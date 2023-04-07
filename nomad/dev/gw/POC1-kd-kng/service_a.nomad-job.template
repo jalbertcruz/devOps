@@ -1,0 +1,87 @@
+job "service-a" {
+
+  # sudo chown 10001:root dockers-data/npm/storage
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    task "task-service-a" {
+      driver = "docker"
+      artifact {
+        source = "{{ resources_register_host }}/service_a_centosV0.1.tar"
+      }
+
+      constraint {
+        attribute = "${attr.kernel.name}"
+        value = "linux"
+      }
+
+      config {
+        load = "service_a_centosV0.1.tar"
+        image = "service_a:centosV0.1"
+        port_map {
+          port_server = 80
+        }
+
+        tty = true
+
+        logging {
+          type = "json-file"
+        }
+
+      }
+
+      service {
+        name = "service-a"
+        port = "port_server"
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-service-a.com/"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 512
+//        memory = 1024
+//        memory = 2048
+//        memory = 4096
+        cpu    = 20
+//        cpu    = 200
+//        cpu    = 300
+//        cpu    = 400
+//        cpu    = 500
+//        cpu    = 1000
+//        cpu    = 2000
+//        cpu    = 4000
+        network {
+          mbits = 100
+//          mbits = 200
+//          mbits = 400
+          port "port_server" {
+          }
+        }
+      }
+
+    }
+  }
+}

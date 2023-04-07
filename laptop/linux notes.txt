@@ -1,0 +1,11 @@
+### Ubuntu
+Error :: You must put some 'source' URIs in your sources.list
+# https://askubuntu.com/questions/496549/error-you-must-put-some-source-uris-in-your-sources-list
+
+software-properties-gtk option "Source code"
+
+I recommend this for the desktop:
+
+software-properties-gtk
+then under the "Ubuntu Software" tab click "Source code"
+

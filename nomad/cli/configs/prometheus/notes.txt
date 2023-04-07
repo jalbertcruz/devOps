@@ -1,0 +1,2 @@
+
+http post prom.service.dc1.consul:9090/-/reload

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+python -m http.server "${DOCKER_IMAGES_SERVER_PORT}" &
+process_pid=$!
+sleep 80
+echo $process_pid | http put http://172.16.10.65:8500/v1/kv/pid-data-WEBSERVER_PID

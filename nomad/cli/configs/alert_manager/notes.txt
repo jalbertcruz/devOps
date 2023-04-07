@@ -1,0 +1,4 @@
+
+karma --alertmanager.uri http://alertmanager.service.dc1.consul:909
+
+http post alertmanager.service.dc1.consul:9093/-/reload

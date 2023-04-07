@@ -1,0 +1,13 @@
+#!/bin/bash
+
+N=4
+for i in $(seq 1 $N); do
+  sed -i '$d' $IDEA_VMOPTIONS_FILE
+done
+
+idea_keys=(idea.plugins.path idea.config.path idea.system.path idea.log.path)
+idea_folders=(plugins config system log)
+
+for index in "${!idea_keys[@]}"; do
+  echo "-D${idea_keys[$index]}=${IDEA_CONFIGS_PATH}${idea_folders[$index]}" >>$IDEA_VMOPTIONS_FILE
+done

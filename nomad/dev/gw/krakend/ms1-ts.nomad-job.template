@@ -1,0 +1,65 @@
+job "ms1-ts" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    task "ms2" {
+
+      driver = "docker"
+
+      config {
+
+        image = "jalbert/ms1-ts:0.1"
+
+        port_map {
+          port_server = 4000
+        }
+
+        hostname = "ms1-ts.service.dc1.consul"
+
+        logging {
+          type = "json-file"
+        }
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+      }
+
+      service {
+        name = "ms1-ts"
+
+        port = "port_server"
+        //        address_mode = "host" // default
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-/ms1-ts strip=/ms1-ts"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+
+      resources {
+        network {
+          mbits = 60
+          port "port_server" {}
+        }
+      }
+
+    }
+  }
+}

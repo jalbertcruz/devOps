@@ -1,0 +1,1 @@
+sudo apt-get install nload iptraf iptraf-ng nethogs bmon slurm tcptrack vnstat bwm-ng cbm speedometer pktstat netdiag ifstat dstat collectl

@@ -1,0 +1,101 @@
+job "loki" {
+
+// https://akoutmos.com/post/elixir-logging-loki/
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    network {
+      port "port_server" {
+        static = 3100
+      }
+
+      dns {
+        servers = [
+          "172.17.0.2", "8.8.8.8", "8.8.4.4"
+        ]
+      }
+
+    }
+
+    task "task-loki" {
+      driver = "docker"
+
+      env {
+        JAEGER_AGENT_HOST    = "tempo.service.dc1.consul"
+        JAEGER_TAGS          = "cluster=nomad"
+        JAEGER_SAMPLER_TYPE  = "probabilistic"
+        JAEGER_SAMPLER_PARAM = "1"
+      }
+
+//      constraint {
+//        attribute = "${attr.kernel.name}"
+//        value = "linux"
+//      }
+
+      config {
+
+        image = "grafana/loki:2.2.0-amd64"
+
+        hostname = "loki.service.dc1.consul"
+
+        ports = [
+          "port_server"]
+
+        args = [
+          "-config.file=/etc/loki/loki-config.yml",
+        ]
+
+        tty = true
+
+//        dns_servers = [
+//          "172.17.0.2"]
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ loki_config }}:/etc/loki/loki-config.yml",
+          "{{ loki_data_index }}:/loki-index",
+          "{{ loki_data_chunks }}:/loki-chunks"
+        ]
+
+      }
+
+      service {
+
+        port = "port_server"
+        address_mode = "driver"
+        name = "loki"
+
+        tags = [
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 1000
+      }
+
+    }
+  }
+}

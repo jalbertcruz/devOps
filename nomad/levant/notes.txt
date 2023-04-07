@@ -1,0 +1,8 @@
+
+https://github.com/hashicorp/levant/issues/424
+
+yq -o=json '.' vars.yaml
+
+levant render -var-file vars.json mysql.nomad | nomad job run -
+
+

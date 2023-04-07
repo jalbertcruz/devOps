@@ -1,0 +1,5 @@
+{
+  "spark/spark-worker1": ["spark/spark-master"],
+  "spark/spark-master": 0,
+  "spark/spark-worker2": ["spark/spark-master"]
+}

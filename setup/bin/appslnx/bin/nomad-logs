@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+id=$(nomad job status -evals $1 | rg Allocations --context 2 | tail -n 1 | awk '{print $1}')
+
+# nomad alloc status $id
+
+nomad alloc logs $id

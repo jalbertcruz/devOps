@@ -1,0 +1,5 @@
+#!/bin/bash
+
+java -jar "$PLANTUML_HOME/plantuml.jar" -DRELATIVE_INCLUDE="$PLANTUML_HOME/includes" -DRELATIVE_ICONS=$PLANTUML_ICON_FONT_SPRITES "$1"
+
+# docker run --rm -v $(shell pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor -r asciidoctor-diagram docs/readme.adoc

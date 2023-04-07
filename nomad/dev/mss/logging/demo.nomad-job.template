@@ -1,0 +1,93 @@
+job "demo" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    network {
+      port "port_server" {
+        to = 4000
+      }
+      port "port_ssh" {
+        to = 22
+      }
+    }
+
+    count = 1
+
+    task "task-demo" {
+
+      driver = "docker"
+
+      env {
+        HOST_NAME = "demo.service.dc1.consul"
+      }
+
+      config {
+        image = "jalbert/phoenix_full:0.1.0-0f98e4"
+
+        hostname = "demo.service.dc1.consul"
+
+        ports = [
+          "port_server",
+          "port_ssh",
+        ]
+
+        logging {
+          type = "loki"
+          config {
+            loki-url = "http://loki:loki@loki.service.dc1.consul:3100/loki/api/v1/push"
+          }
+        }
+
+        //        logging {
+        //          type = "fluentd"
+        //          config {
+        //            fluentd-address = "fluentd.service.dc1.consul:24224"
+        //            tag = "api.logs"
+        //          }
+        //        }
+
+        volumes = [
+          "{{ dev_env_directory_elixir }}:/home/app/src",
+          "{{ dev_env_direnv_alloweds }}:/home/app/.local/share/direnv/allow"
+        ]
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+        //        cpu_hard_limit = true
+      }
+
+      service {
+        name = "demo"
+
+        port = "port_server"
+        //        address_mode = "host" // default
+
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-/demo strip=/demo"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+
+      resources {
+      }
+
+    }
+  }
+}

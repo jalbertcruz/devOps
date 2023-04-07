@@ -1,0 +1,9 @@
+
+https://docs.github.com/en/rest/guides/working-with-comments
+
+gh pr create
+gh pr edit 7 --body "Adding HTTP client proxy configuration"
+gh pr merge 7 -m -d
+
+=== Note that, for now, gh pr view will only render regular comments and not review comments. ???
+gh pr view 1 --comments

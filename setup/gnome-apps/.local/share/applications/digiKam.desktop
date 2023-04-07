@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=7.6.0
+TryExec=/usr/local/bin/appslnx/tools/digiKam.AppImage
+Exec=/usr/local/bin/appslnx/tools/digiKam.AppImage -- %u
+Terminal=false
+Icon=/usr/local/bin/appslnx/tools/digikam_oxygen.svg
+Name=digiKam
+Type=Application
+Categories=Development;
+                          
+MimeType=text/html;

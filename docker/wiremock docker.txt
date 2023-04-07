@@ -1,0 +1,8 @@
+
+
+docker run --rm -it --volume ~/appslnx/tools/wiremock/:/wiremock/ jalbertcruz/jdk-server:10
+
+java -jar wiremock-standalone-2.18.0.jar --enable-browser-proxying --port 80
+
+
+http https://repo.hex.pm/packages/poison

@@ -1,0 +1,105 @@
+job "rabbitmq" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  namespace = "default"
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    network {
+
+      port "port1" {
+        to = 5672
+      }
+      port "port2" {
+        to = 15672
+      }
+    }
+
+    task "task-rabbitmq" {
+
+      driver = "docker"
+
+      env {
+        RABBITMQ_ERLANG_COOKIE = "RABBITMQ_ERLANG_COOKIE"
+        RABBITMQ_DEFAULT_VHOST = "/"
+        RABBITMQ_DEFAULT_USER = "rabbitmq"
+        RABBITMQ_DEFAULT_PASS = "rabbitmq"
+      }
+
+
+      constraint {
+        attribute = "${attr.kernel.name}"
+        value = "linux"
+      }
+
+      config {
+
+        image = "rabbitmq:3.10.1-management"
+        hostname = "rabbitmq.service.dc1.consul"
+
+        ports = [
+          "port1",
+          "port2"
+        ]
+
+        tty = true
+
+        /* logging {
+           type = "gelf"
+           config {
+             gelf-address = "udp://localhost:12201"
+           }
+         }*/
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ rabbitmq_enabled_plugins }}:/etc/rabbitmq/enabled_plugins",
+          "{{ rabbitmq_data }}:/var/lib/rabbitmq"
+        ]
+
+      }
+
+      service {
+
+        name = "rabbitmq"
+        port = "port1"
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-rabbitmq.com/",
+          "dev"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port1"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+
+        memory = 16000
+        cpu = 8000
+
+      }
+
+    }
+  }
+}

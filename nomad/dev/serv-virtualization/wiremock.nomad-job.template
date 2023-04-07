@@ -1,0 +1,76 @@
+job "wiremock" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    task "wiremock" {
+
+      driver = "docker"
+
+      env {
+        //        MIRROR_OUTPUT = "http://fabio.service.dc1.consul:9999/webhook-transformer"
+        MIRROR_OUTPUT = "http://webhook-transformer.service.dc1.consul"
+      }
+
+      config {
+
+        image = "jalbert/wiremock:2.26.0"
+
+        port_map {
+          port_server = 80
+        }
+
+        hostname = "wiremock.service.dc1.consul"
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ files_and_mappings_root_wiremock }}:/files-and-mappings-root"
+        ]
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        //        cpu_hard_limit = true
+
+      }
+
+      service {
+        name = "wiremock"
+
+        port = "port_server"
+        //        address_mode = "host" // default
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-/wiremock strip=/wiremock"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+
+      resources {
+        network {
+          mbits = 60
+          port "port_server" {}
+        }
+      }
+
+    }
+  }
+}

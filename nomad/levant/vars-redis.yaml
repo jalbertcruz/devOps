@@ -1,0 +1,21 @@
+---
+job:
+  name: redis
+  network:
+    port_server:
+      static: 6379
+  task:
+    config:
+      image: redis:7.0.0-bullseye
+      args:
+        - "--appendonly yes"
+      hostname: redis.service.dc1.consul
+      volume:
+        a:
+          key: nomad-redis_data
+          path: /data
+    service:
+      port: port_server
+    resource:
+      memory: 1000
+      cpu: 2000

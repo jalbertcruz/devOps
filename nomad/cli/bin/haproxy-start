@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+haproxy -f "${HAPROXY_CONFIG_PATH}haproxy.cfg" &
+echo $! | http put http://172.16.10.65:8500/v1/kv/pid-data-HAPROXY
+
+#consul kv put pid-data-HAPROXY $!

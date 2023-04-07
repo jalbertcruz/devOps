@@ -1,0 +1,51 @@
+» nomad job status -evals prom
+ID            = prom
+Name          = prom
+Submit Date   = 2020-12-21T00:26:16+01:00
+Type          = service
+Priority      = 50
+Datacenters   = dc1
+Namespace     = default
+Status        = pending
+Periodic      = false
+Parameterized = false
+
+Summary
+Task Group  Queued  Starting  Running  Failed  Complete  Lost
+server      0       0         0        6       0         0
+
+Evaluations
+ID        Priority  Triggered By        Status    Placement Failures
+1c11b643  50        alloc-failure       pending   false
+
+...
+
+Allocations
+ID        Node ID   Task Group  Version  Desired  Status  Created     Modified
+30321a96  d7331af9  server      2        run      failed  1m32s ago   1m28s ago
+
+» nomad alloc status 30321a96
+
+...
+
+Task Events:
+Started At     = N/A
+Finished At    = 2020-12-20T23:34:16Z
+Total Restarts = 0
+Last Restart   = N/A
+
+Recent Events:
+Time                       Type             Description
+2020-12-21T00:34:18+01:00  Killing          Sent interrupt. Waiting 5s before force killing
+2020-12-21T00:34:16+01:00  Alloc Unhealthy  Unhealthy because of failed task
+2020-12-21T00:34:16+01:00  Not Restarting   Error was unrecoverable
+2020-12-21T00:34:16+01:00  Driver Failure   failed to create container: API error (400): bad format for add-host: "host.docker.internal"
+2020-12-21T00:34:16+01:00  Task Setup       Building Task Directory
+2020-12-21T00:34:16+01:00  Received         Task received by client
+
+### ./up1.sh mysql /bin/bash # it open a shell on the first mysql job allocation
+#!/bin/bash
+
+id=$(nomad job status -evals $1 | tail -n 1 | awk '{print $1}')
+cmd="${2:-/bin/bash}"
+nomad alloc exec $id $cmd

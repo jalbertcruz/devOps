@@ -1,0 +1,71 @@
+job "wiremock-webhook" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    task "wiremock-webhook" {
+
+      driver = "docker"
+
+     config {
+
+        image = "jalbert/custom-wiremock:2.26.0-1.0.0"
+
+        port_map {
+          port_server = 80
+        }
+
+        hostname = "wiremock-webhook.service.dc1.consul"
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ files_and_mappings_root_wiremock_webhook }}:/files-and-mappings-root"
+        ]
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+//        cpu_hard_limit = true
+
+      }
+
+      service {
+        name = "wiremock-webhook"
+
+        port = "port_server"
+//        address_mode = "host" // default
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-/wiremock-webhook strip=/wiremock-webhook"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+
+      resources {
+        network {
+          mbits = 60
+          port "port_server" {}
+        }
+      }
+
+    }
+  }
+}

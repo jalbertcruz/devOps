@@ -1,0 +1,82 @@
+job "dev-env" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    task "dev-env" {
+
+      driver = "docker"
+
+//      env {
+//        GET_IDS_USING_CONSUL = "yes"
+//      }
+
+      config {
+
+        image = "jalbert/elixir-machine-service:1102-ubuntu18"
+//        image = "jalbert/elixir-machine-service:110-centos7"
+
+        port_map {
+          port_server = 22
+          port_app = 56299
+          port_ex = 80
+        }
+
+        hostname = "dev-env.service.dc1.consul"
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ dev_env_directory_e }}:/home/app/src/e",
+          "{{ dev_env_directory_h }}:/home/app/src/h",
+          "{{ dev_env_direnv_alloweds }}:/home/app/.local/share/direnv/allow"
+        ]
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        //        cpu_hard_limit = true
+
+      }
+
+      service {
+        name = "dev-env"
+
+        port = "port_server"
+        //        address_mode = "host" // default
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-/dev-env strip=/dev-env"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+
+      resources {
+        network {
+          mbits = 60
+          port "port_server" {}
+          port "port_app" {}
+          port "port_ex" {}
+        }
+      }
+
+    }
+  }
+}

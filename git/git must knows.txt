@@ -1,0 +1,128 @@
+
+Git must know!
+
+Concepts
+* WD: working dir
+* diff: differences
+* patch: file with diffs 
+* status of a change in a file: WD stage/index repo (commits before)
+	** "add -p" (choose the chunks to be added)
+		*** In GitEye -> Show view -- Git staging
+	
+* commit/revision (node of a DAG)
+* parent commit: previous commit
+* branch (path of the DAG to a leaf)
+         <remote name>/<branch name> are branches too
+
+* names of commits: HEAD, master (all branchs), HEAD^, HEAD^^
+* path: file or dir
+* remote: link to another repo (can be more than one!)
+* merge: unify changes
+* merge commit: commit resulting from a merge (a commit can have more than one parent)
+* three-way-merge: merge way of conflicts resolution 
+* fast-forward: related to merge
+
+Commands
+* "add" move from WD to the index
+* "diff" difference between:
+	1. paths in: WD - index, WD - repo, index - repo
+	2. revisions
+		You can also compare two files in two different revisions, like this:
+
+		git diff <revision_1>:<file_1> <revision_2>:<file_2>
+		git difftool <revision_1>:<file_1> <revision_2>:<file_2>
+
+* "commit" make a revision, move from index to repo
+	** "ammend" modify the last commit
+	
+* "checkout" go to a revision, update the WD to a revision
+	** "checkout -b" create a branch
+	
+* "branch" create/manipulate branches
+
+* "merge" unify branches:
+	1. creating a new commit by joining two branches, 
+	2. doing a fast-forward
+
+* "rebase <parent branch>" alternative to "merge", update with the parent branch new commits. While a merge creates a new commit by joining two branches, "rebase" takes the new commits from one branch (takes the commits since the divergence) and reapplies them on top of the other branch.
+
+Merge doesn't change history. It creates and adds a new commit (unless it was a fast-forward merge; then it just advances the branch head), but the commits that were reachable from the branch remain reachable. This is not the case with rebase. Commits get rewritten, old versions are forgotten, and the DAG of revisions changes. What was once reachable might no longer be reachable.
+
+* "rebase -i <previous commit>" (squash commits, reorder commits)
+	** In GitEye -> RClick on commits: rebase interactive
+
+* "revert" (create a commit that undo a previous commit)
+* "cherry-pick" Create a copy of a commit (or a series of commits), applies the changes each one introduces, recording a new commit for each.
+	
+* "reset" (undo or destroy commits)
+	** for undo "add" operations
+	
+* "apply" apply diffs to a repo
+	** "format-patch" create patches from commits
+	** "am" apply patches
+
+* "push" syncronize local --> remote
+	** "push -u" : create the local branch on the remote
+	
+* "fetch" syncronize remote --> local
+
+* "stash" clean the WD in a local stack of diffs
+
+* "blame" the line-wise history of a file
+
+* "reflog" (trash of commits, the "reset" destroy in the DAG no in the hard disk)
+* "log -S'<text>' --pickaxe-all -G<regex>"
+
+log -S'' --pickaxe-all -Gsasl
+git log -G'sasl' --pickaxe-all
+
+With the -S<string> option, Git will look for differences that introduce or remove an instance of a given string.
+
+To show differences for all the files, and not only those diffs where the change in number occurred, you need to use the --pickaxe-all option
+
+--pickaxe-all
+When -S or -G finds a change, show all the changes in that changeset, not just the files that contain the change in <string>.
+
+--pickaxe-regex
+Treat the <string> given to -S as an extended POSIX regular expression to match.
+
+-G<regex>
+           To illustrate the difference between -S<regex> --pickaxe-regex and -G<regex>, consider a commit with the following diff in the same file:
+           While git log -G"frotz\(nitfol" will show this commit, git log -S"frotz\(nitfol" --pickaxe-regex will not (because the number of occurrences of that string
+           When -S or -G finds a change, show all the changes in that changeset, not just the files that contain the change in <string>.
+
+
+You may have used Git’s -G<regex> option to find commits which modified a line that mentions a particular string (e.g., git log -G'foo\(' will look for changes that added, removed, or modified calls to the foo() function). But you may also want to ignore lines matching a certain pattern. Git 2.30 introduces -I<regex>, which lets you ignore changes in lines matching a regular expression. For instance, git log -p -I'//' would show the patch for each commit, but omit any hunks that only touched comment lines (those containing //).
+
+
+Extra
+
+Automating git
+* hooks: scritps to exec when certain git actions occur
+
+Commands
+
+* "filter-branch" rewrite history for: delete files in the repo, change commits author, email, convert/extract a directory of the repo in a new repo, etc.
+
+* "submodule" and "read-tree" / "subtree" repos inside the repo
+
+* "bisect"
+The bisect command searches semi-automatically step by step through the project
+history, trying to find the revision that introduced the bug. In each step, it bisects
+the history into roughly equal parts, and asks whether there is a bug in the dividing
+commit. It then uses the answer to eliminate one of the two sections, and reduces the
+size of the revision range where there can be a commit that introduced the bug.
+
+$ git bisect start
+$ git bisect bad v1.15-rc0
+$ git bisect good v1.14
+
+$ git branch
+
+run your test to check whether the issue is present in the
+commit currently checked out by the bisect operation. If the program crashes, mark
+this commit as bad with "git bisect bad". If the issue is not present, mark it as correct
+with "git bisect good". 
+
+When you're finished
+$ git bisect reset

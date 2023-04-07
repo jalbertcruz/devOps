@@ -1,0 +1,111 @@
+job "kong-service" {
+
+  # sudo chown 10001:root dockers-data/npm/storage
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    task "kong-service" {
+
+      env {
+        KONG_PLUGINS = "bundled"
+        KONG_PROXY_LISTEN = "0.0.0.0:8000, 0.0.0.0:8443 ssl"
+        KONG_ADMIN_LISTEN = "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+        KONG_DATABASE = "postgres"
+        KONG_PG_HOST = "postgres-sb.service.dc1.consul"
+        KONG_PG_USER = "kong"
+        KONG_PG_PASSWORD = "new_password"
+        KONG_PG_DATABASE = "gateway"
+        KONG_LOG_LEVEL = "info"
+        KONG_PROXY_ACCESS_LOG = "/dev/stdout"
+        KONG_ADMIN_ACCESS_LOG = "/dev/stdout"
+        KONG_PROXY_ERROR_LOG = "/dev/stderr"
+        KONG_ADMIN_ERROR_LOG = "/dev/stderr"
+        //        KONG_PREFIX = "/usr/local/kong/"
+      }
+
+      driver = "docker"
+
+      constraint {
+        attribute = "${attr.kernel.name}"
+        value = "linux"
+      }
+
+      config {
+
+        dns_servers = [
+          "172.17.0.2"]
+        network_mode = "host"
+
+        image = "kong:1.4.0-centos"
+        port_map {
+          port_server = 8000
+        }
+
+        tty = true
+
+        logging {
+          type = "json-file"
+
+          //          type = "gelf"
+          //          config {
+          //            gelf-address = "localhost:24224"
+          //            tag = "logs-kong"
+          //          }
+
+          //          {
+          //  "log-driver": "gelf",
+          //  "log-opts": {
+          //    "gelf-address": "udp://1.2.3.4:12201"
+          //  }
+          //}
+
+        }
+
+        //        volumes = [
+        //          "/home/a/dockers-data/kong:/usr/local/kong"
+        //        ]
+
+      }
+
+      service {
+        name = "kong-service"
+        port = "port_server"
+
+        tags = [
+          "urlprefix-kong.com/"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 2048
+        cpu = 1000
+        network {
+          mbits = 200
+          port "port_server" {
+          }
+        }
+      }
+
+    }
+  }
+}

@@ -1,0 +1,97 @@
+job "prom" {
+
+  meta {
+    description = "Prometheus job"
+  }
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  namespace = "default"
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "prom" {
+
+    meta {
+      description = "Prometheus group"
+    }
+
+    network {
+      port "port_server" {
+        static = 9090
+      }
+      dns {
+        servers = [
+          "172.17.0.2", "8.8.8.8", "8.8.4.4"
+        ]
+      }
+    }
+
+    task "prom" {
+
+      meta {
+        description = "Prometheus"
+      }
+
+      driver = "docker"
+
+      config {
+
+        image = "prom/prometheus:v2.39.1"
+        hostname = "prom.service.dc1.consul"
+
+        ports = [
+          "port_server"]
+
+        args = [
+          "--config.file=/etc/prometheus/prometheus.yml",
+          "--storage.tsdb.path=/prometheus",
+          "--web.console.libraries=/usr/share/prometheus/console_libraries",
+          "--web.console.templates=/usr/share/prometheus/consoles",
+          "--web.enable-lifecycle"
+        ]
+
+        tty = true
+
+        extra_hosts = [
+          "host.docker.internal:host-gateway",
+        ]
+
+        volumes = [
+          "{{ prometheus_data }}:/prometheus",
+          "{{ prometheus_alerts }}:/alertmanager",
+          "{{ prometheus_config }}:/etc/prometheus/prometheus.yml",
+        ]
+
+      }
+
+      service {
+        name = "prom"
+        port = "port_server"
+        address_mode = "driver"
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 1000
+      }
+
+    }
+
+  }
+}

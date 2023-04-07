@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+#MITMPROXY_PORT=8082
+#MITMPROXY_WEB_UI_PORT=8083
+
+mitmweb --listen-port "${MITMPROXY_PORT}" --web-port "${MITMPROXY_WEB_UI_PORT}" &
+
+# mitmweb --listen-port 8501 --web-port 8080
+
+echo $! | http put http://172.17.0.2:8500/v1/kv/pid-data-MITMPROXY
+
+#consul kv put pid-data-MITMPROXY $!

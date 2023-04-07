@@ -1,0 +1,69 @@
+job "ms2-fs" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    task "ms2-fs" {
+
+      driver = "docker"
+
+      config {
+
+        image = "jalbert/ms2-fs:0.1"
+
+        port_map {
+          port_server = 4000
+        }
+
+        hostname = "ms2-fs.service.dc1.consul"
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ files_service_app_data }}:/app_data"
+        ]
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+      }
+
+      service {
+        name = "ms2-fs"
+
+        port = "port_server"
+        //        address_mode = "host" // default
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-/ms2-fs strip=/ms2-fs"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+
+      resources {
+        network {
+          mbits = 60
+          port "port_server" {}
+        }
+      }
+
+    }
+  }
+}

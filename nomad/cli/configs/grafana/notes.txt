@@ -1,0 +1,12 @@
+
+
+https://grafana.com/docs/grafana/latest/http_api/admin/#reload-provisioning-configurations
+Reload provisioning configurations
+# Only works with Basic Authentication (username and password).
+
+POST /api/admin/provisioning/dashboards/reload
+POST /api/admin/provisioning/datasources/reload
+POST /api/admin/provisioning/plugins/reload
+POST /api/admin/provisioning/notifications/reload
+POST /api/admin/provisioning/accesscontrol/reload
+

@@ -1,0 +1,27 @@
+---
+job:
+  name: postgres
+  network:
+    port_server: 5432
+  task:
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 11qazxsw22
+    config:
+      image: postgres:12.4
+      args:
+        - "-c"
+        -  "config_file=/etc/postgresql/postgresql.conf"
+      hostname: postgres.service.dc1.consul
+      volume:
+        a:
+          key: nomad-postgres_pgdata
+          path: /var/lib/postgresql/data/
+        b:
+          key: nomad-postgres_conf
+          path: /etc/postgresql/postgresql.conf
+    service:
+      port: port_server
+    resource:
+      memory: 1000
+      cpu: 2000

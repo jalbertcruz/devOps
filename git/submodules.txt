@@ -1,0 +1,51 @@
+
+git/remote/lib_a (dev ✔) » git config receive.denyCurrentBranch ignore
+git/remote/lib_a (dev ✔) » git reset --hard
+
+» g si
+Initialized empty Git repository in /home/a/Desktop/git/project/.git/
+[master (root-commit) b99a082] Initial commit
+Switched to a new branch 'dev'
+
+» g submodule add -b dev ../remote/lib_a/.git lib_a
+Cloning into '/home/a/Desktop/git/project/lib_a'...
+done.
+
+» cat .gitmodules
+[submodule "lib_a"]
+	path = lib_a
+	url = ../remote/lib_a/.git
+	branch = dev
+
+» cd lib_a
+
+» vim x.txt
+
+» g c -a -m new
+
+ » g ph
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 322 bytes | 322.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To /home/a/Desktop/git/remote/lib_a/.git
+   9d6a8c7..3da6a57  dev -> dev
+
+» cd ..
+
+» g c -a -m update-at-root
+
+
+» g submodule deinit -- lib_a
+Cleared directory 'lib_a'
+Submodule 'lib_a' (../remote/lib_a/.git) unregistered for path 'lib_a'
+
+» g rm lib_a
+
+git submodule foreach 'git stash && git checkout dev && git stash && git pull -r'
+git submodule foreach 'git pull -r'
+
+git submodule update --recursive --remote
+

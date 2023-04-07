@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+nomad job run  dev/nomad/consul-dns.nomad-job.template
+sleep 2
+nomad job run  dev/nomad/consul.nomad-job.template

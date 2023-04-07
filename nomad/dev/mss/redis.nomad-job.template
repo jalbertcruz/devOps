@@ -1,0 +1,83 @@
+job "redis" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"
+  ]
+
+  namespace = "default"
+
+  type = "service"
+
+  update {
+    stagger      = "5s"
+    max_parallel = 1
+  }
+
+  group "redis" {
+
+    network {
+      port "port_server" {
+        static = 6379
+      }
+    }
+
+    task "redis" {
+      driver = "docker"
+
+      env {
+
+#        TZ = "Etc/UTC"
+#        TZ = "Africa/Nairobi"
+
+      }
+
+      config {
+
+        image    = "redis:7.0.0-bullseye"
+        hostname = "redis.service.dc1.consul"
+
+        ports = [
+          "port_server"
+        ]
+
+        command = "redis-server"
+        args    = [
+          "--appendonly yes"
+        ]
+
+        tty = true
+
+        volumes = [
+          "{{ redis_data }}:/data"
+        ]
+
+      }
+
+      service {
+        name         = "redis"
+        port         = "port_server"
+        address_mode = "driver"
+
+        check {
+          type     = "tcp"
+          port     = "port_server"
+          interval = "10s"
+          timeout  = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 1000
+      }
+
+    }
+
+  }
+}
+
+// » docker exec -it 019eb0cea407 redis-cli
+// sudo snap install redis-desktop-manager
+// redis-desktop-manager.rdm  /  LPOP App.Buffer

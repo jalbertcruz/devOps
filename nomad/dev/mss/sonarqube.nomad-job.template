@@ -1,0 +1,67 @@
+job "sonarqube" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  namespace = "default"
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    network {
+      port "port_server" {
+        to = 9000
+      }
+    }
+
+    task "task-sonarqube" {
+      driver = "docker"
+
+      config {
+
+        image = "jalbert/sonarqube:8.6"
+        hostname = "sonarqube.service.dc1.consul"
+
+        ports = [
+          "port_server"]
+
+        command = "bin/sonar.sh"
+
+        tty = true
+
+        volumes = [
+          "{{ sonarqube_data }}:/opt/sonarqube/data"
+        ]
+
+      }
+
+      service {
+        name = "sonarqube"
+        port = "port_server"
+        address_mode = "driver"
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 4000
+      }
+
+    }
+
+  }
+}

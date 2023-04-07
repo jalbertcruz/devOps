@@ -1,0 +1,20 @@
+session_name: sportsbook
+windows:
+  - window_name: sportsbook
+    layout: 03e0,240x36,0,0{120x36,0,0,10,119x36,121,0[119x25,121,0,11,119x10,121,26{71x10,121,26,12,47x10,193,26,13}]}
+    # shell_command_before:
+    #   - cd ~/
+    panes:
+      - shell_command:
+          - cd $HOME/src/a/tmbz/dev/sports-book/
+          # -
+      - shell_command:
+          - cd $HOME/src/a/tmbz/dev/sports-book-gateway/
+      - shell_command:
+          - cd $HOME/src/a/tmbz/dev/shikisha/
+      - shell_command:
+          - cd $HOME/src/a/tmbz/dev/cardinal/
+  - window_name: betradar-node
+    panes:
+      - shell_command:
+          - cd $HOME/src/a/tmbz/betradar-node/

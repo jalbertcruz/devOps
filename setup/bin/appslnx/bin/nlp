@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+declare -a nums=(
+  0
+  1
+  2
+  3
+  4
+  5
+  6
+)
+
+create_networks() {
+  for i in "${!nums[@]}"; do
+    sudo ip link add name "mylo${nums[$i]}" type dummy
+    sudo ip address add 172.16.1${nums[$i]}.65/26 dev "mylo${nums[$i]}"
+  done
+}
+
+create_networks

@@ -1,0 +1,18 @@
+session_name: POC
+windows:
+  - window_name: akka-cassandra
+#    layout: 680e,236x42,0,0{118x42,0,0,1,117x42,119,0[117x12,119,0,2,117x13,119,13,3,117x15,119,27,4]} # origin
+    layout: 6eb9,243x35,0,0{23x35,0,0,3,219x35,24,0[219x9,24,0,4,219x11,24,10,5,219x13,24,22,6]} # run
+
+    panes:
+      - shell_command:
+          - cd $AKKA_CLUSTER_APP_HOME && sleep 10 && sbt console
+      - shell_command:
+          - cd $AKKA_CLUSTER_APP_HOME && sdenv 1
+          - sbtr 0
+      - shell_command:
+          - cd $AKKA_CLUSTER_APP_HOME && sdenv 2
+          - sbtr 5
+      - shell_command:
+          - cd $AKKA_CLUSTER_APP_HOME && sdenv 3
+          - sbtr 7

@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = false
+
+[packages]
+Flask = "*"
+
+[dev-packages]
+yapf = "*"
+pytest = "*"
+pytype = "*"
+
+[requires]
+python_version = "3.8"
+
+[scripts]
+s = 'python main.py'

@@ -1,0 +1,133 @@
+» nslookup -port=8600 wiremock.service.dc1.consul
+;; Got recursion not available from 127.0.0.53, trying next server
+Server:		127.0.0.1
+Address:	127.0.0.1#8600
+
+Name:	wiremock.service.dc1.consul
+Address: 127.0.0.1
+;; Got recursion not available from 127.0.0.53, trying next server
+
+
+» nslookup -port=53 postgres-sb.service.dc1.consul
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+Name:	postgres-sb.service.dc1.consul
+Address: 127.0.0.1
+
+
+dig @127.0.0.1 -p 8600 wiremock.service.dc1.consul. ANY
+
+dig @127.0.0.1 -p 8600 postgres-sb.service.dc1.consul. ANY
+
+nslookup -port=8600 postgres-sb.service.dc1.consul
+
+nslookup -port=53 wiremock.service.dc1.consul
+
+nslookup -port=53 rabbitmq.service.dc1.consul
+
+nslookup -port=53 nexus.service.dc1.consul
+
+nslookup -port=53 npm.service.dc1.consul
+npm set registry http://npm.service.dc1.consul:4873/
+
+nslookup -port=8600 wiremock.service.dc1.consul
+
+nslookup -port=8600 postgres-sb.service.dc1.consul 172.16.10.65
+
+http://wiremock.service.dc1.consul/__admin/
+
+
+» nomad node status
+ID        DC   Name  Class   Drain  Eligibility  Status
+1e675fd6  dc1  jl    <none>  false  eligible     ready
+
+a@jl ~/.config/tmuxinator » nomad node-status 1e675fd6
+ID            = 1e675fd6
+Name          = jl
+Class         = <none>
+DC            = dc1
+Drain         = false
+Eligibility   = eligible
+Status        = ready
+Uptime        = 4h38m7s
+Driver Status = docker,qemu,raw_exec
+
+Node Events
+Time                       Subsystem  Message
+2019-06-05T14:30:49+02:00  Cluster    Node registered
+
+Allocated Resources
+CPU          Memory      Disk
+0/14400 MHz  0 B/16 GiB  0 B/266 MiB
+
+Allocation Resource Utilization
+CPU          Memory
+0/14400 MHz  0 B/16 GiB
+
+Host Resource Utilization
+CPU            Memory          Disk
+993/14400 MHz  7.1 GiB/16 GiB  122 GiB/129 GiB
+
+Allocations
+No allocations placed
+
+
+# Add a new DNS when resolv.conf
+# https://datawookie.netlify.com/blog/2018/10/dns-on-ubuntu-18.04/
+# https://linuxize.com/post/how-to-set-dns-nameservers-on-ubuntu-18-04/
+
+$ sudo apt-get install resolvconf
+
+ /etc/resolvconf/resolv.conf.d/base
+          File  containing  basic resolver information.  The lines in this file are included in the resolver
+          configuration file even when no interfaces are configured.
+
+   /etc/resolvconf/resolv.conf.d/head
+          File to be prepended to the dynamically generated resolver configuration file.  Normally  this  is
+          just a comment line.
+
+   /etc/resolvconf/resolv.conf.d/tail
+          File  to be appended to the dynamically generated resolver configuration file.  To append nothing,
+          make this an empty file.  This file is a good place to put a  resolver  options  line  if  one  is
+          needed, e.g.,
+
+              options inet6
+
+
+$ sudo vim /etc/resolvconf/resolv.conf.d/tail
+
+# Add:
+nameserver 127.0.0.1
+nameserver 172.17.0.2
+
+$ sudo resolvconf -u
+
+
+nameserver 8.8.4.4
+nameserver 8.8.8.8
+nameserver 127.0.0.1
+
+nslookup -port=53 files-service.service.dc1.consul
+#  How to check the using of a specific DNS Server.
+# https://www.cloudns.net/blog/10-most-used-nslookup-commands/
+nslookup postgres-sb.service.dc1.consul 172.17.0.2
+
+nslookup nexus.service.dc1.consul 172.17.0.2
+
+nslookup spark-master.service.dc1.consul 172.17.0.2
+
+ping postgres-sb.service.dc1.consul
+
+ping nexus.service.dc1.consul
+
+nslookup postgres-sb.service.dc1.consul 172.17.0.2
+
+# https://github.com/hashicorp/levant
+curl -L https://github.com/hashicorp/levant/releases/download/0.3.0/linux-amd64-levant -o levant
+
+
+# namespace creation: https://www.nomadproject.io/docs/commands/namespace
+nomad namespace apply -description "development" dev-namespace
+

@@ -1,0 +1,4 @@
+{
+  "mss/logging/fluentd": ["mss/logging/elasticsearch"],
+  "mss/logging/dejavu": []
+}

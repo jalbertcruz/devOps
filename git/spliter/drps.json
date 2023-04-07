@@ -1,0 +1,15 @@
+{
+  "repos": [
+    {
+      "home": "fastapi-gae",
+      "name": "backend"
+    },
+    {
+      "home": "fastapi-gae-ui",
+      "name": "frontend"
+    }
+  ],
+  "source_repo": "/home/a/Desktop/git-res/",
+  "branch": "dev",
+  "destination": "/home/a/Desktop/git2/"
+}

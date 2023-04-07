@@ -1,0 +1,6 @@
+
+
+sudo ./wondershaper -a enp2s0 -u 50 -d 400
+
+sudo ./wondershaper -c -a enp2s0
+

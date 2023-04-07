@@ -1,0 +1,94 @@
+job "krakend-service" {
+
+  # sudo chown 10001:root dockers-data/npm/storage
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    task "krakend-service" {
+      driver = "docker"
+      artifact {
+        source = "{{ resources_register_host }}/krakend_centos.tar"
+      }
+
+      constraint {
+        attribute = "${attr.kernel.name}"
+        value = "linux"
+      }
+
+      config {
+
+        dns_servers = ["172.17.0.2"]
+        network_mode = "host"
+
+        load = "krakend_centos.tar"
+        image = "krakend:centos"
+        port_map {
+          port_server = 8000
+        }
+
+        tty = true
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ krakend_config_data }}:/etc/krakend"
+        ]
+
+      }
+
+      service {
+        name = "krakend-service"
+        port = "port_server"
+
+        tags = [
+          "urlprefix-krakend.com/"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+//        memory = 512
+        memory = 512
+//        memory = 1024
+//        memory = 2048
+//        memory = 4096
+        cpu    = 20
+//        cpu    = 300
+//        cpu    = 400
+//        cpu    = 500
+//        cpu    = 1000
+//        cpu    = 2000
+//        cpu    = 4000
+        network {
+          mbits = 100
+//          mbits = 200
+//          mbits = 400
+          port "port_server" {
+          }
+        }
+      }
+
+    }
+  }
+}

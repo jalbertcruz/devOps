@@ -1,0 +1,21 @@
+
+slurm -s -i enp2s0
+
+
+Chequeo del uso de la red:
+
+
+
+sudo iftop -P -i enp3s0f1
+
+sudo iftop -P -i wlp3s0b1
+wlp3s0b1
+
+sar -n TCP,ETCP,DEV 1
+
+sar -n DEV 1
+
+# estado de los buffers
+netstat -n -p -tcp | grep 127
+
+ | grep 8080

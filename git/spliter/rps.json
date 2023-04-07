@@ -1,0 +1,16 @@
+{
+  "repos": [
+    {
+      "home": "/home/a/src/POCs/GCP/fastapi-gae/",
+      "name": "backend",
+      "branch": "dev"
+    },
+    {
+      "home": "/home/a/src/POCs/GCP/fastapi-gae-ui/",
+      "name": "frontend",
+      "branch": "dev"
+    }
+  ],
+  "temp_dir": "/home/a/Desktop/git",
+  "destination": "/home/a/Desktop/git-res/"
+}

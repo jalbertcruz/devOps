@@ -1,0 +1,2 @@
+# NATS
+nc localhost 4222

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Altair GraphQL client
+Comment=Altair GraphQL client
+TryExec=/usr/local/bin/appslnx/web/altair.AppImage
+Exec=/usr/local/bin/appslnx/web/altair.AppImage -- %u
+Terminal=false
+Type=Application
+Categories=Chat;Network;InstantMessaging;Qt;
+MimeType=x-scheme-handler/tg;
+Icon=/usr/local/bin/appslnx/web/altair.png
+Keywords=tg;chat;im;messaging;messenger;sms;tdesktop;
+X-GNOME-UsesNotifications=false

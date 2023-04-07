@@ -1,0 +1,92 @@
+
+# npm set registry http://npm.service.dc1.consul:4873/
+
+# npm install --registry=https://registry.npmjs.org/ electron -g
+
+# npm set registry https://registry.npmjs.org/
+
+
+
+job "npm" {
+
+  # sudo chown 10001:root dockers-data/npm/storage
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    network {
+      port "port_server" {
+        to = 4873
+      }
+    }
+
+    task "task-npm" {
+      driver = "docker"
+      artifact {
+        source = "{{ resources_register_host }}/verdaccio__verdaccio_4.1.x.tar"
+      }
+
+      constraint {
+        attribute = "${attr.kernel.name}"
+        value = "linux"
+      }
+
+      config {
+        image = "verdaccio/verdaccio:4.10.0"
+//        load = "verdaccio__verdaccio_4.1.x.tar"
+//        image = "verdaccio/verdaccio:4.1.x"
+
+        hostname = "npm.service.dc1.consul"
+
+        ports = [
+          "port_server"]
+
+        tty = true
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ verdaccio_storage }}:/verdaccio/storage",
+          "{{ verdaccio_conf }}:/verdaccio/conf"
+        ]
+
+      }
+
+      service {
+        name = "npm"
+        port = "port_server"
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-npm.com/"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 1000
+      }
+
+    }
+  }
+}

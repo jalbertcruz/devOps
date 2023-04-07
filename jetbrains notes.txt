@@ -1,0 +1,9 @@
+
+https://intellij-support.jetbrains.com/hc/en-us/articles/206544519
+
+Linux:
+
+Configuration (idea.config.path): ~/.config/JetBrains/IntelliJIdea2020.3
+Plugins (idea.plugins.path): ~/.local/share/JetBrains/IntelliJIdea2020.3
+System (idea.system.path): ~/.cache/JetBrains/IntelliJIdea2020.3
+Logs (idea.log.path): ~/.cache/JetBrains/IntelliJIdea2020.3/log

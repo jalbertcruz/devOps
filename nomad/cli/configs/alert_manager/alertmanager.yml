@@ -1,0 +1,24 @@
+global:
+  resolve_timeout: 5m
+
+route:
+#  group_by: ['InstanceDown']
+  group_wait: 1s
+  group_interval: 1s
+  repeat_interval: 1h
+  receiver: 'web.hook1'
+
+receivers:
+  - name: 'web.hook1'
+    webhook_configs:
+    - url: 'http://host.docker.internal:5009/critical'
+  - name: 'web.hook2'
+    webhook_configs:
+      - url: 'http://host.docker.internal:5009/warning'
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']

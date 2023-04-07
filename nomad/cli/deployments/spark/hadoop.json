@@ -1,0 +1,5 @@
+{
+  "spark/hadoop-node1": ["spark/hadoop-master"],
+  "spark/hadoop-master": 0,
+  "spark/hadoop-node2": ["spark/hadoop-master"]
+}

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+sudo rm -Rf consul-client || true
+sudo rm -Rf consul-server || true
+
+mkdir consul-client       || true
+chmod 777 consul-client   || true
+mkdir consul-server       || true
+chmod 777 consul-server   || true

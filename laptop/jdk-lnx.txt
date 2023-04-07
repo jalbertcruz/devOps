@@ -1,0 +1,38 @@
+
+wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+     "http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/server-jre-8u152-linux-x64.tar.gz" -O server-jre-8u152-linux-x64.tar.gz
+
+tar -xvf server-jre-8u152-linux-x64.tar.gz
+mv jdk1.8.0_152 jdk1.8
+
+
+wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+     "https://edelivery.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz" -O jdk-8u131-linux-x64.tar.gz
+
+
+sudo update-alternatives --install "/usr/bin/java" "java" "/home/a/appslnx/jdk1.8/bin/java" 1
+sudo update-alternatives --install "/usr/bin/javac" "javac" "/home/a/appslnx/jdk1.8/bin/javac" 1
+sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/home/a/appslnx/jdk1.8/bin/javaws" 1
+
+sudo update-alternatives --install "/usr/bin/java" "java" "/home/a/appslnx/jdk-11/bin/java" 2
+sudo update-alternatives --install "/usr/bin/javac" "javac" "/home/a/appslnx/jdk-11/bin/javac" 2
+
+sudo update-alternatives --config java
+
+
+Monitoring
+Regardless of what monitoring to do, start by running jps to identify the process ID. Unfortunately, most CLojure apps will be listed as main because that’s the standard entry point. If jps is ambiguous, you can also use jcmd, which will list the process ID and the command instead.
+
+From that ID, a world of tools opens up:
+
+Running jstack ID will show you all the running threads in that process. This is particularly handy when your application is taking longer to run than expected.
+Running jcmd ID plus commands let you find out specific information about your running process, like GC stats: jcmd ID gc.info.
+
+jconsole has much of the same monitoring, just in a GUI format.
+Miscelleanous helpers
+jshell (as in “java shell”, although I can’t help reading it as “JS hell”) is a Java REPL. While the Clojure REPL makes a pretty good Java REPL, thanks to its interop capabilities, if you’re interested in how something works in Java, jshell can be a handy choice.
+
+jdeps shows dependencies of JARs, class files, or folders containing them.
+
+jdb is a commandline debugger for Java.
+

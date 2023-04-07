@@ -1,0 +1,17 @@
+
+/home/a/.miktex/texmfs/install/tex/latex/listings/
+
+
+sudo apt-get --no-install-recommends install texstudio
+https://computingforgeeks.com/how-to-check-version-of-installed-package-on-ubuntu-and-debian
+sudo apt show texlive-latex-base -a
+
+https://texblog.net/latex-archive/uncategorized/kile-texlive-2008-equivs/
+! https://shallowsky.com/blog/linux/install/blocking-deb-dependencies.html
+
+sudo apt-get install equivs
+sudo equivs-build texlive.ctl
+
+sudo apt-get --no-install-recommends install kile
+https://sourceforge.net/p/kile/discussion/292014/thread/695839ed47/
+

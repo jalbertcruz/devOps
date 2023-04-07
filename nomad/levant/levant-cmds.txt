@@ -1,0 +1,3 @@
+
+
+levant render -var-file=vars.yaml -consul-address=172.16.10.65:8500 -log-level=DEBUG

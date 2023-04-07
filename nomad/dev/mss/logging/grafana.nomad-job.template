@@ -1,0 +1,90 @@
+job "grafana" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  namespace = "default"
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    network {
+      port "port_server" {
+        static = 3000
+      }
+      dns {
+        servers = [
+          "172.17.0.2", "8.8.8.8", "8.8.4.4"
+        ]
+      }
+    }
+
+    task "task-grafana" {
+      driver = "docker"
+
+      env {
+        GF_LOG_LEVEL          = "DEBUG"
+        GF_LOG_MODE           = "console"
+        GF_SERVER_HTTP_PORT   = "3000"
+        GF_PATHS_PROVISIONING = "/etc/grafana/provisioning"
+      }
+
+      user = "472"
+
+      config {
+
+        image = "grafana/grafana-enterprise:9.2.0"
+        hostname = "grafana.service.dc1.consul"
+
+        ports = [
+          "port_server"]
+
+        tty = true
+
+        volumes = [
+          "{{ grafana_data }}:/var/lib/grafana",
+          "{{ grafana_provisioning }}:/etc/grafana/provisioning",
+          "{{ grafana_config }}:/usr/share/grafana/conf/defaults.ini",
+        ]
+
+      }
+
+      service {
+        name = "grafana"
+        port = "port_server"
+        tags = ["monitoring"]
+
+        address_mode = "driver"
+
+        check {
+          name     = "Grafana HTTP"
+          type     = "http"
+          path     = "/api/health"
+          interval = "5s"
+          timeout  = "2s"
+
+          check_restart {
+            limit           = 2
+            grace           = "60s"
+            ignore_warnings = false
+          }
+        }
+
+      }
+
+      resources {
+        memory = 1000
+      }
+
+    }
+
+  }
+}

@@ -1,0 +1,36 @@
+
+groups:
+- name: demos
+  rules:
+    - alert: BetradarNodeInitalGrpcRequests
+      expr: rate(betradar_grpc_client_requests_total[20s]) > 0
+      for: 30s
+      labels:
+        severity: warning
+        app_type: betradar_node
+        category: app
+      annotations:
+        summary: "BetradarNode inital grpc requests are failing for more than 5 seconds"
+        description: "app of instance {{ $labels.instance }}
+        of job {{ $labels.job }} is failing doing inital grpc requests"
+
+    - alert: BetradarNodeProducersDown
+      expr: sum(betradar_producers_status{id=~"1|3|5|6"}) < 4
+      for: 30s
+      labels:
+        severity: warning
+        app_type: betradar_node
+        category: app
+      annotations:
+        summary: "There are producers down for more than 5 minutes"
+        description: "{{ $labels.job }} on instance {{ $labels.instance }}
+        is having producers down"
+
+#    - alert: InstanceDown
+#      expr: up{instance="host.docker.internal:4000",job="service-node"} == 0
+#      for: 30s
+#      labels:
+#        severity: critical
+#      annotations:
+#        summary: "Instance {{ $labels.instance }} down"
+#        description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."

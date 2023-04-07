@@ -1,0 +1,8 @@
+#async-hvac==0.6.1
+#hvac[parser]==0.9.6
+#klarrio-hvac==0.5.0
+#hvac-cli==1.2.3
+#black==19.10b0
+#pyhcl==0.3.15
+
+Authlib==0.14.1

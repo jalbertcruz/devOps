@@ -1,0 +1,7 @@
+
+How to open and edit multiple projects in the same window?
+# https://stackoverflow.com/questions/8774024/how-to-open-and-edit-multiple-projects-in-the-same-window
+
+Select File->Project Structure->Modules.
+Select + and Import Module and select the directory of your project(or directory where pom exists) and click OK.
+

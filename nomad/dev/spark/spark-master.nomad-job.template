@@ -1,0 +1,72 @@
+job "spark-master" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    task "task-master" {
+      driver = "docker"
+
+      config {
+        image = "jalbert/spark-master:2.4.4-debian"
+
+        hostname = "spark-master.service.dc1.consul"
+
+        port_map {
+          port_server = 7077
+        }
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        tty = true
+
+        logging {
+          type = "json-file"
+        }
+
+        cpu_hard_limit = true
+
+         volumes = [
+          "{{ spark_apps }}:/spark-apps"
+        ]
+
+      }
+
+      service {
+        name = "spark-master"
+
+        port = "port_server"
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-spark-master.com/"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 2048
+        cpu = 2000
+        network {
+          mbits = 40
+          port "port_server" {
+          }
+        }
+      }
+
+    }
+  }
+}

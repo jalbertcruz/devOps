@@ -1,0 +1,96 @@
+job "elasticsearch" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    network {
+      port "port_server" {
+        to = 9200
+      }
+      port "port2" {
+        to = 9300
+      }
+      port "port3" {
+        to = 22
+      }
+    }
+
+    task "task-elasticsearch" {
+      driver = "docker"
+
+      env {
+        //        $ docker run -d --name elasticsearch --net somenetwork -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:tag
+        ELASTIC_PASSWORD = "test"
+      }
+
+      constraint {
+        attribute = "${attr.kernel.name}"
+        value = "linux"
+      }
+
+      config {
+        image = "jalbert/elasticsearch:7.9.2"
+        hostname = "elasticsearch.service.dc1.consul"
+
+        ports = [
+          "port_server",
+          "port2",
+          "port3",
+        ]
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        //        logging {
+        //          type = "json-file"
+        //        }
+
+        volumes = [
+          "{{ elasticsearch_config }}:/home/app/elasticsearch/config/",
+          "{{ elasticsearch_data }}:/home/app/elasticsearch/data/"
+        ]
+
+      }
+
+      service {
+        name = "elasticsearch"
+
+        port = "port_server"
+        address_mode = "driver"
+
+        tags = [
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        cpu = 10000
+        memory = 50000
+
+        network {
+        }
+      }
+
+    }
+  }
+}

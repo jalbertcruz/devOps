@@ -1,0 +1,3 @@
+{
+  "mss/logging/grafana": ["mss/logging/prom","mss/logging/loki","mss/logging/tempo"]
+}

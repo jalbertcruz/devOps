@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.x
+TryExec=/usr/local/bin/appslnx/db/redis-uxes/redis-gui.AppImage
+Exec=/usr/local/bin/appslnx/db/redis-uxes/redis-gui.AppImage -- %u
+Terminal=false
+Name=redis-gui
+Type=Application
+Categories=Development;
+                          
+MimeType=text/html;

@@ -1,0 +1,538 @@
+8. Recovering from Mistakes
+
+# You can unstage files from the index using:
+
+git reset HEAD -- path/to/file
+
+git reset HEAD -- .
+
+
+Remove commits
+git reset --hard HEAD^
+
+undo the commit	and retain the changes introduced in the working tree
+git reset --mixed HEAD^
+
+undo the commit	and retain the changes introduced in the index
+git reset --soft HEAD^
+
+Undo a merge
+git reset --merge ORIG_HEAD
+
+Redo – recreate	the latest commit with new changes
+git commit --amend
+
+Revert – undo the changes introduced by a commit
+git revert 9c7532f
+
+How do I discard changes in my working copy that are not in the index?
+
+For a specific file use:
+
+git checkout path/to/file/to/revert
+
+For all unstaged files use:
+
+git clean -dff
+git checkout -- .
+
+or this which checks out all files from the index, overwriting working tree files.
+
+git checkout-index -a -f
+
+# to restore my deleted working directory:
+
+git checkout .
+
+# Git: checkout a single file from a specific commit
+$ git checkout <COMMIT#> <path/to/the/messed/up/file>
+## example:
+$ git checkout f08a63ff4fa7b8479f8c698e5998ee1afcac3a4e Gemfile
+
+
+.. Extras
+
+To remove a local branch from your machine:
+
+git branch -d the_local_branch
+
+To remove a remote branch from the server:
+
+git push origin :the_remote_branch
+
+
+
+How do you create a remote Git branch?
+
+
+push the branch to the remote repository origin and tracks it
+
+First, you create your branch locally:
+
+git checkout -b your_branch
+
+git push -u origin your_branch
+
+!!!Or in Git 2.x!!!
+
+git push -u
+
+
+Team mates can reach your branch, by doing:
+
+git fetch
+git checkout origin/your_branch
+
+
+# Tags
+# https://www.drupixels.com/blog/git-tags-guide-create-delete-push-tags-remote-and-much-more
+# Use git tag command to add a new one:
+git tag -a v1.4 -m 'version 1.4'
+git tag -a v0.0.1 -m 'version v0.0.1'
+» git push origin --tags
+
+Tagging Later
+git tag -a v1.2 9fceb02
+
+Removing a Tag
+
+For example, if you have created a tag called release01 in a Git repository you would remove it from your repository by doing the following:
+
+git tag -d release01 
+git push origin :refs/tags/release01 
+
+
+- We use the Git command am to apply the patches; am is short for apply from mailbox
+
+git am latest-commit/0001-Calculate-pi-with-more-digits.patch
+
+
+Show branch hierarchy on the command line?
+
+git log --all --graph --decorate --oneline --simplify-by-decoration
+
+# Listar los commits de mezcla!
+
+git log 678ba..master --ancestry-path --merges
+
+
+Buscar cambios
+
+git log -S'"title": "Profile Picture"'
+
+With the -S<string> option, Git will look for differences that introduce or remove an instance of a given string.
+
+To show differences for all the files, and not only those diffs where the change in number occurred, you need to use the --pickaxe-all option
+
+
+How to diff the same file between two different commits
+
+git diff 97cb594 HEAD -- catalog/models.py
+
+
+You can also compare two files in two different revisions, like this:
+
+git diff <revision_1>:<file_1> <revision_2>:<file_2>
+git difftool revision_1:file_1 revision_2:file_2
+
+Delete branch
+
+git branch -d branch_name
+
+git push origin :<branch_name>
+
+Then you should execute this on other machines
+
+git fetch --all --prune
+or
+git remote update --prune
+
+to propagate changes.
+
+
+
+# add a submodule
+
+git submodule add git@gitlab.com:jalbertcruz/oriongs-lib.git main/lib
+
+# update submodules
+## in a working repo
+git submodule update --recursive --remote
+## in a repo without initialized submodules
+git submodule update --init --recursive
+
+# initial clone!
+git clone --recurse-submodules git@gitlab.betika.private:betika-project/backend/betradar-node.git --branch feature/proto-submodules
+
+# ... old
+git clone --recursive git@gitlab.com:jalbertcruz/oriongs.git
+
+# ... old
+git submodule foreach 'git pull origin master'
+
+
+
+
+
+# Aumentar el buffer para hacer push de muchos ficheros
+git config http.postBuffer 524288000
+
+# Reescribir el autor de los commits
+git filter-branch --env-filter '
+                           GIT_AUTHOR_NAME="john Do"
+                           export GIT_AUTHOR_NAME                   
+                           GIT_COMMITTER_NAME="john Do"
+                           export GIT_COMMITTER_NAME
+
+                           GIT_AUTHOR_EMAIL=john@example.com
+                           export GIT_AUTHOR_EMAIL                   
+                           GIT_COMMITTER_EMAIL=john@example.com
+                           export GIT_COMMITTER_EMAIL
+                               ' -- --all
+                               
+                               
+# stash
+# To view the content of the most recent stash, run
+$ git stash show -p
+
+# To view the content of an arbitrary stash, run something like
+$ git stash show -p stash@{1}
+
+# Create a stash entry
+$ git stash push -m 'Env vars' -- config/
+
+
+sudo apt-add-repository ppa:git-core/ppa
+sudo apt-get update
+sudo apt-get install git
+
+# Can I store the .git folder outside the files I want tracked?
+https://stackoverflow.com/questions/505467/can-i-store-the-git-folder-outside-the-files-i-want-tracked
+
+You just need to ensure that the repository knows where the work tree is and vice versa.
+To let the repository know where the work tree is, set the configuration value core.worktree. To let the work tree know where it's git directory is, add a file named .git (not a folder!) and add a line like
+gitdir: /path/to/repo.git
+Since git 1.7.5 the init command learned an extra option for this.
+You can initialize a new separate repository with
+git init --separate-git-dir /path/to/repo.git
+
+# Show a word diff, using the <mode> to delimit changed words.
+
+git diff --word-diff=color b.diff c.diff
+
+# How to find/identify large files/commits in Git history?
+https://stackoverflow.com/questions/10622179/how-to-find-identify-large-files-commits-in-git-history/42544963
+
+git rev-list --objects --all \
+| git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' \
+| sed -n 's/^blob //p' \
+| sort --numeric-sort --key=2 \
+| cut -c 1-12,41- \
+| $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
+
+# the 10 largest files in the repository
+git rev-list --objects --all \
+  | grep "$(git verify-pack -v .git/objects/pack/*.idx \
+  | sort -k 3 -n \
+  | tail -10 \
+  | awk '{print$1}')"
+
+-------------------------------------------------------------------------------
+# How do I list all the files in a commit?
+git diff-tree --no-commit-id --name-only -r 22a6bc6638fa5b281462830434801e74b682964a
+index.html
+javascript/application.js
+javascript/ie6.js
+Another Way (less preferred for scripts, because it's a porcelain command; meant to be user-facing)
+
+$ git show --pretty="" --name-only 57d2f55a2075a3a32ddaf0879b5110e64e64957e
+index.html
+javascript/application.js
+javascript/ie6.js
+
+The --no-commit-id suppresses the commit ID output.
+The --pretty argument specifies an empty format string to avoid the cruft at the beginning.
+The --name-only argument shows only the file names that were affected.
+The -r argument is to recurse into sub-trees
+
+# Example:
+base=diffs
+rm -Rf $base
+mkdir -p $base
+
+IFS='
+'
+for x in `git diff-tree --no-commit-id --name-only -r HEAD`; do
+  line=$(echo $x | sed -r 's/[\/]+/-/g')
+  git diff HEAD^1..HEAD -- $x > $base/$line.diff
+done
+-------------------------------------------------------------------------------
+
+Find all files modified between commits in Git
+
+$ git diff --name-only <SHA, tag start> <SHA, tag end>
+$ git diff --name-status <SHA, tag start> <SHA, tag end>
+
+| numfmt --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
+
+Try this if you don't want any of the merges listed in git status:
+
+$ git reset --merge
+
+git commit --allow-empty -m "Initial commit"
+git co -b dev
+
+# submodules
+
+git submodule add git@github.com:polyglot-concurrency/erlang_chat_lib.git apps/chat_client/src/lib --branch dev
+git submodule add git@github.com:polyglot-concurrency/erlang_chat_lib.git apps/chat_server/src/lib --branch dev
+
+
+git stash show -p "stash@{4}"
+git stash apply "stash@{4}"
+
+# diff file visualizer
+# https://diff2html.xyz/
+diff2html -i file -- a01.diff
+
+
+## How to list all the files in a commit?
+
+$ git diff-tree --no-commit-id --name-only -r 57d2f55a2075a3a32ddaf0879b5110e64e64957e
+index.html
+javascript/application.js
+javascript/ie6.js
+Another Way (less preferred for scripts, because it's a porcelain command; meant to be user-facing)
+
+$ git show --pretty="" --name-only 57d2f55a2075a3a32ddaf0879b5110e64e64957e    
+index.html
+javascript/application.js
+javascript/ie6.js
+The --no-commit-id suppresses the commit ID output.
+The --pretty argument specifies an empty format string to avoid the cruft at the beginning.
+The --name-only argument shows only the file names that were affected.
+The -r argument is to recurse into sub-trees
+
+
+## Find all files modified between commits in Git
+
+$ git diff --name-only <SHA, tag start> <SHA, tag end>
+$ git diff --name-status <SHA, tag start> <SHA, tag end>
+
+# A cheat sheet to making a new release:
+$ git commit -m "New things" && git push
+$ git tag -a v0.0.3 -m "v0.0.3"
+$ git push --tags
+
+
+git fetch origin
+git rebase origin/master
+
+
+# gpg
+
+# https://help.github.com/en/articles/generating-a-new-gpg-key
+$ gpg --full-generate-key
+
+
+# gpg remove passphrase
+$ gpg --edit-key <yourkeyhere>
+> passwd
+
+When GnuPG prompts for the new passphrase, just leave it blank and hit enter.
+
+# https://help.github.com/en/articles/telling-git-about-your-signing-key
+
+$ gpg --list-secret-keys --keyid-format LONG
+
+--------------------------
+sec   rsa4096/0898C59143E8F96D 2019-04-18 [SC]
+      A29AB475A4F3B49CBE720EAE0898C59143E8F96D
+uid                 [ultimate] José Albert Cruz Almaguer <jalbertcruz@gmail.com>
+ssb   rsa4096/02C427EB1287F24F 2019-04-18 [E]
+
+$ gpg --armor --export 0898C59143E8F96D
+Copy your GPG key, beginning with 
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+and ending with 
+-----END PGP PUBLIC KEY BLOCK-----
+
+$ git config --global user.signingkey 0898C59143E8F96D
+
+# https://help.github.com/en/articles/signing-commits
+$ git commit -S -m "your commit message"
+# Creates a signed commit
+
+# https://help.github.com/en/articles/signing-tags
+$ git tag -s mytag
+# Creates a signed tag
+$ git tag -v mytag
+# Verifies the signed tag
+
+# Encryption
+gpg --recipient user@gmail.com --encrypt g.txt
+# Decryption
+gpg --recipient user@gmail.com -o g.txt -d g.txt.gpg
+
+# will commit all tracked files, not track untracked files
+git commit -a --no-edit --amend
+
+
+# Merging Two Git Repositories Into One Repository Without Losing File History
+# https://saintgimp.org/2013/01/22/merging-two-git-repositories-into-one-repository-without-losing-file-history/
+git filter-repo --path-rename webpack.prod.js:frontend/webpack.prod.js
+
+git remote add -f frontend /home/a/Desktop/git/fastapi-gae-ui
+git merge frontend/dev --allow-unrelated-histories
+
+
+git filter-repo --path frontend
+
+# git apply --no-add
+# Extract the common part between two files:
+# - by first running diff on them and applying the result with this option, which would apply the deletion part but not the addition part.
+» git diff a.txt b.txt | git apply --no-add
+
+# https://github.blog/2020-01-17-bring-your-monorepo-down-to-size-with-sparse-checkout/
+### Using sparse-checkout with an existing repository
+» git sparse-checkout init --cone
+» git sparse-checkout set <dir1> <dir2>
+
+# Sparse-checkout and partial clones
+» git clone --no-checkout git@github.com:blog-en/project
+» git clone --filter=blob:none --no-checkout git@github.com:blog-en/project
+» git co master
+» git co dev
+» git sparse-checkout list
+
+# https://opensource.com/article/21/4/git-worktree
+# https://stackoverflow.com/questions/6270193/multiple-working-directories-with-git
+$ git branch | tee
+* dev
+trunk
+$ git worktree add -b hotfix ~/code/hotfix trunk
+Preparing ../hotfix (identifier hotfix)
+HEAD is now at 62a2daf commit
+
+$ cd ~/code/hotfix
+$ sed -i 's/teh/the/' hello.txt
+$ git commit --all --message 'urgent hot fix'
+
+# How can I get a list of Git branches, ordered by most recent commit?
+# https://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
+git for-each-ref --sort=-committerdate refs/heads/
+
+# Or using git branch (since version 2.7.0)
+git branch --sort=-committerdate  # DESC
+git branch --sort=committerdate  # ASC
+
+# https://github.blog/2021-03-15-highlights-from-git-2-31/
+
+When a repository grows large, it can be hard to figure out which branches are responsible. In Git 2.31, git rev-list now has a --disk-usage option which is both simpler and faster than using the existing tools to sum up object sizes. The examples section (https://git-scm.com/docs/git-rev-list#_examples) of the rev-list manual shows off some uses (and check out the source link below for timings and to see the “old” way of doing it).
+
+# https://github.blog/2021-08-16-highlights-from-git-2-33/
+
+merge-ort: a new merge strategy (another implementation of merge-recursive)
+
+merge-recursive (default)
+
+. In the case of “criss-cross” merges (where there is not a single
+common point of divergence between two branches), the strategy
+performs a series of merges (recursively, hence the name) for each
+possible base. This can resolve cases for which the resolve
+strategy would produce a conflict.
+
+. It detects file-level renames along each branch. A file that was
+modified on one side but renamed on the other will have its
+modifications applied to the renamed destination (rather than
+producing a very confusing conflict).
+
+"A cherry-pick or rebase operation may perform a series of merges"
+
+> git merge -s ort
+or setting your 'pull.twohead' config to ort (despite the name, this is used for any merge, not just git pull).
+
+# git rev-list
+
+> git rev-list --no-commit-header --format=%as --author=jalbertcruz HEAD | cut -d- -f1 | feedgnuplot --unset grid --histogram 0 --terminal 'dumb'
+
+# "amendings" :-)
+
+Have you ever been working on a series of patches and realized that you
+forgot to make a change a couple of commits back? If you have, you might
+have been tempted to reset back to that point, make your changes, and then
+cherry-pick the remaining commits back on top.
+
+There’s a better way: if you make changes directly in your working copy
+(even after you wrote more patches on top), you can make a special “fixup”
+commit with the git commit --fixup option. This option creates a new
+commit with the changes that you meant to apply earlier. Then, when you
+rebase, Git automatically sequences the fixup commit in the right place and
+squashes its contents back where you originally wanted them.
+
+But what if instead of changing the contents of your patch, you wanted to
+change the log message itself? In Git 2.32, git commit learned a new
+--fixup=(amend|reword):<commit> option, which allows you to tweak the
+behavior of --fixup. With --fixup=amend, Git will replace the log
+message and the patch contents with your new one, all without you having to
+pause your workflow to rebase.
+
+If you use --fixup=reword instead, you can tell Git to just replace the
+log message while leaving the contents of the reworded patch untouched.
+
+# trailers
+
+You might be familiar with Git’s “trailers” mechanism, the structured
+information that can sometimes appear at the end of a commit. For example, you might have seen trailers used to indicate the Developer’s Certificate of Origin at the end of a commit with Signed-off-by. Or perhaps you have seen projects indicate who reviewed what with Reviewed-by.
+
+These trailers are typically written by hand when crafting a commit message
+in your editor. But now Git can insert these trailers itself via the new
+--trailer flag when running git commit. Trailers are automatically
+inserted in the right place so that Git can parse them later on. This can be
+especially powerful with the new --fixup options we just talked about. For
+example, to add missing trailers to a commit, foo:
+
+$ git commit --no-edit \
+    --fixup=reword:foo \
+    --trailer='Signed-off-by=Mona Lisa Octocat <mona@github.com>'
+$ EDITOR=true git rebase -i --autosquash foo^
+
+# generate patch with format-patch
+ git format-patch -2 -o latest-commits
+
+# apply a patch generated with git format-patch
+# https://stackoverflow.com/questions/2249852/how-to-apply-a-patch-generated-with-git-format-patch
+
+First the stats:
+
+git apply --stat a_file.patch
+Then a dry run to detect errors:
+
+git apply --check a_file.patch
+Finally, you can use git am to apply your patch as a commit. This also allows you to sign off
+https://git-scm.com/docs/git-commit#Documentation/git-commit.txt---signoff
+an applied patch.
+
+This can be useful for later reference.
+
+git am --signoff < a_file.patch
+
+# ssh signatures
+https://blog.dbrgn.ch/2021/11/16/git-ssh-signatures/
+
+# ssh generate key
+ssh-keygen -t ed25519 -C "jalbertcruz@gmail.com"
+
+
+
+https://htmlpreview.github.io/?https://github.com/newren/git-filter-repo/blob/docs/html/git-filter-repo.html#EXAMPLES
+If you wanted all the files from the original repo, but wanted to move everything under a subdirectory named my-module/
+$ git filter-repo --to-subdirectory-filter my-module/
+
+# para traer al local all remote branches
+git fetch --all
+
+# opens a repository browser with every single commit in the repository ever created, reachable and unreachable:
+https://phoenixnap.com/kb/git-stash-drop
+gitk --all $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' )
+

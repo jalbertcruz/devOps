@@ -1,0 +1,46 @@
+
+# select user from mysql.user;
+# select * from mysql.user where User='mysql_user';
+# show grants for 'mysql_user'@'%';
+show grants for 'mysql_user';
+# GRANT SELECT, INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, EXECUTE ON *.* TO 'mysql_user'@'%';
+
+
+https://stackoverflow.com/questions/1620662/mysql-see-all-open-connections-to-a-given-database
+https://stackoverflow.com/questions/4932503/how-to-kill-mysql-connections
+
+SHOW PROCESSLIST;
+
+kill 22
+
+SHOW STATUS LIKE 'Threads_connected';
+
+# https://stackoverflow.com/questions/4440336/mysql-wait-timeout-variable-global-vs-session
+
+show global variables like "wait_timeout";
+
+SET @@GLOBAL.wait_timeout=5;
+
+-----
+
+Guys If you experience this error (most certainly you experienced it)
+09:31:23.016 [error] ** (DBConnection.ConnectionError) socket closed
+https://hexdocs.pm/db_connection/2.0.6/DBConnection.html#start_link/2
+Happens because our MySQL closes connections that had no activity for 5 seconds, in order to prevent the closing of this conns, in the Ecto config you should set idle_interval: config variable as it will tell ecto to ping Mysql in intervals of 4 seconds (default is 15) not closing the conn, If you still experience the problem we might go lower in the pings. But for the moment 4 secs is the reasonable magic number.
+Example:
+config :legacy_node, LegacyNode.Repo,
+  database: "betika_dev",
+  username: "root",
+  password: "betika",
+  hostname: "localhost",
+  pool_size: 30,
+  idle_interval: 4000 #<------ This bad boi
+Tried on my machine and works perfectly if you want to replicate this issue in your Local Machine you can execute the following in you mysql local instance
+(number in secs)
+SET GLOBAL wait_timeout = 2;
+
+https://dev.mysql.com/doc/refman/8.0/en/packet-too-large.html
+
+# make a string column case sensitvie
+execute "ALTER TABLE <table> MODIFY <column_name> VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin"
+

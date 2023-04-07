@@ -1,0 +1,43 @@
+kubernets notes
+
+kubectl get pods
+kubectl get deployments.apps 
+kubectl get svc
+kubectl config get-contexts
+kubectl config use-context dev02
+kubectl config use-context stg02
+
+kubectl delete -f k8s/dev_es/deploy.yml
+kubectl apply -f k8s/dev_es/deploy.yml
+kubectl logs betradar (tab para autcomplete)
+
+kubectl describe pods betradar(tab para autcomplete)
+
+
+https://v1-16.docs.kubernetes.io/docs/tasks/tools/install-kubectl/#before-you-begin
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.3/bin/linux/amd64/kubectl
+
+
+export KUBECONFIG=/home/a/src/a/tmbz/betradar-node/k8s/dev_es/k8s.yml:/home/a/src/a/tmbz/betradar-node/k8s/stg_es/k8s.yml
+
+$ kubectl port-forward sportsbook-dev-es-app-6868f649-6bct6 4001:4000
+Forwarding from 127.0.0.1:4001 -> 4000
+Forwarding from [::1]:4001 -> 4000
+                                                                                                                                                                      a   feature/change-grpc-services-to-http  …  a  tmbz  betradar-node  kubectl port-forward sportsbook-dev-es-app-6868f649-6bct6 4000:4000
+$ kubectl port-forward sportsbook-dev-es-app-6868f649-6bct6 4000:4000
+Forwarding from 127.0.0.1:4000 -> 4000
+Forwarding from [::1]:4000 -> 4000
+
+
+# to see the logs!
+kl dev sportsbook-dev
+
+# to do a port-forward
+pf dev sportsbook-dev 4000
+
+# Applying deployment
+dp dev
+
+# Deleting deployment
+udp stg

@@ -1,0 +1,32 @@
+
+https://www.cloudsavvyit.com/13937/how-to-ssh-into-a-docker-container/
+
+
+Setting Up Container Shortcuts With SSH Config
+You can manipulate your SSH config file to simplify connections to individual containers. Edit ~/.ssh/config to define shorthand hosts with preconfigured ports:
+
+Host my-container
+    HostName 172.17.0.1
+    Port 2220
+    User sshuser
+
+
+== Use Dockssh to Simplify Container Management Instead
+
+
+redis-cli set dockssh:my-container:pass "container-password-here"
+
+
+sudo curl https://github.com/alash3al/dockssh/releases/download/v1.1.0/dockssh_linux_amd64 -O /usr/local/bin/dockssh
+sudo chmod +x /usr/local/bin/dockssh
+sudo ufw allow 22022
+
+# Start DockSSH server
+dockssh
+
+
+Now you can connect to your container:
+
+ssh my-container@example.com -p 22022
+
+

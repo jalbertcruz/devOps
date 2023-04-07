@@ -1,0 +1,90 @@
+job "mysql" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+//  namespace = "dev-namespace"
+  namespace = "default"
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    network {
+      port "port_server" {
+        to = 3306
+      }
+    }
+
+    task "task-mysql" {
+      driver = "docker"
+
+      env {
+        MYSQL_USER = "mysql_user"
+        MYSQL_PASSWORD = "11qazxsw22"
+        MYSQL_ROOT_PASSWORD = "mysecretpw"
+
+        TZ = "Africa/Nairobi"
+#        TZ = "Etc/UTC"
+
+      }
+
+      constraint {
+        attribute = "${attr.kernel.name}"
+        value = "linux"
+      }
+
+      config {
+
+        //        image = "mysql:5.7.29"
+        image = "mysql:8.0.29-debian"
+        hostname = "mysql.service.dc1.consul"
+
+        ports = [
+          "port_server"]
+
+
+        //        logging {
+        //          type = "fluentd"
+        //          config {
+        //            fluentd-address = "fluentd.service.dc1.consul:24224"
+        //            tag = "mysql.logs"
+        //          }
+        //        }
+
+        tty = true
+
+        volumes = [
+          "{{ mysql_data }}:/var/lib/mysql"
+        ]
+
+      }
+
+      service {
+        name = "mysql"
+        port = "port_server"
+        address_mode = "driver"
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 1000
+      }
+
+    }
+  }
+}

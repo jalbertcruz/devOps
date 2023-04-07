@@ -1,0 +1,3 @@
+
+
+docker run -v /media/a/data/repo/npm/storage:/verdaccio/storage -v /media/a/data/repo/npm/conf:/verdaccio/conf -d --name npm -p 4873:4873 verdaccio/verdaccio:3.2.0

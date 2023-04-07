@@ -1,0 +1,55 @@
+job "consul-dns" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    task "consul-dns" {
+      driver = "docker"
+
+      env {
+        CONSUL_BIND_INTERFACE = "eth0"
+      }
+
+      config {
+        image = "jalbert/consul:1.6.2"
+
+        port_map {
+          port_server = 8500
+        }
+
+      }
+
+      service {
+        name = "consul-dns"
+
+        port = "port_server"
+        address_mode = "driver"
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 2048
+        cpu = 2000
+        network {
+          mbits = 40
+          port "port_server" {
+          }
+        }
+      }
+
+    }
+  }
+}

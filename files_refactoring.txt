@@ -1,0 +1,15 @@
+
+# A tool to assist you with large-scale codebase refactors
+# https://github.com/facebookincubator/fastmod
+# CLI refactoring tool! == global replace
+
+fastmod --help
+fastmod -m -d . --extensions ex '' ''
+fastmod -m -d . '' '' --hidden
+
+fastmod -m -d . --extensions exs '' ''
+
+# A command-line tool to batch rename files and directories
+# https://github.com/ismaelgv/rnr
+$ rnr -n -D -r -d=3 -l=0 '(payments_client)(\w*)' 'paygate${2}' .
+

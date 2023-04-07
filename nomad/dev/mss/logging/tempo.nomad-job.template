@@ -1,0 +1,108 @@
+job "tempo" {
+
+// https://grafana.com/docs/tempo/latest/configuration
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "tempo" {
+
+    network {
+
+      port "tempo" {
+        static = 3400
+      }
+
+      port "tempo-write" {
+        static = 6831
+      }
+
+      dns {
+        servers = [
+          "172.17.0.2", "8.8.8.8", "8.8.4.4"
+        ]
+      }
+
+    }
+
+    restart {
+      attempts = 3
+      delay    = "20s"
+      mode     = "delay"
+    }
+
+    task "tempo" {
+      driver = "docker"
+
+      env {
+        JAEGER_AGENT_HOST    = "tempo.service.dc1.consul"
+        JAEGER_TAGS          = "cluster=nomad"
+        JAEGER_SAMPLER_TYPE  = "probabilistic"
+        JAEGER_SAMPLER_PARAM = "1"
+      }
+
+      config {
+
+        image = "grafana/tempo:0.6.0"
+
+        hostname = "tempo.service.dc1.consul"
+
+        ports = ["tempo", "tempo-write"]
+
+
+        args = [
+          "-config.file=/etc/tempo/tempo.yml",
+          "-server.http-listen-port=3400",
+        ]
+
+        tty = true
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ tempo_config }}:/etc/tempo/tempo.yml",
+          "{{ tempo_wal }}:/tmp/tempo/wal",
+          "{{ tempo_blocks }}:/tmp/tempo/blocks"
+        ]
+
+      }
+
+      service {
+        name = "tempo"
+        port = "tempo"
+        tags = ["monitoring"]
+
+        check {
+          name     = "Tempo HTTP"
+          type     = "http"
+          path     = "/ready"
+          interval = "5s"
+          timeout  = "2s"
+
+          check_restart {
+            limit           = 2
+            grace           = "60s"
+            ignore_warnings = false
+          }
+        }
+      }
+
+      resources {
+        cpu    = 200
+        memory = 200
+      }
+
+    }
+  }
+}

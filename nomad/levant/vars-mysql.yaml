@@ -1,0 +1,24 @@
+---
+job:
+  name: mysql
+  network:
+    port_server:
+      to: 3306
+  task:
+    env:
+      MYSQL_USER: mysql_user
+      MYSQL_PASSWORD: 11qazxsw22
+      MYSQL_ROOT_PASSWORD: mysecretpw
+      TZ: Africa/Nairobi
+    config:
+      image: mysql:8.0.29-debian
+      hostname: mysql.service.dc1.consul
+      volume:
+        a:
+          key: nomad-mysql_data
+          path: /var/lib/mysql
+    service:
+      port: port_server
+    resource:
+      memory: 1000
+      cpu: 2000

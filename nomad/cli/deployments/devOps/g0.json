@@ -1,0 +1,6 @@
+{
+  "mss/logging/grafana": [
+    "mss/logging/prom",
+    "mss/rabbitmq"
+  ]
+}

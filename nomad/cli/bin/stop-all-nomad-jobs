@@ -1,0 +1,106 @@
+#!/usr/bin/env bash
+
+# Causes bash to print each command before executing it:
+# set -x
+
+# https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
+# Any command returning a non-zero exit code will cause an immediate exit:
+# set -e
+
+# sets the exit code of a pipeline to that of the rightmost command to exit with a non-zero status, or to zero if all commands of the pipeline exit successfully.
+# set -o pipefail
+
+set -euxo pipefail
+
+consul_ip="172.17.0.2"
+consul_ip="172.16.10.65"
+nomad_ip="172.16.10.65"
+#consul_ip="127.0.0.1"
+
+
+#kill -9 $(consul kv get pid-data-TOXIPROXY_SERVER_PID) || true
+# shellcheck disable=SC2046
+kill -9 $(http --timeout=2 "http://${consul_ip}:8500/v1/kv/pid-data-GOR_PID?raw=true") || true
+# shellcheck disable=SC2046
+kill -9 $(http --timeout=2 "http://${consul_ip}:8500/v1/kv/pid-data-HAPROXY?raw=true") || true
+# shellcheck disable=SC2046
+kill -9 $(http --timeout=2 "http://${consul_ip}:8500/v1/kv/pid-data-GRAFANA_SERVER_PID?raw=true") || true
+# shellcheck disable=SC2046
+kill -9 $(http --timeout=2 "http://${consul_ip}:8500/v1/kv/pid-data-PROMETHEUS_SERVER_PID?raw=true") || true
+
+#kill -9 $(consul kv get pid-data-MITMPROXY) || true
+#kill -9 $(consul kv get pid-data-WEBSERVER_PID) || true
+#sleep 10
+
+# docker stop consul-dev
+webserver_port=$(http --timeout=2 "http://${consul_ip}:8500/v1/kv/nomad-DOCKER_IMAGES_SERVER_PORT?raw=true") || true
+# shellcheck disable=SC2046
+# shellcheck disable=SC2005
+webserver_port=$(echo $(http --timeout=2 "http://${consul_ip}:8500/v1/kv/nomad-DOCKER_IMAGES_SERVER_PORT" | jq -r '.[0].Value') | base64 -d) || true
+# shellcheck disable=SC2046
+# shellcheck disable=SC2005
+mitmproxy_port=$(echo $(http --timeout=2 "http://${consul_ip}:8500/v1/kv/mitmproxy-config-MITMPROXY_PORT" | jq -r '.[0].Value') | base64 -d) || true
+mitmproxy_port2=$(echo $(http --timeout=2 "http://${consul_ip}:8500/v1/kv/mitmproxy2-config-MITMPROXY_PORT" | jq -r '.[0].Value') | base64 -d) || true
+# shellcheck disable=SC2046
+# shellcheck disable=SC2005
+
+#hoverfly_port=$(echo $(http "http://${consul_ip}:8500/v1/kv/hoverfly-config-HOVERFLY_PROXY_PORT" | jq -r '.[0].Value') | base64 -d) || true
+# shellcheck disable=SC2046
+
+# shellcheck disable=SC2005
+toxiproxy_port=$(echo $(http --timeout=2 "http://${consul_ip}:8500/v1/kv/toxiproxy-config-TOXIPROXY_SERVER_PORT" | jq -r '.[0].Value') | base64 -d) || true
+
+DATA=$(http --timeout=2 --body "http://${nomad_ip}:4646/v1/jobs")
+
+for row in $(echo "${DATA}" | jq -r '.[] | @base64'); do
+    _jq() {
+     echo "${row}" | base64 --decode | jq -r "${1}"
+    }
+
+   nomad job stop -address "http://${nomad_ip}:4646" "$(_jq '.ID')" || true
+   sleep 5
+done
+
+declare -a services_ports=(
+ "${webserver_port}"
+ "${mitmproxy_port}"
+ "${mitmproxy_port2}"
+# "${hoverfly_port}"
+ "${toxiproxy_port}"
+ 80 # haproxy
+ 5005 # consul-monitor server
+ 8080 # cAdvisor
+ 8006 # Python file server # » sudo lsof -wni "tcp:8006" # » sudo fuser 8006/tcp # » sudo netstat -ltnp | grep -w '8006' # » netstat -tulpen | rg 8006 # (no root!)
+)
+
+declare -a services_ports_consul_client=(
+ 4646 # nomad
+ 8500 # consul
+)
+
+for i in "${!services_ports[@]}"; do
+  echo "Killing " "$i"
+  sudo lsof -wni "tcp:${services_ports[$i]}" | awk '{if (NR>1) print}' | awk '{print $2}' | xargs -L 1 kill -9 || true
+  # sudo lsof -wni "tcp:4000"
+  # apap
+  # » sudo ss -l # lists data of the open sockets
+done
+
+for i in "${!services_ports_consul_client[@]}"; do
+  echo "Killing " "$i"
+  sudo lsof -wni "tcp@${nomad_ip}:${services_ports_consul_client[$i]}" | awk '{if (NR>1) print}'| awk '{print $2}' | xargs -L 1 kill -9 || true
+  # lsof -wni "tcp:4000"
+  # lsof -wni "tcp:8006"
+  # » sudo ss -l # lists data of the open sockets
+done
+
+# shellcheck disable=SC2046
+kill -9 $(http --timeout=2 "http://${consul_ip}:8500/v1/kv/pid-data-CONSUL_CLIENT_PID?raw=true") || true
+
+docker stop consul-dev
+docker stop consul-client2
+sudo lsof -wni "tcp:8500" | awk '{if (NR>1) print}'| awk '{print $2}' | xargs -L 1 kill -9 || true
+
+# 8500 # consul
+# 8600 # consul (the client is on 53)
+# 8300 # consul

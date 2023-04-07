@@ -1,0 +1,29 @@
+---
+job:
+  name: rabbitmq
+  network:
+    port_server:
+      to: 5672
+    port2:
+      to: 15672
+  task:
+    env:
+      RABBITMQ_ERLANG_COOKIE: RABBITMQ_ERLANG_COOKIE
+      RABBITMQ_DEFAULT_VHOST: "/"
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: rabbitmq
+    config:
+      image: rabbitmq:3.10.1-management
+      hostname: rabbitmq.service.dc1.consul
+      volume:
+        a:
+          key: nomad-rabbitmq_enabled_plugins
+          path: /etc/rabbitmq/enabled_plugins
+        b:
+          key: nomad-rabbitmq_data
+          path: /var/lib/rabbitmq
+    service:
+      port: port_server
+    resource:
+      memory: 16000
+      cpu: 8000

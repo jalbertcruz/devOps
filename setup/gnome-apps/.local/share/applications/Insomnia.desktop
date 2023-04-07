@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Exec=/usr/local/bin/appslnx/web/Insomnia.AppImage -- %u
+Terminal=false
+Icon=/usr/local/bin/appslnx/web/insomnia.png
+Name=Insomnia
+Terminal=false
+Type=Application
+StartupWMClass=Insomnia
+X-AppImage-Version=2021.1.1
+Comment=The Collaborative API Design Tool
+Categories=Development;
+                          
+MimeType=text/html;x-scheme-handler/insomnia;

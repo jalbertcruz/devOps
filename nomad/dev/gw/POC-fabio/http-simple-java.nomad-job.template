@@ -1,0 +1,46 @@
+job "http-simple-java" {
+
+
+  datacenters = [
+    "dc1"]
+
+  group "server" {
+    count = 3
+
+    network {
+
+      // dig @172.16.10.65 -p 8600 http-simple-java.service.dc1.consul ANY
+
+      port "http" {
+         to = 8000
+      }
+    }
+
+    task "server" {
+      driver = "docker"
+      config {
+        image = "jalbert/java-httpserver:0.1"
+
+        ports = ["http"]
+      }
+
+
+      service {
+        name = "http-simple-java"
+        port = "http"
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-/",
+        ]
+
+        check {
+          type = "http"
+          path = "/path"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+    }
+  }
+}

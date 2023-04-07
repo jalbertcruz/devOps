@@ -1,0 +1,33 @@
+
+Start using git-flow by initializing it inside an existing git repository:
+
+$ git flow init
+
+$ git flow feature start MYFEATURE
+
+$ git flow feature finish MYFEATURE --no-ff
+
+$ git flow feature publish MYFEATURE
+
+$ git flow feature pull origin MYFEATURE
+
+$ git flow feature track MYFEATURE
+
+
+It creates a release branch created from the 'develop' branch.
+$ git flow release start RELEASE [BASE]
+# You can optionally supply a [BASE] commit sha-1 hash to start the release from. The commit must be on the 'develop' branch
+
+$ git flow release publish RELEASE
+
+$ git flow release track RELEASE command)
+
+$ git flow release finish RELEASE
+
+$ git push --tags
+
+$ git flow hotfix start VERSION [BASENAME]
+
+$ git flow hotfix finish VERSION
+
+

@@ -1,0 +1,73 @@
+job "service-a" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+
+  type = "service"
+
+  group "server" {
+
+    task "service-a" {
+
+      driver = "docker"
+
+//      env {
+//        PLAY_HTTP_PORT = 80
+//      }
+
+      config {
+
+        image = "jalbert/service-a:0.1"
+
+        //        hostname = "service-a.service.dc1.consul"
+
+//        port_map {
+//          port_server = 80
+//        }
+
+        logging {
+          type = "json-file"
+        }
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        cpu_hard_limit = true
+
+      }
+
+      service {
+        name = "service-a"
+
+        port = "port_server"
+
+        tags = [
+          "urlprefix-/service-a strip=/service-a",
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+      }
+
+      resources {
+        network {
+          mbits = 60
+          port "port_server" {}
+          port "ssh" {
+            static = 22
+          }
+        }
+      }
+
+    }
+  }
+}

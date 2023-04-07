@@ -1,0 +1,908 @@
+
+# uchardet - universalchardet (Universal Charset Detector)
+sudo apt-get install uchardet libuchardet-dev
+
+# timezones
+https://askubuntu.com/questions/3375/how-to-change-time-zone-settings-from-the-command-line
+sudo timedatectl set-timezone UTC
+sudo timedatectl set-timezone CET # Spain
+sudo timedatectl set-timezone Africa/Nairobi
+
+# https://vitux.com/find-out-which-port-number-a-process-is-listening-on-using-linux/
+sudo apt install net-tools
+# sudo netstat -ltnp
+
+# listado de datos de los procesos activos
+ps faux
+
+# to do a bootable flash
+$ old: dd bs=4M if=/media/a/data/installers/Unix/Linux/xubuntu-18.04.1-desktop-amd64.iso of=/dev/sdc && sync
+# https://wiki.archlinux.org/index.php/USB_flash_installation_medium
+cat /home/a/Downloads/ubuntu-22.04.1-desktop-amd64.iso > /dev/sdc && sync
+cat /home/a/Downloads/lubuntu-22.04-desktop-amd64.iso > /dev/sdc && sync
+
+# To see all versions of the package available on the repository, pass the -a option:
+$ apt list docker-ce -a
+
+# Lists down all partitions available on your system.
+blkid
+
+# How to find out what group a given user has?
+id -Gn [user]
+
+sudo apt-get remove google-chrome-stable
+sudo apt-get remove code
+
+# How to check the listening ports and applications on Linux:
+
+sudo lsof -wni "tcp:4000"
+sudo lsof -i -P -n | grep LISTEN
+sudo netstat -tulpn | grep LISTEN
+sudo nmap -sTU -O IP-address-Here
+sudo netstat -lptn
+» sudo netstat -ntap
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:2022            0.0.0.0:*               LISTEN      1159/etserver
+tcp        0      0 127.0.0.1:8080          0.0.0.0:*               LISTEN      122083/mitmweb
+
+
+$ sudo lsof -i -P -n
+$ sudo lsof -i -P -n | grep LISTEN
+
+$ netstat -anp tcp | grep LISTEN
+$ netstat -anp udp | grep LISTEN
+
+$ sudo nmap -sT -O localhost
+$ sudo nmap -sU -O 192.168.2.13 ##[ list open UDP ports ]##
+$ sudo nmap -sT -O 192.168.2.13 ##[ list open TCP ports ]##
+
+# How can I list all IPs in the connected network
+$ nmap -sn 192.168.3.0/24
+
+
+# swagger-ui
+docker run --rm -p 80:8080 swaggerapi/swagger-ui
+
+# swagger-editor
+cd /home/j/Downloads/aa/swagger-editor/swagger-editor-3.0.0/
+npm start
+
+# ficheros con patron en el nombre
+find . -name rabbit* -print
+
+# Recursively Search All Files For A String
+find . -iname "*" -type f -print0 | xargs -0 grep -Hn "controller"
+
+# Recursively Search All directories For A String and print it's size
+find . -iname "target" -type d -print0 | xargs -0 du -sh
+# Recursively Search All directories For A String and delete it
+find . -iname "target" -type d -print0 | xargs -0 rm -Rf
+» find . -iname ".terraform" -type d -print0 | xargs -0 rm -Rf
+» find . -iname ".terragrunt-cache" -type d -print0 | xargs -0 rm -Rf
+
+
+# kill all process by name!
+ps aux | grep nautilus | grep -v grep | awk '{print $2}' | xargs kill
+
+ps aux | rg coursier | grep -v grep | awk '{print $2}' | xargs kill
+ps aux | rg java | grep -v grep | awk '{print $2}' | xargs kill
+
+# Exclude a sub-directory using find
+find . -iname "*.rb" -not -path "./gems/*" -type f -print0 | xargs -0 grep -Hn "partial"
+
+# Rails server says port already used, how to kill that process?
+
+
+# Compactar
+
+tar cvfj /home/j/backup/Envs.tar.bz2 /home/j/Envs/c5/ -p
+
+# Empaquetar
+
+tar -cvf tecmint-14-09-12.tar /home/tecmint/
+
+# Descompactar
+
+tar -xvf Envs.tar.bz2 -C /home/j/Desktop/a/
+
+
+
+# Concatenar lineas
+paste -sd " " file.txt
+
+
+
+ack
+
+ack --ignore-dir=lib --ignore-dir=.idea --ignore-dir=catalog/static/vendor --after-context=2 --before-context=2  --pager=less
+
+
+
+
+
+# ssh
+
+# Convert .ppk to .pem
+puttygen server.ppk -O private-openssh -o server.pem
+
+# Needed permissions to use ssh-add
+chmod 400 server2.pem
+
+# Needed permissions to use
+chmod 600 ~/.ssh/config
+
+scp ec2-user@52.0.91.217:/home/ec2-user/dario.ovpn dario.ovpn
+scp ubuntu@54.71.15.167:/home/ubuntu/j1.ovpn j1.ovpn
+
+# Ubuntu
+# Eliminar emacs
+dpkg -r emacs
+
+# using socks5 instead of VPN
+ssh ec2-user@52.0.91.217 -D 1080
+
+# mejorar uso de la swap
+cat /proc/sys/vm/swappiness # muestra a partir de que valor(1-100) la swap se activa, por default 60, esto quiere
+                            # decir que cuando la RAM tenga un 40% de uso se empieza a utilizar la swap,
+                            # si se le define un valor de 20, entonces s eempieza a utilizar cuando la RAM este al 80%
+vm.swappiness=10  # cambiar el valor de la activacion de la swap, adicionar la instruccion: sudo vim /etc/sysctl.conf
+
+# Optimizar las escrituras a disco
+to set the noatime mount option for the mount point
+
+# Using fdisk
+sudo umount -l /dev/sdc1
+sudo fdisk /dev/sdc
+# https://www.tecmint.com/create-new-ext4-file-system-partition-in-linux/
+
+sudo apt-get install exfat-fuse exfat-utils
+sudo mkfs.exfat /dev/sdc1
+
+
+
+# AWS
+# DynamoDBLocal
+java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
+
+# Para kgrt en Ubuntu (eliminar las notificaciones de "problemas")
+sudo service apport stop
+# poner 0
+sudo vim /etc/default/apport
+
+
+# Linux performace, tracker-control
+# tracker-control is also handy in a session .. kill and remove the databases with:
+tracker-control -r
+# then check the status
+tracker-control -S
+
+# IDEA watches limit
+
+To prevent this situation it is recommended to increase the watches limit (to, say, 512K):
+
+1. Add the following line to either /etc/sysctl.conf file or a new *.conf file (e.g. idea.conf) under /etc/sysctl.d/ directory:
+fs.inotify.max_user_watches = 524288
+
+2. Then run this command to apply the change:
+sudo sysctl -p --system
+
+And don't forget to restart your IDE.
+
+# Security / Permisions
+# Chmod 777
+namei -om /path/of/directory
+
+chmod 755 /usr/share/nginx/html
+
+# to fix the permissions
+
+
+# sudo as another user with their environment
+
+$ whoami
+admin
+$ sudo -S -u otheruser whoami
+otheruser
+$ sudo -S -u otheruser /bin/bash -l -c 'echo $HOME'
+/home/admin
+
+
+# Folders size
+
+$ du -sh file_path
+
+# Check disk space
+# https://opensource.com/article/18/7/how-check-free-disk-space-linux
+df -ha
+
+# Cuantos ficheros .scala hay en el current dir
+
+$ find . -type f | ag .scala | wc -l
+
+
+
+Linux de mda:
+
+gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2
+gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false
+
+
+sudo apt remove atom
+sudo apt remove code
+sudo dpkg -i atom-amd64.deb
+
+# Clojure
+curl -O https://download.clojure.org/install/linux-install.sh
+chmod +x linux-install.sh
+sudo ./linux-install.sh
+
+
+# Apps gnome desktop
+/home/j/.gnome/apps/
+
+# Tip: How to Sort Folders by Size With One Command Line in Linux
+
+$ du --max-depth=1 /home/ubuntu | sort -n -r
+
+
+
+sudo apt-get install python-setuptools
+sudo apt-get install python3-setuptools
+
+» pip install wheel
+» pip3 install --user youtube-dl -U
+$ youtube-dl "https://www.youtube.com/watch?v=d2lJUOv0hLA" --all-subs
+
+# How can I make docke pull images using a socks5 proxy?
+$ export ALL_PROXY=socks5://127.0.0.1:1080 
+$ docker pull image
+
+# replace one char by another
+ls -a | tr '\n' ' '
+
+# Visual Studio Code
+
+Editing JSON with VS Code
+
+Formatting
+
+You can format your JSON document using Ctrl+Shift+I or Format Document from the context menu.
+
+# Temporal use of a key
+eval "$(ssh-agent -s)"
+ssh-add ../rsaa
+git pl -r && mvn clean compile exec:java
+
+
+
+To encode text to base64, use the following syntax:
+
+$ echo -n 'scottlinux.com rocks' | base64
+c2NvdHRsaW51eC5jb20gcm9ja3MK
+To decode, use base64 -d. To decode base64, use a syntax like the following:
+
+$ echo -n c2NvdHRsaW51eC5jb20gcm9ja3MK | base64 -d
+scottlinux.com rocks
+
+
+
+# Post install
+
+sudo apt-get install p7zip-full
+
+# Is there a direct download link with a raw data dump of Stack Overflow? (not a torrent)
+https://meta.stackexchange.com/questions/221397/is-there-a-way-to-download-an-offline-copy-of-the-stackoverflow-questions
+https://meta.stackexchange.com/questions/198915/is-there-a-direct-download-link-with-a-raw-data-dump-of-stack-overflow-not-a-t
+
+12
+https://archive.org/download/stackexchange/stackoverflow.com-Posts.7z
+3.6
+https://archive.org/download/stackexchange/stackoverflow.com-Comments.7z
+21.1
+https://archive.org/download/stackexchange/stackoverflow.com-PostHistory.7z
+
+# Random string generation
+cat /dev/urandom | base64 | head -c 44 ; echo
+head -c 32 /dev/urandom | base64
+
+The following procedure should wipe wireshark from your system: First uninstall the wireshark package and all related configuration files:
+
+$ sudo apt-get remove --purge wireshark
+Then remove all dependencies that are no longer needed:
+$ sudo apt-get autoremove
+
+
+# tmux
+
+tmux new -s a
+tmux a -t a
+tmux kill-session -t a
+❯ tmux list-windows
+1: -* (1 panes) [190x28] [layout c8be,190x28,0,0,1] @1 (active)
+
+
+# To shutdown run the command:
+
+sudo shutdown -P +60
+
+# That will wait 60 mins before starting the shutdown sequence.
+
+# You could do:
+
+sudo shutdown -P 1:00
+
+# to shutdown at 1 AM and
+
+sudo shutdown -P now
+
+# to shutdown now.
+
+# A message is broadcast to all terminals to warn about the shutdown.
+
+# Cancel a pending shutdown
+# After, starting a shutdown, if the time argument is not "+0" or "now", you can use:
+
+sudo shutdown -c
+
+# How to delete only directories and leave files untouched
+rm -rf */
+
+
+ffmpeg -i 'a.mkv' -ss 00:31:40 -t 00:01:00 -async 1 cut.mp4
+
+# ffmpeg (converting mkv to mp4)
+for i in *.mkv; do
+    ffmpeg -i "$i" -codec copy "${i%.*}.mp4"
+done
+
+# heif-convert IMG_7752.heic IMG_cccc.jpg (converting heic to jpg)
+for i in *.heic; do
+    heif-convert "$i" "${i%.*}.jpg"
+done
+
+
+# encode audio to .mp3 and video to .mp4
+# » ffmpeg -i Aqui.no.hay.quien.viva.1x01.avi -codec:a mp3 -strict -2 a.mp4
+for i in *.avi; do
+    ffmpeg -i "$i" -codec:a mp3 -strict -2 "${i%.*}.mp4"
+done
+
+How do you Resize/Scale/Change the Resolution of a Video using FFmpeg?
+# https://ottverse.com/change-resolution-resize-scale-video-using-ffmpeg/
+
+ffmpeg -i input.mp4 -vf scale=$w:$h <encoding-parameters> output.mp4
+ffmpeg -i input.mp4 -vf scale=640:280 output.mp4
+ffmpeg -i ateo.mp4 -vf "scale='min(320,iw)':'min(240,ih)'" output.mp4
+
+
+## TTC - Argumentation, The Study of Effective Reasoning 2nd edition
+#!/usr/bin/env zsh
+
+for i in *.avi; do
+    ffmpeg -i "$i"  -strict -2 "${i%.*}.mp4"
+done
+
+# How can I convert MP4 video to MP3 audio with FFmpeg?
+https://superuser.com/questions/332347/how-can-i-convert-mp4-video-to-mp3-audio-with-ffmpeg
+The basic command is:
+ffmpeg -i filename.mp4 filename.mp3
+or
+ffmpeg -i video.mp4 -b:a 192K -vn music.mp3
+
+ffmpeg -i Cuba-6NSWa9LH2kk.mkv -strict -2 -acodec mp3 constitucion2.mp4
+ffmpeg -i example.mp4 -hide_banner # to get description of the file's properties
+ffprobe constitucion2.mp4
+
+# cut slices of a video
+# https://stackoverflow.com/questions/18444194/cutting-the-videos-based-on-start-and-end-time-using-ffmpeg
+ffmpeg -i 'Joe Rogan Experience #1073 - Steven Pinker-VUDAdOdF6Zg.mp4' -ss 00:34:36 -t 00:02:00 -async 1 cut.mp4
+
+HandBrakeCLI -i Cuba-6NSWa9LH2kk.mkv -o aa.mp4
+
+# montar texlive.iso
+If you want to mount the image to make the contents available for installation or browsing, a typical invocation on Unix is:
+mount -t iso9660 -o ro,loop,noauto /your/texlive.iso /mnt
+
+sudo add-apt-repository ppa:git-core/ppa
+sudo apt-get update
+sudo apt-get remove git
+sudo apt-get install git
+
+# https://www.tecmint.com/check-linux-hard-disk-bad-sectors-bad-blocks/
+
+$ sudo fdisk -l
+
+$ sudo badblocks -v /dev/sda10 > badsectors.txt
+
+$ sudo smartctl -H /dev/sda10
+$ sudo smartctl --xall --all  -H /dev/sda10
+
+------------ Specifically for ext2/ext3/ext4 file-systems ------------ 
+$ sudo e2fsck -l badsectors.txt /dev/sda10
+
+OR
+
+------------ For other file-systems ------------ 
+$ sudo fsck -l badsectors.txt /dev/sda10
+
+# CLI search tools
+$ rg -i <name>
+$ ack <name>
+$ ag <name>
+
+# asciidoctor
+gem install asciidoctor-pdf --pre
+asciidoctor-pdf Candidate-Review-Guideline-john-invictus.adoc 
+asciidoctor Candidate-Review-Guideline-john-invictus.adoc 
+ 
+
+How does one remove a certificate authority's certificate from a system?
+
+$ sudo dpkg-reconfigure ca-certificates
+
+ The list of CAs is stored in the file /etc/ca-certificates.conf. If you edit this file manually you need to run
+
+$ sudo update-ca-certificates
+
+
+# Maven
+» mvn package -Dmaven.test.skip=true
+
+# Example: SymLink to a File
+
+      <existing>                        <new>
+sudo ln -s /opt/python-3.10.0/bin/python3.10 /usr/local/bin/python3.10
+
+ln [OPTION]... [-T] TARGET LINK_NAME
+
+ln -s /path/to/file /path/to/symlink
+
+ln -s /home/a/src/ansible/src/logs/td-agent-config/td-agent.conf /home/a/dockers-data/fluentd/td-agent/td-agent.conf
+
+ln -s /home/a/src/ansible/src/dstores/config/elasticsearch.yml /home/a/dockers-data/elasticsearch/config/elasticsearch.yml
+ln -s /home/a/src/ansible/src/dstores/config/jvm.options /home/a/dockers-data/elasticsearch/config/jvm.options
+
+ln -s /home/a/.config/tmuxinator/nomad.yml /home/a/src/devOps/nomad/nomad.yml
+
+# this was used last time!
+ln -s /home/a/src/devOps/tmux-envs/configs/nomad.yml /home/a/.config/tmuxinator/nomad.yml
+ln -s /home/a/src/devOps/tmux-envs/configs/nomad.yml /home/a/src/devOps/nomad/
+
+ln -s /home/a/src/devOps/tmux-envs/configs/nomad.yml /home/a/.config/tmuxinator/
+ln -s /home/a/src/devOps/tmux-envs/configs/nomad.yml /home/a/src/devOps/nomad/nomad.yml
+
+
+ln -s /media/a/data/docs-files/Web/Testing/proxies/service-virtualization/wiremock/webhooks /home/a/Desktop/poc/wiremock/src/h
+ln -s /home/a/src/a/sb/dev/paygate /home/a/Desktop/poc/wiremock/src/g
+
+ln -s /home/a/src/POCs/elixir/grpc/proto_server_app/lib/proto_app.pb.ex /home/a/src/POCs/elixir/grpc/proto_client_app/lib/proto_app.pb.ex
+
+# MHz in use but also the Maximum you can push / overclock your CPU to:
+$ sudo dmidecode -t processor | grep Speed
+
+# CPU info:
+» lscpu
+
+# RAM info:
+$ sudo dmidecode --type 17
+
+# Calculate RSA key fingerprint
+# https://stackoverflow.com/questions/9607295/calculate-rsa-key-fingerprint
+» ssh-keygen -E md5 -lf ~/.ssh/id_rsa.pub
+4096 MD5:17:6b:a2:52:c4:31:5e:33:2b:4d:be:93:55:20:6b:48 jalbertcruz@gmail.com (RSA)
+
+
+# Python install
+-- https://github.com/pyenv/pyenv
+
+# How to generate a random string?
+# https://unix.stackexchange.com/questions/230673/how-to-generate-a-random-string
+head /dev/urandom | tr -dc A-Za-z0-9 | head -c 20 ; echo ''
+
+# for tools like: mysqldump
+sudo apt-get install mysql-client
+
+# postgresql
+# create a database
+create database terraform_backend
+	with owner safeboda_user;
+
+# ncdu (better du / folders size in the current pwd)
+
+# tldr (better man)
+
+# fd (better find)
+# Regular expression search
+# https://github.com/sharkdp/fd
+> fd '^x.*rc$'
+X11/xinit/xinitrc
+X11/xinit/xserverrc
+
+
+# httpie on centos
+# https://snapcraft.io/install/http/centos
+sudo yum install epel-release
+sudo yum install snapd
+sudo systemctl enable --now snapd.socket
+sudo ln -s /var/lib/snapd/snap /snap
+sleep 30
+sudo snap install http
+
+# Info about a Linux OS
+
+» cat /etc/os-release
+NAME="Ubuntu"
+VERSION="18.04.4 LTS (Bionic Beaver)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 18.04.4 LTS"
+VERSION_ID="18.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=bionic
+UBUNTU_CODENAME=bionic
+
+» cat /etc/hostname
+jlp
+
+# SysV init or systemd
+# You can tell which is being used by running this command:
+» ps -p 1
+  PID TTY          TIME CMD
+    1 ?        00:00:01 systemd
+
+# Running Elasticsearch with systemd
+# To configure Elasticsearch to start automatically when the system boots up, run the following commands:
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable elasticsearch.service
+
+# ssh config
+» ssh github.com
+The authenticity of host 'github.com (140.82.118.3)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'github.com,140.82.118.3' (RSA) to the list of known hosts.
+a@github.com: Permission denied (publickey).
+» ssh-keyscan github.com
+# github.com:22 SSH-2.0-babeld-97a5c183
+github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+# github.com:22 SSH-2.0-babeld-97a5c183
+# github.com:22 SSH-2.0-babeld-97a5c183
+
+# node nvm! (not working for fish, use volta instead :-))
+nvm ls-remote
+nvm install v12.18.3
+# nvm use v12.18.3
+nvm alias default v12.18.3
+
+
+# Breaking Linux files into pieces with the split command
+# https://www.networkworld.com/article/3489256/breaking-linux-files-into-pieces-with-the-split-command.html
+» split -b10G HDP_3.0.1_virtualbox_181205.ova
+» cat xa? > HDP_3.0.1_virtualbox_181205.ova
+
+# https://www.tecmint.com/split-large-tar-into-multiple-files-of-certain-size/
+
+cat home.tar.bz2.parta* >backup.tar.gz.joined
+cat ISO-archive.parta* > Win11_English_x64.iso
+
+split -b 200M linux-mint-18.tar.gz "ISO-archive.part"
+split -b 200M Win11_English_x64.iso "ISO-archive.part"
+
+# https://askubuntu.com/questions/318530/generate-md5-checksum-for-all-files-in-a-directory
+$ md5sum * > checklist.chk  # generates a list of checksums for any file that matches *
+$ md5sum -c checklist.chk   # runs through the list to check them
+
+# linux/gnome
+#
+/home/a/.local/share/applications/
+
+# get a range of lines in a text file
+# https://stackoverflow.com/questions/19327556/get-specific-line-from-text-file-using-just-shell-script
+sed -n 5,10p file
+
+
+How can I limit the bandwidth used by a process?
+
+https://unix.stackexchange.com/questions/34116/how-can-i-limit-the-bandwidth-used-by-a-process
+
+# https://github.com/mariusae/trickle
+
+sudo apt-get install trickle
+
+EXAMPLES
+     trickle -u 10 -d 20 ncftp
+
+     Launch ncftp(1) limiting its upload capacity to 10 KB/s, and download capacity at 20 KB/s.
+
+
+Extract icon from appimage
+# https://askubuntu.com/questions/1115321/extract-icon-from-appimage
+Manually
+If you insist to do this manually, you can run (in a terminal!):
+
+ ./your.AppImage --appimage-extract
+
+
+Gnome apps configs
+/home/a/.local/share/applications/
+
+# only audio
+youtube-dl -F "https://www.youtube.com/watch?v=un_TSrR8COk"
+youtube-dl -f 251 "https://www.youtube.com/watch?v=s1XK4lHS4dQ"
+
+youtube-dl -f 'bestvideo[height<=360]+bestaudio/best[height<=360]' "https://www.youtube.com/watch?v=SSNV0Di0ph0"
+
+# https://askubuntu.com/questions/856911/using-youtube-dl-to-download-entire-youtube-channel
+# youtube-dl -f best -ciw -o "%(title)s.%(ext)s" -v <url-of-channel>
+youtube-dl -c -v https://www.youtube.com/channel/UCjnpuIGovFFUBLG5BeHzTag
+
+# Performance tools
+# https://dev.to/saantoryuu/load-testing-using-hey-c84
+» go get -u github.com/rakyll/hey
+# A simple benchmark
+$ hey -n 10 -c 2 -m POST -T "application/x-www-form-urlencoded" -d 'username=1&message=hello' http://your-rest-url/resource
+This opens 2 connections, and sends 10 requests. Each request is a form post with 2 parameters to your resource. Tweak the command to add/remove more flags as you need it.
+
+# zombie processes
+We can list zombie processes by using the ps command and piping it into egrep.
+zombie processes have a state flag of “Z,” and you’ll usually also see “defunct.”
+
+» ps aux | egrep "Z|defunct"
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+a         182116  0.0  0.0      0     0 ?        Z    16:08   0:00 [createThumbnail] <defunct>
+a         182136  0.0  0.0      0     0 ?        Z    16:08   0:00 [createThumbnail] <defunct>
+a         183521  0.0  0.0  11568   732 pts/0    S+   16:26   0:00 grep -E Z|defunct
+
+The process ID of the first zombie is 182136, but we need to find the process ID of its parent process. We can do so by using ps again. We’ll use the output option (-o) to tell ps to display only the parent’s process ID, and then pass it with the ppid= flag.
+
+The process we want to find will be indicated by using the -p (process) option, and then passing in the zombie’s process ID.
+
+» ps -o ppid= -p 182136
+   2321
+
+We’re told the parent process ID is 2321. We can now cross-reference this by using ps once more.
+
+» ps -e | rg 2321
+   2321 ?        00:18:31 gnome-shell
+
+To kill the parent process, use the SIGKILL option with the kill command as follows:
+
+kill -SIGKILL 2321
+Depending on the owner of the parent process, you might also need to use sudo.
+
+# tree
+$ tree -aF --dirsfirst -L 1 .
+
+# obtener una lista a partir de los nombres de los ficheros:
+# eliminar extension (.betdata), poner ',"' al final de cada linea y poner '"' al inicio de cada linea
+» ls | cut -f6- | sort | uniq | sed s:.betdata:\",: | sed 's/^/\"/'
+
+# internet traffic
+» sudo apt-get install vnstat
+» vnstat --iflist
+Available interfaces: br-c6d290106d08 wlp2s0 enp3s0f1 docker0
+
+» sudo systemctl start vnstat.service
+» sudo systemctl enable vnstat.service
+
+» sudo vnstat -i wlp2s0
+» vnstat -h
+
+ wlp2s0  /  hourly
+
+
+# ps tool -- process managment
+» ps -ef | grep code
+» ps aux | grep code
+
+# https://stackoverflow.com/questions/8206280/delete-all-lines-beginning-with-a-from-a-file
+sed '/\(/ d' < 1.srt > outputFile.srt
+
+# Firewall!!! me jode nomad/consul + no sirve! :-)
+# https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-20-04
+» sudo ufw status numbered
+Status: inactive
+» sudo ufw status verbose
+Status: inactive
+» sudo ufw default deny incoming
+Default incoming policy changed to 'deny'
+(be sure to update your rules accordingly)
+» sudo ufw default allow outgoing
+Default outgoing policy changed to 'allow'
+(be sure to update your rules accordingly)
+» sudo ufw enable
+Firewall is active and enabled on system startup
+» sudo ufw status verbose
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), deny (routed)
+New profiles: skip
+» sudo ufw status numbered
+Status: active
+
+
+# https://csvkit.readthedocs.io/en/latest/tutorial.html
+» pip3 install csvkit --user
+Successfully built csvkit agate-dbf agate-excel agate-sql agate PyICU python-slugify et-xmlfile
+Installing collected packages: Babel, PyICU, isodate, leather, parsedatetime, text-unidecode, python-slugify, pytimeparse, agate, dbfread, agate-dbf, et-xmlfile, openpyxl, xlrd, agate-excel, greenlet, sqlalchemy, agate-sql, csvkit
+Successfully installed Babel-2.9.0 PyICU-2.6 agate-1.6.2 agate-dbf-0.2.2 agate-excel-0.2.3 agate-sql-0.5.6 csvkit-1.0.5 dbfread-2.0.7 et-xmlfile-1.0.1 greenlet-1.0.0 isodate-0.6.0 leather-0.3.3 openpyxl-3.0.7 parsedatetime-2.6 python-slugify-4.0.1 pytimeparse-1.1.8 sqlalchemy-1.4.4 text-unidecode-1.3 xlrd-2.0.1
+# join example:
+>> csvjoin -c fips data.csv acs2012_5yr_population.csv > joined.csv
+
+# bash scripts formater
+shfmt -l -w script.sh
+shfmt -i 2 -l -w bin/appslnx/bin/
+
+# https://stackoverflow.com/questions/9265172/scrape-an-entire-website
+$ wget -m -k -E -l 7 -t 6 -w 1 https://www.postgresqltutorial.com/
+$ wget -m -k -E -l 7 -t 6 -w 1 https://www.mysqltutorial.org/
+
+# https://github.com/blackjack4494/yt-dlc/issues/7
+# [Question]How do I download age restricted video with youtube-dlc? youtube-dl is fine automatically
+youtube-dl --cookies cookies.txt "https://www.youtube.com/watch?v=BbDWRXd0t-w"
+
+# Ruby
+rbenv versions
+
+cd ~/.rbenv/plugins/ruby-build
+git pull
+cd
+
+rbenv install -l
+
+rbenv install 3.0.2
+rbenv global 3.0.2
+
+# Clojure
+# https://clojure.org/guides/getting_started
+curl -O https://download.clojure.org/install/linux-install-1.10.3.1087.sh
+chmod +x linux-install-1.10.3.1087.sh
+./linux-install-1.10.3.1087.sh --prefix /home/a/appslnx/clojure
+
+# ubuntu bluetooth
+https://dev.to/campbelljones74/common-bluetooth-problems-in-ubuntu-and-how-to-fix-them-18b5
+
+# info about files (modification time et al)
+stat <file>
+file <file>
+ls -l
+
+# java/linux
+wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+     "http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/server-jre-8u152-linux-x64.tar.gz" -O server-jre-8u152-linux-x64.tar.gz
+
+tar -xvf server-jre-8u152-linux-x64.tar.gz
+mv jdk1.8.0_152 jdk1.8
+
+
+wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+     "https://edelivery.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz" -O jdk-8u131-linux-x64.tar.gz
+
+
+
+sudo update-alternatives --install "/usr/bin/java" "java" "/home/a/appslnx/jdk-17/bin/java" 1
+sudo update-alternatives --install "/usr/bin/javac" "javac" "/home/a/appslnx/jdk-17/bin/javac" 1
+
+sudo update-alternatives --install "/usr/bin/java" "java" "/home/a/appslnx/jdk-11/bin/java" 2
+sudo update-alternatives --install "/usr/bin/javac" "javac" "/home/a/appslnx/jdk-11/bin/javac" 2
+
+sudo update-alternatives --install "/usr/bin/java" "java" "/home/a/appslnx/jdk1.8/bin/java" 3
+sudo update-alternatives --install "/usr/bin/javac" "javac" "/home/a/appslnx/jdk1.8/bin/javac" 3
+sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/home/a/appslnx/jdk1.8/bin/javaws" 3
+
+sudo update-alternatives --config java
+
+# Rust
+sudo ./install.sh
+sudo ./install.sh --uninstall
+
+#######################################
+error: convert-im6.q16: cache resources exhausted
+
+cache resources exhausted Imagemagick
+https://stackoverflow.com/questions/31407010/cache-resources-exhausted-imagemagick
+
+
+Answer>
+
+Find the policy.xml with find / -name "policy.xml"
+
+something like /etc/ImageMagick-6/policy.xml
+
+and change <policy domain="resource" name="disk" value="1GiB"/> to <policy domain="resource" name="disk" value="8GiB"/>
+
+############################################
+
+npm install --global asciicast2gif
+
+https://github.com/asciinema/asciicast2gif
+
+asciicast2gif demo demo.gif
+DEBUG=1 asciicast2gif demo demo.gif
+
+
+# find hard links
+ls -i # to know the inodes
+sudo find / -inum <inode> # to find the files with that inode
+
+
+# what linux distribution you have
+# https://www.makeuseof.com/tag/check-linux-version/
+cat /etc/os-release
+
+# Elixir
+kiex list releases
+kiex install 1.14.2
+
+mix new x --sup
+mix archive.install hex phx_new
+https://hexdocs.pm/phoenix/Mix.Tasks.Phx.New.html
+mix phx.new pro-dir --module Pro --app pro --no-html --no-assets --no-ecto --no-mailer --no-gettext --no-dashboard --no-live
+
+# https://hexdocs.pm/mix/Mix.Tasks.New.html
+mix new exercise_1 --module Fetcher
+
+» mix hex.docs fetch ecto
+Docs fetched: /media/a/data/repo/.hex/docs/hexpm/ecto/3.5.3
+» mix hex.docs offline ecto
+
+# testing
+# https://brooklinmyers.medium.com/phoenix-elixir-testing-beyond-mix-test-5b07de241001
+mix test --slowest 100
+
+# Erlang install
+kerl update releases
+kerl build 25.1.2 25.1.2
+kerl install 25.1.2 ~/kerl/25.1.2
+
+# Elixir scripts
+Mix.install([
+  {:req, "~> 0.2"},
+  {:floki, "~> 0.30.0"}
+])
+
+resp = Req.get!("https://github.com/elixir-lang")
+
+resp.body
+|> Floki.parse_document!()
+|> Floki.find(~s{[data-hovercard-type="repository"]})
+|> Enum.map(&Floki.text/1)
+|> Enum.map(&String.trim/1)
+|> Enum.each(&IO.puts/1)
+
+$ elixir elixir-repos.exs
+
+# System.trap_signal/3 --> Traps the given signal to execute the fun.
+
+
+# Printing all matching pathnames to a command file
+# https://www.cyberciti.biz/faq/how-do-i-find-the-path-to-a-command-file/
+$ which -a python3
+
+# git alias
+git config --list | rg alias | fzf
+
+# adopt
+$ pwd
+/home/a/src/devOps/setup
+# from configs to touched files
+stow --adopt -vSt ~ *
+
+# restore (from repo to config)
+stow -vSt ~ tmuxp
+
+# un-adopt (remove links)
+stow -vDt ~ *
+
+❯ pwd
+/home/a/appslnx/web/vscode-data
+stow -nvSt /home/a/appslnx/web/VSCode/ personal
+LINK: data => ../vscode-data/personal/data
+
+sudo ln -s /home/a/appslnx/web/VSCode/code /usr/local/bin/
+
+sudo ln -s /home/a/appslnx /usr/local/bin/

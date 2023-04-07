@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+  echo "No arguments provided"
+  current=$(ls ${VSCODE_DATA}.pointer)
+  echo "Current setup" $current
+  exit 1
+else
+  DIRECTORY=$1
+  if test -d "$VSCODE_DATA$DIRECTORY"; then
+    current=$(ls ${VSCODE_DATA}.pointer)
+    rm "${VSCODE_DATA}.pointer/"*
+    mv "${VSCODE_INSTALL_DIR}data" "${VSCODE_DATA}$current/link"
+    touch "${VSCODE_DATA}.pointer/$DIRECTORY"
+    mv "${VSCODE_DATA}$DIRECTORY/link/data" $VSCODE_INSTALL_DIR
+  fi
+fi

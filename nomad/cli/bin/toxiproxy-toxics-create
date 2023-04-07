@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# » envconsul -prefix toxiproxy-config- toxiproxy-toxics-create
+
+toxiproxy-cli --host "http://localhost:${TOXIPROXY_SERVER_PORT}" create p4 --listen localhost:1114 --upstream localhost:4000
+
+toxiproxy-cli --host "http://localhost:${TOXIPROXY_SERVER_PORT}" toxic add p4 -type slicer --attribute average_size=20 --attribute size_variation=2 --attribute delay=30000
+toxiproxy-cli --host "http://localhost:${TOXIPROXY_SERVER_PORT}" toxic add p4 -type latency --attribute latency=2500 --attribute jitter=25
+toxiproxy-cli --host "http://localhost:${TOXIPROXY_SERVER_PORT}" toxic add p4 -type bandwidth --attribute rate=1
+
+# -u (upstream: sending!)
+toxiproxy-cli --host "http://localhost:${TOXIPROXY_SERVER_PORT}" toxic add p4 -u -type bandwidth --attribute rate=1

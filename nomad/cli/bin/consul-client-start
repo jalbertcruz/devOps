@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+consul agent -bind=172.16.10.65 -client=172.16.10.65 -ui -data-dir=/home/a/dockers-data/consul-client -node=client-agent -enable-script-checks=true &
+#consul agent -bind=172.16.10.65 -client=172.16.10.65 -ui -data-dir=/home/a/dockers-data/consul-client -node=client-agent -enable-script-checks=true -config-file cli/configs/consul.json &
+process_pid=$!
+sleep 80
+echo $process_pid | http put http://172.16.10.65:8500/v1/kv/pid-data-CONSUL_CLIENT_PID

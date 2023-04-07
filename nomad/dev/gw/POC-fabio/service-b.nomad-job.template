@@ -1,0 +1,60 @@
+job "service-b" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+
+  group "server" {
+
+    task "service-b" {
+
+      driver = "docker"
+
+      config {
+
+        image = "jalbert/service-b:0.1"
+
+//        hostname = "service-b.service.dc1.consul"
+
+        logging {
+          type = "json-file"
+        }
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        //        cpu_hard_limit = true
+
+      }
+
+      service {
+        name = "service-b"
+
+        port = "port_server"
+
+        tags = [
+          "urlprefix-/service-b strip=/service-b"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+
+      resources {
+        network {
+          mbits = 60
+          port "port_server" {}
+        }
+      }
+
+    }
+  }
+}

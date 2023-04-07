@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/alacritty -e byobu
+#Icon=Alacritty
+Icon=/usr/local/bin/appslnx/tools/Apps-Alacritty.png
+Terminal=false
+Categories=System;TerminalEmulator;

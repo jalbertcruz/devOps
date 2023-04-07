@@ -1,0 +1,68 @@
+job "wiremock" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "utilities" {
+
+    task "task_wiremock" {
+      driver = "docker"
+
+      artifact {
+        source = "{{ resources_register_host }}/jalbert__wiremock_2.21.0.tar"
+      }
+
+      constraint {
+        attribute = "${attr.kernel.name}"
+        value = "linux"
+      }
+
+      config {
+        load = "jalbert__wiremock_2.21.0.tar"
+        image = "jalbert/wiremock:2.21.0"
+        port_map {
+          port_server = 80
+        }
+      }
+
+
+      service {
+        name = "wiremock"
+        port = "port_server"
+
+        address_mode = "driver"
+
+        check {
+          type = "http"
+          path = "/__admin"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+        tags = [
+          "urlprefix-wiremock.com/",
+          "dev"
+        ]
+      }
+      resources {
+        memory = 1000
+        cpu = 800
+        network {
+          mbits = 200
+          port "port_server" {
+          }
+        }
+      }
+
+    }
+  }
+}

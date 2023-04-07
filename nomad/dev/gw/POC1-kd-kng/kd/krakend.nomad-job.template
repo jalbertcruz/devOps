@@ -1,0 +1,68 @@
+job "krakend" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+
+  group "server" {
+
+    task "krakend" {
+
+      driver = "docker"
+
+      config {
+
+        dns_servers = ["172.17.0.2"]
+
+        network_mode = "host"
+
+        image = "devopsfaith/krakend"
+
+        port_map {
+          port_server = 8000
+        }
+
+        tty = true
+
+        logging {
+          type = "json-file"
+        }
+
+        cpu_hard_limit = true
+
+        volumes = [
+          "{{ krakend_config_data }}:/etc/krakend"
+        ]
+
+      }
+
+      service {
+        name = "krakend"
+        port = "port_server"
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 2048
+        cpu    = 1000
+        network {
+          mbits = 200
+          port "port_server" {
+          }
+        }
+      }
+
+    }
+  }
+}

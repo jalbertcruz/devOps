@@ -1,0 +1,9 @@
+
+docker run -v /media/a/data/repo/npm/storage:/verdaccio/storage -v /media/a/data/repo/npm/conf:/verdaccio/conf -d --name npm -p 4873:4873 verdaccio/verdaccio:3.2.0
+
+npm set registry http://172.17.0.2:4873
+
+
+
+docker run -e POSTGRES_PASSWORD=11qazxsw22 -p 5432:5432 --name pg -v ~/src/a/dev-speech-analytics/db/pgdata:/var/lib/postgresql/data/ -d postgres:9.6.8
+

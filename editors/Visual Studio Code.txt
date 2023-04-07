@@ -1,0 +1,81 @@
+
+# word-wrap 
+From the View menu (*View** → Word Wrap)
+
+# multiple cursors!
+https://code.visualstudio.com/docs/getstarted/tips-and-tricks
+
+
+Ctrl+Shift+P >> command palette
+
+https://code.visualstudio.com/docs/getstarted/keybindings
+
+File > Preferences > Keyboard Shortcuts
+
+And editing the keybindings.json
+
+
+
+# Code Formatting Shortcut:
+ctrl+shift+I
+
+Jumping to files in Visual Studio Code (and keeping them open)
+“workbench.editor.enablePreview”: false,
+
+
+How to disable VS Code minimap in Windowed mode?
+: View -> Show Minimap
+
+# Linux path: /home/a/.config/Code/User
+# keybindings.json
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "ctrl+d",
+        "command": "-editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "editor.action.copyLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+alt+down",
+        "command": "-editor.action.copyLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    }
+]
+
+
+https://github.com/VSCodeVim/Vim/blob/master/ROADMAP.md
+
+{
+    "editor.minimap.enabled": false,
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.hlsearch": true,
+    "editor.lineNumbers": "relative",
+    "files.watcherExclude": {
+        "**/.bloop": true,
+        "**/.metals": true,
+        "**/.ammonite": true
+    }
+}
+
+https://stackoverflow.com/questions/38952053/how-to-run-the-select-code-in-vscode
+https://code.visualstudio.com/docs/editor/integrated-terminal#_key-bindings
+
+File + Preferences + Keyboard Shortcuts
+
+workbench.action.terminal.runSelectedText
+Shift + Alt + R
+
+» git clone -c 'remote.origin.fetch=+refs/changes/*:refs/remotes/origin/changes/*' https://gerrit.googlesource.com/git-repo
+
+'+refs/heads/*:refs/remotes/origin/*'
+'+refs/heads/master:refs/remotes/origin/master'
+
+# custom extensions configs
+https://code.visualstudio.com/api/references/extension-manifest#extension-packs

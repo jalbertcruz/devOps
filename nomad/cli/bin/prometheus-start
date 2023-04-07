@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+cd "${PROMETHEUS_HOME}" || true
+
+./prometheus &
+echo $! | http put http://172.17.0.2:8500/v1/kv/pid-data-PROMETHEUS_SERVER_PID
+
+#consul kv put pid-data-PROMETHEUS_SERVER_PID $!

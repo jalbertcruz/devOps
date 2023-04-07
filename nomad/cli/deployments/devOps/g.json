@@ -1,0 +1,9 @@
+{
+  "mss/logging/grafana": [
+    "mss/logging/prom"
+  ],
+
+  "mss/logging/prom": [
+    "mss/logging/alertmanager"
+  ]
+}

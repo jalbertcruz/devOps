@@ -1,0 +1,117 @@
+
+https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking/
+https://developers.redhat.com/blog/2019/05/17/an-introduction-to-linux-virtual-interfaces-tunnels/
+http://www.policyrouting.org/iproute2.doc.html#ss9.2.1
+
+
+https://linuxconfig.org/configuring-virtual-network-interfaces-in-linux
+sudo ifconfig lo:1 127.0.0.2
+
+» ifconfig lo:1
+lo:1: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.2  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+
+
+
+
+How to create a virtual network interface in Ubuntu?
+# https://askubuntu.com/questions/993139/how-to-create-a-virtual-network-interface-in-ubuntu
+
+sudo ip link add name mylo type dummy
+sudo ip address add 172.16.10.65/26 dev mylo
+# sudo ip link set mylo up
+# ping 172.16.10.65 -c 2
+» http http://172.16.10.65:6006/tstate/e
+HTTP/1.0 200 OK
+Content-Length: 28
+Content-Type: application/json
+Date: Thu, 18 Jun 2020 16:38:29 GMT
+Server: Werkzeug/0.16.0 Python/3.8.1
+
+{
+    "state": "ok",
+    "the_id": "e"
+}
+
+
+-------------------------------------------------------
+# 42.6 / 668 -- Docker Networking Cookbook (2016).epub
+
+user@net2:~$ sudo ip link add dummy0 type dummy
+user@net2:~$ sudo ip address add 172.16.10.129/26 dev dummy0
+user@net2:~$ sudo ip link set dummy0 up
+
+user@net3:~$ sudo ip link add dummy0 type dummy
+user@net3:~$ sudo ip address add 172.16.10.193/26 dev dummy0
+user@net3:~$ sudo ip link set dummy0 up
+
+# Advanced stuffs!
+Configuring Linux host routing
+-------------------------------------------------------
+
+# Networking Fundamentals, Develop the networking skills required to pass the Microsoft MTA Networking Fundamentals Exam 98-366 (2019)
+= pag 70
+
+Let's take a look at a high-level view of communication taking place locally and remotely. It
+should be noted that this is a simplified version of the process:
+
+Local device to local device:
+1. Get the recipient hostname.
+2. Resolve the recipient hostname to an IP address.
+3. The sender checks to see if the IP address is on the local network. In
+this case, it is local.
+
+
+4. The sender checks the ARP cache for an IP | MAC mapping. None are
+found.
+5. The sender broadcasts an ARP request.
+6. The recipient machine sends an ARP reply.
+7. The sender updates its ARP Cache.
+8. The sender packages the data to be transferred and sends it out.
+9. The recipient machine receives the data and checks that the destination
+MAC address belongs to it. It does.
+10. The recipient machine checks that the destination IP address belongs
+to it. It does.
+11. The recipient machine processes the data that's dependent on the
+service/application it is for.
+
+Local device to remote device:
+1. Get the recipient hostname.
+2. Resolve the recipient hostname to an IP address.
+3. The sender checks to see if the IP address is on the local network. In
+this case, it is remote, and any data that's transmitted needs to be sent
+via the default gateway.
+4. The sender looks up the IP address of the default gateway.
+5. The sender checks the ARP cache for an IP | MAC mapping for the
+default gateway. None are found.
+6. The sender broadcasts an ARP request, asking for the MAC address of
+the IP address linked to the default gateway.
+7. The default gateway sends an ARP reply.
+8. The sender updates its ARP cache.
+9. The sender packages the data to be transferred. It stipulates that the
+destination MAC is that of the default gateway, but the destination IP
+address is that of the remote device.
+10. The sender transmits the data to the default gateway.
+11. The default gateway receives the data and checks that the destination
+MAC address belongs to it. It does.
+12. The default gateway checks that the destination IP address belongs to
+it. In this case, it does not.
+13. The default gateway forwards the data, as per its rules, to the
+destination device. The source and destination MAC addresses are
+altered at each router they transit, but the IP addresses remain the
+same.
+
+14. The recipient machine receives the data and checks that the destination
+MAC address belongs to it. It does.
+15. The recipient machine checks that the destination IP address belongs
+to it. It does.
+16. The recipient machine processes the data that's dependent on the
+service/application it is for.
+Now that we have looked at how devices are identified on a LAN
+
+
+» netstat -e | more # to know the open ports (local and foreign address)
+» lsof -i :<port> # to know the owner process of <port>
+
+

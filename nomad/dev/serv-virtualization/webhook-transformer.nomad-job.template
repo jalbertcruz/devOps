@@ -1,0 +1,71 @@
+job "webhook-transformer" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    task "webhook-transformer" {
+
+      driver = "docker"
+
+      config {
+
+        image = "jalbert/webhook-transformer:0.1"
+
+        port_map {
+          port_server = 80
+        }
+
+        hostname = "webhook-transformer.service.dc1.consul"
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ templates_webhook_transformer }}:/templates"
+        ]
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        //        cpu_hard_limit = true
+
+      }
+
+      service {
+        name = "webhook-transformer"
+
+        port = "port_server"
+        //        address_mode = "host" // default
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-/webhook-transformer strip=/webhook-transformer"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+
+      resources {
+        network {
+          mbits = 60
+          port "port_server" {}
+        }
+      }
+
+    }
+  }
+}

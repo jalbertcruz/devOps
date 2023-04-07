@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# To use mitmproxy:
+# hoverctl start --upstream-proxy http://127.0.0.1:8080
+hoverctl start --proxy-port "${HOVERFLY_PROXY_PORT}" --upstream-proxy http://127.0.0.1:"${MITMPROXY_PORT}"
+hoverctl mode capture

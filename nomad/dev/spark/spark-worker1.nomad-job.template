@@ -1,0 +1,78 @@
+job "spark-worker1" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "workers" {
+
+//    count = 2
+
+    task "task-worker" {
+      driver = "docker"
+
+      env {
+        SPARK_MASTER = "spark://spark-master.service.dc1.consul:7077"
+      }
+
+      config {
+        image = "jalbert/spark-worker:2.4.4-debian"
+
+        hostname = "spark-worker1.service.dc1.consul"
+
+        port_map {
+          port_server = 8081
+        }
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        tty = true
+
+        logging {
+          type = "json-file"
+        }
+
+        cpu_hard_limit = true
+
+        volumes = [
+          "{{ spark_apps }}:/spark-apps"
+        ]
+
+      }
+
+      service {
+        name = "spark-worker1"
+
+        port = "port_server"
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-spark-worker1.com/"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 2048
+        cpu = 2000
+        network {
+          mbits = 40
+          port "port_server" {
+          }
+        }
+      }
+
+    }
+  }
+}

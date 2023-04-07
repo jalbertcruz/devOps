@@ -1,0 +1,72 @@
+job "hadoop-master" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    task "task-hadoop-master" {
+      driver = "docker"
+
+      config {
+        image = "jalbert/hadoop-master:3.2.1-debian"
+
+        hostname = "hadoop-master.service.dc1.consul"
+
+        port_map {
+          port_server = 22
+        }
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        tty = true
+
+        logging {
+          type = "json-file"
+        }
+
+        //        cpu_hard_limit = true
+
+        volumes = [
+          "{{ spark_apps }}:/spark-apps"
+        ]
+
+      }
+
+      service {
+        name = "hadoop-master"
+
+        port = "port_server"
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-hadoop-master.com/"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        //        memory = 5048
+        //        cpu = 4000
+        network {
+          mbits = 40
+          port "port_server" {
+          }
+        }
+      }
+
+    }
+  }
+}

@@ -1,0 +1,10 @@
+# # config file version
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    url: http://prom.service.dc1.consul:9090
+    access: Browser
+    jsonData:
+        timeInterval: 1s

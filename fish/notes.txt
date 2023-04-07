@@ -1,0 +1,18 @@
+# fish
+$ fisher install edc/bass
+https://github.com/edc/bass
+
+# GitHub cli gh
+gh completion --shell fish > gh.fish
+
+
+Define an alias in fish shell
+# https://stackoverflow.com/questions/2762994/define-an-alias-in-fish-shell
+
+# This is equivalent to entering the following function:
+function rmi
+    rm -i $argv
+end
+# Then, to save it across terminal sessions:
+funcsave rmi
+This last command creates the file ~/.config/fish/functions/rmi.fish

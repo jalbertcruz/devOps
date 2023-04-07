@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+sudo rm -Rf grafana       || true
+sudo rm -Rf loki          || true
+sudo rm -Rf prometheus    || true
+sudo rm -Rf tempo         || true
+
+mkdir grafana              || true
+chmod 777 grafana          || true
+mkdir -p loki/loki-index   || true
+chmod 777 loki/loki-index  || true
+mkdir -p loki/loki-chunks  || true
+chmod 777 loki/loki-chunks || true
+mkdir -p prometheus        || true
+chmod 777 prometheus       || true
+mkdir -p tempo/wal         || true
+chmod 777 tempo/wal        || true
+mkdir -p tempo/blocks      || true
+chmod 777 tempo/blocks     || true

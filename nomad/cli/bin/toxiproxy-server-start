@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+toxiproxy-server -port "${TOXIPROXY_SERVER_PORT}" &
+echo $! | http put http://172.17.0.2:8500/v1/kv/pid-data-TOXIPROXY_SERVER_PID
+
+#consul kv put pid-data-TOXIPROXY_SERVER_PID $!

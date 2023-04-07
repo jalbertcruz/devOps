@@ -1,0 +1,57 @@
+
+# ripgrep ( rg )
+# https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md
+
+Configuration file:
+RIPGREP_CONFIG_PATH
+$ cat $HOME/.ripgreprc
+
+If we wanted, we could tell ripgrep to search anything but *.toml files:
+
+$ rg clap -g '!*.toml'
+
+rg def -g "*.scala"
+# disable .gitignore handling
+rg --no-ignore server_api
+# search over hidden files and directories
+rg --hidden server_api
+
+All of these things can be toggled using various flags provided by ripgrep:
+
+You can disable .gitignore handling with the --no-ignore flag.
+Hidden files and directories can be searched with the --hidden flag.
+Binary files can be searched via the --text (-a for short) flag. Be careful with this flag! Binary files may emit control characters to your terminal, which might cause strange behavior.
+ripgrep can follow symlinks with the --follow (-L for short) flag.
+
+Common options
+
+-h: Show ripgrep's condensed help output.
+--help: Show ripgrep's longer form help output. (Nearly what you'd find in ripgrep's man page, so pipe it into a pager!)
+-i/--ignore-case: When searching for a pattern, ignore case differences. That is rg -i fast matches fast, fASt, FAST, etc.
+-S/--smart-case: This is similar to --ignore-case, but disables itself if the pattern contains any uppercase letters. Usually this flag is put into alias or a config file.
+-w/--word-regexp: Require that all matches of the pattern be surrounded by word boundaries. That is, given pattern, the --word-regexp flag will cause ripgrep to behave as if pattern were actually \b(?:pattern)\b.
+-c/--count: Report a count of total matched lines.
+--files: Print the files that ripgrep would search, but don't actually search them.
+-a/--text: Search binary files as if they were plain text.
+-U/--multiline: Permit matches to span multiple lines.
+-z/--search-zip: Search compressed files (gzip, bzip2, lzma, xz, lz4, brotli, zstd). This is disabled by default.
+
+-C/--context: Show the lines surrounding a match.
+
+## https://github.com/BurntSushi/ripgrep/blob/master/complete/_rg
+
+    + '(context-a)' # Context (after) options
+    '(context-c)'{-A+,--after-context=}'[specify lines to show after each match]:number of lines'
+
+    + '(context-b)' # Context (before) options
+    '(context-c)'{-B+,--before-context=}'[specify lines to show before each match]:number of lines'
+
+    + '(context-c)' # Context (combined) options
+    '(context-a context-b)'{-C+,--context=}'[specify lines to show before and after each match]:number of lines'
+
+    Ej. $ rg 'next_state.*retry_needed' -A 3
+
+--sort path: Force ripgrep to sort its output by file name. (This disables parallelism, so it might be slower.)
+-L/--follow: Follow symbolic links while recursively searching.
+-M/--max-columns: Limit the length of lines printed by ripgrep.
+--debug: Shows ripgrep's debug output. This is useful for understanding why a particular file might be ignored from search, or what kinds of configuration ripgrep is loading from the environment.

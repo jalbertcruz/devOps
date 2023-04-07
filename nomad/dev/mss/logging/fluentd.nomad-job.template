@@ -1,0 +1,90 @@
+job "fluentd" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  namespace = "default"
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    network {
+      port "port_server" {
+        to = 24224
+      }
+    }
+
+    task "task-fluentd" {
+      driver = "docker"
+
+      env {
+
+      }
+
+      constraint {
+        attribute = "${attr.kernel.name}"
+        value = "linux"
+      }
+
+      config {
+
+        image = "jalbert/fluentd:calyptia"
+
+        ports = [
+          "port_server"]
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        /* logging {
+           type = "gelf"
+           config {
+             gelf-address = "udp://localhost:12201"
+           }
+         }*/
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          //          https://docs.fluentd.org/configuration/config-file
+          "{{ fluentd_etc }}:/etc/td-agent"
+        ]
+
+      }
+
+      service {
+
+        port = "port_server"
+        address_mode = "driver"
+        name = "fluentd"
+
+        tags = [
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "10s"
+          timeout = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 1000
+      }
+
+    }
+  }
+}

@@ -1,0 +1,224 @@
+h   move one character left
+j   move one row down
+k   move one row up
+l   move one character right
+
+w   move to beginning of next word
+b   move to previous beginning of word
+e   move to end of word
+
+W   move to beginning of next word after a whitespace
+B   move to beginning of previous word before a whitespace
+E   move to end of word before a whitespace
+
+0   move to beginning of line
+$   move to end of line
+_   move to first non-blank character of the line
+g_  move to last non-blank character of the line
+
+gg  move to first line
+G   move to last line
+
+z.  scroll the line with the cursor to the center of the screen
+zt  scroll the line with the cursor to the top
+zb  scroll the line with the cursor to the bottom
+
+n   next matching search pattern
+N   previous matching search pattern
+*   next whole word under cursor
+#   previous whole word under cursor
+g*  next matching search (not whole word) pattern under cursor
+g#  previous matching search (not whole word) pattern under cursor
+
+%   jump to matching bracket { } [ ] ( )
+
+fX  to next 'X' after cursor, in the same line (X is any character)
+FX  to previous 'X' before cursor (f and F put the cursor on X)
+tX  til next 'X' (similar to above, but cursor is before X)
+TX  til previous 'X'
+;   repeat above, in same direction
+\\   repeat above, in reverse direction
+
+
+== Table 1—Repeatable Actions and How to Reverse Them
+Make a change                                      .   u
+Scan line for next character f{char}/t{char}       ;   ,
+Scan line for previous character F{char}/T{char}   ;   ,
+Scan document for next match /pattern<CR>          n   N
+Scan document for previous match ?pattern<CR>      n   N
+Perform substitution :s/target/replacement         &   u
+Execute a sequence of changes qx{changes}q         @x  u
+
+
+== Paste (used after delete or yank to recover lines.)
+p paste below cursor
+P paste above cursor
+"2p paste from buffer 2 (there are 9)
+u Undo last change
+U Restore line
+J Join next line down to the end of the current line
+
+== Two for the Price of One
+Compound 	Command
+C 		 	c$
+s 			cl
+S 			^C
+I 			^i
+A 			$a
+o 			A<CR>
+O 			ko
+
+
+# Historial de hex commands
+q:
+
+H   move to top of screen
+M   move to middle of screen
+L   move to bottom of screen
+
+Ctrl-d  move half-page down
+Ctrl-u  move half-page up
+Ctrl-b  page up
+Ctrl-f  page down
+Ctrl-o  jump to last (older) cursor position
+
+
+# Run Normal Mode Commands Across a Range
+(git clone)
+:%normal ^PA"
+
+
+# To delete all the lines of a file that is open in Vim.
+
+Solution
+
+ggdG
+
+
+
+GA – to go to the end of the last line
+or
+Go – to go to a new line after the last line
+
+
+Vim jump to end of file
+G
+
+# go to a line number:
+
+:N
+
+# complete page!
+# https://github.com/kana/vim-textobj-entire
+vim-textobj-entire provides two text objects:
+
+- `ae` targets the entire content of the current buffer.
+- `ie` is similar to `ae`
+
+`"*yie` == copy entire file to clipwoard
+
+####################
+
+find!
+
+yank with incremental search in spacemacs
+
+
+yaw --> como hacer que en Spacemacs/VIM el - sea un caracter valido para id ! ??? (iskeyword=a-Z - en Vim)
+
+
+
+yiw -- copy current word
+/ Ctrl+r+"  -- search the yanked text
+
+# The register named * is the system clipboard
+To copy text from Vim to the system clipboard, you can select the text using visual mode
+
+- then press `"*y` to copy it to the system clipboard
+
+- use `"*p` to paste text from the system clipboard into Vim
+
+
+# to copy the current line into register k, you can type:
+"kyy
+# Or you can append to a register by using a capital letter:
+"Kyy
+# You can then move through the document and paste it elsewhere using:
+"kp
+
+
+## How to replace a pair of brackets:
+# surround
+
+`cs([`
+
+in Normal mode.
+
+cs is the "change-surrounding" operator
+( is the "target"
+[ is the replacement
+
+visual mode, insert " => S"
+
+
+# https://stackoverflow.com/questions/235839/indent-multiple-lines-quickly-in-vi
+Indent multiple lines quickly in vi
+
+>>   Indent line by shiftwidth spaces
+<<   De-indent line by shiftwidth spaces
+5>>  Indent 5 lines
+5==  Re-indent 5 lines
+
+>%   Increase indent of a braced or bracketed block (place cursor on brace first)
+=%   Reindent a braced or bracketed block (cursor on brace)
+<%   Decrease indent of a braced or bracketed block (cursor on brace)
+]p   Paste text, aligning indentation with kkkroundings
+
+=i{  Re-indent the 'inner block', i.e. the contents of the block
+=a{  Re-indent 'a block', i.e. block and containing braces
+=2a{ Re-indent '2 blocks', i.e. this block and containing block
+
+>i{  Increase inner block indent
+<i{  Decrease inner block indent
+gg=G  Re-indent entire buffer
+
+
+# https://vim.fandom.com/wiki/Search_and_replace#Basic_search_and_replace
+
+:%s/foo/bar/gc
+Change each 'foo' to 'bar', but ask for confirmation first.
+
+:%s/foo/bar/g
+Find each occurrence of 'foo' (in all lines), and replace it with 'bar'.
+
+:%s/\<foo\>/bar/gc
+Change only whole words exactly matching 'foo' to 'bar'; ask for confirmation.
+
+Changing a word at n positions
+# https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db
+
+search for a word you want to change and
+change the next found occurrence with `cgn` once and
+use . (dot).
+or skip one word with n which will jump to the next word
+
+- In visual block mode
+
+Ctrl + v
+<move>
+shift + i
+<write>
+Esc
+
+multiple cursors, idea
+https://plugins.jetbrains.com/plugin/19162-ideavimmulticursor
+
+Ctrl+a n
+
+
+# What's the syntax for selecting a range of lines in Vim?
+https://unix.stackexchange.com/questions/30054/whats-the-syntax-for-selecting-a-range-of-lines-in-vim
+
+- Go to line 1405 by typing: 1405G.
+- Press V to switch to VISUAL LINE mode and then go to line 1701 by typing: 1701G.
+- Now your lines are selected, you can run a command on them. For example, to replace foo with bar type: :s/foo/bar/.

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.x
+TryExec=/usr/local/bin/appslnx/tools/java/jmc/jmc
+Exec=/usr/local/bin/appslnx/tools/java/jmc/jmc -- %u
+Terminal=false
+Name=java-mission-control
+Type=Application
+Categories=Development;
+                          
+MimeType=text/html;

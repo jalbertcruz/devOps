@@ -1,0 +1,102 @@
+job "alertmanager" {
+
+  // https://github.com/prometheus/alertmanager
+  // https://prometheus.io/docs/alerting/latest/configuration/#webhook_config
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "alertmanager" {
+
+    network {
+
+      port "http" {
+        static = 9093
+      }
+
+      dns {
+        servers = [
+          "172.17.0.2", "8.8.8.8", "8.8.4.4"
+        ]
+      }
+
+    }
+
+    restart {
+      attempts = 3
+      delay    = "20s"
+      mode     = "delay"
+    }
+
+    task "alertmanager" {
+      driver = "docker"
+
+      config {
+
+        image = "prom/alertmanager:v0.22.1"
+
+        hostname = "alertmanager.service.dc1.consul"
+
+        ports = ["http"]
+
+
+        args = [
+          "--config.file=/etc/alert_manager/alertmanager.yml",
+          "--web.listen-address=:9093",
+          "--storage.path=/var/data/"
+        ]
+
+        tty = true
+
+        extra_hosts = [
+          "host.docker.internal:host-gateway",
+        ]
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ alert_manager_config }}:/etc/alert_manager/alertmanager.yml",
+          "{{ alert_manager_volume }}/data:/var/data/"
+        ]
+
+      }
+
+      service {
+        name = "alertmanager"
+        port = "http"
+        tags = ["monitoring"]
+
+        check {
+          name     = "Alert manager HTTP"
+          type     = "http"
+          path     = "/"
+          interval = "5s"
+          timeout  = "2s"
+
+          check_restart {
+            limit           = 2
+            grace           = "60s"
+            ignore_warnings = false
+          }
+        }
+      }
+
+      resources {
+        cpu    = 200
+        memory = 200
+      }
+
+    }
+  }
+}

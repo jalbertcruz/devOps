@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.x
+TryExec=/usr/local/bin/appslnx/db/redis-uxes/P3X-Redis-UI.AppImage
+Exec=/usr/local/bin/appslnx/db/redis-uxes/P3X-Redis-UI.AppImage -- %u
+Terminal=false
+Name=p3x-redis-ui
+Type=Application
+Categories=Development;
+                          
+MimeType=text/html;

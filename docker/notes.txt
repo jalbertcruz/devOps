@@ -1,0 +1,88 @@
+# Docker
+# How to get bash or ssh into a running container in background mode?
+
+docker exec -it <name> bash
+docker exec -it aa bash
+
+docker run --interactive --tty --name web busybox:latest /bin/sh
+docker run --interactive --tty --name web amazoncorretto:17 /bin/sh
+
+docker exec -u root -it m1 bash
+
+docker run --name m2 -v /home/j/src/dbs/mysql56km:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=aa -d docker.io/mysql/mysql-server:5.6
+
+docker run --rm --interactive --tty --name dev -v /home/a/src/a/sb/POCs/gateways-poc/services/service_a:/src buildpack-deps:bullseye-curl
+
+docker run --rm --interactive --tty --name dev jalbert/jdk8:v231
+docker run --rm --interactive --tty --name dev jalbert/spark-master:v2.4.4
+
+docker run --rm --interactive --tty --name dev jalbert/payment_services:debian10
+
+docker run --rm --interactive --tty --name dev jalbert/payment_services:ubuntu1804
+
+docker run --rm --interactive --tty --name dev -p 80:80 jalbert/denarius:ubuntu1804
+
+docker run --rm --interactive --tty --name dev jalbert/elixir-compiler:centos7-erl221-ex194
+
+docker run --rm --interactive --tty --name dev ubuntu:18.04
+docker run --rm --interactive --tty --name dev centos:7
+
+docker run --entrypoint /bin/bash -it jalbert/betradar-node:latest
+
+
+# detach your terminal:
+>> Ctrl + P + Q
+
+
+# The following command will cycle through all containers and attempt to remove it.
+# NOTE: This will fail on running containers (you will get an error message, but it
+# will just move on to the next one)
+docker ps -a | grep -v CONTAINER | awk '{ print $1 }' | xargs -L 1 docker rm
+docker rm -f $(docker ps -a -q)
+
+# OJO: delete all containers
+docker ps -a | tail -n +2 | cut -d " " -f 1 | xargs docker rm
+
+
+# delete all images
+docker images | tail -n +2 | tr -s " " | cut -d " " -f 3 | xargs docker rmi -f
+
+# delete all <none> images
+docker images | grep \<none\> | awk '{print $3}' | xargs -L 1 docker rmi
+
+# delete all stoped containers
+docker ps -a | awk '{print $1}' | xargs -L 1 docker rm
+
+# networking, How to Check Remote Ports are Reachable Using ‘nc’ Command
+# https://www.tecmint.com/check-remote-port-in-linux/
+apt-get install netcat
+nc -zv mysql 3306
+DNS fwd/rev mismatch: mysql != mysql.dockerized-platform_bet-net
+mysql [172.26.0.5] 3306 (?) open
+
+# networking 2, access localhost
+https://www.howtogeek.com/devops/how-to-connect-to-localhost-within-a-docker-container/
+
+
+docker run --rm --interactive --tty --name latex -v /home/j/Downloads/CV-jalbert:/data blang/latex
+xelatex resume_cv.tex
+
+# Problemas con permisos en volumens Docker en Fedora
+chcon -Rt svirt_sandbox_file_t /home/j/src/dbs/mysql56km
+
+
+What to do when all docker commands hang?
+https://forums.docker.com/t/what-to-do-when-all-docker-commands-hang/28103
+
+## Remove all docker images one liner
+# enter in the bash of the first container
+docker exec -it $(docker ps | head -n 2 | tail -n 1 | cut -d " " -f 1) bash
+
+# delete all containers
+docker ps -a | tail -n +2 | cut -d " " -f 1 | xargs docker rm
+
+# delete all images
+docker images | tail -n +2 | tr -s " " | cut -d " " -f 3 | xargs docker rmi -f
+
+# Delete all volumes:
+docker volume rm $(docker volume ls -q)

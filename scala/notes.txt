@@ -1,0 +1,6 @@
+
+https://alexn.org/blog/2022/09/09/scala-isnt-fun-anymore/?pk_campaign=reddit&pk_kwd=link
+https://www.scala-lang.org/blog/2021/02/16/preventing-version-conflicts-with-versionscheme.html
+https://github.com/scalacenter/sbt-version-policy
+
+sbt dependencyBrowseTreeHTML

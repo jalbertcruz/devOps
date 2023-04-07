@@ -1,0 +1,47 @@
+job "http-echo1" {
+
+// https://medium.com/hashicorp-engineering/hashicorp-nomad-from-zero-to-wow-1615345aa539
+// https://www.youtube.com/watch?v=xl58mjMJjrg
+
+  datacenters = [
+    "dc1"]
+  group "echo" {
+    count = 3
+
+    network {
+
+      port "http" {
+      }
+    }
+
+    task "server" {
+      driver = "docker"
+      config {
+        image = "hashicorp/http-echo:latest"
+        args = [
+          "-listen",
+          ":${NOMAD_PORT_http}",
+          "-text",
+          "Hello from echo 1, and welcome to this server: ${NOMAD_IP_http}, running on ${NOMAD_PORT_http}",
+        ]
+
+        ports = ["http"]
+      }
+
+
+      service {
+        name = "http-echo1"
+        port = "http"
+        tags = [
+          "urlprefix-prod.service.com/",
+        ]
+        check {
+          type = "http"
+          path = "/health"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+    }
+  }
+}

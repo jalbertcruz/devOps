@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -o allexport; source $HOME/.env; set +o allexport; 
+
+git --config-env=gpg.ssh.allowedSignersFile=ALLOWED_SIGNERS_FILE --config-env=user.email=ACTIVE_EMAIL --config-env=user.signingKey=ACTIVE_SIGNING_KEY "$@"
+

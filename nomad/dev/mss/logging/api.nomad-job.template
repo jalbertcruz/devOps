@@ -1,0 +1,88 @@
+job "api" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    network {
+      port "port_server" {
+        to = 80
+      }
+      port "port_ssh" {
+        to = 22
+      }
+    }
+    count = 1
+
+    task "task-api" {
+
+      driver = "docker"
+
+      env {
+        HOST_NAME = "api.service.dc1.consul"
+        ERL_INETRC = "/opt/elixir-app/releases/erl_inetrc"
+      }
+
+      config {
+        image = "jalbert/api:0.1.0-7fba3d"
+
+        hostname = "api.service.dc1.consul"
+
+        ports = [
+          "port_server",
+          "port_ssh",
+        ]
+
+        logging {
+          type = "fluentd"
+          config {
+            fluentd-address = "fluentd.service.dc1.consul:24224"
+            tag = "api.logs"
+          }
+        }
+
+        volumes = [
+          "{{ dev_env_directory_elixir }}:/home/app/src",
+          "{{ dev_env_direnv_alloweds }}:/home/app/.local/share/direnv/allow"
+        ]
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        //        cpu_hard_limit = true
+
+      }
+
+      service {
+        name = "api"
+
+        port = "port_server"
+        //        address_mode = "host" // default
+
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-/api strip=/api"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+
+      resources {
+      }
+
+    }
+  }
+}

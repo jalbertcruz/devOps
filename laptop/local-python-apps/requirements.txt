@@ -1,0 +1,4 @@
+youtube_dl
+httpie
+ansible
+pipenv

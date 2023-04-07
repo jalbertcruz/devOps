@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+cd "${GROK_EXPORTER_HOME}" || true
+
+./grok_exporter -config config2.yml &
+
+echo $! | http put http://172.17.0.2:8500/v1/kv/pid-data-GROK_EXPORTER_SERVER_PID
+
+#consul kv put pid-data-GROK_EXPORTER_SERVER_PID $!
