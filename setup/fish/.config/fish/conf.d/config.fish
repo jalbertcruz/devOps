@@ -41,8 +41,8 @@ set -x LD_LIBRARY_PATH /usr/local/lib/
 # source /media/a/data/installers/Unix/CLI-tools/tmuxinator/completion/tmuxinator.fish
 
 # https://github.com/rbenv/rbenv
-set -x fish_user_paths $HOME/.rbenv/bin $fish_user_paths
-status --is-interactive; and source (rbenv init -|psub)
+# set -x fish_user_paths $HOME/.rbenv/bin $fish_user_paths
+# status --is-interactive; and source (rbenv init -|psub)
 
 # set -x PATH $HOME/appslnx/bin/job $PATH
 penv
@@ -78,3 +78,12 @@ set -g fish_color_valid_path --underline
 
 # Install Starship
 starship init fish | source
+
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+end
+
+set -gx VOLTA_HOME "$HOME/.volta"
+set -gx PATH "$VOLTA_HOME/bin" $PATH
+
+# status --is-interactive; and ~/.rbenv/bin/rbenv init - fish | source

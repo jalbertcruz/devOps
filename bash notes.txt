@@ -318,8 +318,14 @@ $ sudo apt-get autoremove
 tmux new -s a
 tmux a -t a
 tmux kill-session -t a
+
+tmux set-hook -g -t dev-env session-closed  'run-shell "/home/a/src/devOps/nomad/cli/bin/stop-all-nomad-jobs"'
+
 ❯ tmux list-windows
-1: -* (1 panes) [190x28] [layout c8be,190x28,0,0,1] @1 (active)
+1: nomad* (7 panes) [198x45] [layout 731c,198x45,0,0[198x14,0,0{65x14,0,0,3,65x14,66,0,4,66x14,132,0,5},198x14,0,15{65x14,0,15,6,65x14,66,15,7,66x14,132,15,8},198x15,0,30,9]] @3 (active)
+
+# using byoby!
+byobu new-session tmuxp load --yes nm
 
 
 # To shutdown run the command:
@@ -456,7 +462,10 @@ sudo ln -s /opt/python-3.10.0/bin/python3.10 /usr/local/bin/python3.10
 
 ln [OPTION]... [-T] TARGET LINK_NAME
 
-ln -s /path/to/file /path/to/symlink
+ln -s /path/to/file (the existing one) /path/to/symlink (the one being created)
+
+ln -s /home/a/src/cv/utilities-pro-deployment/p8/bin/p8 /home/a/appslnx/bin/p8
+ln -s /home/a/src/cv/utilities-pro-deployment/p8/bin/diyp8 /home/a/appslnx/bin/diyp8
 
 ln -s /home/a/src/ansible/src/logs/td-agent-config/td-agent.conf /home/a/dockers-data/fluentd/td-agent/td-agent.conf
 
@@ -745,18 +754,6 @@ $ wget -m -k -E -l 7 -t 6 -w 1 https://www.mysqltutorial.org/
 # [Question]How do I download age restricted video with youtube-dlc? youtube-dl is fine automatically
 youtube-dl --cookies cookies.txt "https://www.youtube.com/watch?v=BbDWRXd0t-w"
 
-# Ruby
-rbenv versions
-
-cd ~/.rbenv/plugins/ruby-build
-git pull
-cd
-
-rbenv install -l
-
-rbenv install 3.0.2
-rbenv global 3.0.2
-
 # Clojure
 # https://clojure.org/guides/getting_started
 curl -O https://download.clojure.org/install/linux-install-1.10.3.1087.sh
@@ -906,3 +903,11 @@ LINK: data => ../vscode-data/personal/data
 sudo ln -s /home/a/appslnx/web/VSCode/code /usr/local/bin/
 
 sudo ln -s /home/a/appslnx /usr/local/bin/
+
+# killing process
+# https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html
+# kill it now
+kill -9 <pid>
+# kill it gracefully (-15 == SIGTERM)
+kill -15 <pid>
+

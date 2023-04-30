@@ -2,7 +2,8 @@
 job:
   name: postgres
   network:
-    port_server: 5432
+    port_server:
+      to: 5432
   task:
     env:
       POSTGRES_USER: postgres

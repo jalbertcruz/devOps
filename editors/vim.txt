@@ -222,3 +222,21 @@ https://unix.stackexchange.com/questions/30054/whats-the-syntax-for-selecting-a-
 - Go to line 1405 by typing: 1405G.
 - Press V to switch to VISUAL LINE mode and then go to line 1701 by typing: 1701G.
 - Now your lines are selected, you can run a command on them. For example, to replace foo with bar type: :s/foo/bar/.
+
+
+vim-indent-object
+
+https://github.com/michaeljsmith/vim-indent-object/blob/master/doc/indent-object.txt
+
+TEXT OBJECTS                          *ai* *ii* *aI* *iI*     *indtobj-objects*
+
+This plugin defines two new text objects. These are very similar - they differ
+only in whether they include the line below the block or not.
+
+        Key Mapping       Description     ~
+>
+        <count>ai         (A)n (I)ndentation level and line above.
+        <count>ii         (I)nner (I)ndentation level (no line above).
+        <count>aI         (A)n (I)ndentation level and lines above/below.
+        <count>iI         (I)nner (I)ndentation level (no lines above/below).
+<

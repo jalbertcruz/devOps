@@ -24,7 +24,7 @@ windows:
 #  - jobs: sleep 15 && cli/start-nomad-jobs devOps/g
 #  - jobs: sleep 25 && cli/start-nomad-jobs devOps/g0
 #  - jobs: sleep 15 && cli/start-nomad-jobs devOps/observability
-#  - jobs: sleep 15 && cli/start-nomad-jobs general/postgres
+  - jobs: sleep 15 && cli/start-nomad-jobs general/postgres
 #  - jobs: sleep 15 && cli/start-nomad-jobs general/mysql
 #  - jobs: sleep 15 && cli/start-nomad-jobs general/redis
 #  - jobs: sleep 15 && cli/start-nomad-jobs general/sonarqube

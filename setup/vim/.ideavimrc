@@ -11,6 +11,8 @@ set sneak
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 set quickscope
 
+set textobj-indent
+
 """ set argtextobj
 set easymotion
 set textobj-entire

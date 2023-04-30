@@ -1,5 +1,6 @@
 
 set -x PATH /opt/python-3.8.16/bin $PATH
+set -x PATH /opt/python-3.11.3/bin $PATH
 # set -x PATH /opt/python-3.7.14/bin $PATH
 # set -x PATH /opt/python-3.6.15/bin $PATH
 # set -x PATH /opt/python-3.5.10/bin $PATH

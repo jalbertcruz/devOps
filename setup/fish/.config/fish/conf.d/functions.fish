@@ -101,9 +101,9 @@ function venv
   pip install --upgrade pip
   pip install --upgrade wheel
 
-#   if test -e requirements.txt
-#       pip install -r requirements.txt
-#   end
+  if test -e requirements.txt
+      pip install -r requirements.txt
+  end
 
 end
 
