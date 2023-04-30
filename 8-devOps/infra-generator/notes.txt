@@ -1,0 +1,22 @@
+
+http://jaeger1.dev.me:16686/search
+http://jaeger2.dev.me:16686/search
+http://keycloak1.dev.me:8087
+http://keycloak2.dev.me:8087
+http://minio1.dev.me:9012
+http://minio2.dev.me:9012
+mongodb1.dev.me
+mongodb2.dev.me
+nats1.dev.me
+nats2.dev.me
+http://redpanda1.dev.me:8080
+http://redpanda2.dev.me:8080
+
+https://docs.redpanda.com/redpanda-labs/docker-compose/single-broker/
+
+import java.nio.file.{Files, Paths, StandardOpenOption}
+Files.write(Paths.get("file.txt"), "your string\n".getBytes, StandardOpenOption.APPEND, StandardOpenOption.CREATE)
+
+
+
+

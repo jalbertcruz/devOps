@@ -1,0 +1,70 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap Python
+      raw: (apt-get -y update && test -e /usr/bin/python) || (apt-get -y update && apt-get install -y python-minimal)
+
+- name: Provision Hadoop master
+  hosts: all
+
+  tasks:
+    - name: Putting Spark files
+      unarchive:
+        src: files/spark-2.4.4-bin-hadoop2.7.tgz
+        dest: /home/app
+        owner: app
+        group: app
+
+    - name: rename spark
+      raw: mv /home/app/spark* /home/app/spark
+
+    - name: echo app/.profile
+      raw: echo "export PATH=/home/app/spark/bin:\$PATH" >> /home/app/.profile
+
+    - name: echo app/.profile
+      raw: echo "export HADOOP_CONF_DIR=/home/app/hadoop/etc/hadoop" >> /home/app/.profile
+
+    - name: echo app/.profile
+      raw: echo "export SPARK_HOME=/home/app/spark" >> /home/app/.profile
+
+    - name: echo app/.profile
+      raw: echo "export LD_LIBRARY_PATH=/home/app/hadoop/lib/native:\$LD_LIBRARY_PATH" >> /home/app/.profile
+
+    - name: Putting spark-defaults.conf on Spark
+      copy:
+        src: files/spark-defaults.conf.template
+        dest: /home/app/spark/conf/spark-defaults.conf
+        owner: app
+        group: app
+        mode: u+r
+
+    - name: "Creates directory: /etc/services.d/hadoop"
+      file:
+        path: /etc/services.d/hadoop
+        state: directory
+
+    - name: Putting /etc/services.d/hadoop/run
+      copy:
+        src: files/services.d/hadoop/run
+        dest: /etc/services.d/hadoop/run
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    - name: "Creates directory: /home/app/bin"
+      file:
+        path: /home/app/bin
+        state: directory
+        owner: app
+        group: app
+
+    - name: Putting /home/app/bin/master.sh
+      copy:
+        src: files/master.sh
+        dest: /home/app/bin/master.sh
+        owner: app
+        group: app
+        mode: u=rx,g=rx,o=rx

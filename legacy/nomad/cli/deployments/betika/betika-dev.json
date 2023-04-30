@@ -1,0 +1,6 @@
+{
+  "mss/mysql": ["mss/rabbitmq", "mss/redis"],
+  "mss/logging/grafana": [
+    "mss/logging/prom"
+  ]
+}

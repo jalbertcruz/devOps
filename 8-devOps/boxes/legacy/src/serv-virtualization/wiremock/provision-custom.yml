@@ -1,0 +1,44 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+
+- name: Provision custom wiremock app
+  hosts: all
+
+  tasks:
+    - name: "Creates directory: /etc/services.d/custom-wiremock"
+      file:
+        path: /etc/services.d/custom-wiremock
+        state: directory
+
+    - name: "Creates directory: /files-and-mappings-root"
+      file:
+        path: /files-and-mappings-root
+        state: directory
+
+    - name: Putting /etc/services.d/custom-wiremock/run
+      copy:
+        src: files/services.d/custom-wiremock/run
+        dest: /etc/services.d/custom-wiremock/run
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    - name: Putting /usr/bin/custom_wiremock.sh
+      copy:
+        src: files/scripts/custom-wiremock.sh
+        dest: /usr/bin/custom-wiremock.sh
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    - name: Putting custom_wiremock-*-*-all
+      copy:
+        src: files/custom_wiremock-2.26.0-1.0.0-all.jar
+        dest: /home/app/custom_wiremock-2.26.0-1.0.0-all.jar
+        mode: u=rx,g=rx,o=rx

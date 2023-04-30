@@ -1,0 +1,5 @@
+[http-basic.trinity-gitlab]
+username = "__token__"
+
+[http-basic.trinity-commons]
+username = "__token__"

@@ -1,0 +1,50 @@
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: ./pki/personal.local+9.pem
+        keyFile: ./pki/personal.local+9-key.pem
+  certificates:
+    - certFile: ./pki/personal.local+9.pem
+      keyFile: ./pki/personal.local+9-key.pem
+      stores:
+        - default
+
+tcp:
+  routers:
+    postgres-router:
+      entryPoints:
+        - postgres
+      rule: "HostSNI(`demo.personal.local`)"
+      service: postgres-service1
+      tls:
+         options: default
+
+    postgres-router2:
+      entryPoints:
+        - postgres
+      rule: "HostSNI(`demo2.personal.local`)"
+      service: postgres-service2
+      tls:
+        options: default
+
+  services:
+    postgres-service1:
+      loadBalancer:
+        servers:
+          - address: "0.0.0.0:5432"
+    postgres-service2:
+      loadBalancer:
+        servers:
+          - address: "0.0.0.0:5433"
+
+http:
+  routers:
+    routerfoo:
+      rule: "Host(`docker-registry.personal.test`)"
+      service: registry-service
+  services:
+    registry-service:
+      loadBalancer:
+        servers:
+          - url: "http://0.0.0.0:5001"

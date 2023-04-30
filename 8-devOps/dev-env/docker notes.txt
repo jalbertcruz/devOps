@@ -1,0 +1,24 @@
+
+docker events --filter container=<your_container_id>
+
+Output:
+
+2025-05-04T18:20:01Z container create ...
+2025-05-04T18:20:02Z container start ...
+2025-05-04T18:20:03Z container health_status: unhealthy ...
+2025-05-04T18:20:04Z container kill signal=SIGTERM
+2025-05-04T18:20:04Z container restart
+
+👉And boom.
+Healthcheck failed → container killed → Docker auto-restarted it.
+
+And your app logs?
+They don’t show that. Because the healthcheck is outside your main process.
+
+Bonus tips:
+
+- Scope timeframes:
+docker events --since 30m --until "2025-05-04T18:00:00"
+
+- Want structured output?
+docker events --format '{{json .}}'

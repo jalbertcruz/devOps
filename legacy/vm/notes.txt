@@ -1,0 +1,13 @@
+
+# set the guest kernel
+sgk
+
+# set the guest roots
+sgr
+
+# start the guest machine
+sgm
+
+
+https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.10.99.tar.xz
+

@@ -1,0 +1,3 @@
+mode = "aware"
+[dirs.env]
+virtual = ".venv"

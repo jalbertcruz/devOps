@@ -1,0 +1,4 @@
+
+# proxies
+## local capture
+mitmweb --mode local:main

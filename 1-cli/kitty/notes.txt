@@ -1,0 +1,5 @@
+
+sudo ln -s "/home/z/appslnx/tools/kitty/bin/kitty" "/usr/local/bin/kitty"
+sudo ln -s "/home/z/appslnx/tools/kitty/bin/kitten" "/usr/local/bin/kitten"
+
+https://sw.kovidgoyal.net/kitty/conf/

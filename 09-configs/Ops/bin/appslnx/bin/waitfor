@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+set -u
+set -o pipefail
+
+pid="$1"
+# https://manpages.ubuntu.com/manpages/jammy/man1/systemd-inhibit.1.html
+# https://man.archlinux.org/man/systemd-inhibit.1.en
+# TODO: use fzf to select a process if no PID is given
+if hash systemd-inhibit 2>/dev/null; then
+  systemd-inhibit \
+    --who=waitfor \
+    --why="Awaiting PID $pid" \
+    tail --pid="$pid" -f /dev/null
+else
+  tail --pid="$pid" -f /dev/null
+fi

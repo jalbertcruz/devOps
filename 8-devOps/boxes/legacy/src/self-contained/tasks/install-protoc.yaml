@@ -1,0 +1,15 @@
+
+- name: Create protoc dir
+  file:
+    path: /usr/lib/protoc
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Putting protoc-chain
+  unarchive:
+    src: https://github.com/protocolbuffers/protobuf/releases/download/v3.15.8/protoc-3.15.8-linux-x86_64.zip
+    dest: /usr/lib/protoc
+    remote_src: yes
+    validate_certs: no

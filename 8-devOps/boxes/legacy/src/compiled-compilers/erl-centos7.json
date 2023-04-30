@@ -1,0 +1,36 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "jalbert/centos:7",
+      "commit": true,
+      "changes": [
+        "ENTRYPOINT [\"/init\"]",
+        "EXPOSE 22",
+        "ENV NOTVISIBLE \"in users profile\""
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "ansible_env_vars": [
+        "ANSIBLE_DISTRIBUTION=centos",
+        "ERLANG_VERSION=22.2",
+        "PYTHON_VERSION=3.8.1"
+      ],
+      "playbook_file": "provision.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/erlang",
+        "tag": "222-centos7"
+      },
+      "docker-push"
+    ]
+  ]
+}

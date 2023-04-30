@@ -1,0 +1,5 @@
+nats-1: 
+  command: nats-server -config server.conf
+  working_dir: wdir/nats
+  environment: 
+    - NATS_PORT=10024

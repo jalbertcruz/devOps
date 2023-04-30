@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# This script is used to create a new worktree from a branch
+
+DIR_SEARCH_BASE_PATH_LOCAL="${DIR_SEARCH_BASE_PATH:-../..}"
+SEARCH_MAX_DEPTH_LOCAL="${SEARCH_MAX_DEPTH:-4}"
+PATTERNS_TO_EXCLUDE_LOCAL="${PATTERNS_TO_EXCLUDE:-.git|.venv}"
+
+BARE_GIT_DIR=".git"
+if ! test -d $BARE_GIT_DIR; then
+  echo "Your are not in a git repository."
+  exit 0
+fi
+
+# TODO: check if there is enough space available
+# - a = size of the bigger folder in "context"
+# - b = available space in the disk
+# a < b
+
+branches=($(git for-each-ref --format='%(refname:short)' refs/heads/))
+
+export GUM_CHOOSE_HEADER="Choose branch:"
+
+brch=$(gum choose "${branches[@]}") && {
+  cdir=$(pwd)
+  cd $DIR_SEARCH_BASE_PATH_LOCAL
+  dest=$(fd --max-depth $SEARCH_MAX_DEPTH_LOCAL --type d --type e | rg --invert-match -e $PATTERNS_TO_EXCLUDE_LOCAL |
+    fzf --header "Choose destination directory to create the worktree:") && {
+    cd $cdir
+    git worktree add "$DIR_SEARCH_BASE_PATH_LOCAL/$dest" $brch
+    echo $dest
+  }
+}

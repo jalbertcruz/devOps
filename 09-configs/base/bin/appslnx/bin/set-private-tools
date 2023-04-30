@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+
+from pathlib import Path
+import os
+
+def is_running_as_sudo():
+    return os.geteuid() == 0
+
+if __name__ == "__main__":
+    current = Path(os.getenv("PRIVATE_TOOLS_VENV")) / "bin"
+    reference = Path(os.getenv("PRIVATE_TOOLS_REFERENCE_VENV")) / "bin"
+    private_tools = Path(os.getenv("PRIVATE_TOOLS"))
+    # Ensure private_tools directory exists
+    if not private_tools.exists():
+        private_tools.mkdir(parents=True, exist_ok=True)
+    def get_x_ok(ex: Path):
+        return [v.parts[-1] for v in ex.glob("*") if v.is_file() and os.access(v, os.X_OK)]
+    c = get_x_ok(current)
+    r = get_x_ok(reference)
+    c = set(c)
+    r = set(r)
+    diff = c - r
+    exclusions = set([
+        "markdown-it",
+        "pygmentize",
+        "typer",
+        "normalizer",
+        # "slugify",
+        "dotenv",
+        "filetype",
+        "coverage-3.13",
+        "coverage",
+        "coverage3",
+        "doesitcache",
+        "dul-receive-pack",
+        "dulwich",
+        "dul-upload-pack",
+        "pkginfo",
+        "keyring",
+        "file-contents-sorter",
+        "forbid-new-submodules",
+        "forbid-submodules",
+        "findpython",
+        "httpx",
+        "pbs-install",
+        "nodeenv",
+        "watchfiles",
+
+        "rst2html.py", # awscli
+        "rst2xetex.py",
+        "rst2s5.py",
+        "pyrsa-encrypt",
+        "pyrsa-sign",
+        "aws_bash_completer",
+        "pyrsa-keygen",
+        "rst2xml.py",
+        "rst2man.py",
+        "rst2html4.py",
+        "rst2odt.py",
+        "rst2html5.py",
+        "aws.cmd",
+        "rstpep2html.py",
+        "pyrsa-priv2pub",
+        "rst2odt_prepstyles.py",
+        "aws_completer",
+        "pyrsa-decrypt",
+        "jp.py",
+        "aws_zsh_completer.sh",
+        "rst2latex.py",
+        "rst2pseudoxml.py",
+        "pyrsa-verify",
+
+        "diff-quality", # sqlfluff
+        "py.test",
+        "tqdm",
+        "diff-cover",
+        "pytest",
+        "chardetect",
+
+        "get_gprof",
+        "pyre.bin",
+        "stubgen",
+        "yapf-diff",
+        "isort-identify-imports",
+        "ninja",
+        "pylint-config",
+        "publish",
+        "mypyc",
+        "undill",
+        "annotate-ast",
+        "dmypy",
+        "pytd",
+        "pytype-single",
+        "docutils",
+        "pyre-upgrade",
+        "stubtest",
+        "symilar",
+        "pyreverse",
+        "merge-pyi",
+        "tabulate",
+        "testslide",
+        "get_objgraph",
+        "importlab",
+        "publish.py",
+        "mutagen-pony",
+        "mid3iconv",
+        "trove-classifiers",
+        "mid3v2",
+        "moggsplit",
+        "mid3cp",
+
+        "pyftsubset", # weasyprint
+        "pyftmerge",
+        "ttx",
+        "fonttools",
+        "virtualenv",
+        "python3.12",
+        "python3.13",
+        "pip3.13",
+        "python3.14",
+        "pip3.14",
+        "",
+
+        # "register-python-argcomplete",
+        # "hjson",
+        # "jsonschema",
+        # "milc-color",
+        # "pyserial-miniterm",
+        # "activate-global-python-argcomplete",
+        # "python-argcomplete-check-easy-install-script",
+        # "pyserial-ports",
+
+        # "barman-cloud-wal-restore", # barman
+        # "barman-cloud-backup-keep",
+        # "barman-cloud-backup-delete",
+        # "barman-cloud-backup-list",
+        # "barman-cloud-check-wal-archive",
+        # "barman-cloud-backup",
+        # "barman-wal-restore",
+        # "barman-cloud-wal-archive",
+        # "barman-wal-archive",
+        # "barman-cloud-restore",
+        # "barman-cloud-backup-show",
+
+        "",
+
+        #        "",
+    ])
+    sudo_apps = set([
+        "_to-package-elf-deps",
+        "podman-compose",
+#        "",
+    ])
+    if not is_running_as_sudo():
+      for v in diff - exclusions - sudo_apps:
+          target = private_tools / v
+          link = current / v
+          if not target.exists():
+              print(f"Linking {target} to {link}")
+              target.symlink_to(link)
+    else:
+        # sudo -E ./set-private-tools
+        personal_tools_dir = Path("/usr/local/bin")
+        for v in sudo_apps.intersection(diff):
+            target = personal_tools_dir / v
+            link = current / v
+            if not target.exists():
+                print(f"Linking {target} to {link}")
+                target.symlink_to(link)

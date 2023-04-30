@@ -1,0 +1,67 @@
+# fish
+$ fisher install edc/bass
+https://github.com/edc/bass
+
+# GitHub cli gh
+gh completion --shell fish > gh.fish
+
+
+Define an alias in fish shell
+# https://stackoverflow.com/questions/2762994/define-an-alias-in-fish-shell
+
+# This is equivalent to entering the following function:
+function rmi
+    rm -i $argv
+end
+# Then, to save it across terminal sessions:
+funcsave rmi
+This last command creates the file ~/.config/fish/functions/rmi.fish
+
+# https://stackoverflow.com/questions/45360612/fish-shell-automatic-directory-specific-functions#:~:text=Take%20a%20look,to%20%24PWD%0Aend
+Take a look at the --on-variable flag for the function statement. You can define a function like this that runs whenever the PWD changes:
+
+function react_to_pwd --on-variable PWD
+   echo Reacting to PWD changing to $PWD
+end
+
+## How to access arguments in a fish script
+In fish, your arguments are contained in the $argv list. Use list slicing to access a range of elements, e.g. $argv[2..-1] returns all arguments from the second to the last.
+- keep in mind that indexes start at 1, i.e. $argv[1]
+
+function loop --description "loop <count> <command>"
+  for i in (seq 1 $argv[1])
+    eval $argv[2..-1]
+  end
+end
+$ loop 3 echo hello world
+hello world
+hello world
+hello world
+
+The behaviour of the shift command can be simulated with set -e/--erase VARIABLE_NAME.
+
+The idea is to erase the first argument, then get the remaining arguments from the $argv list.
+
+function loop  --description "loop <count> <command>"
+  set count $argv[1]
+  set --erase argv[1]
+  for i in (seq 1 $count)
+    eval $argv
+  end
+end
+$ loop 3 echo hello world
+hello world
+hello world
+hello world
+
+You could also use read which is more readable in my opinion:
+function loop
+  echo $argv | read -l count command
+  for i in (seq 1 $count)
+    eval $command
+  end
+end
+
+This works better especially when you want to use more than the first argument.
+echo $argv | read -l first second rest
+

@@ -1,0 +1,14 @@
+https://stackoverflow.com/questions/46704572/error-with-previously-committed-files-which-matches-new-git-lfs-filter
+Encountered 7 file(s) that should have been pointers, but weren't:
+
+## solutions
+git lfs uninstall
+git reset --hard
+git lfs install
+git lfs pull
+
+git rm --cached -r .
+git reset --hard
+git rm .gitattributes
+git reset .
+git checkout .

@@ -1,0 +1,15 @@
+---
+
+- name: Provision s6-ssh
+  hosts: localhost
+#  become: yes
+#  become_method: sudo
+#  become_user: root
+
+  tasks:
+    - name: Python
+      include_role:
+        name: python
+      vars:
+        ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+

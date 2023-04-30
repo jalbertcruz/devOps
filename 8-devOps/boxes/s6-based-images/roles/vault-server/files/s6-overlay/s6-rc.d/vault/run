@@ -1,0 +1,8 @@
+#!/command/with-contenv sh
+
+FILE=/data/raft-vault/vault.db
+if [ ! -f "$FILE" ]; then
+  cp -r /backup/* /data/raft-vault/
+fi
+
+vault server -log-level=trace -config=/configs/config-vault.hcl

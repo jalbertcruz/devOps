@@ -1,0 +1,10 @@
+
+- name: Creates directory
+  file:
+    path: /app
+    state: directory
+
+- name: Put demo app
+  ansible.builtin.copy:
+    src: files/Main.class
+    dest: /app/Main.class

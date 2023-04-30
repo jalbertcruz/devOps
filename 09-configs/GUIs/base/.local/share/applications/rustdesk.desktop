@@ -1,0 +1,11 @@
+[Desktop Entry]
+X-AppImage-Arch=x86_64
+X-AppImage-Version=1.3.9
+X-AppImage-Name=rustdesk
+Name=rustdesk
+Exec=/usr/local/bin/appslnx/tools/rustdesk/squashfs-root/AppRun
+Icon=/usr/local/bin/appslnx/tools/rustdesk/rustdesk.svg
+Type=Application
+Terminal=false
+Categories=Utility;
+Comment=

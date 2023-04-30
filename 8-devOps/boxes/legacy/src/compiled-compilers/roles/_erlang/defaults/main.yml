@@ -1,0 +1,31 @@
+---
+
+erlang_version: "{{ lookup('env','ERLANG_VERSION') }}"
+kerl_download_url: https://raw.githubusercontent.com/kerl/kerl/master/kerl
+kerl_working_dir: /kerl_files
+erlang_sources_dir: /root/.kerl/archives
+
+erlang_build_debian_deps:
+  - libssl-dev
+  - make
+  - automake
+  - gcc
+  - libncurses5-dev
+  - procps
+  - unzip
+  - git
+  - curl
+
+erlang_build_centos_deps:
+  - openssl-devel
+  - make
+  - automake
+  - gcc-c++
+  - ncurses-devel
+  - procps-ng
+  - unzip
+  - git
+  - curl
+  - gzip
+  - tar
+  - ca-certificates

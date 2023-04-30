@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# This script is used to update git local configs
+
+git_config=.git/config
+
+if ! test -f $git_config; then
+  echo "File '$git_config' does not exist."
+  exit 0
+fi
+
+if test -f "${git_config}.tmp"; then
+  echo "Restoring ${git_config} from backup"
+  rm -f $git_config
+  cp "${git_config}.tmp" $git_config
+else
+  echo "Backing up ${git_config} to ${git_config}.tmp"
+  cp $git_config "${git_config}.tmp"
+fi
+
+git config --local commit.gpgsign $SIG_COMMIT
+git config --local gpg.ssh.allowedSignersFile $ALLOWED_SIGNERS_FILE
+git config --local user.email $ACTIVE_EMAIL
+git config --local user.signingKey $ACTIVE_SIGNING_KEY
+git config --local core.hooksPath $HOOKS_PATH

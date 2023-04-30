@@ -1,0 +1,7 @@
+entryPoints:
+  web:
+    address: :8200
+
+providers:
+  file:
+    directory: /configs/traefik/

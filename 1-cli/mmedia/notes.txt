@@ -1,0 +1,8 @@
+
+
+❯ gocatcli find '(?i)SEA'
+
+gocatcli index <some-path>
+gocatli nav
+gocatli tree
+

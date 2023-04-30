@@ -1,0 +1,8 @@
+import domain.
+
+main(Args) =>
+    Args = [Arg | _],
+    W = to_integer(Arg),
+    first_vcodec_large(R, W),
+    Res = to_string(R),
+    printf("%s", Res).

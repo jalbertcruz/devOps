@@ -1,0 +1,32 @@
+
+- name: Create app group
+  group:
+    name: app
+    state: present
+
+- name: Create user
+  user:
+    name: app
+    state: present
+    group: app
+    shell: /bin/bash
+    groups:
+      - app
+      - staff
+      - sudo
+
+- name: Insert a line at the end of a file
+  lineinfile:
+    path: /home/app/.bashrc
+    line: 'export KERL_CONFIGURE_OPTIONS={{ kerl_configure_options }}'
+
+- name: "setting permissions to /etc/passwd"
+  raw: chmod 777 /etc/passwd
+
+- name: Create workdir
+  file:
+    path: /home/app/src
+    state: directory
+    owner: app
+    group: app
+    mode: 0755

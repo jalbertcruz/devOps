@@ -1,0 +1,30 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "ubuntu:20.04",
+      "commit": true,
+      "changes": [
+        "USER root",
+        "ENV PATH \"$PATH:/usr/lib/protoc/bin:/usr/lib/sbt/bin\""
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "provision-j11.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/scala",
+        "tags": "2.13-sbt-1.4-j11"
+      },
+      "docker-push"
+    ]
+  ]
+}

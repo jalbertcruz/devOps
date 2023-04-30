@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+shopt -s nullglob  # Ignore failed globs (if no files exist)
+
+#shopt -s nullglob  # Ignore unmatched globs (no files)
+#files=(*.yaml *.yml)
+#
+#if (( ${#files[@]} == 0 )); then
+#    echo "No YAML files found." >&2
+#    exit 1
+#fi
+
+my_array=("jaeger" "keycloak" "minio" "mongodb" "nats")
+
+element=${my_array[0]}
+
+current=$(pwd)
+cd out/$element
+files=(*.yaml *.yml)
+first_yaml=${files[0]}
+yq ".processes += load(\"$first_yaml\")" ../../process-compose-origin.yml > ../process-compose.yml
+for file in "${files[@]:1}"; do
+  yq -i ".processes += load(\"$file\")" ../process-compose.yml
+done
+cd $current
+
+for element in "${my_array[@]:1}"; do
+  current=$(pwd)
+  cd out/$element
+  files=(*.yaml *.yml)
+  for file in "${files[@]}"; do
+    yq -i ".processes += load(\"$file\")" ../process-compose.yml
+  done
+  cd $current
+done
+
+cp out/process-compose.yml $HOME/src/infra/process-compose/process-compose.yml
+

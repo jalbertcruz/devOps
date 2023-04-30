@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cp out/haproxy.cfg /etc/haproxy/haproxy.cfg
+cp out/dnsmask.conf /etc/dnsmasq.conf
+systemctl restart haproxy
+systemctl restart dnsmasq

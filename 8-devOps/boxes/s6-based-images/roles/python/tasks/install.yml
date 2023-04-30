@@ -1,0 +1,34 @@
+---
+
+
+- name: Creating directories for Python compilation
+  file:
+    path: "/home/app/temp/python-src-{{ version }}"
+    state: directory
+
+- name: Downloading Python srcs
+  get_url:
+    url: "https://www.python.org/ftp/python/{{ version }}/Python-{{ version }}.tgz"
+    dest: "/home/app/temp/python-src-{{ version }}/Python-{{ version }}.tgz"
+
+- name: Unarchive a file that is already on the remote machine
+  unarchive:
+    src: "/home/app/temp/python-src-{{ version }}/Python-{{ version }}.tgz"
+    dest: "/home/app/temp/python-src-{{ version }}"
+    remote_src: yes
+
+#- name: Building Python
+#  raw: "cd /home/app/temp/python-src-{{ version }}/Python-{{ version }} && ls -a"
+#  register: hello
+#
+#- debug: msg="{{ hello.stdout_lines }}"
+
+- name: "Building Python {{ version }}"
+  raw: "cd /home/app/temp/python-src-{{ version }}/Python-{{ version }} && CC=gcc-9 ./configure --enable-optimizations --prefix=/opt/python-{{ preffix }} && make altinstall"
+
+#- name: Building Python
+#  raw: "cd /home/app/temp/python-src-{{ version }}/Python-{{ version }} && cat config.log"
+#  register: hello
+
+#- debug: msg="{{ hello.stdout_lines }}"
+

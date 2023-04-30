@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+if [ "$#" -eq 0 ]; then
+  _ACTION="connect"
+else
+  case $1 in
+  connect)
+    _ACTION="connect"
+    ;;
+  stop)
+    _ACTION="stop"
+    ;;
+  *)
+    _ACTION="stop-all"
+    ;;
+  esac
+fi
+
+case $_ACTION in
+connect)
+  res=$(_boxes-names | fzf) && {
+    port=$(_run-box "$res")
+    echo "Connecting to $res on port $port"
+    ssh -o "StrictHostKeyChecking no" -p $port app@localhost
+  }
+  ;;
+stop)
+  res=$(_boxes-names | fzf) && {
+    name=$(echo "$res" | slugify --stdin)
+    echo "Stoping: '$res'"
+    docker stop "$name"
+  }
+  ;;
+stop-all)
+  echo "default"
+  docker ps --filter "label=custom.type=pdi" | tail -n +2 | cut -d " " -f 1 | xargs -I {} docker stop {}
+  ;;
+esac

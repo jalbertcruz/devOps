@@ -1,0 +1,29 @@
+---
+
+- name: Repos update
+  hosts: all
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install epel-release
+      raw: yum install epel-release
+
+    - name: Update repos
+      raw: yum -y update
+
+- name: Provision server
+  hosts: all
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: Install runtime deps
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - python-pip
+
+    - name: Install required libraries
+      raw: pip install boto boto3 botocore awscli

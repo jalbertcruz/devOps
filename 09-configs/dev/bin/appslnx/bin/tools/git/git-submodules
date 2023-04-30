@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+SEARCH_MAX_DEPTH_LOCAL="${SEARCH_MAX_DEPTH:-4}"
+PATTERNS_TO_EXCLUDE_LOCAL="${PATTERNS_TO_EXCLUDE:-.git|.venv}"
+
+whatToDo=$(gum choose "add" "remove" "update-all")
+
+case $whatToDo in
+"add")
+  dest=$(fd --max-depth $SEARCH_MAX_DEPTH_LOCAL --type d --type e | rg --invert-match -e $PATTERNS_TO_EXCLUDE_LOCAL | fzf --header "Choose destination directory for the submodule")
+  if [[ $dest ]]; then
+    remoteRepo=$(xclip -o -selection clipboard)
+    if [[ $remoteRepo != https* ]] && [[ ! -d $remoteRepo ]]; then
+      remoteRepo=$(gum input --placeholder "Enter submodule repository:")
+    fi
+    rm -rf "$dest"
+    git -c protocol.file.allow=always submodule add "$remoteRepo" "$dest"
+  fi
+  ;;
+
+"remove")
+  submodule=$(git config --file .gitmodules --get-regexp path | awk '{ print $2 }' | gum choose)
+  if [[ $submodule ]]; then
+    echo "Removing submodule" $submodule
+    git rm $submodule
+    rm -rf .git/modules/$submodule
+    git config --remove-section submodule.$submodule
+  fi
+  ;;
+
+"update-all")
+  git -c protocol.file.allow=always submodule update --init --recursive --remote
+  ;;
+
+esac

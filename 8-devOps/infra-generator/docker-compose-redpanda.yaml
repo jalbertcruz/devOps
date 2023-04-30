@@ -1,0 +1,12 @@
+
+volumes:
+  redpanda1-data:
+    name: ${KAFKA_1_VOLUME}
+    external: true
+  redpanda2-data:
+    name: ${KAFKA_2_VOLUME}
+    external: true
+networks:
+  dev-network:
+    name: dev-network
+    external: true

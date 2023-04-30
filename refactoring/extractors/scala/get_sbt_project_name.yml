@@ -1,0 +1,11 @@
+id: get_sbt_project_name
+language: scala
+rule:
+  pattern: |
+    $A
+  kind: string
+  inside:
+    pattern: |
+      name := $A
+    stopBy:
+      kind: infix_expression

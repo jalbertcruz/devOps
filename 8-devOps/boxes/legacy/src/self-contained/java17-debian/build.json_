@@ -1,0 +1,31 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "debian:bullseye-slim",
+      "commit": true,
+      "changes": [
+        "USER root",
+        "WORKDIR /workdir"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "provision-j17.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "gitlab.betika.private:4567/platform-dev/libraries/jdk-oracle",
+        "tags": "17"
+      },
+      "docker-push"
+    ]
+  ]
+
+}

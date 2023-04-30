@@ -1,0 +1,8 @@
+
+- name: Putting configurations
+  template:
+    src: templates/configuration.sh.j2
+    dest: /home/app/configuration.sh
+    owner: app
+    group: app
+    mode: u=rx,g=rx,o=rx

@@ -1,0 +1,23 @@
+set shell := ["sh", "-c"]
+set allow-duplicate-recipes := true
+set positional-arguments := true
+set dotenv-load := true
+set export := true
+
+default: run
+
+one-time:
+    #!/usr/bin/env bash
+
+    touch one-time-ran.txt
+    current=$(cat one-time-ran.txt)
+    hash=$(cat requirements.txt justfile | md5sum | awk '{ print $1 }')
+    if [ "$current" != "$hash" ]; then
+        echo "$hash" > one-time-ran.txt
+        echo "This is the first run after changes to the files."
+    else
+        echo "The files have not changed since the last run."
+    fi
+
+run: one-time
+    @echo "Running the main task..."

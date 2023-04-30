@@ -1,0 +1,10 @@
+
+google: Sni postgres jdbc
+
+jdbc:postgresql://your_host:5432/your_database?sslmode=verify-full&sslrootcert=path/to/root.crt&host=your_host
+
+
+
+jdbc:postgresql://localhost:55432/service?sslmode=verify-full&virtualHost=demo.personal.local
+
+&sslrootcert=/home/z/src/devOps/07-DBs/postgres/traefik/tls-example/pki/personal.local+5.pem

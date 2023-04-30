@@ -1,0 +1,13 @@
+
+- name: Put Nodejs
+  unarchive:
+    src: https://nodejs.org/dist/v20.15.1/node-v20.15.1-linux-x64.tar.xz
+    dest: /usr/bin
+    remote_src: yes
+    validate_certs: no
+
+- name: make symlinks for node
+  raw: ln -s /usr/bin/node-v20.15.1-linux-x64/bin/node /usr/bin/node
+
+- name: make symlinks for npm
+  raw: ln -s /usr/bin/node-v20.15.1-linux-x64/bin/npm /usr/bin/npm

@@ -1,0 +1,72 @@
+---
+
+- name: Installing Elixir application
+  hosts: aws_ec2
+  become: yes
+  become_method: sudo
+
+  vars:
+    app_name: payment_services
+    app_name_full: Payment services application
+    installation_path: /app
+    parameter_store_paths: "'/payments/x' '/payments/y'"
+    s3_release_bucket: "{{ lookup('env','S3_RELEASE_BUCKET') }}"
+    ec2_instance_role: "{{ lookup('env','AWS_EC2_INSTANCE_ROLE') }}"
+
+  tasks:
+
+    - name: Create aws config file
+      file:
+        path: /home/centos/.aws
+        state: directory
+        owner: centos
+        group: centos
+        mode: 0755
+
+    - name: aws config file, using symbolic modes
+      template:
+        src: templates/ec2-awscli-config.j2
+        dest: /home/centos/.aws/config
+        owner: centos
+        group: centos
+        mode: u=r,g=r,o=r
+
+    - name: Create installation dir
+      file:
+        path: "{{ installation_path }}"
+        state: directory
+        owner: centos
+        group: centos
+        mode: 0755
+
+    - name: Downloading release from S3
+      aws_s3:
+        bucket: "{{ s3_release_bucket }}"
+        object: "{{ app_name }}-centos7.tar"
+        dest: "{{ installation_path }}/{{ app_name }}.tar"
+        mode: get
+
+    - name: Unpacking
+      raw: "tar xf {{ installation_path }}/{{ app_name }}.tar -C {{ installation_path }}"
+
+    - name: Clean unpacking
+      raw: "rm -Rf {{ installation_path }}/{{ app_name }}.tar"
+
+    - name: Entrypoint file, using symbolic modes
+      template:
+        src: templates/entrypoint-aws-ec2.sh.j2
+        dest: /usr/local/bin/entrypoint.sh
+        owner: centos
+        group: centos
+        mode: u=rx,g=rx,o=rx
+
+    - name: systemd service, using symbolic modes
+      template:
+        src: templates/systemd-elixir.service.j2
+        dest: "/etc/systemd/system/{{ app_name }}.service"
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    - name: Service creation/activation
+      raw: "systemctl daemon-reload && systemctl enable {{ app_name }}.service && systemctl start {{ app_name }}.service"

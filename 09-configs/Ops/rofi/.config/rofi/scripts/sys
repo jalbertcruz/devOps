@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+case "$(printf "shutdown\nreboot" | rofi -dmenu)" in
+	reboot) systemctl reboot -i ;;
+	shutdown) shutdown now ;;
+	*) exit 1 ;;
+esac

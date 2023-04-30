@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+sel=$(eza --only-dirs "$UPDATES_REGISTRY" | fzf)
+if [ -z "$sel" ]; then
+  echo "No selection made."
+  exit 1
+fi
+
+CONFIG_FILE="$UPDATES_REGISTRY/${sel}/.reference-config.yaml"
+lang=$(yq '.dependencies.lang' $CONFIG_FILE)
+templatePath=$(yq '.dependencies.templatePath' $CONFIG_FILE)
+cpwd=$(pwd)
+
+if [ $cpwd == "$templatePath" ]; then
+  echo "You can not run this script from the template directory."
+  exit 1
+fi
+
+readarray cases < <(eza --only-files "$UPDATES_REGISTRY/${sel}/rules")
+
+#echo "cases: "
+#echo "${cases[@]}"
+
+for it in "${cases[@]}"; do
+  cd "$templatePath"
+  path="$UPDATES_REGISTRY/${sel}/rules/$it"
+
+  IFS= read -rd '' output < <(ast-grep scan --rule $path --json | jq -r '.[0].text')
+  cd "$cpwd"
+  value="$output" yq '.fix = strenv(value)' $path >_rule.yml
+  ast-grep scan --rule _rule.yml --update-all
+  rm _rule.yml
+done

@@ -1,0 +1,12 @@
+
+https://stackoverflow.com/questions/72500740/how-to-access-localhost-on-rootless-docker
+
+Rootless Docker v26.0 now allows you to disable host-loopback-isolation via an EV. DOCKERD_ROOTLESS_ROOTLESSKIT_DISABLE_HOST_LOOPBACK=false. The EV must be set when the rootless docker service starts. It will enable container-to-host communication via the 10.0.2.2 address.
+
+
+curl -s localhost:5000/v2/_catalog | jq
+{
+  "repositories": []
+}
+
+curl -s docker-registry.personal.test:5000/v2/_catalog | jq

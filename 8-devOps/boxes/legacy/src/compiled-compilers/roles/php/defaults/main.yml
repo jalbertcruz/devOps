@@ -1,0 +1,56 @@
+---
+
+swoole_version: "{{ lookup('env','SWOOLE_VERSION') }}"
+
+swoole_download_url: "https://github.com/swoole/swoole-src/archive/v{{ swoole_version }}.tar.gz"
+
+php_build_centos_deps:
+  - openssl-devel
+  - make
+  - automake
+  - gcc-c++
+  - ncurses-devel
+  - procps-ng
+  - unzip
+  - git
+  - curl
+  - gzip
+  - tar
+  - ca-certificates
+
+  - php74
+  - php74-php-devel
+  - php74-php-fpm
+  - php74-php-gd
+  - php74-php-pdo
+  - php74-php-mysql
+  - php74-php-xml
+  - php74-php-mbstring
+  - php74-php-zip
+  - php74-php-opcache
+  - php74-php-redis
+  - php74-php-process
+  - php74-php-bcmath
+  - ca-certificates
+  - curl
+  - tar
+  - xz
+  - tzdata
+  - pcre
+
+php_build_debian_deps:
+  - ca-certificates
+  - curl
+  - unzip
+  - php-apcu
+  - php-apcu-bc
+  - php7.4-cli
+  - php7.4-curl
+  - php7.4-json
+  - php7.4-mbstring
+  - php7.4-opcache
+  - php7.4-readline
+  - php7.4-xml
+  - php7.4-zip
+  - php7.4-fpm
+  - php7.4-dev

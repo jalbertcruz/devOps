@@ -1,0 +1,45 @@
+
+
+https://yazi-rs.github.io/docs/configuration/yazi#plugin.previewers
+https://github.com/wustho/epy
+
+curl http://10.0.2.2:8000
+curl http://host.docker.internal:8000
+curl http://host.containers.internal:8000
+curl http://server:8000
+
+miktexsetup --verbose --remote-package-repository=https://mirrors.ibiblio.org/pub/mirrors/CTAN/systems/win32/miktex/tm/packages/ --local-package-repository=/media/z/data/installers/Latex-edition/MikTex/repo2 --package-set=complete download
+
+
+❯ miktexsetup --help
+Usage: miktexsetup cleanup|download|finish
+      --common-config=DIR                    Set the location of the common configuration directory. This option requires administrator privileges.
+      --common-data=DIR                      Set the location of the common data directory. This option requires administrator privileges.
+      --common-install=DIR                   Set the location of the common installation directory. This option requires administrator privileges.
+      --common-link-target-directory=DIR     Set the system-wide directory in which to create symbolic links to MiKTeX executables.
+      --common-roots=DIRS                    Register additional directories for all users. DIRS must be a semicolon-separated list of fully qualified path names. This option requires administrator privileges.
+      --list-repositories                    Download the list of known package repository URLs from the MiKTeX project server, then print the list.
+      --local-package-repository=DIR         Download into (install from) the specified directory.
+      --modify-path[=yes|no]                 Add MiKTeX to the PATH variable (--modify-path=yes). With --modify-path=no, the modification of PATH will be prevented.
+      --package-set=SET                      Set the package set (one of: essential, basic, complete).
+      --portable=DIR                         Set up MiKTeX Portable.
+      --print-info-only                      Print information about what would be done and exit.
+      --print-program-version                Print the program version number and exit.
+      --print-miktex-version                 Print the MiKTeX version number and exit.
+      --quiet                                Suppress all output (except errors).
+      --remote-package-repository=URL        Download from the specified URL. Use --list-repositories to download an up-to-date list of package repositories.
+      --shared[=yes|no]                      Operate in admin mode (--shared=yes) or in user mode (--shared=no).
+      --trace[=TRACESTREAMS]                 Turn on tracing.  TRACESTREAMS, if specified, is a comma-separated list of trace stream names (see the MiKTeX manual).
+      --user-config=DIR                      Set the location of the user configuration directory.
+      --user-data=DIR                        Set the location of the user data directory.
+      --user-install=DIR                     Set the location of the user installation directory.
+      --user-link-target-directory=DIR       Set the per-user directory in which to create symbolic links to MiKTeX executables.
+      --user-roots=DIRS                      Register additional directories for the current user. DIRS must be a semicolon-separated list of fully qualified path names.
+      --verbose                              Turn on verbose output mode.
+      --version                              Print version information and exit.
+
+Help options:
+  -?, --help                                 Show this help message
+      --usage                                Display brief usage message
+
+

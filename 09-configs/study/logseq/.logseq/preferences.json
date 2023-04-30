@@ -1,0 +1,14 @@
+{
+  "theme": null,
+  "themes": {
+    "mode": "light",
+    "light": null,
+    "dark": null
+  },
+  "externals": [],
+  "pinnedToolbarItems": [
+    "logseq-journals-calendar:open-calendar",
+    "logseq-tocgen:open-toc",
+    "logseq-tags:tags-plugin-open"
+  ]
+}

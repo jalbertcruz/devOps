@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Sioyek
+Comment=PDF viewer for reading research papers and technical books
+Keywords=pdf;viewer;reader;research;
+StartupNotify=true
+Terminal=false
+TryExec=/usr/local/bin/appslnx/tools/learning/Sioyek/squashfs-root/AppRun
+Exec=/usr/local/bin/appslnx/tools/learning/Sioyek/squashfs-root/AppRun %f
+Type=Application
+Icon=/usr/local/bin/appslnx/tools/Sioyek/sioyek-icon-linux.png
+Categories=Development;Viewer;
+MimeType=application/pdf;application/epub+zip;
+StartupWMClass=sioyek

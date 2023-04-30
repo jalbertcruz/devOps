@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# TODO: until we find out way if you do not use CMD the services stop
+while true; do
+  sleep 100
+done

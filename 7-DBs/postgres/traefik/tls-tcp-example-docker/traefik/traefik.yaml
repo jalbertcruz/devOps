@@ -1,0 +1,25 @@
+entryPoints:
+  traefik:
+    address: :8089
+  postgres:
+    address: :55432
+
+providers:
+  docker: {}
+
+accessLog: { }
+
+log:
+  level: DEBUG
+
+api:
+  dashboard: true
+  insecure: true
+
+tls: {}
+#  certificates:
+#    - certFile: /pki/personal.local+5.pem
+#      keyFile: /pki/personal.local+5-key.pem
+#  options:
+#    default:
+#      sniStrict: true

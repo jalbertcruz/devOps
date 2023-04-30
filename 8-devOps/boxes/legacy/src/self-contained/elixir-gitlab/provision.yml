@@ -1,0 +1,15 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap Python
+      raw: apt-get -y update && apt-get install -y python3-minimal
+
+- name: Provision Elixir
+  hosts: all
+
+  tasks:
+    - name: Deps install script
+      ansible.builtin.script: scripts/install.sh

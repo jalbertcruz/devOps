@@ -1,0 +1,23 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap Python
+      raw: apt-get -y update && apt-get install -y python3-minimal
+
+- name: Provision Java
+  hosts: all
+
+  tasks:
+
+    - name: Include task for install Java 17
+      include_tasks: "../tasks/install-local-oracle-jdk17.yaml"
+
+    - name: Install async-profile
+      include_tasks: "../tasks/install-local-async-profiler.yaml"
+
+#    - name: Install demo
+#      include_tasks: "../tasks/install-local-demo.yaml"
+

@@ -1,0 +1,30 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "jalbert/ubuntu:20.04",
+      "commit": true,
+      "changes": [
+        "ENTRYPOINT [\"/init\"]",
+        "EXPOSE 22 9200 9300",
+        "ENV NOTVISIBLE \"in users profile\""
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "provision.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/gitea",
+        "tag": "1.12.5"
+      }
+    ]
+  ]
+}

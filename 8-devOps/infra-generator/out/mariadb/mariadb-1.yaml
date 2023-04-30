@@ -1,0 +1,20 @@
+mariadb-1: 
+  restart: always
+  ports: 
+    - 10012:3306
+  container_name: maria1_dev_me
+  image: mariadb:12.0.2-noble
+  networks: 
+    - dev-network
+  profiles: 
+    - tier-1
+  hostname: maria1.dev.me
+  volumes: 
+    - mariadb1-data:/var/lib/mysql
+  environment: 
+    MARIADB_DATABASE: service
+    MARIADB_USER: duser
+    MARIADB_PASSWORD: dpass
+    MARIADB_ROOT_PASSWORD: dpass
+  labels: 
+    - type=mariadb

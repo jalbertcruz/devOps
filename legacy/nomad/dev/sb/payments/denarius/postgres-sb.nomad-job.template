@@ -1,0 +1,98 @@
+job "postgres-sb" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    task "task-postgresql-sb" {
+      driver = "docker"
+
+      env {
+        POSTGRES_USER = "postgres"
+        POSTGRES_PASSWORD = "11qazxsw22"
+      }
+
+//       when served locally:
+//      artifact {
+//        source = "{{ resources_register_host }}/jalbert__postgres_10.7.tar"
+//      }
+
+      constraint {
+        attribute = "${attr.kernel.name}"
+        value = "linux"
+      }
+
+      config {
+
+//         when served locally:
+//        load = "jalbert__postgres_10.7.tar"
+        image = "jalbert/postgres:10.7"
+        port_map {
+          port_server = 5432
+        }
+
+        force_pull = false
+
+        tty = true
+
+       /* logging {
+          type = "gelf"
+          config {
+            gelf-address = "udp://localhost:12201"
+          }
+        }*/
+
+         logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          # Use absolute paths to mount arbitrary paths on the host
+          "{{ postgres_pgdata }}:/var/lib/postgresql/data/"
+
+          # Use relative paths to rebind paths already in the allocation dir
+//          , "relative/to/task:/also/in/container"
+        ]
+
+      }
+
+      service {
+        name = "postgres-sb"
+        port = "port_server"
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-postgres-sb.com/"
+        ]
+
+        check {
+          type     = "tcp"
+          port     = "port_server"
+          interval = "10s"
+          timeout  = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 1000
+        network {
+          mbits = 20
+          port "port_server" {
+          }
+        }
+      }
+
+    }
+  }
+}

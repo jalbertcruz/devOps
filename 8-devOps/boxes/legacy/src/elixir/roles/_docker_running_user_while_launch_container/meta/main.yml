@@ -1,0 +1,5 @@
+galaxy_info:
+  # https://stackoverflow.com/questions/47706024/docker-set-running-user-while-launch-container/57531352#57531352
+  author: José Albert Cruz Almaguer <jalbertcruz@gmail.com>
+  description: docker, set running user while launch container
+  min_ansible_version: 2.9.0

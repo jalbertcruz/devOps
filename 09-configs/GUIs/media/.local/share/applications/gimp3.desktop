@@ -1,0 +1,17 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=gimp3 GNU Image Manipulation Program
+GenericName=gimp3 Image Editor
+Comment=Create images and edit photographs
+# Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+Keywords=gimp3;GIMP;graphic;design;illustration;painting;
+Exec=/usr/local/bin/appslnx/tools/edition/gimp3/squashfs-root/AppRun %U
+TryExec=/usr/local/bin/appslnx/tools/edition/gimp3/squashfs-root/AppRun
+Icon=/usr/local/bin/appslnx/tools/edition/gimp3/gimp.png
+Terminal=false
+Categories=Graphics;2DGraphics;RasterGraphics;GTK;
+StartupNotify=true
+MimeType=image/bmp;image/g3fax;image/gif;image/svg+xml;image/x-compressed-xcf;image/x-fits;image/x-gimp-gbr;image/x-gimp-gih;image/x-gimp-pat;image/x-pcx;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-sgi;image/x-sun-raster;image/x-tga;image/x-xbitmap;image/x-xcf;image/x-xwindowdump;image/tiff;image/jpeg;image/x-psp;application/postscript;image/png;image/x-icon;image/x-xpixmap;image/qoi;image/x-exr;image/x-webp;image/webp;image/heif;image/heic;image/avif;
+# StartupWMClass=org.gimp.GIMP.Pre
+StartupWMClass=gimp

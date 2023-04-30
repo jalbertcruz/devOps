@@ -1,0 +1,26 @@
+postgres-1: 
+  restart: always
+  ports: 
+    - 5432
+  container_name: postgresql-services-1_personal_local
+  image: postgres:18.0-alpine3.22
+  networks: 
+    - dev-network
+  profiles: 
+    - tier-1
+  hostname: postgresql-services-1.personal.local
+  volumes: 
+    - postgresql-services-1-data:/var/lib/postgresql/data
+  environment: 
+    POSTGRES_PASSWORD: dpass
+    POSTGRES_USER: duser
+    POSTGRES_DB: service
+  labels: 
+    - traefik.enable=true
+    - traefik.docker.network=dev-network
+    - traefik.tcp.routers.tcprouter-postgres-1.entryPoints=postgres
+    - traefik.tcp.routers.tcprouter-postgres-1.rule=HostSNI(`postgresql-services-1.personal.local`)
+    - traefik.tcp.routers.tcprouter-postgres-1.service=postgres-1
+    - traefik.tcp.routers.tcprouter-postgres-1.tls=true
+    - traefik.tcp.services.postgres-1.loadbalancer.server.port=5432
+    - type=postgres

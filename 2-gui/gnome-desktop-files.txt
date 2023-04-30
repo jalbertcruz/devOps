@@ -1,0 +1,11 @@
+# env vars
+# cat /usr/share/applications/ulauncher.desktop
+TryExec=/usr/bin/ulauncher
+Exec=env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window
+
+# ulauncher
+https://github.com/Ulauncher/Ulauncher/wiki/Hotkey-In-Wayland
+
+## Define StartUpWMClass in Linux desktop file
+xprop WM_CLASS
+WM_CLASS(STRING) = "org-openstreetmap-josm-gui-MainApplication", "org-openstreetmap-josm-gui-MainApplication"

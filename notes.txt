@@ -3,3 +3,56 @@
 2       alsa_input.usb-Sonix_Technology_Co.__Ltd._USB_2.0_Camera_SN0001-02.mono-fallback        module-alsa-card.c      s16le 1ch 44100Hz       SUSPENDED
 3       alsa_output.pci-0000_00_1f.3.analog-stereo.monitor      module-alsa-card.c      s16le 2ch 44100Hz       IDLE
 4       alsa_input.pci-0000_00_1f.3.analog-stereo       module-alsa-card.c      s16le 2ch 44100Hz       SUSPENDED
+
+
+In Fish shell, the equivalent of `compgen` in Bash is `complete`. The `complete` command in Fish is used to define and display command line completions.
+
+To list all available commands, you can use:
+```fish
+complete -C""
+```
+
+To list all available files and directories, you can use:
+```fish
+complete -C"ls "
+```
+
+To list all available functions, you can use:
+```fish
+functions
+```
+
+# symlink
+
+ln -s /opt/python-3.10.0/bin/python3.10 /usr/local/bin/python3.10
+sudo ln -s /opt/python-3.10.0/bin/python3.10 /usr/local/bin/python3.10
+sudo ln -s /opt/python-3.10.2/bin/python3.10 /usr/local/bin/python3.10
+sudo ln -s /usr/bin/python3 /usr/local/bin/python3.10
+sudo ln -s /opt/python-3.10.2/bin/python3.10 /usr/bin/python3
+sudo ln -s /usr/bin/python3.8 /usr/bin/python3
+sudo ln -s /home/z/appslnx/web/VSCode/code /usr/local/bin/
+sudo ln -s /home/z/appslnx /usr/local/bin/
+ln -s /home/z/appslnx/bin/p8 /home/z/src/cv/utilities-pro-deployment/p8/bin/p8
+ln -s /home/z/src/cv/utilities-pro-deployment/p8/bin/p8 /home/z/appslnx/bin/p8
+ln -s /home/z/src/cv/utilities-pro-deployment/p8/bin/diyp8 /home/z/appslnx/bin/diyp8
+ln -s /home/z/src/POCs/APIs/jdev-clj-impl-validator/src/jalbertcruz/jdev_clj_impl_validator.clj /home/z/src/POCs/APIs/demos-java/src/main/resou [... 0 more matches]
+ln -s /home/z/appslnx/tools/smithy/cli/bin/smithy /home/z/appslnx/bin/smithy
+ln -s "(pwd)/fpp" /usr/local/bin/fpp
+sudo ln -s "(pwd)/fpp" /usr/local/bin/fpp
+cd website/.vitepress/cache/deps\nln -s ../../../../pkg/ast_grep_wasm_bg.wasm\ncd ../../../..
+ln -s ./xh ./xhs
+ln -s ../../tools/edition/LosslessCut.AppImage ./LosslessCut
+ln -s ../web/bruno.AppImage ./bruno
+ln -s /home/z/appslnx/google/go/bin/go /usr/bin/go
+sudo ln -s /home/z/appslnx/google/go/bin/go /usr/bin/go
+ln -s /home/z/Downloads/aa/a/.envrc ./.envrc
+sudo ln -s "/home/z/appslnx/tools/kitty/bin/kitty" "/usr/local/bin/kitty"
+sudo ln -s "/home/z/appslnx/tools/kitty/bin/kitten" "/usr/local/bin/kitten"
+sudo ln -s "/home/z/appslnx/tools/git/git-lfs" "/usr/local/bin/git-lfs"
+sudo ln -s ./git-lfs "/usr/local/bin/git-lfs"
+sudo ln -s "/home/z/appslnx/bin/tools/git/git-lfs" "/usr/local/bin/git-lfs"
+sudo ln -s "./keymap.toml" "myz"
+ln -s "./keymap.toml" "myz"
+ln -s "./alias.fish" "al"
+sudo ln -s /home/z/appslnx/tools/nvim/bin/nvim /usr/local/bin/nvim
+sudo ln -s /home/z/appslnx/tools/nvim/bin/nvim /usr/local/bin/nvim

@@ -1,0 +1,11 @@
+.idea
+*.iml
+*~
+*.tar
+*.pem
+*.tgz
+*.gz
+envconsul
+notes.txt
+docs/
+examples/

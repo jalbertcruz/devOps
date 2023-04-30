@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+selector=${1:-cluster}
+CONFIG_FILE=.dev.yaml
+
+session=$(pwd | slugify --stdin)
+
+keys=$(yq ".$selector | keys" $CONFIG_FILE | yq '.[]')
+for x in $keys; do
+  readarray actions < <(yq ".$selector | .$x[]" $CONFIG_FILE)
+  for action in "${actions[@]}"; do
+    #      echo "Sending command: $action"
+    zellij -s $session action write-chars "$action"
+  done
+  #    echo "Sending action: focus-next-pane"
+  zellij -s $session action focus-next-pane
+done

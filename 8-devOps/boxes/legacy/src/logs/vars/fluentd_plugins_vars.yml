@@ -1,0 +1,8 @@
+---
+
+fluentd_plugins:
+  - mysql2
+  - fluent-plugin-sql
+  - fluent-plugin-prometheus
+  - fluent-plugin-route
+  - fluent-plugin-rewrite-tag-filter

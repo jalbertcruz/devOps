@@ -1,0 +1,18 @@
+# $XDG_CONFIG_HOME/k9s/plugins.yaml
+plugins:
+  copyname:
+    # Define a mnemonic to invoke the plugin
+    shortCut: Ctrl-N
+    # What will be shown on the K9s menu
+    description: Copy name
+    # Collections of views that support this shortcut. (You can use `all`)
+    scopes:
+    - po
+    # The command to run upon invocation. Can use Krew plugins here too!
+    command: sh
+    # Whether or not to run the command in background mode
+    background: false
+    # Defines the command arguments
+    args:
+      - -c
+      - "echo -n $NAME | xclip -sel clip"

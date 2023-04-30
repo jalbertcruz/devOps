@@ -1,0 +1,29 @@
+******************************************************************************************
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
+sudo apt-get install     apt-transport-https     ca-certificates     curl     gnupg-agent     software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo usermod -aG docker $USER
+sudo apt install python3-pip
+pip3 install ansible docker --user
+eval `ssh-agent -s`
+ssh-keygen
+cat /home/ubuntu/.ssh/id_rsa.pub
+git clone git@github.com:SafeBoda/payment_services.git
+git clone git@github.com:jdev-ops/packer-ansible.git
+cd packer-ansible/src/elixir/compile/
+export PATH="$PATH:/home/ubuntu/.local/bin"
+USER_ID=$(id -u) GROUP_ID=$(id -g) SSH_PATH=/home/ubuntu/.ssh SRC_PATH=/home/ubuntu/payment_services ansible-playbook -v provision.yml
+******************************************************************************************
+you can check the resulting tar file:
+******************************************************************************************
+ls /home/ubuntu/payment_services/
+bin  _build  config  deps  lib  Makefile  mix.exs  mix.lock  payment_services-0.1.0-CentOS-Linux-7-Core-f81c45.tar  README.md  rel  test
+******************************************************************************************
+the file "payment_services-0.1.0-CentOS-Linux-7-Core-f81c45.tar" is the release package in tar form, I have included now, I am using as env var the ssh keys location (SSH_PATH)

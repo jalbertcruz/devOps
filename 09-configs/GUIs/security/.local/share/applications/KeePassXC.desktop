@@ -1,0 +1,16 @@
+[Desktop Entry]
+Name=KeePassXC
+TryExec=/usr/local/bin/appslnx/tools/security/KeePassXC/squashfs-root/AppRun
+Exec=/usr/local/bin/appslnx/tools/security/KeePassXC/squashfs-root/AppRun %f
+Icon=/usr/local/bin/appslnx/tools/security/KeePassXC/keepassxc.svg
+StartupWMClass=keepassxc
+StartupNotify=true
+Terminal=false
+Type=Application
+Version=1.5
+Categories=Utility;Security;Qt;
+MimeType=application/x-keepass2;
+SingleMainWindow=true
+X-GNOME-SingleWindow=true
+Keywords=security;privacy;password-manager;yubikey;password;keepass;
+X-AppImage-Version=2.7.10

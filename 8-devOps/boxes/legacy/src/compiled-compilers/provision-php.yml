@@ -1,0 +1,123 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  vars:
+    ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+    repos_type: "{{ lookup('env','REPOS_TYPE') }}"
+
+  tasks:
+    - name: Boostrap Python Debian
+      raw: apt-get -y update && apt-get install -y python-minimal
+      when:
+        - ansible_distribution | lower == "debian"
+
+    - name: Install Ondrej repos for Ubuntu Bionic, PHP7.4, composer and selected extensions - better selection than the distro's packages
+      raw: apt-get install -y --no-install-recommends gnupg && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt/sources.list.d/ondrej-php.list
+      when:
+        - (ansible_distribution | lower == "debian" and repos_type | lower == "ubuntu")
+
+    - name: Install Ondrej repos for Ubuntu Bionic, PHP7.4, composer and selected extensions - better selection than the distro's packages
+      raw: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C && apt-get update
+      when:
+        - (ansible_distribution | lower == "debian" and repos_type | lower == "ubuntu")
+
+    - name: apt -y install lsb-release apt-transport-https ca-certificates
+      raw: apt -y install lsb-release apt-transport-https ca-certificates
+      when:
+        - (ansible_distribution | lower == "debian" and repos_type | lower == "debian")
+
+
+    - name: wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+      raw: wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+      when:
+        - (ansible_distribution | lower == "debian" and repos_type | lower == "debian")
+
+    - name: echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+      raw: echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+      when:
+        - (ansible_distribution | lower == "debian" and repos_type | lower == "debian")
+
+    - name: apt update
+      raw: apt update
+      when:
+        - (ansible_distribution | lower == "debian" and repos_type | lower == "debian")
+
+
+    - name: Boostrap Python CentOS
+      raw: yum -y install epel-release && yum -y update
+      when:
+        - ansible_distribution | lower == "centos"
+
+- name: Provision Python
+  hosts: all
+
+  tasks:
+    - name: rpm --import https://rpms.remirepo.net/RPM-GPG-KEY-remi
+      raw: "rpm --import https://rpms.remirepo.net/RPM-GPG-KEY-remi"
+      when:
+        - ansible_distribution | lower == "centos"
+
+#    - name: rpm -ivh http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+#      raw: "rpm -ivh http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+
+    - name: rpm -ivh https://mirrors.tuna.tsinghua.edu.cn/remi/enterprise/remi-release-7.rpm
+      raw: "rpm -ivh https://mirrors.tuna.tsinghua.edu.cn/remi/enterprise/remi-release-7.rpm"
+      when:
+        - ansible_distribution | lower == "centos"
+
+    - name: Ensure PHP configured with role
+      include_role:
+        name: php
+      vars:
+        ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+    - name: ln -s /usr/bin/php74 /usr/local/bin/php
+      raw: "ln -s /usr/bin/php74 /usr/local/bin/php"
+      when:
+        - ansible_distribution | lower == "centos"
+
+    - name: ln -s /opt/remi/php74/root/bin/phpize /usr/local/bin/phpize
+      raw: "ln -s /opt/remi/php74/root/bin/phpize /usr/local/bin/phpize"
+      when:
+        - ansible_distribution | lower == "centos"
+
+    - name: ln -s /opt/remi/php74/root/bin/php-config /usr/local/bin/php-config
+      raw: "ln -s /opt/remi/php74/root/bin/php-config /usr/local/bin/php-config"
+      when:
+        - ansible_distribution | lower == "centos"
+
+    - name: ln -s /opt/remi/php74/root/sbin/php-fpm /usr/local/sbin/php-fpm
+      raw: "ln -s /opt/remi/php74/root/sbin/php-fpm /usr/local/sbin/php-fpm"
+      when:
+        - ansible_distribution | lower == "centos"
+
+    - name: Building swoole
+      raw: "/tmp/swoole/pinstall.sh"
+#      when:
+#        - ansible_distribution | lower == "centos"
+
+
+#    - name:  rm -rf /tmp/* /usr/share/man /usr/share/php7
+#      raw: "rm -rf /tmp/* /usr/share/man /usr/share/php7"
+
+    - name: Install composer
+      raw: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      when:
+        - ansible_distribution | lower == "debian"
+
+    - name: Install composer
+      raw: composer global require hirak/prestissimo
+      when:
+        - ansible_distribution | lower == "debian"
+
+    - name: Install composer
+      raw: composer clear-cache
+      when:
+        - ansible_distribution | lower == "debian"
+
+    - name: Cleaning
+      raw: apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer
+      when:
+        - ansible_distribution | lower == "debian"

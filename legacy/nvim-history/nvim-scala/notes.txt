@@ -1,0 +1,4 @@
+
+# Neovim Scala LSP
+https://gvolpe.com/neovim-flake/
+https://github.com/gvolpe/neovim-flake/blob/main/modules/lsp/lsp.nix#L412

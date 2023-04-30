@@ -1,0 +1,26 @@
+
+- name: Install deps
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - libssl-dev
+    - make
+    - automake
+    - gcc
+    - libncurses5-dev
+    - procps
+    - unzip
+    - git
+    - curl
+    - libcap2-bin
+
+- name: Install debuging deps
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - systemtap-sdt-dev
+    - libwxgtk-webview3.0-gtk3-dev
+  when:
+    - kerl_configure_options != default_erlang_configure_options

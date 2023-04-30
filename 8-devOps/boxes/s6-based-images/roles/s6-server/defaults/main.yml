@@ -1,0 +1,16 @@
+---
+
+ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+deps:
+  - openssh-server
+  - libssl-dev
+  - zlib1g-dev
+  - xz-utils
+  - unzip
+  - wget
+  - curl
+  - iputils-ping
+  - libgpm2
+  - libncurses6
+  - libsctp1

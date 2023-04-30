@@ -1,0 +1,7 @@
+
+# Obsidian
+## To show a smaller version of note title
+
+We use [[Implementing code generation with scalameta|scalameta]]
+
+Implementing code generation with scalameta => another note

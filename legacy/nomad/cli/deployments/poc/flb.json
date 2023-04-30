@@ -1,0 +1,4 @@
+{
+  "gw/POC-fabio/fabio": ["gw/POC-fabio/service-a", "gw/POC-fabio/service-b"],
+  "kd/krakend": ["hc/fabio"]
+}

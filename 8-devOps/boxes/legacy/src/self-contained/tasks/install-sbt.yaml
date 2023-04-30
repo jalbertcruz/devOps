@@ -1,0 +1,7 @@
+
+- name: Put sbt
+  unarchive:
+    src: https://github.com/sbt/sbt/releases/download/v1.9.1/sbt-1.9.1.tgz
+    dest: /usr/lib
+    remote_src: yes
+    validate_certs: no

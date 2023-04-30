@@ -1,0 +1,7 @@
+{
+  "serv-virtualization/wiremock": [
+    "serv-virtualization/webhook-transformer",
+    "serv-virtualization/wiremock-webhook",
+    "serv-virtualization/dev-env"
+  ]
+}

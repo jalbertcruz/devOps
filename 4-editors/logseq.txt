@@ -1,0 +1,10 @@
+
+# Logseq
+## To show a smaller version of note title
+
+We use [scalameta]([[Implementing code generation with scalameta]])
+
+or
+    We use [scalameta](Implementing code generation with scalameta)
+
+Implementing code generation with scalameta => another note

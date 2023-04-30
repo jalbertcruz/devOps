@@ -1,0 +1,5 @@
+
+- name: Install ruby gems
+  raw: "gem install {{ item }}"
+  with_items: "{{ ruby_gems }}"
+

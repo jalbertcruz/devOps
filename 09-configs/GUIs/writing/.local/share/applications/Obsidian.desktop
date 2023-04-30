@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Obsidian
+Exec=/usr/local/bin/appslnx/tools/edition/Obsidian/squashfs-root/obsidian --no-sandbox %U
+Terminal=false
+Type=Application
+Icon=/usr/local/bin/appslnx/tools/edition/Obsidian/obsidian.png
+StartupWMClass=obsidian
+X-AppImage-Version=1.6.7
+Comment=Obsidian
+MimeType=x-scheme-handler/obsidian;
+Categories=Office;

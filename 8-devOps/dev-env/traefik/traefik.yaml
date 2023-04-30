@@ -1,0 +1,24 @@
+entryPoints:
+#  mariadb:
+#    address: :33306
+  postgres:
+    address: :55432
+  traefik:
+    address: :8089
+  http:
+    address: :8088
+
+providers:
+  docker: {}
+
+accessLog: { }
+
+log:
+  level: INFO
+
+api:
+  dashboard: true
+  insecure: true
+
+serversTransport:
+  insecureSkipVerify: true

@@ -1,0 +1,16 @@
+{
+  "dependencies": [
+    {"name": "cattrs", "version": "25.3.0"},
+    {"name": "python-decouple", "version": "3.8"},
+    {"name": "typer", "version": "0.20.0"},
+    {"name": "rich", "version": "14.2.0"},
+    {"name": "more-itertools", "version": "10.8.0"},
+    {"name": "jinja2", "version": "3.1.6"},
+    {"name": "python-slugify", "version": "8.0.4"},
+    {"name": "requests", "version": "2.32.5"},
+    {"name": "pynvim", "version": "0.6.0"},
+    {"name": "docker", "version": "7.1.0"},
+    {"name": "tomlkit", "version": "0.13.3"},
+    {"name": "pypdf", "version": "6.1.3"}
+  ]
+}

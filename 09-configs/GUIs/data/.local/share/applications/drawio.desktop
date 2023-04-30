@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=drawio
+Exec=/usr/local/bin/appslnx/tools/edition/drawio/squashfs-root/drawio --no-sandbox %U
+Terminal=false
+Type=Application
+Icon=/usr/local/bin/appslnx/tools/edition/drawio/drawio.png
+StartupWMClass=drawio
+X-AppImage-Version=26.0.9
+Comment=draw.io desktop
+MimeType=application/vnd.jgraph.mxfile;application/vnd.visio;
+Categories=Graphics;

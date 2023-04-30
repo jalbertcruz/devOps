@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+
+# tar -zcvf <result>.tar.gz -C source-dir .
+# tar -zcvf install.tar.gz -C install .
+
+buildah unshare cli/ssh.sh
+#buildah unshare cli/erl.sh
+#buildah unshare cli/c-compiler-base.sh
+#buildah unshare cli/python.sh 2.7.18 2.7
+#buildah unshare cli/python.sh 3.10.17 3.10

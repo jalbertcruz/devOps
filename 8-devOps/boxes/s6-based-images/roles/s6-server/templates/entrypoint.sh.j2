@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+# creating runing user
+if [ "$OSNAME" = "centos" ]
+then
+  /usr/local/bin/create_user
+fi
+
+. {{ kerl_working_dir }}/{{ erlang_version }}/activate
+export PATH="$PATH:{{ elixir_bin_dir }}/bin"
+
+mix local.rebar --force
+mix local.hex --force
+# mix deps.get
+export SECRET_KEY_BASE="{{ secret_key_base }}"
+# export MIX_ENV=prod && mix release --overwrite $1
+
+/src/bin/release_command.sh

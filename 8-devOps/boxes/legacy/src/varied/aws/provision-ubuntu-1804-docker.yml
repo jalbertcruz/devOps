@@ -1,0 +1,59 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap Python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+
+- name: Provision Erlang/Elixir
+  hosts: all
+  vars:
+    app_name: payment_services
+    app_name_full: Payment services application
+
+  tasks:
+    - name: Ensure runtime configured with role
+      import_role:
+        name: ubuntu.1804
+
+    - name: Create workdir
+      file:
+        path: /app
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Template a file, using symbolic modes
+      template:
+        src: templates/entrypoint.sh.j2
+        dest: /usr/local/bin/entrypoint.sh
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    - name: Putting runtime programs
+      copy:
+        src: "../../../_build/prod/rel/{{ app_name }}.tar"
+        dest: "/app/{{ app_name }}.tar"
+        mode: 0755
+        owner: root
+        group: root
+
+    - name: Unpacking
+      raw: "tar xf /app/{{ app_name }}.tar -C /app"
+
+    - name: Clean npacking
+      raw: "rm -Rf /app/{{ app_name }}.tar"
+
+- name: Container cleanup
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Remove Python
+      raw: apt-get purge -y python-minimal && apt-get autoremove -y
+
+    - name: Remove apt lists
+      raw: rm -rf /var/lib/apt/lists/*

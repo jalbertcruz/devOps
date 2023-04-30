@@ -1,0 +1,10 @@
+
+files:
+  - ruff.toml
+  - pytype.cfg
+  - pyrightconfig.json
+  - .mypy.ini
+  - .envrc
+  - .envrc.local
+
+path: files

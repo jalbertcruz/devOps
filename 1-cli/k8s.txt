@@ -1,0 +1,11 @@
+# To do attach
+https://stackoverflow.com/questions/39886146/kubectl-attach-unable-to-use-a-tty-container-es-node-did-not-allocate-one
+
+```yaml
+spec:
+      containers:
+      - name: web
+        image: web:latest
+        tty: true
+        stdin: true
+```

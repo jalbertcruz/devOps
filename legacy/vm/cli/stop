@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+#firecraker_socker_path=/home/a/src/vm/firecracker.socket
+
+curl --unix-socket $firecraker_socker_path -i \
+    -X PUT "http://localhost/actions" \
+    -d '{ "action_type": "SendCtrlAltDel" }'
+

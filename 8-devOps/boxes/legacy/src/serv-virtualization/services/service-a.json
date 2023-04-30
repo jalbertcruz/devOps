@@ -1,0 +1,32 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "jalbert/ubuntu:18.04",
+      "commit": true,
+      "changes": [
+        "ENTRYPOINT [\"/init\"]"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "provision-a.yml",
+      "ansible_env_vars": [
+        "ANSIBLE_DISTRIBUTION=debian"
+      ]
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/service-a",
+        "tag": "0.1"
+      },
+      "docker-push"
+    ]
+  ]
+}

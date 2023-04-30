@@ -1,0 +1,82 @@
+job "mysql-orion-mktplace" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+
+  group "server" {
+
+    task "task-mysql-orion-mktplace" {
+      driver = "docker"
+
+      env {
+        MYSQL_USER = "mysql_user"
+        MYSQL_PASSWORD = "11qazxsw22"
+        MYSQL_ROOT_PASSWORD = "mysecretpw"
+      }
+
+      constraint {
+        attribute = "${attr.kernel.name}"
+        value = "linux"
+      }
+
+      config {
+
+//        image = "mysql:5.7.29"
+        image = "mysql:5.6.47"
+        hostname = "mysql-orion-mktplace.service.dc1.consul"
+
+        port_map {
+          port_server = 3306
+        }
+
+//        logging {
+//          type = "fluentd"
+//          config {
+//            fluentd-address = "fluentd.service.dc1.consul:24224"
+//            tag = "mysql-mktplace.logs"
+//          }
+//        }
+
+        tty=true
+
+        volumes = [
+          "{{ mysql_orion_data }}:/var/lib/mysql"
+        ]
+
+      }
+
+      service {
+        name = "mysql-orion-mktplace"
+        port = "port_server"
+        address_mode = "driver"
+
+        check {
+          type     = "tcp"
+          port     = "port_server"
+          interval = "10s"
+          timeout  = "2s"
+        }
+
+      }
+
+      resources {
+        memory = 1000
+        network {
+          mbits = 20
+          port "port_server" {
+          }
+        }
+      }
+
+    }
+  }
+}

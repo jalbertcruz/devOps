@@ -1,0 +1,21 @@
+entryPoints:
+  traefik:
+    address: :8089
+  postgres:
+    address: :55432
+  http:
+    address: :5000
+
+providers:
+  file:
+    directory: traefik-confs
+    watch: true
+
+accessLog: { }
+
+log:
+  level: DEBUG
+
+api:
+  dashboard: true
+  insecure: true

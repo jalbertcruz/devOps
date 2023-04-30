@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=Development;version control;
+Comment=GG - Gui for JJ
+Exec=/home/z/appslnx/tools/jj/gg/squashfs-root/AppRun
+Icon=/home/z/appslnx/tools/jj/gg/gg.png
+Name=gg
+Terminal=false
+Type=Application

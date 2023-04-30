@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+shopt -s nullglob  # Ignore failed globs (if no files exist)
+
+my_array=("postgres" )
+
+for element in "${my_array[@]}"; do
+  current=$(pwd)
+  cd out/$element
+  files=(*.yaml *.yml)
+  first_yaml=${files[0]}
+  yq ".services = load(\"$first_yaml\")" ../../docker-compose-$element.yaml > ../$element-result.yaml
+  for file in "${files[@]:1}"; do
+    yq -i ".services += load(\"$file\")" ../$element-result.yaml
+  done
+  cp ../$element-result.yaml ../../../dev-env/$element/docker-compose.yaml
+  cd $current
+done
+
+

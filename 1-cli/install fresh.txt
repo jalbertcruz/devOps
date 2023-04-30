@@ -1,0 +1,87 @@
+# backup tool
+sudo apt install timeshift -y
+After this operation, 9,528 kB of additional disk space will be used.
+Get:1 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 xapps-common all 2.8.2-1build3 [56.9 kB]
+Get:2 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 libxapp1 amd64 2.8.2-1build3 [80.9 kB]
+Get:3 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 libxapp-gtk3-module amd64 2.8.2-1build3 [5,444 B]
+Get:4 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 mesa-utils-bin amd64 9.0.0-2 [164 kB]
+Get:5 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 timeshift amd64 24.01.1-1build2 [698 kB]
+Get:6 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 xapp-sn-watcher amd64 2.8.2-1build3 [32.0 kB]
+Get:7 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 inxi all 3.3.34-1-1 [352 kB]
+Get:8 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 lm-sensors amd64 1:3.6.0-9build1 [90.1 kB]
+Get:9 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 mesa-utils amd64 9.0.0-2 [1,051 kB]
+#################################
+
+# bwrap: setting up uid map: Permission denied, I'm adding some of my findings
+https://github.com/DevToys-app/DevToys/issues/1373
+sudo sysctl -w kernel.apparmor_restrict_unprivileged_unconfined=0
+sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+
+wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O chrome64.deb
+sudo dpkg -i chrome64.deb
+
+# pwdc
+sudo apt-get install xclip
+
+# for podman
+sudo add-apt-repository ppa:criu/ppa
+sudo apt update
+
+# for AppImage
+sudo apt-get install libfuse2
+# for Clojure
+sudo apt-get install rlwrap
+
+# video players
+sudo apt-get install libjack0
+
+## for ImPlay
+sudo apt-get install libglfw3
+sudo apt-get install libglfw3-dev
+
+# djvu viewer
+❯ sudo apt-get install djview4
+The following additional packages will be installed:
+  djvulibre-desktop libqt5opengl5t64
+Suggested packages:
+  djvulibre-bin
+The following NEW packages will be installed:
+  djview4 djvulibre-desktop libqt5opengl5t64
+Get:1 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 libqt5opengl5t64 amd64 5.15.13+dfsg-1ubuntu1 [150 kB]
+Get:2 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 djview4 amd64 4.12-3build3 [596 kB]
+Get:3 http://es.archive.ubuntu.com/ubuntu noble/universe amd64 djvulibre-desktop all 3.5.28-2build4 [78.1 kB]
+
+# How to permanently disable Ubuntu's new AppArmor user namespace creation restrictions in order to run appimages and web-based apps?
+https://askubuntu.com/questions/1511854/how-to-permanently-disable-ubuntus-new-apparmor-user-namespace-creation-restric
+echo 'kernel.apparmor_restrict_unprivileged_userns = 0' | sudo tee /etc/sysctl.d/20-apparmor-donotrestrict.conf
+sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+# Fish shell
+https://fishshell.com/docs/3.0/tutorial.html
+
+echo /usr/local/bin/fish | sudo tee -a /etc/shells
+chsh -s /usr/local/bin/fish
+
+echo /home/z/appslnx/bin/tools/lnx/fish | sudo tee -a /etc/shells
+sudo chsh -s /home/z/appslnx/bin/tools/lnx/fish z
+
+
+## File associations
+### in order to override gnome default apps
+## https://askubuntu.com/questions/16580/where-are-file-associations-stored
+❯ sudo mv /usr/share/applications/gnome-mimeapps.list /usr/share/applications/gnome-mimeapps.list2
+/usr/share/applications/gnome-mimeapps.list
+/home/z/.config/mimeapps.list
+/home/z/.local/share/applications/mimeapps.list
+
+# Error : target STRING not available
+# https://github.com/astrand/xclip/issues/38
+# https://wiki.ubuntu.com/ClipboardPersistence
+Workaround: Clipboard Managers
+If you want to fix this problem on your machine, you can install a clipboard manager that should solve it. I recommend Parcellite. It's available in the universe repositories, and you can install it with:
+
+sudo apt-get install parcellite
+
+
+## continue with ./laptop/ubuntu post install.txt

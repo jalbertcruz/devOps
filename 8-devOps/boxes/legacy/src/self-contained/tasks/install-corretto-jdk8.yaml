@@ -1,0 +1,24 @@
+
+- name: Create JDK dir
+  file:
+    path: /usr/lib/jvm
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Put JDK8
+  unarchive:
+    src: https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.tar.gz
+    dest: /usr/lib/jvm
+    remote_src: yes
+    validate_certs: no
+
+- name: Rename JDK folder
+  raw: export JVM_PATH=/usr/lib/jvm/ && export JDKDIR=$(ls $JVM_PATH | head -n 1) && mv "$JVM_PATH$JDKDIR" "${JVM_PATH}jdk8"
+
+- name: update-alternatives java
+  raw: update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk8/bin/java" 1
+
+- name: update-alternatives javac
+  raw: update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk8/bin/javac" 1

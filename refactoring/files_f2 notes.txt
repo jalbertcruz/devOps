@@ -1,0 +1,63 @@
+
+# f2
+https://github.com/ayoisaiah/f2
+https://github.com/ayoisaiah/f2/wiki
+https://github.com/ayoisaiah/f2/wiki/F2-tutorial
+https://github.com/ayoisaiah/f2/wiki/Undoing-renaming-mistakes
+
+## Dir
+$HOME/.local/share/f2/backups/
+
+f2 --exec
+
+# All that can be replaced with a single command: (  f2 -f '.*' -r '{.win}' --recursive --include-dir  )
+f2 -f ':' -r ',' --recursive
+f2 -f '\|' -r '-' --recursive
+f2 -f '"' -r '' --recursive
+f2 -f '"' -r '' --recursive --include-dir --exec
+f2 -f '/' -r '-' --recursive --include-dir --exec
+--
+  f2 -f '.*' -r '{.win}' -f '[ ]{2,}' -r ' ' --recursive -E 'class' -E 'cache'
+  f2 -f '.*' -r '{.win}' --recursive -E 'class' -E 'cache'
+
+
+# Remove all dots from file names:
+f2 -f '\.' -r ' ' -e --recursive --include-dir
+f2 -f '\.' -r ' ' -r '{.di}' -e --recursive --include-dir --json
+f2 -f '\.' -r ' ' -r '{.di}' -r '{.win}' -e --recursive --include-dir --exec
+
+
+f2 -f '(.*) \[.*$' -r '$1' -e --recursive --include-dir --exec
+f2 -f '？' -r '_' -e --recursive --include-dir --exec
+f2 -f '\?' -r '_' -e --recursive --include-dir --exec
+f2 -f '¿' -r '' -e --recursive --include-dir --exec
+f2 -f 'á' -r 'a' -e --recursive --include-dir --exec
+f2 -f 'é' -r 'e' -e --recursive --include-dir --exec
+f2 -f 'í' -r 'i' -e --recursive --include-dir --exec
+f2 -f 'ó' -r 'o' -e --recursive --include-dir --exec
+f2 -f 'ú' -r 'u' -e --recursive --include-dir --exec
+f2 -f 'Á' -r 'A' -e --recursive --include-dir --exec
+f2 -f 'É' -r 'E' -e --recursive --include-dir --exec
+f2 -f 'Í' -r 'I' -e --recursive --include-dir --exec
+f2 -f 'Ó' -r 'O' -e --recursive --include-dir --exec
+f2 -f 'Ú' -r 'U' -e --recursive --include-dir --exec
+f2 -f '\.' -r ' ' -e --recursive --include-dir --exec
+f2 -f 'ñ' -r 'n' -e --recursive --include-dir --exec
+f2 -r '{.di}' -e --recursive --include-dir --exec
+f2 -r '{.win}' -e --recursive --include-dir --exec
+--fix-conflicts
+
+
+f2 -u # dry-run
+f2 -ux # revert the renaming operation
+
+# Strip file name of Windows forbidden characters and replace multiple spaces with a single one:
+https://github.com/ayoisaiah/f2/wiki/Built-in-variables#8-string-transformation
+
+f2 -f '.*' -r '{.win}' -f '[ ]{2,}' -r ' ' --recursive --include-dir
+
+# Remove diacritics from file names:
+f2 -f '.*' -r '{.di}' --recursive --include-dir
+
+# Replace hyphen with a space and transform entire filename to title case (except the extension)
+f2 -f '-' -r ' ' -r '{.ti}' -e

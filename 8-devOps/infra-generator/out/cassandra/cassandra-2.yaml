@@ -1,0 +1,19 @@
+cassandra-2: 
+  restart: always
+  ports: 
+    - 10014:9042
+  container_name: cassandra2_dev_me
+  image: cassandra:5.0.5
+  networks: 
+    - dev-network
+  profiles: 
+    - tier-1
+  hostname: cassandra2.dev.me
+  volumes: 
+    - cassandra2-data:/var/lib/cassandra
+  environment: 
+    MAX_HEAP_SIZE: 256M
+    HEAP_NEWSIZE: 128M
+    CASSANDRA_CLUSTER_NAME: cassandra-akka-cluster
+  labels: 
+    - type=cassandra

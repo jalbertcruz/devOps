@@ -1,0 +1,9 @@
+
+https://moslehian.com/posts/2023/2-reliable-btrfs-snapshots-snapper-debian-ubuntu/
+https://www.maketecheasier.com/use-zfs-snapshots-ubuntu/
+https://forum.zorin.com/t/timeshift-alternative-for-zfs/38146/2
+https://www.youtube.com/watch?v=TlNnNndf21M
+
+# XFS vs EXT4
+https://blog.allegro.tech/2024/03/kafka-performance-analysis.html
+https://www.youtube.com/watch?v=QAq3HRMmdbo

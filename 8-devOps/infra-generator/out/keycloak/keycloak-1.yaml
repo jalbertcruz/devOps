@@ -1,0 +1,6 @@
+keycloak-1: 
+  command: kc.sh start-dev
+  working_dir: wdir/keycloak
+  environment: 
+    - KC_DB_URL=jdbc:h2:file:./data/keycloakdb;NON_KEYWORDS=VALUE;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=0
+    - KC_HTTP_PORT=10020

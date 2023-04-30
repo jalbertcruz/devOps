@@ -1,0 +1,73 @@
+
+volumes:
+  kafka-1-data:
+    name: ${KAFKA_1_VOLUME}
+    external: true
+  kafka-2-data:
+    name: ${KAFKA_2_VOLUME}
+    external: true
+networks:
+  dev-network:
+    name: dev-network
+    external: true
+services:
+  redpanda-0:
+    restart: always
+    command:
+      - redpanda
+      - start
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr internal://redpanda-0:9092,external://localhost:19092
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --advertise-pandaproxy-addr internal://redpanda:8082,external://localhost:18082
+      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:18081
+      - --rpc-addr redpanda-0:33145
+      - --advertise-rpc-addr redpanda-0:33145
+      - --smp 1
+      - --memory 1G
+      - --mode dev-container
+      - --default-log-level=info
+    ports:
+      - 18081:18081
+      - 18082:18082
+      - 19092:19092
+      - 19644:9644
+    container_name: redpanda-0_me_dev
+    image: docker.redpanda.com/redpandadata/redpanda:v25.1.8
+    networks:
+      - dev-network
+    profiles:
+      - tier-1
+    hostname: redpanda-0.me.dev
+    volumes:
+      - kafka-1-data:/var/lib/redpanda/data
+  redpanda-1:
+    restart: always
+    command:
+      - redpanda
+      - start
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:29092
+      - --advertise-kafka-addr internal://redpanda-1:9092,external://localhost:29092
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --advertise-pandaproxy-addr internal://redpanda:8082,external://localhost:28082
+      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:28081
+      - --rpc-addr redpanda-1:33145
+      - --advertise-rpc-addr redpanda-1:33145
+      - --smp 1
+      - --memory 1G
+      - --mode dev-container
+      - --default-log-level=info
+    ports:
+      - 28081:28081
+      - 28082:28082
+      - 29092:29092
+      - 29644:9644
+    container_name: redpanda-1_me_dev
+    image: docker.redpanda.com/redpandadata/redpanda:v25.1.8
+    networks:
+      - dev-network
+    profiles:
+      - tier-1
+    hostname: redpanda-1.me.dev
+    volumes:
+      - kafka-2-data:/var/lib/redpanda/data

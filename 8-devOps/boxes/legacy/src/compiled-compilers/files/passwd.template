@@ -1,0 +1,2 @@
+root:x:0:0:root:/root:/bin/bash
+${USER_NAME}:x:${USER_ID}:${GROUP_ID}:${USER_NAME}:${HOME_DIR}:/bin/bash

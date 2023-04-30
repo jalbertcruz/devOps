@@ -1,0 +1,26 @@
+
+- name: Create JDK dir
+  file:
+    path: /usr/lib/jvm
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Creates directory
+  file:
+    path: /usr/lib/profilers
+    state: directory
+
+- name: Put async-profiler
+  ansible.builtin.unarchive:
+    src: files/async-profiler-2.7-linux-x64.tar.gz
+    dest: /usr/lib/profilers
+
+- name: Rename profiler folder
+  raw: export PROFILER_BASE_PATH=/usr/lib/profilers/ && export PROFILER_DIR=$(ls $PROFILER_BASE_PATH | head -n 1) && mv "$PROFILER_BASE_PATH$PROFILER_DIR" "${PROFILER_BASE_PATH}async-profiler"
+
+- name: Install procps
+  apt:
+    name: procps
+    state: present

@@ -1,0 +1,33 @@
+
+Draft: Add SNI routing support for MySQL
+https://github.com/traefik/traefik/pull/10884
+
+https://netplan.io/
+https://linuxconfig.org/configuring-virtual-network-interfaces-in-linux
+https://linuxconfig.org/ubuntu-24-04-firewall-a-quick-guide
+
+https://hub.docker.com/_/mariadb
+https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql
+https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#privileges-provided-summary
+
+CREATE USER 'user2' IDENTIFIED BY 'dpass';
+
+GRANT INSERT, SELECT, SHOW VIEW, UPDATE ON *.* TO 'user2' WITH GRANT OPTION;
+
+CREATE DATABASE operations;
+
+
+FLUSH PRIVILEGES;
+
+# Backup and Restore
+https://github.com/databacker/mysql-backup
+https://mariadb.com/docs/server/server-usage/backup-and-restore/backup-and-restore-overview
+https://mariadb.com/docs/server/clients-and-utilities/backup-restore-and-import-clients/mariadb-import
+https://mariadb.com/docs/server/server-usage/data-handling/mariadb-importing-data-guide-1
+https://www.digitalocean.com/community/tutorials/how-to-import-and-export-databases-in-mysql-or-mariadb
+
+https://simplebackups.com/blog/remote-mysql-database-backup-via-ssh-tunneling#how-use-mysqldump-via-ssh-tunnel
+mysqldump -h maria1.dev.me -u root -P 3306 -p service1 > database_backup.sql
+mysqldump -h localhost -u root -P 3306 -p service1 > /dump/database_backup.sql
+mariadb-dump -h localhost -u root -P 3306 -p service1 > /dump/database_backup.sql
+mariadb -u root -p -h localhost -P 3306 -e "select * from DATABASES"

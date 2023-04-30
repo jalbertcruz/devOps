@@ -1,0 +1,34 @@
+entryPoints:
+  web:
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+    address: :8200
+    transport:
+      lifeCycle:
+        requestAcceptGraceTimeout: "1"
+        graceTimeOut: "1"
+  websecure:
+    address: ":4443"
+  traefik:
+    address: :8089
+
+providers:
+  file:
+    directory: traefik-confs
+    watch: true
+
+accessLog: { }
+
+log:
+  level: DEBUG
+
+api:
+  # Dashboard
+  #
+  # Optional
+  # Default: true
+  #
+  dashboard: true
+  insecure: true

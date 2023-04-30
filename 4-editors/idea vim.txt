@@ -1,0 +1,42 @@
+
+How to open and edit multiple projects in the same window?
+# https://stackoverflow.com/questions/8774024/how-to-open-and-edit-multiple-projects-in-the-same-window
+
+Select File->Project Structure->Modules.
+Select + and Import Module and select the directory of your project(or directory where pom exists) and click OK.
+
+Find in Files
+> CTRL+SHIFT+F
+
+
+multiple cursors, idea
+https://plugins.jetbrains.com/plugin/19162-ideavimmulticursor
+
+# In normal mode
+Ctrl+a n
+
+= To set cursors, remember:
+ - go to a char
+ - press 'v' to select
+ - press 'mc' to set cursor
+
+-- config
+set multiple-cursors
+map mc <A-n>
+map mx <A-x>
+map mp <A-p>
+-- end config
+
+
+= To set cursors, remember:
+ - go to a char
+ - press 'v' to select
+ - press 'mc' to set cursor
+
+== How do I change rate of the keys repeat rate
+# https://askubuntu.com/questions/1053448/how-do-i-change-rate-of-the-keys-repeat-rate-through-console
+
+xset r rate 240 100
+240 - is a milliseconds delay before repeating starts
+100 - a number between 1 and 255. The higher the number, the faster the repetition
+

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+count=1
+
+eza --only-dirs --oneline "/media/z" | rg -v data | while read -r dir; do
+  echo "Mounting /media/z/$dir"
+  sudo mount -o bind "/media/z/$dir" "/home/z/Desktop/mounts/hd$count"
+  count=$((count + 1))
+done

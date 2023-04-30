@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+while IFS="|" read -r name ip; do
+  sudo /sbin/ip link add $name type dummy
+  sudo /sbin/ip addr add $ip dev $name
+  sudo ip link set $name up
+
+#  sudo ip link set $name down
+#  sudo ip link del $name
+
+done < <(yq -r '.[] | "\(.name)|\(.ip)"' out/networks.yaml)
+
+systemctl restart haproxy
+

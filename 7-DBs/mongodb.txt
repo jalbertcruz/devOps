@@ -1,0 +1,37 @@
+
+mongod --dbpath /data/db
+
+mongosh -u user -p pass
+
+show dbs # para mostrar las bbdd disponibles
+
+use test # Deprecated DB
+# para ver avatares existentes
+db.avatars.find().pretty()
+
+use trinity-jam
+db.avatars.insertOne( # insertar un nuevo registry
+    ...json
+)
+
+db.avatars.insertOne(
+{
+    avatarId: 'avatar1',
+    userId: 'user2',
+    path: 'user2/avatars/avatar1/avatar',
+    thumbnail: 'objects/download?prefix=044aa5a8-97d6-40de-807f-ed5fe0872066/avatars/98a47aa1-d271-4e63-9ac9-648b224e2c44/thumbnail/thumbnail.png',
+    status: [],
+    creationDate: ISODate('2025-02-14T13:03:04.493Z'),
+    lastModifiedDate: ISODate('2025-02-14T13:03:04.493Z'),
+    fileData: {
+      id: '044aa5a8-97d6-40de-807f-ed5fe0872066/avatars/98a47aa1-d271-4e63-9ac9-648b224e2c44/uploaded_video/ramon_dynamic.MOV',
+      path: '044aa5a8-97d6-40de-807f-ed5fe0872066/avatars/98a47aa1-d271-4e63-9ac9-648b224e2c44/uploaded_video/ramon_dynamic.MOV',
+      versionId: '937faba9-115b-4518-8aff-fc2062392c2b',
+      prompt: '',
+      type: 'Avatar'
+    }
+  }
+)
+
+db.avatars.findOneAndUpdate( {userId: 'user2', avatarId: 'avatar1'}, {$set: {status: {}} })
+

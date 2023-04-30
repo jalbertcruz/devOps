@@ -1,0 +1,59 @@
+services:
+  postgres1:
+    image: postgres:17.5-alpine3.22
+    container_name: postgres-1
+    restart: always
+    ports:
+      - 5432
+    environment:
+      POSTGRES_PASSWORD: dpass
+      POSTGRES_USER: duser
+      POSTGRES_DB: service
+    volumes:
+      - postgres-1-data:/var/lib/postgresql/data
+    networks:
+      - traefik-network
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-network
+      - traefik.tcp.routers.tcprouter-postgres-1.entryPoints=postgres
+      - traefik.tcp.routers.tcprouter-postgres-1.rule=HostSNI(`postgres-1.personal.local`)
+      - traefik.tcp.routers.tcprouter-postgres-1.service=postgres-1
+      - traefik.tcp.routers.tcprouter-postgres-1.tls=true
+      - traefik.tcp.services.postgres-1.loadbalancer.server.port=5432
+
+  postgres2:
+    image: postgres:17.5-alpine3.22
+    container_name: postgres-2
+    restart: always
+    ports:
+      - 5432
+    environment:
+      POSTGRES_PASSWORD: dpass
+      POSTGRES_USER: duser
+      POSTGRES_DB: service
+    volumes:
+      - postgres-2-data:/var/lib/postgresql/data
+    networks:
+      - traefik-network
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-network
+      - traefik.tcp.routers.tcprouter-postgres-2.entryPoints=postgres
+      - traefik.tcp.routers.tcprouter-postgres-2.rule=HostSNI(`postgres-2.personal.local`)
+      - traefik.tcp.routers.tcprouter-postgres-2.service=postgres-2
+      - traefik.tcp.routers.tcprouter-postgres-2.tls=true
+      - traefik.tcp.services.postgres-2.loadbalancer.server.port=5432
+
+volumes:
+  postgres-1-data:
+    name: postgres-1-data
+    external: true
+  postgres-2-data:
+    name: postgres-2-data
+    external: true
+
+networks:
+  traefik-network:
+    name: traefik-network
+    external: true

@@ -1,0 +1,126 @@
+---
+
+- name: Install build deps Debian
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ python_build_debian_deps }}"
+  when:
+    - ansible_distribution | lower == "debian"
+
+- name: Creating directories for Python compilation
+  file:
+    path: "/home/app/temp/python-src-{{ item.d }}"
+    state: directory
+  with_items: "{{ python_versions1 }}"
+  when:
+    - ansible_distribution | lower == "debian"
+
+- name: Creating directories for Python compilation
+  file:
+    path: "/home/app/temp/python-src-{{ item.d }}"
+    state: directory
+  with_items: "{{ python_versions2 }}"
+  when:
+    - ansible_distribution | lower == "debian"
+
+- name: Downloading Python srcs
+  get_url:
+    url: "https://www.python.org/ftp/python/{{ item.d }}/Python-{{ item.d }}.tgz"
+    dest: "/home/app/temp/python-src-{{ item.d }}/Python-{{ item.d }}.tgz"
+  with_items: "{{ python_versions1 }}"
+
+- name: Downloading Python srcs
+  get_url:
+    url: "https://www.python.org/ftp/python/{{ item.d }}/Python-{{ item.d }}.tgz"
+    dest: "/home/app/temp/python-src-{{ item.d }}/Python-{{ item.d }}.tgz"
+  with_items: "{{ python_versions2 }}"
+
+- name: Unarchive a file that is already on the remote machine
+  unarchive:
+    src: "/home/app/temp/python-src-{{ item.d }}/Python-{{ item.d }}.tgz"
+    dest: "/home/app/temp/python-src-{{ item.d }}"
+    remote_src: yes
+  with_items: "{{ python_versions1 }}"
+
+- name: Unarchive a file that is already on the remote machine
+  unarchive:
+    src: "/home/app/temp/python-src-{{ item.d }}/Python-{{ item.d }}.tgz"
+    dest: "/home/app/temp/python-src-{{ item.d }}"
+    remote_src: yes
+  with_items: "{{ python_versions2 }}"
+
+- name: Building Python
+  raw: "cd /home/app/temp/python-src-{{ item.d }}/Python-{{ item.d }} && CC=gcc-9 ./configure --enable-optimizations --prefix=/opt/python-{{ item.b }} && make altinstall"
+  with_items: "{{ python_versions1 }}"
+
+- name: Building Python
+  raw: "cd /home/app/temp/python-src-{{ item.d }}/Python-{{ item.d }} && CC=gcc-9 ./configure --enable-optimizations --prefix=/opt/python-{{ item.b }} && make altinstall"
+  with_items: "{{ python_versions2 }}"
+
+
+- name: Bash function for creating venv
+  ansible.builtin.blockinfile:
+    path: /home/app/.bashrc
+    insertafter: EOF
+    block: |
+      venv(){
+
+      array=(
+        3.8
+        3.7
+        3.10
+        3.9
+        3.3
+        3.4
+        3.5
+        3.6
+        3.11
+      )
+
+      PYTHON_VERSION=$(gum choose ${array[@]})
+      eval "python$PYTHON_VERSION" -m venv .env
+
+      source .env/bin/activate
+
+      pip install --upgrade pip
+      pip install --upgrade wheel
+
+      if test -f requirements.txt; then
+            /home/app/.local/bin/pip install -r requirements.txt
+      fi
+
+      }
+      export PATH=$PATH:/opt/python-3.11:/opt/python-3.9/bin:/opt/python-3.8/bin:/opt/python-3.7/bin:/opt/python-3.6/bin:/opt/python-3.5/bin:/opt/python-3.4/bin:/opt/python-3.3/bin
+
+#  register: output
+#           /home/app/temp/python-src-3.3.7/Python-3.3.7
+#- debug:
+#    var: output.stdout_lines
+
+#- name: Putting install script
+#  template:
+#    src: templates/pinstall.sh.j2
+#    dest: "{{ python_compilation_working_dir }}/Python-{{ python_version | replace('\n', '') }}/pinstall.sh"
+#    owner: app
+#    group: app
+#    mode: u=rx,g=rx,o=rx
+#
+#- name: Building Python
+#  raw: "cd {{ python_compilation_working_dir }}/Python-{{ python_version | replace('\n', '') }}/ && ./pinstall.sh"
+
+## ALERT: paths with numbers fixed!
+#- name: setcap CAP_NET_BIND_SERVICE=+eip
+#  raw: "setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/python3.8"
+#
+## https://stackoverflow.com/questions/9843178/linux-capabilities-setcap-seems-to-disable-ld-library-path/10215158
+#- name: Putting python3.8.conf
+#  copy:
+#    src: "files/python3.8.conf"
+#    dest: "/etc/ld.so.conf.d/python3.8.conf"
+#    mode: 0755
+#    owner: root
+#    group: root
+#
+#- name: ldconfig
+#  raw: "ldconfig"

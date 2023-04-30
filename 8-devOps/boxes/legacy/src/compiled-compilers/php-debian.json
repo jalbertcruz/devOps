@@ -1,0 +1,34 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "jalbert/debian:10",
+      "commit": true,
+      "changes": [
+        "ENTRYPOINT [\"/init\"]",
+        "EXPOSE 22 9000"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "ansible_env_vars": [
+        "ANSIBLE_DISTRIBUTION=debian",
+        "SWOOLE_VERSION=4.4.16",
+        "REPOS_TYPE=debian"
+      ],
+      "playbook_file": "provision-php.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/php",
+        "tag": "debian10"
+      }
+    ]
+  ]
+}

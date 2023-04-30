@@ -1,0 +1,52 @@
+---
+
+- name: Provision Python
+  hosts: aws_ec2
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Boostrap Python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+
+    - name: Install pip
+      raw: apt-get install -y python-pip
+
+    - name: Install required libraries
+      raw: pip install boto boto3 botocore
+
+- name: Elixir application release creation
+  hosts: aws_ec2
+  become: yes
+  become_method: sudo
+
+  vars:
+    app_name: payment_services
+    app_name_full: Payment services application
+    installation_path: /app
+    release_os: "{{ lookup('env','RELEASE_OS') }}"
+    release_vsn: "{{ lookup('env','RELEASE_VSN') }}"
+    s3_release_bucket: "{{ lookup('env','S3_RELEASE_BUCKET') }}"
+
+  tasks:
+      - name: Downloading release from S3
+        aws_s3:
+          bucket: "{{ s3_release_bucket }}"
+          object: "{{ app_name }}-{{ release_os }}-{{ release_vsn }}.tar"
+          dest: "{{ installation_path }}/{{ app_name }}.tar"
+          mode: get
+
+      - name: Service deactivation
+        raw: "systemctl stop {{ app_name }}.service"
+
+      - name: Clean service files
+        raw: "rm -Rf {{ installation_path }}/{{ app_name }}"
+
+      - name: Unpacking
+        raw: "tar xf {{ installation_path }}/{{ app_name }}.tar -C /app"
+
+      - name: Clean npacking
+        raw: "rm -Rf {{ installation_path }}/{{ app_name }}.tar"
+
+      - name: Service activation
+        raw: "systemctl start {{ app_name }}.service"

@@ -1,0 +1,9 @@
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/a/appslnx/jetbrains/intellij-idea-2017/bin:/home/a/appslnx/jetbrains/pycharm-professional-2017/bin:/home/a/appslnx/jetbrains/web-storm-2017/bin"
+
+export GRADLE_HOME=/home/a/appslnx/build-tools/gradle/
+export GRADLE_USER_HOME=/media/a/data/repo/internet/.gradle
+ 
+#export WORKON_HOME=/home/a/.virtualenvs
+#export PROJECT_HOME=/home/a/Devel
+
+#workon blog

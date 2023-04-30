@@ -1,0 +1,7 @@
+
+- name: Put sbt
+  unarchive:
+    src: https://github.com/jdev-ops/smithy-translate/releases/download/v0.3.6.1/smithytranslate.tgz
+    dest: /usr/bin
+    remote_src: yes
+    validate_certs: no

@@ -1,0 +1,38 @@
+
+[api]
+enabled = true
+
+[sources.my_source_id]
+type = "file"
+data_dir = "logs/var/vector/"
+file_key = "file"
+glob_minimum_cooldown_ms = 1_000
+ignore_older_secs = 600
+include = [ "logs/**/*.log" ]
+max_line_bytes = 102_400
+max_read_bytes = 2_048
+offset_key = "offset"
+read_from = "beginning"
+rotate_wait_secs = 9_223
+
+[transforms.my_transform_id]
+type = "remap"
+inputs = [ "my_source_id" ]
+drop_on_abort = true
+metric_tag_values = "single"
+source = """
+. = parse_json!(string!(.message))
+"""
+timezone = "local"
+
+[transforms.my_transform_id2]
+type = "filter"
+inputs = [ "my_transform_id" ]
+condition = { type = "vrl", source = """.level == "debug" && contains( string!(.message), "No default certificate", case_sensitive: false) """ }
+
+ [sinks.my_sink_id]
+ type = "console"
+ inputs = [ "my_transform_id2" ]
+ target = "stdout"
+ encoding.only_fields = ["message", "time"]
+ encoding.codec = "json"

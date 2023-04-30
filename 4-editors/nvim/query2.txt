@@ -1,0 +1,5 @@
+
+(simple_enum_case
+   (extends_clause
+    (arguments (string) @enumId)
+))

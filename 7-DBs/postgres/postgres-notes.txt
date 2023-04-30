@@ -1,0 +1,7 @@
+
+# How to list active connections on PostgreSQL?
+
+SELECT * FROM pg_stat_activity;
+
+SELECT * FROM pg_stat_activity WHERE datname = 'dbname';
+

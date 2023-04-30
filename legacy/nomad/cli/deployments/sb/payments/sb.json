@@ -1,0 +1,4 @@
+{
+  "sb/payments/denarius/postgres-sb": [],
+  "sb/payments/denarius/rabbitmq-sb": []
+}

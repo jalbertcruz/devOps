@@ -1,0 +1,33 @@
+
+## handlr
+https://wiki.archlinux.org/title/Default_applications#xdg-open
+handlr-regex, written in Rust, provides the functionality of xdg-open and xdg-mime with a streamlined interface. handlr-regex is a fork of handlrAUR with regex support.
+
+Compared to xdg-utils, it includes:
+
+setting associations by extension, removing the need to look up or remember mime types
+validation for mime types and extensions
+removal of invalid entries from mimeapps.list
+intelligent detection of mime types from file content in case filename is ambiguous
+autocompletion of mimes, extensions, and desktop entries
+setting arbitrary commands as handlers based on regular expressions
+# The following two are identical
+handlr set .png feh.desktop
+handlr set image/png feh.desktop
+
+# List default apps
+handlr list
+
+# Get the handler for a mime/extension
+$ handlr get .png --json
+{"handler":"pqiv.desktop","name":"pqiv","cmd":"/usr/bin/pqiv"}
+
+# Launch a handler with optional path/URL
+handlr launch x-scheme-handler/https
+handlr launch x-scheme-handler/https -- https://google.ca
+To use handlr as a replacement for xdg-open, shadow it with following script:
+
+#!/usr/bin/bash
+handlr open "$@"
+
+-------

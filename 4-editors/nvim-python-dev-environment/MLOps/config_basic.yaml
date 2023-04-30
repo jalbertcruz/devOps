@@ -1,0 +1,7 @@
+
+files:
+  - .envrc
+  - .envrc.local
+  - cli/wsbt
+
+path: files

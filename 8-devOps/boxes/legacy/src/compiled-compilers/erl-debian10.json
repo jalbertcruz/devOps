@@ -1,0 +1,31 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "jalbert/debian:10",
+      "commit": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "ansible_env_vars": [
+        "ANSIBLE_DISTRIBUTION=debian",
+        "ERLANG_VERSION=22.2",
+        "PYTHON_VERSION=3.8.1"
+      ],
+      "playbook_file": "provision.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/erlang",
+        "tag": "222-debian10"
+      },
+      "docker-push"
+    ]
+  ]
+}

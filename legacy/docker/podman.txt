@@ -1,0 +1,77 @@
+
+
+sudo apt-get install \
+    btrfs-progs \
+    crun \
+    go-md2man \
+    iptables \
+    libassuan-dev \
+    libbtrfs-dev \
+    libc6-dev \
+    libdevmapper-dev \
+    libglib2.0-dev \
+    libgpgme-dev \
+    libgpg-error-dev \
+    libprotobuf-dev \
+    libprotobuf-c-dev \
+    libseccomp-dev \
+    libselinux1-dev \
+    libsystemd-dev \
+    pkg-config \
+    uidmap
+
+
+
+
+# podman
+make BUILDTAGS="systemd cni seccomp" PREFIX=/usr
+sudo make install PREFIX=/usr
+
+sudo ln -s /home/a/appslnx/google/go/bin/go /usr/bin/go
+
+
+# pasta
+git clone https://passt.top/passt
+z passt/
+make
+sudo make install PREFIX=/usr
+
+# conmon
+make PREFIX=/usr
+sudo make install PREFIX=/usr
+
+podman run quay.io/podman/hello
+
+# buildah
+sudo apt-get -y -qq update
+sudo apt-get -y install bats btrfs-progs go-md2man libapparmor-dev libglib2.0-dev libgpgme11-dev libseccomp-dev libselinux1-dev skopeo libbtrfs-dev
+
+# network plugins
+❯ ./build_linux.sh
+❯ l bin
+.rwxrwxr-x 4.7M a 30 Oct 23:07 -I  bandwidth
+.rwxrwxr-x 5.3M a 30 Oct 23:07 -I  bridge
+.rwxrwxr-x  13M a 30 Oct 23:07 -I  dhcp
+.rwxrwxr-x 4.9M a 30 Oct 23:07 -I  dummy
+.rwxrwxr-x 5.4M a 30 Oct 23:07 -I  firewall
+.rwxrwxr-x 4.8M a 30 Oct 23:07 -I  host-device
+.rwxrwxr-x 4.1M a 30 Oct 23:07 -I  host-local
+.rwxrwxr-x 4.9M a 30 Oct 23:07 -I  ipvlan
+.rwxrwxr-x 4.1M a 30 Oct 23:07 -I  loopback
+.rwxrwxr-x 4.9M a 30 Oct 23:07 -I  macvlan
+.rwxrwxr-x 4.7M a 30 Oct 23:07 -I  portmap
+.rwxrwxr-x 5.1M a 30 Oct 23:07 -I  ptp
+.rwxrwxr-x 4.3M a 30 Oct 23:07 -I  sbr
+.rwxrwxr-x 3.7M a 30 Oct 23:07 -I  static
+.rwxrwxr-x 4.9M a 30 Oct 23:07 -I  tap
+.rwxrwxr-x 4.2M a 30 Oct 23:07 -I  tuning
+.rwxrwxr-x 4.9M a 30 Oct 23:07 -I  vlan
+.rwxrwxr-x 4.5M a 30 Oct 23:07 -I  vrf
+
+sudo install -v ./plugins/bin/* /opt/cni/bin
+mkdir -p /etc/cni/net.d
+install -v -m644 *.conf /etc/cni/net.d/
+sudo install -v -m644 *.conf /etc/cni/net.d/
+
+❯ which aardvark-dns
+/usr/local/bin/aardvark-dns

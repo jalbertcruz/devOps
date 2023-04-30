@@ -1,0 +1,35 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  vars:
+    ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+  tasks:
+
+    - name: Boostrap Python Debian
+      raw: apt-get -y update && apt-get install -y python-minimal
+      when:
+        - ansible_distribution | lower == "debian"
+
+    - name: Boostrap Python CentOS
+      raw: yum -y install epel-release && yum -y update
+      when:
+        - ansible_distribution | lower == "centos"
+
+- name: Provision Erlang
+  hosts: all
+
+  tasks:
+    - name: Ensure Erlang configured with role
+      include_role:
+        name: erlang-local-user
+      vars:
+        ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+    - name: Ensure Python
+      include_role:
+        name: python
+      vars:
+        ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"

@@ -1,0 +1,14 @@
+
+comby -config comby.toml -f .scala
+
+###
+comby -config comby.toml -f .scala -review
+comby -config comby.toml -f .scala -diff
+comby -config comby-all.toml -f .scala -i
+
+# comby.toml
+[my-first-pattern]
+
+match=":[~ SpendingCondition.greater_than]"
+rewrite=" SpendingCondition.GreaterThan"
+

@@ -1,0 +1,50 @@
+---
+- name: Install libnss-wrapper for Debian
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - libnss-wrapper
+    - openssh-client
+  when:
+    - ansible_distribution | lower == "debian"
+
+- name: Install nss_wrapper for CentOS
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nss_wrapper
+    - openssh-clients
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: Putting runtime programs
+  copy:
+    src: "files/create_user.centos"
+    dest: "/usr/local/bin/create_user"
+    mode: 0755
+    owner: root
+    group: root
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: Putting runtime programs
+  copy:
+    src: "files/run_as_user.debian"
+    dest: "/usr/local/bin/run_as_user"
+    mode: 0755
+    owner: root
+    group: root
+  when:
+    - ansible_distribution | lower == "debian"
+
+- name: Putting runtime programs
+  copy:
+    src: "files/ssh"
+    dest: "/usr/local/sbin/ssh"
+    mode: 0755
+    owner: root
+    group: root
+  when:
+    - ansible_distribution | lower == "debian"

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+#firecraker_socker_path=/home/a/src/vm/firecracker.socket
+#rootfs_path=/media/a/data/installers/P/microservices/VMs/firecracker/bionic.rootfs.ext4
+
+curl --unix-socket $firecraker_socker_path -i  \
+  -X PUT 'http://localhost/machine-config' \
+  -H 'Accept: application/json'            \
+  -H 'Content-Type: application/json'      \
+  -d '{
+      "vcpu_count": 1,
+      "mem_size_mib": 256
+  }'
+
+cat ../cli/eth0.json | jj -v $firecraker_tap_id host_dev_name | curl --unix-socket $firecraker_socker_path -i \
+  -X PUT 'http://localhost/network-interfaces/eth0' \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d "$(</dev/stdin)"
+
+#  '{
+#      "iface_id": "eth0",
+#      "guest_mac": "AA:FC:00:00:00:01",
+#      "host_dev_name": "tap0"
+#    }'
+
+#http+unix://%2Fvar%2Frun%2Fdocker.sock/info
+#
+#cat ../cli/eth0.json | jj -v $firecraker_tap_id host_dev_name | \
+#  http put http://localhost/network-interfaces/eth0
+
+curl --unix-socket $firecraker_socker_path -i \
+  -X PUT 'http://localhost/actions'       \
+  -H  'Accept: application/json'          \
+  -H  'Content-Type: application/json'    \
+  -d '{
+      "action_type": "InstanceStart"
+   }'

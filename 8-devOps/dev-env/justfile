@@ -1,0 +1,166 @@
+set shell := ["sh", "-c"]
+set allow-duplicate-recipes := true
+set positional-arguments := true
+set dotenv-load := true
+set export := true
+
+bootstrap-up:
+    docker compose \
+      --project-directory bootstrap \
+      up -d
+    docker compose \
+      --project-directory traefik \
+      up -d
+
+postgres-up: bootstrap-up
+    docker compose \
+      --project-directory postgres \
+      up -d
+
+postgres-down:
+    docker compose \
+      --project-directory postgres \
+      down
+
+kafka-up: bootstrap-up
+    docker compose \
+      --project-directory redpanda \
+      up -d
+
+kafka-down:
+    docker compose \
+      --project-directory redpanda \
+      down
+
+mariadb-up: bootstrap-up
+    docker compose \
+      --project-directory mariadb \
+      up -d
+
+mariadb-down:
+    docker compose \
+      --project-directory mariadb \
+      down
+
+cassandra-up: bootstrap-up
+    docker compose \
+      --project-directory cassandra \
+      up -d
+
+cassandra-down:
+    docker compose \
+      --project-directory cassandra \
+      down
+
+rabbitmq-up: bootstrap-up
+    docker compose \
+      --project-directory rabbitmq \
+      up -d
+
+rabbitmq-down:
+    docker compose \
+      --project-directory rabbitmq \
+      down
+
+db-up: postgres-up
+db-down: postgres-down mariadb-down
+
+bootstrap-down: db-down rabbitmq-down cassandra-down
+    docker compose \
+      --project-directory traefik \
+      down
+    docker compose \
+      --project-directory bootstrap \
+      down
+
+create-registry-data-resources:
+    docker volume create registry-data || true
+
+delete-registry-data-resources:
+    docker volume rm registry-data || true
+
+create-postgres-data-resources:
+    docker volume create postgresql1-data || true
+
+delete-postgres-data-resources:
+    docker volume rm postgresql1-data || true
+
+create-cassandra-data-resources:
+    docker volume create cassandra1-data || true
+    docker volume create cassandra2-data || true
+
+delete-cassandra-data-resources:
+    docker volume rm cassandra1-data || true
+    docker volume rm cassandra2-data || true
+
+create-mariadb-data-resources:
+    docker volume create mariadb1-data || true
+    docker volume create mariadb2-data || true
+
+delete-mariadb-data-resources:
+    docker volume rm mariadb1-data || true
+    docker volume rm mariadb2-data || true
+
+create-kafka-data-resources:
+    docker volume create kafka1-data || true
+    docker volume create kafka2-data || true
+
+delete-kafka-data-resources:
+    docker volume rm kafka1-data || true
+    docker volume rm kafka2-data || true
+
+create-rabbitmq-data-resources:
+    docker volume create rabbitmq1-data || true
+    docker volume create rabbitmq2-data || true
+
+delete-rabbit-data-resources:
+    docker volume rm rabbitmq1-data || true
+    docker volume rm rabbitmq2-data || true
+
+create-postgres:
+    #!/usr/bin/env bash
+
+    servers=$(docker ps --filter "label=type=postgres" | awk 'NR>1 {print $NF}')
+    lines=$(docker ps --filter "label=type=postgres" | awk 'NR>1 {print $NF}' | wc -l)
+    if [ "$lines" -eq 0 ]; then
+      echo "No PostgreSQL servers found."
+      exit 0
+    elif [ "$lines" -eq 1 ]; then
+      server=$servers
+    elif [ "$lines" -gt 1 ]; then
+      server=$(gum choose $servers)
+    fi
+
+    dbases=$(docker exec -i $server psql -U duser -d postgres -t -c "create database service4 owner duser;" )
+    echo $dbases
+
+dump-postgres:
+    postgres-dump.py
+
+restore-postgres:
+    postgres-restore.py
+
+dump-mariadb:
+    mariadb-dump.py
+
+restore-mariadb:
+    mariadb-restore.py
+
+dump-cassandra:
+    cassandra-dump.py
+
+restore-cassandra:
+    cassandra-restore.py
+
+create-keyspace-cassandra:
+    cassandra-keyspace-create.py
+
+run-migrations:
+    liquibase update --defaults-file=postgres/liquibase/liquibase.properties
+
+fmt-py:
+    ruff check --select I --fix cli
+    ruff format cli
+
+run-tests:
+    fd '.*_test_*|test_*|.*_test' --exec-batch echo '{//}'\n | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | grep -v '^\s*$' | fzf

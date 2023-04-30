@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+
+if [ "$#" -eq 0 ]; then
+  #  echo "No arguments supplied"
+  _ACTION="link"
+else
+  case $1 in
+  link)
+    _ACTION="link"
+    ;;
+  copy)
+    _ACTION="copy"
+    ;;
+  *)
+    _ACTION="link"
+    ;;
+  esac
+fi
+
+# echo "1"
+# echo $DEV_ENV_PY_SETUP_CONFIG_FILE_DIR
+# echo "2"
+# echo $DEV_ENV_PY_SETUP_CONFIG_FILE
+
+readarray files < <(yq ".files[]" "$DEV_ENV_PY_SETUP_CONFIG_FILE_DIR$DEV_ENV_PY_SETUP_CONFIG_FILE")
+path=$(yq ".path" "$DEV_ENV_PY_SETUP_CONFIG_FILE_DIR$DEV_ENV_PY_SETUP_CONFIG_FILE")
+
+for FILE in "${files[@]}"; do
+  FILE=$(echo $FILE | sd '\n' '')
+  target="$DEV_ENV_PY_SETUP_CONFIG_FILE_DIR$path/$FILE"
+  if [ -f $FILE ]; then
+    echo "File $FILE exists, skipping..."
+  else
+    case $_ACTION in
+    link)
+      echo "Creating link $FILE (new file) to $target (existing file)"
+      ln -s "$target" "./$FILE"
+      ;;
+    copy)
+      echo "Copying $target to $FILE"
+      cp "$target" "./$FILE"
+      ;;
+    esac
+  fi
+done
+
+if [ -f .envrc ]; then
+  isDirAllowed=$(direnv status --json | jq '.state.foundRC.allowed')
+  if [ $isDirAllowed != "0" ]; then
+    gum confirm "The current dir is not allowed for direnv, can I change that?"
+    if [ $? -eq 0 ]; then
+      echo "Allowing the current directory"
+      direnv allow
+      direnv reload
+    fi
+  else
+    direnv reload
+  fi
+fi
+
+read -r -d '' code <<EOM
+import sys
+if sys.prefix != sys.base_prefix:
+  sys.stdout.write('1')
+else:
+  sys.stdout.write('0')
+EOM
+
+PYTHON_ENV=$(python3 -c "$code")
+if [ $PYTHON_ENV == "1" ]; then
+  echo "Python virtual environment is active, installing packages"
+  pip3 install \
+    pytest \
+    testcontainers \
+    slugify \
+    pynvim \
+    bandit \
+    orjson
+
+  pip3 uninstall -y slugify
+
+fi

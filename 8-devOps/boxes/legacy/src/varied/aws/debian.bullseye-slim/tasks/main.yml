@@ -1,0 +1,14 @@
+---
+- name: Install runtime deps
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ app_runtime_deps }}"
+
+- name: Putting runtime programs
+  copy:
+    src: files/envconsul
+    dest: /usr/local/bin/envconsul
+    mode: 0755
+    owner: root
+    group: root

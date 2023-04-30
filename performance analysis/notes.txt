@@ -1,0 +1,13 @@
+
+# Kafka
+https://blog.allegro.tech/2024/03/kafka-performance-analysis.html
+
+# Tools
+https://github.com/dicksites/KUtrace
+https://github.com/iovisor/bcc/blob/master/tools/ext4slower.py
+https://github.com/iovisor/bcc/tree/master
+https://github.com/bpftrace/bpftrace
+https://github.com/libbpf/libbpf
+https://github.com/iovisor/bcc/blob/master/tools/profile.py
+https://github.com/iovisor/bcc/blob/master/tools/offcputime.py
+

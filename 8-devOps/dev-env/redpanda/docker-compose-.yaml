@@ -1,0 +1,126 @@
+
+services:
+  redpanda-0:
+    restart: always
+    command:
+      - redpanda
+      - start
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr internal://redpanda-0:9092,external://localhost:19092
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --advertise-pandaproxy-addr internal://redpanda:8082,external://localhost:18082
+      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:18081
+      - --rpc-addr redpanda-0:33145
+      - --advertise-rpc-addr redpanda-0:33145
+      - --smp 1
+      - --memory 1G
+      - --mode dev-container
+      - --default-log-level=info
+    ports:
+      - 18081:18081
+      - 18082:18082
+      - 19092:19092
+      - 19644:9644
+    container_name: redpanda-0
+    image: docker.redpanda.com/redpandadata/redpanda:v25.1.8
+    networks:
+      - dev-network
+    profiles:
+      - tier-1
+    volumes:
+      - kafka-1-data:/var/lib/redpanda/data
+  redpanda-0-console:
+    restart: always
+    command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml; /app/console'
+    ports:
+      - 8085:8080
+    container_name: redpanda-0-console
+    image: docker.redpanda.com/redpandadata/console:v2.8.8
+    networks:
+      - dev-network
+    profiles:
+      - tier-1
+    depends_on:
+      - redpanda-0
+    environment:
+      CONFIG_FILEPATH: /tmp/config.yml
+      CONSOLE_CONFIG_FILE: |
+        kafka:
+          brokers: ["redpanda-0:9092"]
+          schemaRegistry:
+            enabled: true
+            urls: ["http://redpanda-0:8081"]
+        redpanda:
+          adminApi:
+            enabled: true
+            urls: ["http://redpanda-0:9644"]
+
+    entrypoint: /bin/sh
+  redpanda-1:
+    restart: always
+    command:
+      - redpanda
+      - start
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:29092
+      - --advertise-kafka-addr internal://redpanda-1:9092,external://localhost:29092
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --advertise-pandaproxy-addr internal://redpanda:8082,external://localhost:28082
+      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:28081
+      - --rpc-addr redpanda-1:33145
+      - --advertise-rpc-addr redpanda-1:33145
+      - --smp 1
+      - --memory 1G
+      - --mode dev-container
+      - --default-log-level=info
+    ports:
+      - 28081:28081
+      - 28082:28082
+      - 29092:29092
+      - 29644:9644
+    container_name: redpanda-1
+    image: docker.redpanda.com/redpandadata/redpanda:v25.1.8
+    networks:
+      - dev-network
+    profiles:
+      - tier-1
+    volumes:
+      - kafka-2-data:/var/lib/redpanda/data
+  redpanda-1-console:
+    restart: always
+    command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml; /app/console'
+    ports:
+      - 8086:8080
+    container_name: redpanda-1-console
+    image: docker.redpanda.com/redpandadata/console:v2.8.8
+    networks:
+      - dev-network
+    profiles:
+      - tier-1
+    depends_on:
+      - redpanda-1
+    environment:
+      CONFIG_FILEPATH: /tmp/config.yml
+      CONSOLE_CONFIG_FILE: |
+        kafka:
+          brokers: ["redpanda-1:9092"]
+          schemaRegistry:
+            enabled: true
+            urls: ["http://redpanda-1:8081"]
+        redpanda:
+          adminApi:
+            enabled: true
+            urls: ["http://redpanda-1:9644"]
+
+    entrypoint: /bin/sh
+volumes:
+  kafka-1-data:
+    name: ${KAFKA_1_VOLUME}
+    external: true
+  kafka-2-data:
+    name: ${KAFKA_2_VOLUME}
+    external: true
+
+networks:
+  dev-network:
+    name: dev-network
+    external: true

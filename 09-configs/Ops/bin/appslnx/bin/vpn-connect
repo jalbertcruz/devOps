@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+sel=$(fd --search-path $PROTON_VPN_OPEN_VPNS_PATH --type file | rg '.ovpn$' | fzf)
+if [ -n "$sel" ]; then
+  sudo openvpn --config "$sel"
+fi

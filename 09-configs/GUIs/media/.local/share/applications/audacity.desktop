@@ -1,0 +1,17 @@
+[Desktop Entry]
+Name=Audacity
+GenericName=Sound Editor
+Comment=Record and edit audio files
+
+Icon=/usr/local/bin/appslnx/tools/edition/audacity/audacity.svg
+StartupWMClass=Audacity
+
+Type=Application
+Categories=AudioVideo;Audio;AudioVideoEditing;
+
+Keywords=sound;music editing;voice channel;frequency;modulation;audio trim;clipping;noise reduction;multi track audio editor;edit;mixing;WAV;AIFF;FLAC;MP2;MP3;
+
+Exec=env GDK_BACKEND=x11 UBUNTU_MENUPROXY=0 /usr/local/bin/appslnx/tools/edition/audacity/squashfs-root/AppRun %F
+StartupNotify=false
+Terminal=false
+MimeType=application/x-audacity-project;application/x-audacity-project+sqlite3;audio/basic;audio/x-aiff;audio/x-wav;audio/aac;audio/ac3;audio/mp4;audio/x-ms-wma;video/mpeg;audio/flac;audio/x-flac;audio/mpeg;application/ogg;audio/x-vorbis+ogg;

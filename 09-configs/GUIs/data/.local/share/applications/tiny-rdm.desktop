@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Tiny RDM
+Exec=/usr/local/bin/appslnx/dbs/redis-guis/tiny-rdm/squashfs-root/AppRun %U
+Terminal=false
+Type=Application
+Icon=/usr/local/bin/appslnx/dbs/redis-guis/tiny-rdm/tiny-rdm.png
+StartupWMClass=tinyrdm
+Comment=Tiny Redis Desktop Manager
+MimeType=x-scheme-handler/tinyrdm;
+Categories=Office;

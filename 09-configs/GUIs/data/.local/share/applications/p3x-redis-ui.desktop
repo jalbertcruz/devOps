@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=P3X-Redis-UI
+Exec=/usr/local/bin/appslnx/dbs/redis-guis/P3X-Redis-UI/squashfs-root/AppRun
+Terminal=false
+Type=Application
+Icon=/usr/local/bin/appslnx/dbs/redis-guis/P3X-Redis-UI/p3x-redis-ui.png
+StartupWMClass=P3X-Redis-UI
+X-AppImage-Version=2025.4.101
+Comment=📡 P3X Redis UI: A highly functional and convenient database GUI that fits in your pocket, accessible on both responsive web and desktop applications
+Categories=Development;

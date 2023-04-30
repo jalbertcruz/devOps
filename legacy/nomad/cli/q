@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+stop-all-nomad-jobs || true # && hoverctl stop
+
+# tmuxinator stop nomad

@@ -1,0 +1,70 @@
+
+https://www.strongdm.com/blog/postgres-create-user
+https://www.postgresql.org/docs/current/ddl-priv.html
+https://www.postgresql.org/docs/7.1/user-manag.html
+
+GRANT ALL PRIVILEGES ON DATABASE your_database_name TO your_new_username;
+
+
+CREATE ROLE sales_team;
+GRANT sales_team TO sales_example_user;
+
+This creates a role named "sales_team" and assigns it the "sales_role." This makes managing users easier, particularly when multiple users have similar responsibilities.
+
+
+CREATE ROLE marketing_team;
+
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO marketing_team;
+
+
+
+
+# Backup and Restore
+https://www.postgresql.org/docs/current/backup-dump.html#BACKUP-DUMP-ALL
+https://github.com/orgrim/pg_back?tab=readme-ov-file
+https://manpages.ubuntu.com/manpages/noble/man1/pg_dumpall.1.html
+https://github.com/orgrim/pg_back/blob/master/pg_back.conf
+https://github.com/lzlabs/pg_dumpbinary
+
+https://github.com/EnterpriseDB/barman
+https://github.com/pgbackrest/pgbackrest
+https://pgbackrest.org/user-guide.html
+https://pgbackrest.org/user-guide.html#installation
+
+https://dev.to/johndotowl/postgresql-17-installation-on-ubuntu-2404-5bfi
+https://linuxcapable.com/install-postgresql-15-on-ubuntu/
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+sudo apt update
+sudo apt-get install postgresql-client-17
+
+alpine:
+https://pkgs.org/download/postgresql-client
+https://alpine.pkgs.org/3.22/alpine-main-x86_64/postgresql17-client-17.5-r0.apk.html
+https://pkgs.alpinelinux.org/package/edge/main/x86/fish
+https://pkgs.alpinelinux.org/package/edge/community/x86/s6-overlay
+https://github.com/crazy-max/docker-alpine-s6
+https://wiki.alpinelinux.org/wiki/Setting_up_a_SSH_server
+x86_64 or aarch64 (musl)
+https://wiki.alpinelinux.org/wiki/How_to_setup_a_Alpine_Linux_mirror
+
+
+
+# https://www.postgresql.org/docs/17/libpq-envars.html
+https://neon.com/postgresql/postgresql-administration/postgresql-show-databases
+https://snapshooter.com/learn/postgresql/pg_dump_pg_restore
+https://serverspace.io/support/help/how-to-backup-and-restore-in-a-postgresql/
+
+pg_dump --username=duser --host=0.0.0.0 --port=5432 --format=plain -f postgres_backup.sql --clean --inserts -d service
+pg_dump --username=duser --host=postgres-1 --port=5432 --format=plain -f /dump/postgres_backup.sql --clean --inserts -d service
+docker exec -it postgres-1 sh -c "pg_dump --username=duser --host=postgres-1 --port=5432 --format=plain -f /dump/postgres_backup.sql --clean --inserts -d service"
+
+docker exec -i postgres-1 psql -U duser -d postgres -t -c "SELECT datname FROM pg_database;"
+
+# not working
+pg_dump --username=duser --host=postgres-1.personal.local --port=55432 --format=plain -f postgres_backup.sql --clean --inserts -d service
+
+
+
+https://hub.docker.com/r/postgis/postgis/
+postgis/postgis:17-3.5-alpine

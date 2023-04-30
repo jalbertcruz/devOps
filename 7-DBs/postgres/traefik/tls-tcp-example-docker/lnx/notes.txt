@@ -1,0 +1,6 @@
+sudo apt update && sudo apt install dnsmasq
+sudo nvim /etc/dnsmasq.conf
+sudo systemctl restart dnsmasq
+sudo systemctl status dnsmasq
+sudo nvim /etc/systemd/resolved.conf
+sudo systemctl restart systemd-resolved

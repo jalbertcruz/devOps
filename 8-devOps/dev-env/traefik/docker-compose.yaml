@@ -1,0 +1,43 @@
+services:
+  traefik:
+    image: "traefik:v3.5.3"
+    container_name: traefik
+    command:
+      - "--log.level=DEBUG"
+      - "--configfile=/traefik.yml"
+      - --api.dashboard=true
+      - --accesslog=true
+      - --providers.docker=true
+      - --providers.docker.exposedByDefault=false
+      - --providers.file.directory=/etc/traefik/dynamic
+#      - --entryPoints.http.address=:8088
+#      - --entryPoints.mariadb.address=:33306
+#      - --entryPoints.tcp.address=:2222
+
+#      - --tls.stores.default.defaultCertificate.certFile=/pki/personal.local+9.pem
+#      - --tls.stores.default.defaultCertificate.keyFile=/pki/personal.local+9-key.pem
+#      - --tls.certificates.certFile=/pki/personal.local+9.pem
+#      - --tls.certificates.keyFile=/pki/personal.local+9-key.pem
+    ports:
+      - "8089:8089"
+      - "4443:443"
+      - "55432:55432"
+#      - "33306:33306"
+      - "8088:8088"
+    labels:
+      - traefik.enable=true
+    networks:
+      - dev-network
+    volumes:
+      - /run/user/1000/docker.sock:/var/run/docker.sock:ro
+#      - /var/run/podman/podman.sock:/var/run/docker.sock:ro
+#      - /run/user/1000/podman/podman.sock:/var/run/docker.sock:ro
+      - ./traefik.yaml:/traefik.yml
+      - ./pki/personal.local+9.pem:/pki/personal.local+9.pem
+      - ./pki/personal.local+9-key.pem:/pki/personal.local+9-key.pem
+      - ./dynamic:/etc/traefik/dynamic
+
+networks:
+  dev-network:
+    name: dev-network
+    external: true

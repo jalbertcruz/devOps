@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# This script is used to delete a worktree
+
+BARE_GIT_DIR=".git"
+if ! test -d $BARE_GIT_DIR; then
+  echo "Your are not in a git directory."
+  exit 0
+fi
+
+branches=($(git worktree list -v | hck -f3 | sd '\[|\]' '' | rg -v '^$' | rg -v -e 'master|main' | sort -u))
+
+export GUM_CHOOSE_HEADER="Choose branch to delete its worktree:"
+brch=$(gum choose "${branches[@]}") && {
+  dir=($(git worktree list -v | rg "\[$brch\]" | hck -f1))
+  echo "Deleting '$dir'"
+  git worktree remove --force $dir
+}

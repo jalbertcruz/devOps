@@ -1,0 +1,76 @@
+version: "0.5"
+is_strict: true
+environment:
+processes:
+  reposilite:
+    command: |
+      java -jar $REPOSILITE_STANDALONE_JAR_PATH --token name:secret
+    working_dir: "wdir/reposilite"
+  caddy:
+    command: |
+      caddy run
+    working_dir: "wdir/caddy"
+  jaeger-1:
+    command: jaeger --config config.yaml
+    working_dir: wdir/jaeger
+    environment:
+      - JAEGER_METRICS_READERS_EXPORTER_PROMETHEUS_PORT=10000
+      - JAEGER_QUERY_HTTP_HOST_PORT=10001
+      - JAEGER_QUERY_GRPC_HOST_PORT=10002
+      - JAEGER_REMOTE_SAMPLING_HTTP_PORT=10003
+      - JAEGER_REMOTE_SAMPLING_GRPC_PORT=10004
+      - JAEGER_RECEIVERS_OTLP_GRPC_PORT=10005
+      - JAEGER_RECEIVERS_OTLP_HTTP_PORT=10006
+      - JAEGER_RECEIVERS_JAEGER_PROTOCOLS_GRPC_PORT=10007
+      - JAEGER_RECEIVERS_JAEGER_PROTOCOLS_THRIFT_HTTP_PORT=10008
+      - JAEGER_RECEIVERS_JAEGER_PROTOCOLS_THRIFT_BINARY_PORT=10009
+      - JAEGER_RECEIVERS_JAEGER_PROTOCOLS_THRIFT_COMPACT_PORT=10010
+      - JAEGER_RECEIVERS_ZIPKIN_PORT=10011
+  jaeger-2:
+    command: jaeger --config config.yaml
+    working_dir: wdir/jaeger2
+    environment:
+      - JAEGER_METRICS_READERS_EXPORTER_PROMETHEUS_PORT=10012
+      - JAEGER_QUERY_HTTP_HOST_PORT=10013
+      - JAEGER_QUERY_GRPC_HOST_PORT=10014
+      - JAEGER_REMOTE_SAMPLING_HTTP_PORT=10015
+      - JAEGER_REMOTE_SAMPLING_GRPC_PORT=10016
+      - JAEGER_RECEIVERS_OTLP_GRPC_PORT=10017
+      - JAEGER_RECEIVERS_OTLP_HTTP_PORT=10018
+      - JAEGER_RECEIVERS_JAEGER_PROTOCOLS_GRPC_PORT=10019
+      - JAEGER_RECEIVERS_JAEGER_PROTOCOLS_THRIFT_HTTP_PORT=10020
+      - JAEGER_RECEIVERS_JAEGER_PROTOCOLS_THRIFT_BINARY_PORT=10021
+      - JAEGER_RECEIVERS_JAEGER_PROTOCOLS_THRIFT_COMPACT_PORT=10022
+      - JAEGER_RECEIVERS_ZIPKIN_PORT=10023
+  keycloak-1:
+    command: kc.sh start-dev
+    working_dir: wdir/keycloak
+    environment:
+      - KC_DB_URL=jdbc:h2:file:./data/keycloakdb;NON_KEYWORDS=VALUE;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=0
+      - KC_HTTP_PORT=10020
+  minio-1:
+    command: minio server ./data
+    working_dir: wdir/minio
+    environment:
+      - MINIO_ADDRESS=:10021
+      - MINIO_CONSOLE_ADDRESS=:10022
+  mongodb-1:
+    command: mongod --auth --config mongod.conf --configExpand "exec"
+    working_dir: wdir/mongo
+    environment:
+      - MONGODB_PORT=10023
+  mongodb-2:
+    command: mongod --auth --config mongod.conf --configExpand "exec"
+    working_dir: wdir/mongo2
+    environment:
+      - MONGODB_PORT=10041
+  nats-1:
+    command: nats-server -config server.conf
+    working_dir: wdir/nats
+    environment:
+      - NATS_PORT=10024
+  nats-2:
+    command: nats-server -config server.conf
+    working_dir: wdir/nats2
+    environment:
+      - NATS_PORT=10043

@@ -1,0 +1,10 @@
+mappings:
+  db:
+    k1: DB_HOST
+    k2:
+    - DB_PORT
+  kafka:
+    k1: KAFKA_HOST
+    k2:
+      - KAFKA_PORT
+      - KAFKA_CONSOLE_PORT

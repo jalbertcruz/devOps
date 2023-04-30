@@ -1,0 +1,21 @@
+
+destination_path: /media/z/Local data/backups/docs/
+origin_path: /media/z/data/docs/
+structure:
+  packaging:
+    - dir: P
+      level: 2
+    - dir: OSs
+      level: 1
+    - dir: Web
+      level: 1
+    - dir: Mathematics
+      level: 1
+    - dir: CSociales
+      level: 2
+    - dir: Economics
+      level: 1
+    - dir: Electronics
+      level: 1
+    - dir: varied
+      level: 1

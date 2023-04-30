@@ -1,0 +1,41 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+
+- name: Provision Test app
+  hosts: all
+
+  tasks:
+    - name: "Creates directory: /etc/services.d/service-b"
+      file:
+        path: /etc/services.d/service-b
+        state: directory
+
+    - name: Putting /etc/services.d/service-b/run
+      copy:
+        src: files/services.d/service-b/run
+        dest: /etc/services.d/service-b/run
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    - name: Putting /home/app/service-b.sh
+      copy:
+        src: files/service-b.sh
+        dest: /home/app/service-b.sh
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    - name: Putting service-b
+      copy:
+        src: files/service-b
+        dest: /home/app/service-b
+        mode: u=rx,g=rx,o=rx
+
+

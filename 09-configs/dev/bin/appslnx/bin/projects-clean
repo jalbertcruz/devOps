@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+sudo projclean .venv .env .metals .bsp .bloop target .vscode node_modules .mysql .kafka .postgres .data abuild _build .mypy_cache

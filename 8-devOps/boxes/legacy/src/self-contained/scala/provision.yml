@@ -1,0 +1,25 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap Python
+      raw: apt-get -y update && apt-get install -y python3-minimal
+
+- name: Provision Scala/sbt
+  hosts: all
+
+  tasks:
+
+    - name: Install deps
+      include_tasks: "../tasks/install-deps.yaml"
+
+    - name: Install sbt
+      include_tasks: "../tasks/install-sbt.yaml"
+
+    - name: Install smithytranslate
+      include_tasks: "../tasks/install-smithytranslate.yaml"
+
+    - name: Install just
+      include_tasks: "../tasks/install-just.yaml"

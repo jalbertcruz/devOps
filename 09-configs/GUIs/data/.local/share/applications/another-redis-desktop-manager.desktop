@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Another Redis Desktop Manager
+Exec=/usr/local/bin/appslnx/db/redis-guis/Another-Redis-Desktop-Manager/squashfs-root/another-redis-desktop-manager --no-sandbox %U
+Terminal=false
+Type=Application
+Icon=/usr/local/bin/appslnx/db/redis-guis/Another-Redis-Desktop-Manager/another-redis-desktop-manager.png
+StartupWMClass=Another Redis Desktop Manager
+X-AppImage-Version=1.7.1
+Comment=A faster, better and more stable redis desktop manager.
+Categories=Utility;

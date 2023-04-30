@@ -75,7 +75,6 @@ sudo add-apt-repository ppa:wireshark-dev/stable
 sudo apt-get install wireshark
 
 sudo apt-get install bind9
-sudo apt-get install emacs25
 
 sudo update-alternatives --install "/usr/bin/java" "java" "/home/a/appslnx/jdk1.8/bin/java" 1
 sudo update-alternatives --install "/usr/bin/javac" "javac" "/home/a/appslnx/jdk1.8/bin/javac" 1  
@@ -86,7 +85,8 @@ sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/home/a/appslnx/j
 sudo update-alternatives --install "/usr/bin/java" "java" "/home/a/appslnx/jdk-11/bin/java" 1
 sudo update-alternatives --install "/usr/bin/javac" "javac" "/home/a/appslnx/jdk-11/bin/javac" 1  
 
-sudo apt-get install p7zip-full p7zip-rar uget calibre sysstat iftop htop ack silversearcher-ag xchm cmake nmap portaudio19-dev ffmpeg
+# sudo apt-get install p7zip-full p7zip-rar uget calibre iftop htop ack silversearcher-ag xchm cmake nmap portaudio19-dev ffmpeg
+sudo apt-get install p7zip-full p7zip-rar uget calibre sysstat iftop xchm cmake nmap portaudio19-dev ffmpeg
 
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 sudo apt-get install build-essential libssl-dev
@@ -177,7 +177,7 @@ $ sudo apt-cache search wxWebView
 
 
 
-# extra (download mmedia, not really workin)
+# extra (download mmedia, not really working)
 # https://www.sololinux.es/como-instalar-amule-en-ubuntu-20-04-lts/
 wget https://www.sololinux.es/public/amule/amule-common_2.3.2-6_all.deb
 wget https://www.sololinux.es/public/amule/amule_2.3.2-6_amd64.deb
@@ -203,3 +203,14 @@ sudo apt-get install pfring-dkms nprobe ntopng n2disk cento
 
 # poner esto en startup applications
 pactl set-default-source alsa_input.usb-CMEDIA_Q9-1-00.mono-fallback
+
+# IO analysis
+# https://www.baeldung.com/linux/monitor-disk-io
+sudo apt-get install iotop
+sudo apt-get install sysstat
+
+# On-screen annotation tool
+sudo apt-get install gromit-mpx
+
+# aria2 is a lightweight multi-protocol & multi-source (HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink)
+sudo apt-get install aria2

@@ -1,0 +1,28 @@
+
+- name: Downloading precompiled Elixir
+  get_url:
+    url: "{{ elixir_download_url }}"
+    dest: "{{ kerl_working_dir }}/Precompiled.zip"
+
+- name: Unpacking Elixir
+  raw: "unzip {{ kerl_working_dir }}/Precompiled.zip -d {{ elixir_bin_dir }}"
+
+- name: Removing precompiled Elixir
+  file:
+    path: "{{ kerl_working_dir }}/Precompiled.zip"
+    state: absent
+
+- name: Insert a line at the end of a file
+  lineinfile:
+    path: /home/app/.bashrc
+    line: ". {{ kerl_working_dir }}/{{ erlang_version }}/activate"
+
+- name: Insert a line at the end of a file
+  lineinfile:
+    path: /home/app/.bashrc
+    line: "export PATH=\"$PATH:{{ elixir_bin_dir }}/bin\""
+
+- name: Insert a line at the end of a file
+  lineinfile:
+    path: /home/app/.bashrc
+    line: "export SECRET_KEY_BASE={{ secret_key_base }}"

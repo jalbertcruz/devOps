@@ -1,0 +1,10 @@
+boxes:
+  - name: ubuntu-ssh
+    image: localhost:5000/dev/ubuntu-ssh:latest
+    host: ubuntu-ssh.personal.local
+  - name: elixir
+    image: localhost:5000/dev/ubuntu-erlang_27:latest
+    host: ubuntu-erlang.personal.local
+  - name: python-27
+    image: localhost:5000/dev/ubuntu-python-2.7:latest
+    host: python-27.personal.local

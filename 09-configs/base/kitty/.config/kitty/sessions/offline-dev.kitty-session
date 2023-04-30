@@ -1,0 +1,20 @@
+new_os_window
+
+new_tab files
+
+layout splits
+
+cd $HOME/src/offline/offline-devops
+
+launch --var window=yazi yap offline-devops
+
+new_tab dev
+
+layout splits
+
+cd $HOME/src/offline/offline-devops
+
+launch --var window=first --title nvim nvim
+launch --location=vsplit --var window=second --bias=25
+
+#focus_matching_window title:nvim

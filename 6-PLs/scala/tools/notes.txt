@@ -1,0 +1,6 @@
+
+# GraalVM native image
+# https://www.graalvm.org/22.0/reference-manual/native-image/
+# https://scala-cli.virtuslab.org/docs/commands/package#native-image
+
+❯ scala-cli --power package case_conversor.scala -o case-conversor --native-image

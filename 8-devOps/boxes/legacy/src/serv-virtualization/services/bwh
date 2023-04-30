@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cd py
+pyinstaller --distpath ../files --onefile webhook-transformer.py
+cd ..
+packer build webhook-transformer.json

@@ -1,0 +1,18 @@
+
+https://cloud.google.com/spanner/docs/schema-design
+
+Use a Universally Unique Identifier (UUID)
+You can use a Universally Unique Identifier (UUID) as defined by RFC 4122 as the primary key. Version 4 UUID is recommended, because it uses random values in the bit sequence. Version 1 UUID stores the timestamp in the high order bits and is not recommended.
+
+
+https://cloud.google.com/blog/products/gcp/what-dbas-need-to-know-about-cloud-spanner-part-1-keys-and-indexes
+
+What makes a good key
+
+ One simple way to generate such a key is to use random numbers, such as a random universally unique identifier (UUID). Note that there are several classes of UUID. Versions 1 and 2 use deterministic prefixes, such as timestamps or MAC addresses. Ensure that the UUID generation method you use is truly randomly distributed, i.e., v4, at least over the higher order bytes. This will ensure that the keys are evenly distributed among the keyspace, and hence that the load is distributed evenly over the spanner nodes.
+
+
+Redis
+
+https://cloud.google.com/memorystore/docs/redis/memory-management-best-practices
+

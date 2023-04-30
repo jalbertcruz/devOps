@@ -1,0 +1,16 @@
+
+- name: "Creates directory: /etc/s6-overlay/scripts/"
+  file:
+    path: /etc/s6-overlay/scripts/
+    state: directory
+
+- name: "Creates directory: /configs"
+  file:
+    path: /configs
+    state: directory
+
+- name: "Creates directory: /etc/s6-overlay/s6-rc.d/user/contents.d"
+  file:
+    path: /etc/s6-overlay/s6-rc.d/user/contents.d
+    state: directory
+

@@ -1,0 +1,136 @@
+---
+
+- name: Ensure SSH server config
+  ansible.builtin.blockinfile:
+    path: /etc/ssh/sshd_config
+    insertafter: EOF
+    block: |
+      Port 22
+      AddressFamily any
+      ListenAddress 0.0.0.0
+      ListenAddress ::
+
+- name: "Creates directory: /var/run/sshd"
+  file:
+    path: /var/run/sshd
+    state: directory
+
+- name: ssh 1
+  raw: sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config
+
+- name: ssh 2
+  raw: sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+- name: touch /root/.Xauthority
+  raw: touch /root/.Xauthority
+
+
+#- name: Putting sshd service (old school)
+#  copy:
+#    src: files/services.d/
+#    dest: /etc/services.d/
+
+
+- name: Putting cmd
+  copy:
+    src: files/run_
+    dest: /usr/local/bin/run_
+    owner: root
+    group: root
+    mode: u=rx,g=rx,o=rx
+
+- name: Putting sshd service
+  copy:
+    src: files/s6-overlay/s6-rc.d/sshd/
+    dest: /etc/s6-overlay/s6-rc.d/sshd/
+
+- name: Putting /etc/s6-overlay/s6-rc.d/user/contents.d/sshd
+  copy:
+    src: files/s6-overlay/s6-rc.d/user/contents.d/sshd
+    dest: /etc/s6-overlay/s6-rc.d/user/contents.d/sshd
+    owner: root
+    group: root
+    mode: u=rx,g=rx,o=rx
+
+- name: "Creates directory: /root/.ssh"
+  file:
+    path: /root/.ssh
+    state: directory
+
+#- name: setting permissions
+#  raw: chmod go-rwx /root/.ssh
+
+- name: Putting id_ed25519 on root
+  copy:
+    src: files/dotssh/id_ed25519
+    dest: /root/.ssh/id_ed25519
+    owner: root
+    group: root
+    mode: u+r
+
+- name: Putting id_ed25519.pub on root
+  copy:
+    src: files/dotssh/id_ed25519.pub
+    dest: /root/.ssh/id_ed25519.pub
+    owner: root
+    group: root
+    mode: u+r
+
+- name: "Creates directory: /home/app/.ssh"
+  file:
+    path: /home/app/.ssh
+    state: directory
+
+- name: setting permissions
+  raw: chmod go-rwx /home/app/.ssh
+
+- name: Putting id_ed25519 on app
+  copy:
+    src: files/dotssh/id_ed25519
+    dest: /home/app/.ssh/id_ed25519
+    owner: app
+    group: app
+    mode: u+r
+
+- name: Putting id_ed25519.pub on app
+  copy:
+    src: files/dotssh/id_ed25519.pub
+    dest: /home/app/.ssh/id_ed25519.pub
+    owner: app
+    group: app
+    mode: u+r
+
+- name: Putting id_ed25519.pub on app as master.pub
+  copy:
+    src: files/dotssh/id_ed25519.pub
+    dest: /home/app/.ssh/master.pub
+    owner: app
+    group: app
+    mode: u+r
+
+- name: cat 1
+  raw: cat /root/.ssh/id_ed25519.pub > /root/.ssh/authorized_keys
+
+- name: cat 2
+  raw: cat /home/app/.ssh/id_ed25519.pub > /home/app/.ssh/authorized_keys
+
+- name: setting permissions /root/.ssh/authorized_keys
+  raw: chmod go-rw /root/.ssh/authorized_keys
+
+- name: chown -R root:root /root/.ssh
+  raw: chown -R root:root /root/.ssh
+
+- name: chown -R app:app /home/app
+  raw: chown -R app:app /home/app
+
+- name: setting permissions /home/app/.ssh/authorized_keys
+  raw: chmod go-rw /home/app/.ssh/authorized_keys
+
+- name: setting permissions /home/app/.ssh
+  raw: chown -R app:app /home/app/.ssh
+
+- name: resetting 400 permissions to root/id_ed25519
+  raw: chmod 400 /root/.ssh/id_ed25519
+
+- name: resetting 400 permissions to app/id_ed25519
+  raw: chmod 400 /home/app/.ssh/id_ed25519

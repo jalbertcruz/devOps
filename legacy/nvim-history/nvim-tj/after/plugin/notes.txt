@@ -1,0 +1,2 @@
+# get current buffer id
+ echo nvim_get_current_buf()

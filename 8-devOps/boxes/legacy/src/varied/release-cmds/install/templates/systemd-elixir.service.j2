@@ -1,0 +1,18 @@
+[Unit]
+Description={{ app_name_full }} service
+After=network.target
+
+[Service]
+WorkingDirectory=/app
+ExecStart=/usr/local/bin/entrypoint.sh
+ExecStop=/app/{{ app_name }}/bin/{{ app_name }} stop
+
+#Restart=on-failure
+User=centos
+Group=centos
+
+# See http://serverfault.com/a/695863
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

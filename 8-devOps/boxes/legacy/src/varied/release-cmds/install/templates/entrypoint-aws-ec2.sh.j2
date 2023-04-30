@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+EC2_AVAIL_ZONE=`curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone`
+if [ $? = 0 ]; then
+  export AWS_REGION="`echo \"$EC2_AVAIL_ZONE\" | sed 's/[a-z]$//'`"
+fi
+
+declare -a names=({{ parameter_store_paths }})
+
+for i in "${!names[@]}"; do
+   eval $(aws ssm get-parameters-by-path --path ${names[$i]} --recursive --with-decryption --region ${AWS_REGION} --max-items 100 --query 'Parameters[*].{path:Name,val:Value}' --output text | awk '{gsub(/\/*.*\//,"export ",$1); print $1 "=" $2}');
+done
+
+trap 'exit' INT; {{ installation_path }}/{{ app_name }}/bin/{{ app_name }} start

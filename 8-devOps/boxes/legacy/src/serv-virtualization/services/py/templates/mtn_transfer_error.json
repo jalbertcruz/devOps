@@ -1,0 +1,21 @@
+{
+  "request": {
+    "urlPath": "/disbursement/v1_0/transfer",
+    "method": "POST",
+    "headers": {
+      "X-Reference-Id": {
+        "equalTo": "{{ x_reference_id }}"
+      }
+    }
+  },
+  "postServeActions": {
+   "webhook": {
+     "headers": {
+       "Content-Type": "application/json"
+     },
+     "method": "POST",
+     "body": "{ \"status\": \"failed\" }",
+     "url": "{{ x_callback_url }}"
+   }
+ }
+}

@@ -1,0 +1,34 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "jalbert/spark-base:2.4.4-debian",
+      "commit": true,
+      "changes": [
+        "WORKDIR /spark",
+        "ENV SPARK_WORKER_WEBUI_PORT 8081",
+        "ENV SPARK_WORKER_LOG /spark/logs",
+        "ENV SPARK_MASTER spark://spark-master.service.dc1.consul:7077",
+        "EXPOSE 22 8081",
+        "ENTRYPOINT [\"/init\"]"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "provision-worker.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/spark-worker",
+        "tag": "2.4.4-debian"
+      },
+      "docker-push"
+    ]
+  ]
+}

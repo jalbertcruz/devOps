@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=HTTP Toolkit
+Exec=/usr/local/bin/appslnx/web/HttpToolkit/squashfs-root/httptoolkit --no-sandbox %U
+Terminal=false
+Type=Application
+Icon=/usr/local/bin/appslnx/web/HttpToolkit/httptoolkit.svg
+StartupWMClass=HTTP Toolkit
+X-AppImage-Version=1.19.3
+Comment=HTTP(S) debugging, development & testing tool
+Categories=Development;
+StartupNotify=true

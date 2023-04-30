@@ -1,0 +1,39 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+
+- name: Provision webhook-transformer app
+  hosts: all
+
+  tasks:
+    - name: "Creates directory: /etc/services.d/webhook-transformer"
+      file:
+        path: /etc/services.d/webhook-transformer
+        state: directory
+
+    - name: Putting /etc/services.d/webhook-transformer/run
+      copy:
+        src: files/services.d/webhook-transformer/run
+        dest: /etc/services.d/webhook-transformer/run
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    - name: Putting /usr/bin/webhook-transformer.sh
+      copy:
+        src: files/webhook-transformer.sh
+        dest:  /usr/bin/webhook-transformer.sh
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    - name: Putting webhook-transformer
+      copy:
+        src: files/webhook-transformer
+        dest: /usr/bin/webhook-transformer
+        mode: u=rx,g=rx,o=rx

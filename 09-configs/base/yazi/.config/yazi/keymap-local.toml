@@ -1,0 +1,8 @@
+[mgr]
+
+keymap = [
+    # Goto
+    { on = ["g", "s", ], run = "cd ~/src",                     desc = "Goto ~/src" },
+    { on = ["g", "c", ], run = "cd ~/src/devOps/09-configs",   desc = "Goto configs" },
+    { on = ["g", "m", ], run = "cd /media/z",                  desc = "Goto new medias" },
+]

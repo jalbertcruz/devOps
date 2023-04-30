@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+#packer build -debug scala2.json
+
+packer build build.json
+#packer build build-j11.json

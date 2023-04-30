@@ -1,0 +1,23 @@
+{
+    "builders": [{
+        "type": "docker",
+        "image": "ubuntu:18.04",
+        "commit": true,
+        "changes": [
+            "WORKDIR /app",
+            "ENTRYPOINT [\"entrypoint.sh\"]"
+        ]
+    }],
+
+    "provisioners": [{
+        "type": "ansible",
+        "user": "root",
+        "playbook_file": "provision-ubuntu-1804-docker.yml"
+    }],
+
+    "post-processors": [[ {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/payment_services",
+        "tag": "ubuntu1804"
+    } ]]
+}

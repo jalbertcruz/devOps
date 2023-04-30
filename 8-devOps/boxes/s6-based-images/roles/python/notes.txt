@@ -1,0 +1,45 @@
+
+apt-get install gfortran libopenblas-dev liblapack-dev
+
+apt-get install software-properties-common
+
+apt-add-repository ppa:fish-shell/release-3
+
+apt update
+apt-get update
+apt-get upgrade
+apt-get install fish
+chsh -s /usr/local/bin/fish
+
+apt install python3-pip
+
+python3.10
+
+
+https://www.python.org/ftp/python/3.11.0/Python-3.11.0.tar.xz
+https://www.python.org/ftp/python/3.9.15/Python-3.9.15.tar.xz
+https://www.python.org/ftp/python/3.8.15/Python-3.8.15.tar.xz
+https://www.python.org/ftp/python/3.7.15/Python-3.7.15.tar.xz
+https://www.python.org/ftp/python/3.6.15/Python-3.6.15.tar.xz
+https://www.python.org/ftp/python/3.5.10/Python-3.5.10.tar.xz
+https://www.python.org/ftp/python/3.4.10/Python-3.4.10.tar.xz
+https://www.python.org/ftp/python/3.3.7/Python-3.3.7.tar.xz
+
+-------------------------------------------------------------------
+# BEGIN ANSIBLE MANAGED BLOCK
+pip install --upgrade pip
+pip install --upgrade wheel
+
+if test -f requirements.txt; then
+      pip install -r requirements.txt
+fi
+
+}
+# END ANSIBLE MANAGED BLOCK
+3.3
+3.7
+python /opt/python-3.3/get-pip.py
+python /opt/python-3.7/get-pip.py
+export PATH=$PATH:/opt/python-3.3/bin
+export PATH=$PATH:/opt/python-3.7/bin
+app@d5016042d7b5:~$

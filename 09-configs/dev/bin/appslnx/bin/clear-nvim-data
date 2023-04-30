@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+NVIM_BASE_DIR=${NVIM_BASE_DIR_VALUE:-"$HOME/.config/nvim"}
+
+rm -rf $HOME/.local/state/nvim
+
+mkdir -p $HOME/.cache/nvim-temp_
+cp -r $HOME/.cache/nvim/arrow $HOME/.cache/nvim-temp_/
+
+rm -rf $HOME/.cache/nvim
+
+mkdir -p $HOME/.cache/nvim
+cp -r $HOME/.cache/nvim-temp_/arrow $HOME/.cache/nvim/
+rm -rf $HOME/.cache/nvim-temp_
+
+rm -rf $HOME/.local/share/nvim
+#rm -rf $HOME/.config/nvim/lazy-lock.json || true
+exit 0
+
+case $1 in
+
+clean)
+  echo "Cleaning up nvim-nvchad"
+  rm -rf $HOME/.local/state/nvim
+  rm -rf $HOME/.local/share/nvim
+  rm -rf "$NVIM_BASE_DIR/lazy-lock.json" || true
+
+  if [ -d "$NVIM_BASE_DIR/temp/lua" ]; then
+    :
+  else
+    echo "Setting up nvim-nvchad starter project"
+    mv "$NVIM_BASE_DIR/init.lua" "$NVIM_BASE_DIR/temp/init.lua"
+    mv "$NVIM_BASE_DIR/lua" "$NVIM_BASE_DIR/temp/lua"
+    mv "$NVIM_BASE_DIR/after" "$NVIM_BASE_DIR/temp/after"
+
+    cp "$NVIM_BASE_DIR/starter/init.lua" "$NVIM_BASE_DIR"
+    cp -R "$NVIM_BASE_DIR/starter/lua" "$NVIM_BASE_DIR"
+  fi
+
+  exit 0
+  ;;
+
+new)
+
+  if [ -d "$NVIM_BASE_DIR/temp/lua" ]; then
+    echo "Setting up nvim-nvchad project"
+    rm "$NVIM_BASE_DIR/init.lua"
+    rm -Rf "$NVIM_BASE_DIR/lua"
+    mv "$NVIM_BASE_DIR/temp/init.lua" "$NVIM_BASE_DIR"
+    mv "$NVIM_BASE_DIR/temp/lua" "$NVIM_BASE_DIR"
+    mv "$NVIM_BASE_DIR/temp/after" "$NVIM_BASE_DIR/after"
+  else
+    echo "Doing nothing, you must have run clean first"
+  fi
+
+  exit 0
+  ;;
+
+clean-session)
+  echo "Removing all sessions data"
+  rm -Rf $HOME/.local/share/nvim/sessions
+  exit 0
+  ;;
+
+esac
+
+echo "Usage:
+ $0 clean
+ nvim
+ $0 new
+ or
+ $0 clean-session
+ "
+
+exit 1
+
+#rm -Rf /home/a/.local/state/nvim-tj
+#rm -Rf /home/a/.local/share/nvim-tj
+
+#rm -Rf /home/a/.local/state/nvim-astronvim
+#rm -Rf /home/a/.local/share/nvim-astronvim
+
+#rm -Rf /home/a/.local/state/$NVIM_APPNAME
+#rm -Rf /home/a/.local/share/$NVIM_APPNAME

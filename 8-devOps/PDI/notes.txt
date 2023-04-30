@@ -1,0 +1,15 @@
+    "dev/ubuntu-c-compiler-base",
+    "dev/ubuntu-erlang_27",
+    "dev/ubuntu-python-2.7",
+    "dev/ubuntu-ssh"
+
+docker run --rm --name aa -d \
+    --volume /home/z/appslnx:/home/app/appslnx \
+    --dns 10.5.0.3 --dns 8.8.8.8 \
+    --network dev-network \
+    --label custom.type=pdi \
+    -p 2222:22 localhost:5000/dev/ubuntu-ssh:latest
+
+
+ssh -o "StrictHostKeyChecking no" -p 2222 app@localhost
+

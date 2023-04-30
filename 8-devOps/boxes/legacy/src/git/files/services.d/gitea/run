@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv sh
+
+exec /home/app/gitea/gitea web
+# exec s6-setuidgid app /home/app/gitea/gitea web
+
+# -c /etc/gitea/app.ini

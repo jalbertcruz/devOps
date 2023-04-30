@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Categories=Science;Electronics;
+Exec=/usr/local/bin/appslnx/tools/electricity/easyeda-pro/easyeda-pro/easyeda-pro
+TryExec=/usr/local/bin/appslnx/tools/electricity/easyeda-pro/easyeda-pro/easyeda-pro
+Icon=/usr/local/bin/appslnx/tools/electricity/easyeda-pro/easyeda-pro.png
+StartupWMClass=EasyEDA Pro
+Keywords=EasyEDA;EDA;Circuit Design;PCB Design;
+Name=EasyEDA
+GenericName=Easy EDA Suite

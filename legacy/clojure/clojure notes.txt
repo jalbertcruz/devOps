@@ -1,0 +1,17 @@
+
+Easy, not Simple: Jacking In
+# https://lambdaisland.com/blog/2021-11-03-making-nrepl-cider-more-dynamic-1
+
+What we have seen in response is that editors have mostly tried to relieve users from having to start up their application process, instead the editor does it for you, providing all the right flags and dependencies to make sure nREPL gets started, with all the necessary middleware in tow. For instance when I do cider-jack-in in Emacs in the context of a Clojure CLI (deps.edn) based project it does something like this:
+
+/usr/local/bin/clojure \
+  -Sdeps '{:deps {nrepl/nrepl {:mvn/version "0.9.0-beta3"}
+                  cider/cider-nrepl {:mvn/version "0.27.2"}
+                  refactor-nrepl/refactor-nrepl {:mvn/version "2.5.1"}}}' \
+  -m nrepl.cmdline \
+  --middleware '[shadow.cljs.devtools.server.nrepl/middleware
+                 refactor-nrepl.middleware/wrap-refactor
+                 cider.nrepl/cider-middleware]
+First it provides Clojure CLI, based on clojure/tools.deps.alpha, with extra dependencies: the nREPL server, and the cider-nrepl and refactor-nrepl middlewares. This will cause tools.deps to find these artifacts (poms and jars) on Clojars or Maven Central, download them, download any dependencies they rely on, and then add all those jars to the classpath. (The lookup path where Clojure can find namespaces to load, or the JVM looks for compiled classes).
+
+Then it invokes the nrepl.cmdline namespace’s -main function, passing it a --middleware flag, which tells it which middleware vars to load and add to the server when it boots up.

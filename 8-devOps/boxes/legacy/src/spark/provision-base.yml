@@ -1,0 +1,50 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+
+- name: Provision Spark 2.x
+  hosts: all
+
+  tasks:
+    - name: Create workdir
+      file:
+        path: /opt
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Putting Spark file
+      copy:
+        src: files/spark-2.4.4-bin-hadoop2.7.tgz
+        dest: /opt/spark.tgz
+        owner: root
+        group: root
+
+    - name: Unpacking
+      raw: tar -xzf /opt/spark.tgz -C /opt/
+
+    - name: Remove Spark file
+      raw: rm -rf /opt/spark.tgz
+
+    - name: Spark link
+      raw: ln -s /opt/spark-2.4.4-bin-hadoop2.7 /usr/local/spark
+
+    - name: setting SPARK_HOME
+      raw: echo 'SPARK_HOME=/usr/local/spark' >> /etc/environment
+
+    - name: setting SPARK_MASTER_HOST
+      raw: echo 'SPARK_MASTER_HOST="spark-master.service.dc1.consul"' >> /etc/environment
+
+    - name: setting SPARK_HOME/bin
+      raw: echo 'export PATH="$PATH:$SPARK_HOME/bin"' >> /etc/profile.d/custom_inits.sh
+
+    - name: setting SPARK_HOME/sbin
+      raw: echo 'export PATH="$PATH:$SPARK_HOME/sbin"' >> /etc/profile.d/custom_inits.sh
+
+

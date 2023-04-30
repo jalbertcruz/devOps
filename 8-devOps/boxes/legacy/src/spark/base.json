@@ -1,0 +1,31 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "jalbert/jdk:8-u231-debian",
+      "commit": true,
+      "changes": [
+        "ENTRYPOINT [\"/init\"]",
+        "EXPOSE 22",
+        "ENV NOTVISIBLE \"in users profile\""
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "provision-base.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/spark-base",
+        "tag": "2.4.4-debian"
+      },
+      "docker-push"
+    ]
+  ]
+}

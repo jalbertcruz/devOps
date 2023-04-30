@@ -1,0 +1,17 @@
+
+Hit <alt + enter> and you're back to the terminal in the desired location.
+
+This way, you can navigate to a directory with the minimum amount of keystrokes, even if you don't exactly remember where it is.
+
+Broot is fast and doesn't block (any keystroke interrupts the current search to start the next one).
+
+Most useful keys for this:
+the letters of what you're looking for
+    <enter> on the root line to go up to the parent (staying in broot)
+    <enter> to focus a directory (staying in broot)
+    <esc> to get back to the previous state or clear your search
+    <↓> and <↑> may be used to move the selection
+    <alt + enter> to get back to the shell having cd to the selected directory
+    <alt + h> to toggle showing hidden files (the ones whose name starts with a dot)
+    <alt + i> to toggle showing gitignored files
+    <:q> if you just want to quit (you can use ctrlq if you prefer)

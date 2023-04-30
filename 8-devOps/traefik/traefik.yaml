@@ -1,0 +1,25 @@
+entryPoints:
+  kafka:
+    address: :29092
+    transport:
+      lifeCycle:
+        requestAcceptGraceTimeout: 1
+        graceTimeOut: 1
+  traefik:
+    address: :8089
+
+providers:
+  file:
+    directory: dynamic
+    watch: true
+
+accessLog: {}
+
+log:
+ level: DEBUG
+# filePath: "logs/var/vector/traefik.log"
+# format: json
+
+api:
+  dashboard: true
+  insecure: true

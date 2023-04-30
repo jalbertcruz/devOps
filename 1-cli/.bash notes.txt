@@ -1,0 +1,4 @@
+# sudo
+# /etc/sudoers
+z       ALL=NOPASSWD: /usr/bin/lsof
+z       ALL=NOPASSWD: /usr/bin/netstat

@@ -1,0 +1,30 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "jalbert/hadoop-base:3.2.1-debian",
+      "commit": true,
+      "changes": [
+        "ENTRYPOINT [\"/init\"]",
+        "EXPOSE 22 9000 9870 8088 4040 18080 8032"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "provision-master.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/hadoop-master",
+        "tag": "3.2.1-debian"
+      },
+      "docker-push"
+    ]
+  ]
+}

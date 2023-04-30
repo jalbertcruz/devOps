@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Categories=Science;Electronics;
+Exec=/usr/local/bin/appslnx/tools/electricity/circuitjs/circuitjs1/circuitjs1
+TryExec=/usr/local/bin/appslnx/tools/electricity/circuitjs/circuitjs1/circuitjs1
+StartupWMClass=circuitjs1
+Keywords=circuitjs1;
+MimeType=application/x-circuitjs1-project;
+Name=circuitjs1
+GenericName=circuitjs1

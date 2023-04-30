@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Bruno http client
+Exec=/usr/local/bin/appslnx/web/Bruno/squashfs-root/bruno --no-sandbox %U
+Terminal=false
+Type=Application
+Icon=/usr/local/bin/appslnx/web/Bruno/bruno.png
+StartupWMClass=Bruno
+X-AppImage-Version=2.12.0
+Comment=Opensource API Client for Exploring and Testing APIs
+Categories=Development;

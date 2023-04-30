@@ -1,0 +1,32 @@
+
+# Important commands
+## debug
+ checkhealth
+
+# https://github.com/nvim-treesitter/nvim-treesitter#adding-queries
+# $HOME/.local/share/nvim/lazy/nvim-treesitter/queries/scala/
+# $HOME/.local/share/nvim/lazy/nvim-treesitter-textobjects/queries/scala/
+ TSEditQuery < folds | highlights | injections | locals textobjects >
+ TSEditQueryUserAfter < folds | highlights | injections | locals textobjects >
+
+:Inspect to show the highlight groups under the cursor
+:InspectTree to show the parsed syntax tree ("TSPlayground")
+:EditQuery to open the Live Query Editor (Nvim 0.10+)
+
+echo nvim_get_current_buf()
+
+
+# https://neovim.io/doc/user/starting.html#_nvim_appname
+NVIM_APPNAME
+The standard directories can be further configured by the $NVIM_APPNAME
+environment variable. This variable controls the sub-directory that Nvim will
+read from (and auto-create) in each of the base directories. For example,
+setting $NVIM_APPNAME to "foo" before starting will cause Nvim to look for
+configuration files in $XDG_CONFIG_HOME/foo instead of
+$XDG_CONFIG_HOME/nvim. $NVIM_APPNAME must be a name, such as "foo", or a
+relative path, such as "foo/bar".
+
+# https://www.youtube.com/watch?v=vB3NT9QIXo8&ab_channel=GavinFreeborn
+# to see examples for make/makeprg
+e $VIMRUNTIME/<tab>
+ e /usr/local/share/nvim/runtime/compiler/<lot of them>

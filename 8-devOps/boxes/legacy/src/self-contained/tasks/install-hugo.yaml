@@ -1,0 +1,7 @@
+
+- name: Put Hugo extended
+  unarchive:
+    src: https://github.com/gohugoio/hugo/releases/download/v0.129.0/hugo_0.129.0_linux-amd64.tar.gz
+    dest: /usr/bin
+    remote_src: yes
+    validate_certs: no

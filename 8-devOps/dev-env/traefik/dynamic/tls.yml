@@ -1,0 +1,9 @@
+tls:
+  certificates:
+      - certFile: /pki/personal.local+9.pem
+        keyFile: /pki/personal.local+9-key.pem
+  stores:
+    default:
+      defaultCertificate:
+       - certFile: /pki/personal.local+9.pem
+         keyFile: /pki/personal.local+9-key.pem

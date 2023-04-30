@@ -1,0 +1,80 @@
+
+- name: Create sonarqube group
+  group:
+    name: sonarqube
+    state: present
+
+- name: Create user
+  user:
+    name: sonarqube
+    state: present
+    group: sonarqube
+    shell: /bin/bash
+    groups:
+      - sonarqube
+      - staff
+#      - sudo
+
+- name: Put Sonarqube
+  unarchive:
+    src: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.6.0.39681.zip
+    dest: /opt
+    remote_src: yes
+    validate_certs: no
+    owner: sonarqube
+    group: sonarqube
+
+- name: Rename sonarqube folder
+  raw: export SONAR_PATH=/opt/ && export SONARDIR=$(ls $SONAR_PATH | grep sonar) && mv "$SONAR_PATH$SONARDIR" "${SONAR_PATH}sonarqube"
+
+- name: delete unused plugins
+  raw: "export EXTENSIONS_PATH=/opt/sonarqube/lib/extensions/ && export EXTENSION_NAME=$(ls $EXTENSIONS_PATH | grep {{ item }}) && rm $EXTENSIONS_PATH$EXTENSION_NAME"
+  with_items:
+    - flex
+    - html
+    - vbnet
+    - xml
+    - go
+    - javascript
+    - kotlin
+    - php
+    - ruby
+    - csharp
+    - css
+    - jacoco
+    - java
+
+- name: delete scala official plugins
+  raw: "export EXTENSIONS_PATH=/opt/sonarqube/lib/extensions/ && export EXTENSION_NAME=$(ls $EXTENSIONS_PATH | grep {{ item }}) && rm $EXTENSIONS_PATH$EXTENSION_NAME"
+  with_items:
+    - scala
+  when:
+    - sonar_distribution | lower == "custom"
+
+- name: Put custom Scala plugin
+  get_url:
+    url: https://dl.bintray.com/mwz/maven/com/github/mwz/sonar-scala_2.13/8.6.0/sonar-scala_2.13-8.6.0-assembly.jar
+    dest: /opt/sonarqube/extensions/plugins/sonar-scala_2.13-8.6.0-assembly.jar
+    validate_certs: no
+  when:
+    - sonar_distribution | lower == "custom"
+
+
+- name: this 777 will be replaced by 700 at runtime (allows semi-arbitrary "--user" values)
+  raw: 'chmod -R 777 {{ sq_data_dir }} {{ sq_extensions_dir }} {{ sq_logs_dir }} {{ sq_temp_dir }}'
+
+- name: Copy run.sh
+  copy:
+    src: files/run.sh
+    dest: /opt/sonarqube/bin/run.sh
+    owner: sonarqube
+    group: sonarqube
+    mode: u=rxw,g=xr,o=xr
+
+- name: Copy sonar.sh
+  copy:
+    src: files/sonar.sh
+    dest: /opt/sonarqube/bin/sonar.sh
+    owner: sonarqube
+    group: sonarqube
+    mode: u=rxw,g=xr,o=xr

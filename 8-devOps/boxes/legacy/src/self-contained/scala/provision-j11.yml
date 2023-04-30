@@ -1,0 +1,26 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap Python
+      raw: apt-get -y update && apt-get install -y python3-minimal
+
+- name: Provision Scala/sbt
+  hosts: all
+
+  tasks:
+
+    - name: Include task for install deps
+      include_tasks: "../tasks/install-deps.yaml"
+
+    - name: Include task for install Java 11
+      include_tasks: "../tasks/install-corretto-jdk11.yaml"
+
+    - name: Include task for install sbt
+      include_tasks: "../tasks/install-sbt.yaml"
+
+    - name: Include task for install protoc
+      include_tasks: "../tasks/install-protoc.yaml"
+

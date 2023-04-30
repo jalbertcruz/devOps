@@ -1,0 +1,15 @@
+
+# Updates to git sparse-checkout
+# https://github.blog/open-source/git/highlights-from-git-2-26/
+Save network trafic with sparse-checkout:
+Add --filter=blob:none and --sparse as command-line options to git clone, and your repository will be cloned in such a way as to only fetch blob objects as they’re needed.
+
+>> git sparse-checkout add mode, which allows you to add new directory entries one at a time
+
+git clone --filter=blob:none --sparse git@github.com:git/git.git
+z git
+git sparse-checkout init --cone
+git sparse-checkout add contrib
+
+
+#

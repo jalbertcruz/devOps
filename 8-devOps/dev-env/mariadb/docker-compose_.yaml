@@ -1,0 +1,88 @@
+services:
+
+  maria-1:
+    restart: always
+    ports:
+      - 8123:3306
+    container_name: maria1_dev_me
+    image: mariadb:11.8.2-ubi9
+    networks:
+      - dev-network
+    profiles:
+      - tier-1
+    hostname: maria1.dev.me
+    volumes:
+      - mariadb1-data:/var/lib/mysql
+    environment:
+      MARIADB_DATABASE: service
+      MARIADB_USER: duser
+      MARIADB_PASSWORD: dpass
+      MARIADB_ROOT_PASSWORD: dpass
+
+  maria-2:
+    restart: always
+    ports:
+      - 8124:3306
+    container_name: maria2_dev_me
+    image: mariadb:11.8.2-ubi9
+    networks:
+      - dev-network
+    profiles:
+      - tier-1
+    hostname: maria2.dev.me
+    volumes:
+      - mariadb2-data:/var/lib/mysql
+    environment:
+      MARIADB_DATABASE: service
+      MARIADB_USER: duser
+      MARIADB_PASSWORD: dpass
+      MARIADB_ROOT_PASSWORD: dpass
+
+volumes:
+  mariadb1-data:
+    name: ${MARIADB_SERVICE_1_VOLUME}
+    external: true
+  mariadb2-data:
+    name: ${MARIADB_SERVICE_2_VOLUME}
+    external: true
+
+networks:
+  dev-network:
+    name: dev-network
+    external: true
+
+#  mariadb2:
+#    image: mariadb:11.8.2-ubi9
+#    profiles: [ tier-1 ]
+#    container_name: mariadb-2
+#    restart: always
+#    environment:
+#      MARIADB_DATABASE: "service"
+#      MARIADB_USER: "duser"
+#      MARIADB_PASSWORD: "dpass"
+#      MARIADB_ROOT_PASSWORD: "dpass"
+#    ports:
+#      - "3308:3306"
+#    volumes:
+#      - mariadb-2-data:/var/lib/mysql
+#    #      - ./config.cnf:/etc/mysql/conf.d/config.cnf
+#    #    command:
+#    #      - "--transaction-isolation=READ-COMMITTED"
+#    networks:
+#      - dev-network
+
+
+
+#  haproxy:
+#    image: haproxy:3.1.8-alpine3.22
+#    profiles: [ tier-1 ]
+#    container_name: haproxy
+#    restart: always
+#    ports:
+#      - 3306:3306
+#      - 3307:3307
+#    volumes:
+#      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+#    networks:
+#      - dev-network
+

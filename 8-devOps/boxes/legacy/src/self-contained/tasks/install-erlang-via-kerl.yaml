@@ -1,0 +1,20 @@
+
+- name: Downloading Kerl tool
+  get_url:
+    url: "{{ kerl_download_url }}"
+    dest: "{{ kerl_working_dir }}/kerl"
+
+- name: Getting exec permissions to Kerl tool
+  raw: "chmod a+x {{ kerl_working_dir }}/kerl"
+
+- name: Building Erlang
+  raw: "{{ kerl_working_dir }}/kerl build {{ erlang_version }} {{ erlang_version }}"
+
+- name: Installing Erlang
+  raw: "{{ kerl_working_dir }}/kerl install {{ erlang_version }} {{ kerl_working_dir }}/{{ erlang_version }}"
+
+# ALERT: paths with numbers fixed!
+- name: setcap CAP_NET_BIND_SERVICE=+eip
+  raw: "setcap CAP_NET_BIND_SERVICE=+eip /home/app/{{ erlang_version }}/erts-{{ erts_version }}/bin/beam.smp"
+# The flags mean: e=activated , p=permitted. You can add i to allow the process
+# to also spawn child processes which open privileged ports.

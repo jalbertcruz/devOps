@@ -1,0 +1,44 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python3-minimal)
+
+- name: Provision ElasticSerarch
+  hosts: all
+
+  tasks:
+    - name: "Creates directory: /etc/services.d/elasticsearch"
+      file:
+        path: /etc/services.d/elasticsearch
+        state: directory
+
+    - name: Putting /etc/services.d/elasticsearch/run
+      copy:
+        src: files/services.d/elasticsearch/run
+        dest: /etc/services.d/elasticsearch/run
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    - name: Putting Elasticsearch file
+      copy:
+        src: files/elasticsearch-7.9.2-linux-x86_64.tar.gz
+        dest: /home/app/elasticsearch.tar.gz
+        owner: app
+        group: app
+
+    - name: Unpacking
+      raw: tar -xf /home/app/elasticsearch.tar.gz -C /home/app/
+
+    - name: Remove Elasticsearch file
+      raw: rm -rf /home/app/elasticsearch.tgz
+
+    - name: normalize name
+      raw: mv /home/app/elasticsearch-7.9.2 /home/app/elasticsearch
+
+    - name: updating permissions
+      raw: chown -R app:app /home/app/elasticsearch

@@ -1,0 +1,10 @@
+
+volumes:
+  postgresql-services-1-data:
+    name: ${POSTGRESQL_SERVICE_1_VOLUME}
+    external: true
+
+networks:
+  dev-network:
+    name: dev-network
+    external: true

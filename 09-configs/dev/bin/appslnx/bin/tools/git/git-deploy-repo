@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+dir_from=$3
+dir_to=$4
+
+dir_from=/home/a/Desktop/git/demos/working
+dir_to=/home/a/Desktop/git/demos/dest
+temp_dir_to=/home/a/Desktop/git/demos/temp_dest
+temp_dir_from=/home/a/Desktop/git/demos/temp_working
+
+branch_from=develop
+branch_to=demo
+
+cd "$dir_from"
+for sha in $(git log $branch_from..$branch_to --format=format:%H); do
+  msg=$(git log --format=%B -n 1 $sha)
+  git checkout $sha
+  mv "$dir_to/.git" "$temp_dir_to/"
+  mv "$dir_from/.git" "$temp_dir_from/"
+  rm -rf "$dir_to"
+  mkdir -p "$dir_to"
+  cp -r "$dir_from/." "$dir_to"
+  mv "$temp_dir_to/.git" "$dir_to/"
+  cd "$dir_to"
+  git add .
+  git commit -m "$msg"
+  mv "$temp_dir_from/.git" "$dir_from/"
+  cd "$dir_from"
+done

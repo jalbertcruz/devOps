@@ -1,0 +1,72 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+
+- name: Provision wiremock app
+  hosts: all
+
+  tasks:
+    - name: "Creates directory: /etc/services.d/wiremock"
+      file:
+        path: /etc/services.d/wiremock
+        state: directory
+
+#    - name: "Creates directory: /etc/services.d/gor"
+#      file:
+#        path: /etc/services.d/gor
+#        state: directory
+
+    - name: Putting /etc/services.d/wiremock/run
+      copy:
+        src: files/services.d/wiremock/run
+        dest: /etc/services.d/wiremock/run
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+#    - name: Putting /etc/services.d/gor/run
+#      copy:
+#        src: files/services.d/gor/run
+#        dest: /etc/services.d/gor/run
+#        owner: root
+#        group: root
+#        mode: u=rx,g=rx,o=rx
+
+    - name: Putting /usr/bin/wiremock.sh
+      copy:
+        src: files/scripts/wiremock.sh
+        dest: /usr/bin/wiremock.sh
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+#    - name: Putting /usr/bin/gor-run.sh
+#      copy:
+#        src: files/scripts/gor-run.sh
+#        dest: /usr/bin/gor-run.sh
+#        owner: root
+#        group: root
+#        mode: u=rx,g=rx,o=rx
+
+    - name: Putting wiremock-standalone-*
+      copy:
+        src: files/wiremock-jre8-standalone-2.31.0.jar
+        dest: /home/app/wiremock-jre8-standalone-2.31.0.jar
+        mode: u=rx,g=rx,o=rx
+
+    - name: Putting wiremock-webhook extension
+      copy:
+        src: files/wiremock-webhooks-extension-2.31.0.jar
+        dest: /home/app/wiremock-webhooks-extension-2.31.0.jar
+        mode: u=rx,g=rx,o=rx
+
+#    - name: Putting gor
+#      copy:
+#        src: files/gor
+#        dest: /usr/bin/gor
+#        mode: u=rx,g=rx,o=rx

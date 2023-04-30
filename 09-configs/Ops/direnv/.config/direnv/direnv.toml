@@ -1,0 +1,4 @@
+load_dotenv=true
+hide_env_diff=true
+[whitelist]
+prefix = [ "~/src" ]

@@ -1,0 +1,112 @@
+
+https://medium.com/usevim/vim-101-runtimepath-83194d411b0a
+
+nvim $ :set runtimepath?
+/home/a/.local/share/nvim/
+/home/a/.local/state/nvim/
+
+# Tree-sitter playground
+:Inspect to show the highlight groups under the cursor
+:InspectTree to show the parsed syntax tree ("TSPlayground")
+    o ("open buffer for queries")
+:EditQuery to open the Live Query Editor (Nvim 0.10+)
+
+## keybindings
+
+-- Lsp
+-- https://neovim.io/doc/user/lsp.html
+-- $ :checkhealth lsp
+
+-- quickfix
+-- https://neovim.io/doc/user/quickfix.html
+-- Add from telescope: Ctrl+q
+
+"folding"
+zc
+zo
+
+
+#https://www.lazyvim.org/keymaps#troublenvim
+[q	Previous Trouble/Quickfix Item	n
+]q	Next Trouble/Quickfix Item	n
+
+Same information in a table:
+*map-table*
+Mode           | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang | ~
+Command        +------+-----+-----+-----+-----+-----+------+------+ ~
+[nore]map      | yes  |  -  |  -  | yes | yes | yes |  -   |  -   |
+n[nore]map     | yes  |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
+[nore]map!     |  -   | yes | yes |  -  |  -  |  -  |  -   |  -   |
+i[nore]map     |  -   | yes |  -  |  -  |  -  |  -  |  -   |  -   |
+c[nore]map     |  -   |  -  | yes |  -  |  -  |  -  |  -   |  -   |
+v[nore]map     |  -   |  -  |  -  | yes | yes |  -  |  -   |  -   |
+x[nore]map     |  -   |  -  |  -  | yes |  -  |  -  |  -   |  -   |
+s[nore]map     |  -   |  -  |  -  |  -  | yes |  -  |  -   |  -   |
+o[nore]map     |  -   |  -  |  -  |  -  |  -  | yes |  -   |  -   |
+t[nore]map     |  -   |  -  |  -  |  -  |  -  |  -  | yes  |  -   |
+l[nore]map     |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
+
+
+
+:Lazy relaod lualine.nvim
+
+# CmdLine
+https://www.youtube.com/watch?v=2Meztidjjlg&ab_channel=AndrewCourter
+min 10.56
+
+# To see the logs:
+$HOME/.local/state/nvim-nvchad/*.log
+
+# better print (prints tables)
+vim.print(table)
+vim.print(vim.lsp)
+:=vim.lsp
+
+
+# LSPs linters
+
+## with binaries
+https://github.com/JohnnyMorganz/StyLua/releases
+https://github.com/clangd/clangd/releases
+https://github.com/mattn/efm-langserver/releases
+https://github.com/LuaLS/lua-language-server/releases
+https://github.com/koalaman/shellcheck/releases
+
+## python based
+https://github.com/idank/explainshell (esto es un server, necesita DBs etc)
+https://github.com/jorisroovers/gitlint
+https://github.com/amperser/proselint/
+https://github.com/adrienverge/yamllint
+
+## node based
+https://github.com/bash-lsp/bash-language-server?tab=readme-ov-file
+https://github.com/get-alex/alex
+https://github.com/btford/write-good
+https://prettier.io/docs/en/install.html
+https://github.com/tailwindlabs/tailwindcss-intellisense/tree/HEAD/packages/tailwindcss-language-server#readme
+https://github.com/microsoft/vscode-css-languageservice
+https://github.com/microsoft/vscode-json-languageservice
+https://github.com/DavidAnson/markdownlint-cli2
+https://github.com/jonschlinkert/markdown-toc
+
+
+How to replace a character by a newline in Vim
+https://stackoverflow.com/questions/71323/how-to-replace-a-character-by-a-newline-in-vim
+:%s/CHAR/\r/g
+
+# https://www.reddit.com/r/neovim/comments/1bftq35/do_you_guys_remap_p_to_dp/
+# https://github.com/gbprod/substitute.nvim
+One of my favorite plugins is gbprod/substitute.nvim. I have remapped it to gr like so:
+
+  vim.keymap.set('n', 'gr', require('substitute').operator)
+  vim.keymap.set('n', 'grr', require('substitute').line)
+  vim.keymap.set('n', 'gR', require('substitute').eol)
+  vim.keymap.set('x', 'gr', require('substitute').visual)
+
+C-q
+Populates all find result lines into the quickfix list.
+
+Populate quickfix from lint/lsp output
+https://www.reddit.com/r/neovim/comments/1d6g7mr/populate_quickfix_from_lintlsp_output/
+vim.diagnostic.setqflist()
+

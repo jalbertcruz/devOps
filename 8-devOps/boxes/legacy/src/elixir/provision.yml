@@ -1,0 +1,56 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  vars:
+    ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+  tasks:
+
+    - name: Boostrap Python Debian
+      raw: apt-get -y update && apt-get install -y python-minimal
+      when:
+        - ansible_distribution | lower == "debian"
+
+    - name: Boostrap Python CentOS
+      raw: yum -y install epel-release && yum -y update
+      when:
+        - ansible_distribution | lower == "centos"
+
+- name: Provision Elixir
+  hosts: all
+
+  tasks:
+    - name: Ensure Elixir configured with role
+      include_role:
+        name: elixir
+      vars:
+        ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+    #    - name: Docker, running user while launch container
+    #      include_role:
+    #        name: docker_running_user_while_launch_container
+    #      vars:
+    #        ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+    - name: "setting permissions to /etc/passwd"
+      raw: chmod 777 /etc/passwd
+
+    #    - name: "setting permissions to /etc/group"
+    #      raw: chmod 777 /etc/group
+    #      when:
+    #        - ansible_distribution | lower == "centos"
+
+    #    - name: "chmod +x update_user_ids.sh"
+    #      raw: chmod +x /home/app/update_user_ids.sh
+    #      when:
+    #        - ansible_distribution | lower == "centos"
+
+    - name: Create workdir
+      file:
+        path: /home/app/src
+        state: directory
+        owner: app
+        group: app
+        mode: 0755

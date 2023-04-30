@@ -1,0 +1,10 @@
+set shell := ["sh", "-c"]
+set allow-duplicate-recipes := true
+set positional-arguments := true
+set dotenv-load := true
+set export := true
+
+g-sbt-name:
+    #!/usr/bin/env bash
+    name=$(ast-grep scan --rule $EXTRACTORS_PATH/scala/get_sbt_project_name.yml --json | jq -r '.[0].text' | sd '"' '')
+    echo $name

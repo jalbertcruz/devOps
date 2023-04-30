@@ -1,0 +1,22 @@
+
+- name: Create JDK dir
+  file:
+    path: /usr/lib/jvm
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Put JDK17
+  ansible.builtin.unarchive:
+    src: files/jdk-17.02_linux-x64_bin.tar.gz
+    dest: /usr/lib/jvm
+
+- name: Rename JDK folder
+  raw: export JVM_PATH=/usr/lib/jvm/ && export JDKDIR=$(ls $JVM_PATH | head -n 1) && mv "$JVM_PATH$JDKDIR" "${JVM_PATH}jdk17"
+
+- name: update-alternatives java
+  raw: update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk17/bin/java" 1
+
+- name: update-alternatives javac
+  raw: update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk17/bin/javac" 1

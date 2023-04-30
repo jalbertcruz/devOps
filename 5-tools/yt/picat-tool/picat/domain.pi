@@ -1,0 +1,26 @@
+
+module domain.
+
+import db1.
+
+is_multimedia_ext('mp4').
+is_multimedia_ext('webm').
+
+% Finds the FormatID with the smallest filesize among multimedia formats with VCodec 'none'
+smallest_acodec_format(FormatID, Langs) ?=>
+    Results = findall([Filesize, FormatID],
+    (format(FormatID, Filesize, Ext, 'none', _, _, _, _, Lang), member(Lang, Langs), is_multimedia_ext(Ext), Filesize != null)),
+    bp.sort(Results, Sorted),
+    Sorted = [[_, FormatID] | _].
+
+smallest_acodec_format(FormatID, _) ?=>
+    Results = findall([Filesize, FormatID],
+    (format(FormatID, Filesize, Ext, 'none', _, _, _, _, null), is_multimedia_ext(Ext), Filesize != null)),
+    bp.sort(Results, Sorted),
+    Sorted = [[_, FormatID] | _].
+
+first_vcodec_large(FormatID, W) ?=>
+    format(FormatID, _, Ext, _, 'none', _, _, $resolution(Width, _), _),
+    is_multimedia_ext(Ext),
+    Width >= W,
+    !.

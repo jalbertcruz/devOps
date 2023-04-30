@@ -1,0 +1,17 @@
+[Desktop Entry]
+Name=Krita
+Exec=/usr/local/bin/appslnx/tools/edition/Krita/Krita.AppImage %F
+GenericName=Digital Painting
+MimeType=application/x-krita;image/openraster;application/x-krita-paintoppreset;
+Comment=Digital Painting
+Type=Application
+Icon=/usr/local/bin/appslnx/tools/edition/Krita/krita.png
+Categories=Qt;KDE;Graphics;2DGraphics;RasterGraphics;
+X-KDE-NativeMimeType=application/x-krita
+X-KDE-ExtraNativeMimeTypes=
+StartupNotify=true
+X-Krita-Version=28
+StartupWMClass=krita
+# Always be the preferred handler for .kra files
+InitialPreference=99
+X-AppImage-Version=5.2.3

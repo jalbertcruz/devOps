@@ -1,0 +1,43 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "ubuntu:20.04",
+      "commit": true,
+      "changes": [
+        "USER sonarqube",
+        "WORKDIR /opt/sonarqube",
+        "EXPOSE 9000",
+        "CMD [\"bin/sonar.sh\"]",
+        "ENTRYPOINT bin/run.sh",
+        "ENV JAVA_HOME /usr/lib/jvm/jdk11",
+        "ENV SONARQUBE_HOME /opt/sonarqube",
+        "ENV SONAR_VERSION 8.6.0.39681",
+        "ENV SQ_DATA_DIR /opt/sonarqube/data",
+        "ENV SQ_EXTENSIONS_DIR /opt/sonarqube/extensions",
+        "ENV SQ_LOGS_DIR /opt/sonarqube/logs",
+        "ENV SQ_TEMP_DIR /opt/sonarqube/temp"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "ansible_env_vars": [
+        "SONAR_DISTRIBUTION=default"
+      ],
+      "playbook_file": "provision.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/sonarqube",
+        "tags": "8.6"
+      },
+      "docker-push"
+    ]
+  ]
+}

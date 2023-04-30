@@ -1,0 +1,15 @@
+
+= Tools used
+
+Packer
+https://www.packer.io/
+
+Ansible
+https://www.ansible.com/
+
+== To create and publish the image:
+
+```bash
+packer build build.json
+```
+

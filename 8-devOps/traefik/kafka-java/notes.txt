@@ -1,0 +1,7 @@
+
+https://www.geeksforgeeks.org/java/apache-kafka-create-producer-with-keys-using-java/
+https://learn.conduktor.io/kafka/kafka-security/
+
+https://docs.redpanda.com/current/manage/security/encryption/
+https://github.com/containers/appstore/pull/14/files#diff-4772b8e66f44e6d17311013756f06caa0c668f7cd041f3bf8c1a0d994cca636bR28
+https://www.redpanda.com/blog/tls-config

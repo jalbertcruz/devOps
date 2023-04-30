@@ -1,0 +1,6 @@
+{
+  "gw/krakend/krakend": [
+    "gw/krakend/ms1-ts",
+    "gw/krakend/ms2-fs"
+  ]
+}

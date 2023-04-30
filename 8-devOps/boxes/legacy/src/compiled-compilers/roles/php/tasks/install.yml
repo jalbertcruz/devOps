@@ -1,0 +1,47 @@
+---
+
+- name: Install build deps Debian
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ php_build_debian_deps }}"
+  when:
+    - ansible_distribution | lower == "debian"
+
+- name: Install build deps CentOS
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ php_build_centos_deps }}"
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: Downloading swoole
+  get_url:
+    url: "{{ swoole_download_url }}"
+    dest: "/tmp/swoole.tar.gz"
+#  when:
+#    - ansible_distribution | lower == "centos"
+
+- name: "Creates directory: /tmp/swoole"
+  file:
+    path:  /tmp/swoole
+    state: directory
+#  when:
+#    - ansible_distribution | lower == "centos"
+
+#- name: Unarchive a file that is already on the remote machine
+#  unarchive:
+#    src: "/tmp/swoole.tar.gz"
+#    dest: "/tmp/swoole"
+#    remote_src: yes
+
+- name: Putting install script
+  template:
+    src: templates/pinstall.sh.j2
+    dest: "/tmp/swoole/pinstall.sh"
+    owner: root
+    group: root
+    mode: u=rx,g=rx,o=rx
+#  when:
+#    - ansible_distribution | lower == "centos"

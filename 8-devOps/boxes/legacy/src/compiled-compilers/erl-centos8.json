@@ -1,0 +1,30 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "centos:8",
+      "commit": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "ansible_env_vars": [
+        "ANSIBLE_DISTRIBUTION=centos",
+        "ERLANG_VERSION=22.2"
+      ],
+      "playbook_file": "provision.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/erlang",
+        "tag": "222-centos8"
+      },
+      "docker-push"
+    ]
+  ]
+}

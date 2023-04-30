@@ -1,0 +1,32 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "docker.io/jalbert/jdk-corretto:11",
+      "commit": true,
+      "changes": [
+        "USER root",
+        "WORKDIR /",
+        "EXPOSE 8000",
+        "ENTRYPOINT /run.sh"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "provision.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/java-httpserver",
+        "tags": "0.1"
+      },
+      "docker-push"
+    ]
+  ]
+}

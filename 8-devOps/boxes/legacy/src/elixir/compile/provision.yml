@@ -1,0 +1,101 @@
+#!/usr/bin/env ansible-playbook
+---
+- hosts: localhost
+  gather_facts: false
+  vars:
+    src_path: "{{ lookup('env','SRC_PATH') }}"
+    ssh_path: "{{ lookup('env','SSH_PATH') }}"
+    compiler_os: "{{ lookup('env','COMPILER_OS') }}"
+    elixir_version: "{{ lookup('env','ELIXIR_VERSION') }}"
+
+  tasks:
+    - name: Create container
+      docker_container:
+        name: elixir-machine-service
+        image: "jalbert/elixir-machine-service:{{ elixir_version }}-{{ compiler_os }}"
+        detach: true
+        interactive: true
+        tty: true
+        debug: yes
+        env:
+          UPDATE_USER_IDS: "yes"
+          CONTAINER_COMMAND: "make release"
+          CLEAN_COMPILATION_DIRS: "yes"
+          USING_CONSUL: "no"
+          GET_IDS_USING_CONSUL: "no"
+          CONSUL_ADDR: "172.17.0.2:8500"
+          CONSUL_PREFIXES: "-prefix app-config-"
+        volumes:
+          - "{{ src_path }}:/home/app/src"
+          - "{{ ssh_path }}:/home/app/.ssh"
+
+    - name: Add docker container to inventory
+      add_host:
+        name: elixir-machine-service
+        ansible_connection: docker
+        ansible_user: app
+
+- hosts: elixir-machine-service
+  gather_facts: false
+  vars:
+    user_id: "{{ lookup('env','USER_ID') }}"
+    group_id:  "{{ lookup('env','GROUP_ID') }}"
+    utility_scripts:
+      - elixir-machine-service-command.sh
+
+  tasks:
+    - name: Putting scripts
+      copy:
+        src: "bin/{{ item }}"
+        dest: "/home/app/src/bin/{{ item }}"
+        owner: app
+        group: app
+        mode: u+x
+      with_items: "{{ utility_scripts }}"
+
+#    - name: Set release version
+#      lineinfile:
+#        path: /home/app/src/mix.exs
+#        regexp: '(^\s*)version: (\".+)\"'
+#        line: >
+#          \1version: \2-{{ os_name.stdout | trim() }}-{{ suffix.stdout | trim() }}",
+#        backrefs: yes
+
+    - name: Compile project
+      raw: /home/app/entrypoint.sh
+
+    - name: Target git revision
+      raw: git rev-parse --verify HEAD | cut -c1-6
+      register: suffix
+
+    - name: Target version
+      raw: >
+        sed -nr 's/(^\s*)version: "(.+)(",)/\2/p' /home/app/src/mix.exs
+      register: version
+
+    - name: Target OS
+      # xargs is for removing leading/trailing spaces
+      raw: cat /etc/os-release | grep ^PRETTY | cut -c13-50 | tr '"/()' ' ' | xargs | tr ' ' '-'
+      register: os_name
+
+    - name: Target Project name
+      raw: ls _build/prod/rel
+      register: build_outputs
+
+    - name: Create tar file
+      raw: "tar -cf {{ build_outputs.stdout_lines[0] }}-{{ version.stdout | trim() }}-{{ os_name.stdout | trim() }}-{{ suffix.stdout | trim() }}.tar -C _build/prod/rel {{ build_outputs.stdout_lines[0] }}"
+
+    - name: Removing scripts
+      file:
+        path: "/home/app/src/bin/{{ item }}"
+        state: absent
+      with_items: "{{ utility_scripts }}"
+
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: destroy container
+      docker_container:
+        name: elixir-machine-service
+        state: absent

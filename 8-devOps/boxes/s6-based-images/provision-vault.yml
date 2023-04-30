@@ -1,0 +1,14 @@
+---
+
+- name: Provision vault
+  hosts: all
+#  become: yes
+#  become_method: sudo
+#  become_user: root
+
+  tasks:
+    - name: vault server
+      include_role:
+        name: vault-server
+      vars:
+        ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"

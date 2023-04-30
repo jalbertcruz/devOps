@@ -1,0 +1,60 @@
+http:
+  routers:
+    to-target:
+      rule: "Host(`demo.personal.local`)"
+      service: arch-demo
+      tls: {}
+    to-target2:
+      rule: "Host(`demo2.personal.local`)"
+      service: arch-demo2
+      tls: {}
+
+  services:
+    arch-demo:
+      loadBalancer:
+        servers:
+          - url: http://0.0.0.0:8988
+    arch-demo2:
+      loadBalancer:
+        servers:
+          - url: http://0.0.0.0:8989
+#
+#      loadbalancer:
+#        servers:
+#          - url: "http://localhost:8000"
+#        passHostHeader: true
+
+tls:
+#  stores:
+#    default:
+#      defaultCertificate:
+#        certFile: ./pki/certs/traefik.cert
+#        keyFile: ./pki/certs/traefik.key
+  certificates:
+    - certFile: ./pki/personal.local+5.pem
+      keyFile: ./pki/personal.local+5-key.pem
+#  options:
+#    acmeClient:
+#      clientAuth:
+#        caFiles:
+#          - /home/z/.step/authorities/test.ca/certs/root_ca.crt
+#        # the path of root certificate might be like below:-
+#        # Users/<User_name>/.step/authorities/test.ca/certs/root_ca.crt
+#        clientAuthType: RequireAndVerifyClientCert
+tcp:
+  serversTransports:
+    mytransport:
+      tls:
+#        peerCertURI: foobar
+        insecureSkipVerify: true
+        serverName: "myhost.localhost"
+        certificates:
+          - certFile: client.crt
+            keyFile: client.key
+#  services:
+#    arch-demo:
+#      loadBalancer:
+#        serversTransport: mytransport
+#        servers:
+#          - address: "0.0.0.0:8000"
+#            tls: true

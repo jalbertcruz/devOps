@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# dupdate elixir-machine-service:19-ubuntu18 erlang/ubuntu:222-ubuntu18
+# dupdate <build to update (builds/elixir.json) [1]> \
+#         <what image's configuration was changed [2]>
+## it rebuilds from <[2]> to <[1]>
+
+echo aaa

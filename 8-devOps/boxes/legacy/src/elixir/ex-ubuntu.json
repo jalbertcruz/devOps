@@ -1,0 +1,35 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "jalbert/elixir-machine-service:1102-ubuntu18",
+      "commit": true,
+      "changes": [
+        "VOLUME /home/app/src",
+        "WORKDIR /home/app/src/api",
+        "ENV OSNAME debian",
+        "ENTRYPOINT [\"/init\"]"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "ansible_env_vars": [
+        "ANSIBLE_DISTRIBUTION=debian"
+      ],
+      "playbook_file": "provision-ex.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/elixir-machine-ex",
+        "tag": "1102-ubuntu18"
+      },
+      "docker-push"
+    ]
+  ]
+}

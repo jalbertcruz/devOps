@@ -1,0 +1,11 @@
+http:
+  routers:
+    to-target:
+      rule: "PathPrefix(`/`)"
+      service: arch-demo
+
+  services:
+    arch-demo:
+      loadBalancer:
+        servers:
+        - url: http://0.0.0.0:8000

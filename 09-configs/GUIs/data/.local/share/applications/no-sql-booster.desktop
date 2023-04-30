@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=NoSQLBooster for MongoDB
+Exec=/usr/local/bin/appslnx/dbs/mongodb/no-sql-booster/squashfs-root/nosqlbooster4mongo --no-sandbox %U
+Terminal=false
+Type=Application
+Icon=/usr/local/bin/appslnx/dbs/mongodb/no-sql-booster/nosqlbooster4mongo.png
+StartupWMClass=NoSQLBooster for MongoDB
+X-AppImage-Version=9.1.6
+Comment=Essential Admin GUI for MongoDB
+Categories=Development;

@@ -1,0 +1,87 @@
+{
+    "editor.fontFamily": "FiraCode NF",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 16,
+    "editor.wordWrap": "on",
+    "terminal.integrated.fontFamily": "FiraCode NF",
+    "files.watcherExclude": {
+        "**/.bloop": true,
+        "**/.metals": true,
+        "**/.ammonite": true
+    },
+    "files.autoSave": "onFocusChange",
+    "editor.inlineSuggest.enabled": true,
+    "redhat.telemetry.enabled": true,
+    "fzf-quick-open.initialWorkingDirectory": "${workspaceFolder}",
+    "fzf-quick-open.findDirectoriesCmd": "fd --type d",
+    "fzf-quick-open.ripgrepSearchStyle": "Ignore case",
+    "fzf-quick-open.fuzzyCmd": "fzf --layout=reverse",
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/local/bin/nvim",
+    // "vscode-neovim.neovimInitVimPaths.linux": "/home/a/.config/nvim-vscode/init.lua",
+    "vscode-neovim.NVIM_APPNAME": "nvim-vscode",
+    "extensions.experimental.affinity": {
+       "asvetliakov.vscode-neovim": 1
+    },
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.enablePreview": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "terminal.integrated.shellIntegration.enabled": false,
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": true,
+        "markdown": true,
+        "scminput": false,
+        "properties": true,
+        "scala": true,
+        "yaml": false
+    },
+    "smithyLsp.trace.server": "off",
+    "editor.minimap.enabled": false,
+    "git.enabled": false,
+    // "git.enabled": true,
+    "todo-tree.general.tags": [
+        "BUG",
+        "HACK",
+        "FIXME",
+        "TODO",
+        "XXX",
+        "[ ]",
+        "[x]",
+        "NOTE"
+    ],
+    "todo-tree.ripgrep.ripgrep": "$HOME/appslnx/bin/rg",
+    "todo-tree.general.tagGroups": {
+       "FIX": ["FIXME", "TODO", "NOTE", "BUG"],
+       "DO": ["[ ]", "[x]"]
+    },
+    "D2.execPath": "/usr/bin/d2",
+    "D2.previewLayout": "elk",
+    "workbench.editorAssociations": {
+        "*.svg2": "default"
+    },
+    "httpyac.clientCertificates": {
+
+    },
+    "gitlens.advanced.messages": {
+        "suppressGitDisabledWarning": true,
+        "suppressGitMissingWarning": true
+    },
+    "files.associations": {
+        "*.scalax": "scala"
+    },
+    "metals.enableIndentOnPaste": true,
+    "keyboard.dispatch": "keyCode",
+    "explorer.confirmDelete": false,
+    "git.openRepositoryInParentFolders": "always",
+    "java.configuration.runtimes": [
+
+    ],
+    "metals.javaHome": "/home/z/appslnx/jdk-17/",
+    "github.copilot.editor.enableAutoCompletions": true,
+
+    "update.mode": "start",
+    "extensions.autoUpdate": false,
+    "metals.defaultBspToBuildTool": true,
+    "metals.inlayHints.inferredTypes.enable": false
+
+}

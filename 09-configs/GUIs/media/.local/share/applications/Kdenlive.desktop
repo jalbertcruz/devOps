@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Kdenlive
+GenericName=Video Editor
+Comment=Nonlinear video editor by KDE
+Type=Application
+Exec=/usr/local/bin/appslnx/tools/edition/Kdenlive/squashfs-root/AppRun %F
+Icon=/usr/local/bin/appslnx/tools/edition/Kdenlive/kdenlive.png
+StartupWMClass=kdenlive
+X-DocPath=kdenlive/index.html
+MimeType=application/x-kdenlive;
+Categories=Qt;KDE;AudioVideo;AudioVideoEditing;
+Keywords=editing;video;audio;mlt;kde;
+X-DBUS-ServiceName=org.kde.kdenlive
+X-AppImage-Version=24.12.0

@@ -1,0 +1,34 @@
+
+elasticsearch.service.dc1.consul:9200
+
+curl -v -GET "http://elasticsearch.service.dc1.consul:9200/_cat/indices?pretty"
+
+curl -v -XPUT "elasticsearch.service.dc1.consul:9200/api_index" -H 'Content-Type: application/json' -d '
+{
+  "settings" : {
+    "number_of_shards" : 1,
+    "number_of_replicas" : 1
+  }
+}
+'
+
+# use `POST` instead of `PUT`, and omit the ID:
+curl -XPOST "http://elasticsearch.service.dc1.consul:9200/api_index/_doc?pretty" -H 'Content-Type: application/json' -d'
+{
+  "field_1": "I wonder what my ID will be?!?!?!",
+  "field_2": 5678,
+  "field_3": true,
+  "created": "1556193846"
+}
+'
+
+curl -X GET "http://elasticsearch.service.dc1.consul:9200/_search?pretty" -H 'Content-Type: application/json' -d'
+{
+"query": {
+  "match": {
+    "_all": "a"
+  }
+}
+}
+'
+

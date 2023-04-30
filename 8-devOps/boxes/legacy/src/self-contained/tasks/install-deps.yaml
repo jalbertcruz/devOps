@@ -1,0 +1,11 @@
+
+- name: Install deps
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - make
+    - unzip
+    - git
+#    - openssh-client
+#    - wget

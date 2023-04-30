@@ -1,0 +1,1 @@
+fonttools[ufo,lxml,woff,unicode]==4.55.0

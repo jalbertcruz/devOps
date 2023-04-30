@@ -1,0 +1,61 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+
+- name: Provision Java
+  hosts: all
+
+  tasks:
+    - name: Create workdir
+      file:
+        path: /usr/lib/jvm
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Putting JDK
+      copy:
+        src: files/jdk-8u241-linux-x64.tar.gz
+        dest: /usr/lib/jvm/jdk.tar.gz
+        owner: root
+        group: root
+
+    - name: Unpacking
+      raw: tar -xzf /usr/lib/jvm/jdk.tar.gz -C /usr/lib/jvm/
+
+    - name: Remove jdk file
+      raw: rm -rf /usr/lib/jvm/jdk.tar.gz
+
+    - name: update-alternatives java
+      raw: update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.8.0_241/bin/java" 1
+
+    - name: update-alternatives javac
+      raw: update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.8.0_241/bin/javac" 1
+
+    - name: update-alternatives javaw
+      raw: update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.8.0_241/bin/javaw" 1
+
+#    - name: setting PATH
+#      raw: echo 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"' >> /etc/environment
+
+    - name: setting _JAVA_OPTS
+      raw: echo '_JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"' >> /etc/environment
+
+    - name: setting JAVA_OPTS
+      raw: echo 'JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"' >> /etc/environment
+
+    - name: setting JAVA_HOME
+      raw: echo 'JAVA_HOME=/usr/lib/jvm/jdk1.8.0_241' >> /etc/environment
+
+    - name: setting JAVA_HOME
+      raw: echo 'export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_241' > /etc/profile.d/custom_inits.sh
+
+    - name: setting JAVA_HOME/bin
+      raw: echo 'export PATH="$PATH:$JAVA_HOME/bin"' >> /etc/profile.d/custom_inits.sh
+

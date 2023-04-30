@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e
+set -u
+set -o pipefail
+
+while IFS= read -r f; do
+  dir_path="$(dirname "$f")"
+  relative_dir_path="${dir_path#$DOCS_PATH/}"
+  relative_path="${f#$DOCS_PATH/}"
+  dest_file_path="${DEST_PATH}/${relative_path}"
+  mkdir -p "${DEST_PATH}/${relative_dir_path}"
+  if [ ! -e "$dest_file_path" ]; then
+    ln -s "$f" "$dest_file_path"
+  fi
+done < <(fd --search-path "$DOCS_PATH" --type file \
+  --extension .epub \
+  --extension .pdf \
+  --extension .mobi \
+  --extension .azw3 \
+  --extension .azw \
+  --extension .fb2 \
+  --extension .cbr \
+  --extension .cbz \
+  --extension .cbt \
+  --extension .cb7)

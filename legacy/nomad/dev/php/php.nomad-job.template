@@ -1,0 +1,75 @@
+job "php" {
+
+  region = "global"
+
+  datacenters = [
+    "dc1"]
+
+  type = "service"
+
+  group "server" {
+
+    task "php" {
+
+      driver = "docker"
+
+      config {
+
+        image = "jalbert/php:debian10"
+//        image = "jalbert/php:ubuntu1804"
+
+        port_map {
+          port_server = 22
+          port_app = 8101
+          port_ex = 80
+        }
+
+        hostname = "php.service.dc1.consul"
+
+        logging {
+          type = "json-file"
+        }
+
+        volumes = [
+          "{{ php_dev_env_directory }}:/home/app/src"
+        ]
+
+        tty = true
+
+        dns_servers = [
+          "172.17.0.2"]
+
+        //        cpu_hard_limit = true
+
+      }
+
+      service {
+        name = "php"
+
+        port = "port_server"
+        //        address_mode = "host" // default
+        address_mode = "driver"
+
+        tags = [
+          "urlprefix-/php-env strip=/php-env"
+        ]
+
+        check {
+          type = "tcp"
+          port = "port_server"
+          interval = "2s"
+          timeout = "2s"
+        }
+      }
+
+      resources {
+        network {
+          mbits = 60
+          port "port_server" {}
+          port "port_app" {}
+        }
+      }
+
+    }
+  }
+}

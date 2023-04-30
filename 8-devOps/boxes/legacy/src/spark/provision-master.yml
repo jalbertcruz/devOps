@@ -1,0 +1,41 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+
+- name: Provision Spark 2.x
+  hosts: all
+
+  tasks:
+#    - name: "Creates directory: /etc/services.d/master"
+#      file:
+#        path: /etc/services.d/master
+#        state: directory
+#
+#    - name: Putting /etc/services.d/master/run
+#      copy:
+#        src: files/services.d/master/run
+#        dest: /etc/services.d/master/run
+#        owner: root
+#        group: root
+#        mode: u=rx,g=rx,o=rx
+
+#    - name: Putting /usr/local/spark/bin/master.sh
+#      copy:
+#        src: files/master.sh
+#        dest: /usr/local/spark/bin/master.sh
+#        owner: root
+#        group: root
+#        mode: u=rx,g=rx,o=rx
+
+    - name: Putting /usr/local/spark/conf/slaves
+      copy:
+        src: files/slaves
+        dest: /usr/local/spark/conf/slaves
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx

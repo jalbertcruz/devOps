@@ -1,0 +1,5 @@
+
+swi-prolog.swipl-win
+
+swi-prolog.swipl
+

@@ -1,0 +1,4 @@
+galaxy_info:
+  author: José Albert Cruz Almaguer <jalbertcruz@gmail.com>
+  description: Provision PHP
+  min_ansible_version: 2.9.0

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Calibre
+GenericName=E-book library management
+Comment=E-book library management: Convert, view, share, catalogue all your e-books
+Exec=/usr/local/bin/appslnx/tools/learning/Calibre/squashfs-root/AppRun %F
+Icon=/usr/local/bin/appslnx/tools/learning/Calibre/calibre.png
+MimeType=application/x-mobipocket-ebook;x-content/ebook-reader
+Categories=Office;Graphics;Viewer;
+X-GNOME-UsesNotifications=true
+Actions=Ebook-editor;Ebook-viewer;LRF-viewer;

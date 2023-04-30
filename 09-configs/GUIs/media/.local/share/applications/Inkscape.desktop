@@ -1,0 +1,21 @@
+[Desktop Entry]
+Version=1.0
+Name=Inkscape
+GenericName=Vector Graphics Editor
+X-GNOME-FullName=Inkscape Vector Graphics Editor
+Comment=Create and edit Scalable Vector Graphics images
+Keywords=image;editor;vector;drawing;
+Type=Application
+Categories=Graphics;VectorGraphics;GTK;
+MimeType=image/svg+xml;image/svg+xml-compressed;
+Exec=/usr/local/bin/appslnx/tools/edition/Inkscape/squashfs-root/AppRun %F
+TryExec=/usr/local/bin/appslnx/tools/edition/Inkscape/squashfs-root/AppRun
+Terminal=false
+StartupNotify=true
+Icon=/usr/local/bin/appslnx/tools/edition/Inkscape/inkscape.png
+Actions=new-window;
+X-AppImage-Version=e7c3feb
+StartupWMClass=org.inkscape.Inkscape
+
+[Desktop Action new-window]
+Name=Open a New Window

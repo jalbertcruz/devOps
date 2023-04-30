@@ -1,0 +1,21 @@
+id: change_libs_names
+language: scala
+rule:
+  pattern: |
+    object Deps {
+        $$$
+    }
+  inside:
+    pattern: |
+      object Dependencies {
+          $$$
+      }
+    stopBy:
+      kind: object_definition
+
+
+fix: |-
+    object Deps {
+      val commonsCompress            = "org.apache.commons" % "commons-compress"  % V.commonsCompress 
+      val commonsCompress            = "org.apache.commons" % "commons-compress"  % V.commonsCompress 
+    }

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Podman desktop
+Keywords=docker;containers;podman;
+TryExec=/usr/local/bin/appslnx/tools/devOps/podman-desktop/podman-desktop
+Exec=/usr/local/bin/appslnx/tools/devOps/podman-desktop/podman-desktop
+StartupNotify=true
+Terminal=false
+Type=Application
+Icon=/usr/local/bin/appslnx/tools/devOps/podman-desktop.svg
+Categories=Development;

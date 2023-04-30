@@ -1,0 +1,30 @@
+
+smithyCodegen:
+  templatePath: /home/z/src/POCs/APIs/Smithy/demos/codegen-scl
+  lang: scala
+  parameters:
+    - case_1:
+        description: "the code writer class name"
+        rule:
+          regex: "CppWriter"
+        kinds:
+          - identifier
+          - type_identifier
+    - case_2:
+        description: "plugin name (put the response between \\\")"
+        rule:
+            regex: example-codegen
+        kinds:
+            - string
+
+scl3AkkaReplTester:
+  templatePath: /home/z/src/Scala/templates/akka/akkaReplTester-scl
+  lang: scala
+  parameters:
+    - case_1:
+        description: "Actor demo class name"
+        rule:
+          regex: "Wallet"
+        kinds:
+          - identifier
+          - type_identifier

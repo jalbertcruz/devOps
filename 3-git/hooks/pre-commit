@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+HOOKS_CONFIG_FILE_BASE_PATH_LOCAL="${HOOKS_CONFIG_FILE_BASE_PATH:-.}"
+
+if [ -z ${USING_HOOKS+x} ]; then
+  :
+else
+  if ! command -v yq &>/dev/null; then
+    echo "'yq' tool could not be found"
+    exit 0
+  fi
+
+  HOOKS_CONFIG_FILE="${HOOKS_CONFIG_FILE_BASE_PATH_LOCAL}/.hooks-config.yaml"
+  if ! test -f $HOOKS_CONFIG_FILE; then
+    echo "File '$HOOKS_CONFIG_FILE' does not exist."
+    exit 0
+  fi
+
+  exists_hook_config=$(yq '.hooks.pre-commit | column' $HOOKS_CONFIG_FILE)
+  if [[ "$USING_HOOKS" = "true" ]] && [[ "$exists_hook_config" != "0" ]]; then
+    for cmd in $(yq '.hooks | .pre-commit' $HOOKS_CONFIG_FILE); do
+      eval "$cmd $@"
+    done
+  fi
+fi

@@ -1,0 +1,37 @@
+set shell := ["sh", "-c"]
+set allow-duplicate-recipes := true
+set positional-arguments := true
+set dotenv-load := true
+set export := true
+
+docker-compose-up:
+    docker compose \
+      --project-directory traefik \
+      up -d
+    docker compose \
+      --project-directory db \
+      up -d
+
+docker-compose-down:
+    docker compose \
+      --project-directory traefik \
+      down
+    docker compose \
+      --project-directory db \
+      down
+
+create-docker-resources:
+    #!/usr/bin/env bash
+    set -euxo pipefail
+
+    docker network create traefik-network || true
+    docker volume create postgres-1-data || true
+    docker volume create postgres-2-data || true
+
+delete-docker-resources:
+    #!/usr/bin/env bash
+    set -euxo pipefail
+
+    docker network rm traefik-network || true
+    docker volume rm postgres-1-data || true
+    docker volume rm postgres-2-data || true

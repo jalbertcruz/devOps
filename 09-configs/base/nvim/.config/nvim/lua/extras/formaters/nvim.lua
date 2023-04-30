@@ -1,0 +1,5 @@
+vim.api.nvim_create_user_command("ClearMultipleBlankLines", function()
+  vim.api.nvim_buf_call(0, function()
+    vim.cmd([[%s/\v(\n\s*){2,}/\r\r/g]])
+  end)
+end, {})

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+shopt -s nullglob  # Ignore failed globs (if no files exist)
+
+my_array=("mariadb" "redpanda" "cassandra")
+
+for element in "${my_array[@]}"; do
+  current=$(pwd)
+  cd out/$element
+  files=(*.yaml *.yml)
+  first_yaml=${files[0]}
+  yq ".services = load(\"$first_yaml\")" ../../docker-compose-$element.yaml > ../$element-result.yaml
+  for file in "${files[@]:1}"; do
+    yq -i ".services += load(\"$file\")" ../$element-result.yaml
+  done
+  cp ../$element-result.yaml ../../../dev-env/$element/docker-compose.yaml
+  cd $current
+done
+
+
+exit 0
+
+ENDPOINT_URL="http://localhost:9000/envs/dotenvrc.json"
+
+# Fetch JSON response
+#response=$(curl -s "$ENDPOINT_URL")
+
+#echo "$response" | jq -r 'to_entries|map("export \(.key)=\(.value|@sh)")|.[]' | while read -r line; do
+#  eval "$line"
+#done
+
+
+while IFS="|" read -r name ip; do
+  sudo ip link add $name type dummy
+  sudo ip addr add $ip dev $name
+  sudo ip link set $name up
+
+#  sudo ip link set $name down
+#  sudo ip link del $name
+
+done < <(yq -r '.[] | "\(.name)|\(.ip)"' out/networks.yaml)
+

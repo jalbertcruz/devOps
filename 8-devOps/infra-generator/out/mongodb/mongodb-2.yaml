@@ -1,0 +1,5 @@
+mongodb-2: 
+  command: mongod --auth --config mongod.conf --configExpand "exec"
+  working_dir: wdir/mongo2
+  environment: 
+    - MONGODB_PORT=10041

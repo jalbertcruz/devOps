@@ -1,0 +1,14 @@
+
+-- post run
+PRAGMA case_sensitive_like=OFF;
+CREATE INDEX index_name ON main(name);
+CREATE INDEX index_hash ON main(hash);
+
+
+PRAGMA case_sensitive_like=ON;
+
+select * from main where name like '%la%';
+select hash, count(hash) as count from main group by hash order by count desc;
+delete from main where hash == '';
+select * from main where hash == '';
+

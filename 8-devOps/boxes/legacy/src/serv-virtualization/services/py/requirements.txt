@@ -1,0 +1,11 @@
+requests==2.23.0
+yapf==0.29.0
+Flask==1.1.1
+flask-restplus==0.13.0
+
+Flask-APScheduler==1.11.0
+
+# websocket_client==0.57.0
+dynaconf==2.2.2
+
+toposort==1.5

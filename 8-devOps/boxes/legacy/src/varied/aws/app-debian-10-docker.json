@@ -1,0 +1,23 @@
+{
+    "builders": [{
+        "type": "docker",
+        "image": "debian:bullseye-slim",
+        "commit": true,
+        "changes": [
+            "WORKDIR /app/payment_services/releases/0.1.0/",
+            "ENTRYPOINT [\"entrypoint.sh\"]"
+        ]
+    }],
+
+    "provisioners": [{
+        "type": "ansible",
+        "user": "root",
+        "playbook_file": "provision-debian-10-docker.yml"
+    }],
+
+    "post-processors": [[ {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/payment_services",
+        "tag": "debian10"
+    } ]]
+}

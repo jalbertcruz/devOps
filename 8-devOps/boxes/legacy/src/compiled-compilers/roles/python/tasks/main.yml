@@ -1,0 +1,7 @@
+---
+
+- name: Install Python
+  import_tasks: install.yml
+
+#- name: Cleanup
+#  import_tasks: cleanup.yml

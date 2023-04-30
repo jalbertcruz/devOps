@@ -1,0 +1,32 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "jalbert/ubuntu:18.04",
+      "commit": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "ansible_env_vars": [
+        "ANSIBLE_DISTRIBUTION=debian",
+        "ERLANG_VERSION=22.3",
+        "ERTS_VERSION=10.7",
+        "PYTHON_VERSION=3.8.1"
+      ],
+      "playbook_file": "provision.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "docker.io/jalbert/erlang",
+        "tag": "223-ubuntu18"
+      },
+      "docker-push"
+    ]
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "sb/postgres-sb": [
+    "sb/rabbitmq-sb"
+  ],
+  "sb/rabbitmq-sb": [
+    "npm/npm"
+  ],
+  "java/nexus": []
+}

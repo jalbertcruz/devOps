@@ -1,0 +1,74 @@
+
+https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
+
+2023/07/23 09:50:02.986 WARN    caddyfile       Site block has an unspecified IP address which only matches requests having that Host header; you probably want the 'bind' directive to configure the
+
+socket{
+  "address": "0.0.0.0"
+ }
+
+
+tar -Jcpf files.tar.xz files-dir
+tar -Jcpf all.tar.xz *
+buildah bud -t docker.io/jalbert/ubuntu-ssh:latest .
+podman image save --uncompressed --format oci-dir docker.io/jalbert/ubuntu-ssh:latest -o local
+podman image save --uncompressed --format oci-dir docker.io/jalbert/ubuntu-ssh2:latest -o local2
+
+podman inspect --format '{{ .Config.Cmd }}' docker.io/jalbert/ubuntu-ssh:latest
+
+https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz
+
+
+podman run --rm --name aa -d \
+    --volume ./installers:/installers \
+    --volume /home/z/appslnx:/appslnx \
+    -p 2222:22 docker.io/jalbert/ubuntu-ssh:latest
+
+podman run --rm --name aa -d \
+    --volume ./installers:/installers \
+    --volume /home/z/appslnx:/appslnx \
+    -p 2222:22 docker.io/jalbert/ubuntu-python-3.10:latest
+
+podman run --rm --name aa -d \
+    --volume ./installers:/installers \
+    --volume /home/z/appslnx:/appslnx \
+    -p 2222:22 docker.io/jalbert/ubuntu-python-2.7:latest
+
+
+podman run --rm --name aa -d \
+    --volume ./installers:/installers \
+    --volume /home/z/appslnx:/appslnx \
+    -p 2222:22 docker.io/jalbert/ubuntu-erlang_27:latest
+
+
+Note, selecting 'esl-erlang' instead of '/files/esl-erlang_27.3.4-1~ubuntu~noble_amd64.deb'
+The following additional packages will be installed:
+  libgpm2 libncurses6 libsctp1
+Suggested packages:
+  default-jre-headless | java2-runtime-headless | java1-runtime-headless | java2-runtime | java1-runtime gpm lksctp-tools
+Recommended packages:
+  libwxbase2.8-0 | libwxbase3.0-0 | libwxbase3.0-0v5 libwxgtk2.8-0 | libwxgtk3.0-0 | libwxgtk3.0-0v5 | libwxgtk3.0-gtk3-0v5
+The following NEW packages will be installed:
+  esl-erlang libgpm2 libncurses6 libsctp1
+0 upgraded, 4 newly installed, 0 to remove and 1 not upgraded.
+Need to get 135 kB/66.1 MB of archives.
+After this operation, 194 MB of additional disk space will be used.
+Do you want to continue? [Y/n]
+Get:1 http://archive.ubuntu.com/ubuntu noble/main amd64 libgpm2 amd64 1.20.7-11 [14.1 kB]
+Get:2 /files/esl-erlang_27.3.4-1~ubuntu~noble_amd64.deb esl-erlang amd64 1:27.3.4-1 [66.0 MB]
+Get:3 http://archive.ubuntu.com/ubuntu noble/main amd64 libncurses6 amd64 6.4+20240113-1ubuntu2 [112 kB]
+Get:4 http://archive.ubuntu.com/ubuntu noble/main amd64 libsctp1 amd64 1.0.19+dfsg-2build1 [9,146 B]
+
+
+/home/z/.local/state/
+
+/home/app/appslnx/dbs/postgres-tui/rainfrog -u postgres://duser:dpass@postgres-1.personal.local:55432/service
+
+
+docker run --rm --name aa -d \
+    --volume /home/z/appslnx:/home/app/appslnx \
+    --dns 10.5.0.3 --dns 8.8.8.8 \
+    --network dev-network \
+    -p 2222:22 localhost:5000/dev/ubuntu-ssh:latest
+
+docker ps --filter "label=custom.type" | tail -n +2 | cut -d " " -f 1 | xargs -I {} docker stop {}

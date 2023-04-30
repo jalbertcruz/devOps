@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+packer build -var-file=debian_vars.pkrvars.hcl build.pkr.hcl

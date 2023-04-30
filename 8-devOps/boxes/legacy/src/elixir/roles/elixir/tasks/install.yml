@@ -1,0 +1,9 @@
+---
+
+- name: Downloading precompiled Elixir
+  get_url:
+    url: "{{ elixir_download_url }}"
+    dest: "{{ kerl_working_dir }}/Precompiled.zip"
+
+- name: Unpacking Elixir
+  raw: "unzip {{ kerl_working_dir }}/Precompiled.zip -d {{ elixir_bin_dir }}"

@@ -1,0 +1,4 @@
+[repositories]
+
+  local
+  my-maven-releases-proxy: http://localhost:8080/releases

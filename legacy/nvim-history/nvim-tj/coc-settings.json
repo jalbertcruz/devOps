@@ -1,0 +1,21 @@
+{
+  "languageserver": {
+    "basedpyright": {
+      "command": "basedpyright-langserver",
+      "args": [
+        "--stdio"
+      ],
+      "rootPatterns": [
+        ".git",
+        ".venv"
+      ],
+      "trace.server": "verbose",
+      "filetypes": [
+        "python"
+      ],
+      "analysis.ignore": [
+        "*"
+      ]
+    }
+  }
+}

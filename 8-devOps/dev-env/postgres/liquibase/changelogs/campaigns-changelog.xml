@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd ">
+
+
+<changeSet id="1" author="loyalty">
+
+    <sql>
+        -- Create table "campaigns"
+        CREATE TABLE IF NOT EXISTS campaigns (
+            id VARCHAR(255) PRIMARY KEY,
+            name VARCHAR(255) UNIQUE NOT NULL,
+            status VARCHAR(50) NOT NULL,
+            budget JSON,
+            duration JSON
+            );
+
+    </sql>
+
+</changeSet>
+</databaseChangeLog>

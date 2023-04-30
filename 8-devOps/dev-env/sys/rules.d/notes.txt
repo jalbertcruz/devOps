@@ -1,0 +1,10 @@
+
+sudo cp rules.d/01-haproxy.rules rules.d/02-dnsmasq.rules /etc/polkit-1/rules.d/
+❯ sudo ls /etc/polkit-1/rules.d/
+01-haproxy.rules  02-dnsmasq.rules
+
+sudo apt install policykit-1
+sudo apt install policykit-1-gnome
+sudo apt install dnsmasq
+sudo apt install haproxy
+

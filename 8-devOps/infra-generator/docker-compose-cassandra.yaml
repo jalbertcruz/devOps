@@ -1,0 +1,14 @@
+
+volumes:
+  cassandra1-data:
+    name: ${CASSANDRA_1_VOLUME}
+    external: true
+  cassandra2-data:
+    name: ${CASSANDRA_2_VOLUME}
+    external: true
+
+networks:
+  dev-network:
+    name: dev-network
+    external: true
+

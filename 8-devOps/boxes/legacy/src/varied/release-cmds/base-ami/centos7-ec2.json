@@ -1,0 +1,36 @@
+{
+  "variables": {
+    "ami_id": "{{env `AWS_AMI_ID`}}",
+    "aws_region": "{{env `AWS_REGION`}}",
+    "access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "ami_name": "Payment services"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "{{user `aws_region`}}",
+      "source_ami": "{{user `ami_id`}}",
+      "access_key": "{{user `access_key`}}",
+      "secret_key": "{{user `secret_key`}}",
+      "instance_type": "t2.micro",
+      "ssh_username": "centos",
+      "ami_name": "{{user `ami_name`}} - {{timestamp}}",
+      "launch_block_device_mappings": [
+        {
+          "device_name": "/dev/sda1",
+          "volume_size": 10,
+          "volume_type": "gp2",
+          "delete_on_termination": true
+        }
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "centos",
+      "playbook_file": "provision-centos7-ec2.yml"
+    }
+  ]
+}

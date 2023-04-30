@@ -1,0 +1,287 @@
+{
+    "Type": "buildah 0.0.1",
+    "FromImage": "docker.io/jalbert/ubuntu-ssh:latest",
+    "FromImageID": "816918e71e180b55e7b35f7aea172a69854167364a6dd651a15964b734e8f3ce",
+    "FromImageDigest": "sha256:7ee88d0e189f65aa906df2cb102aa9bfd1f7ca14228c8ae8025e6cdfac00870f",
+    "GroupAdd": null,
+    "Config": "{\"created\":\"2025-01-26T15:50:07.17096592Z\",\"architecture\":\"amd64\",\"os\":\"linux\",\"config\":{\"Env\":[\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\"],\"Entrypoint\":[\"/init\"],\"Cmd\":[\"/bin/bash\"],\"WorkingDir\":\"/wdir\",\"Labels\":{\"io.buildah.version\":\"1.38.0\",\"org.opencontainers.image.ref.name\":\"ubuntu\",\"org.opencontainers.image.version\":\"22.04\"}},\"rootfs\":{\"type\":\"layers\",\"diff_ids\":[\"sha256:2573e0d8158209ed54ab25c87bcdcb00bd3d2539246960a3d592a1c599d70465\",\"sha256:219c5c525632ecece45a788632031700a031abdaf3b8fc0ffe815d6f8f519633\"]},\"history\":[{\"created\":\"2024-09-11T16:25:16.091322237Z\",\"created_by\":\"/bin/sh -c #(nop)  ARG RELEASE\",\"empty_layer\":true},{\"created\":\"2024-09-11T16:25:16.110134186Z\",\"created_by\":\"/bin/sh -c #(nop)  ARG LAUNCHPAD_BUILD_ARCH\",\"empty_layer\":true},{\"created\":\"2024-09-11T16:25:16.12828917Z\",\"created_by\":\"/bin/sh -c #(nop)  LABEL org.opencontainers.image.ref.name=ubuntu\",\"empty_layer\":true},{\"created\":\"2024-09-11T16:25:16.145319811Z\",\"created_by\":\"/bin/sh -c #(nop)  LABEL org.opencontainers.image.version=22.04\",\"empty_layer\":true},{\"created\":\"2024-09-11T16:25:17.895714864Z\",\"created_by\":\"/bin/sh -c #(nop) ADD file:ebe009f86035c175ba244badd298a2582914415cf62783d510eab3a311a5d4e1 in / \"},{\"created\":\"2024-09-11T16:25:18.112480611Z\",\"created_by\":\"/bin/sh -c #(nop)  CMD [\\\"/bin/bash\\\"]\",\"empty_layer\":true},{\"created\":\"2025-01-26T15:50:11.064995179Z\",\"created_by\":\"/bin/sh\",\"comment\":\"FROM docker.io/library/ubuntu:22.04\"}]}",
+    "Manifest": "{\"schemaVersion\":2,\"mediaType\":\"application/vnd.oci.image.manifest.v1+json\",\"config\":{\"mediaType\":\"application/vnd.oci.image.config.v1+json\",\"digest\":\"sha256:816918e71e180b55e7b35f7aea172a69854167364a6dd651a15964b734e8f3ce\",\"size\":1471},\"layers\":[{\"mediaType\":\"application/vnd.oci.image.layer.v1.tar\",\"digest\":\"sha256:2573e0d8158209ed54ab25c87bcdcb00bd3d2539246960a3d592a1c599d70465\",\"size\":80413184},{\"mediaType\":\"application/vnd.oci.image.layer.v1.tar\",\"digest\":\"sha256:219c5c525632ecece45a788632031700a031abdaf3b8fc0ffe815d6f8f519633\",\"size\":569223680}],\"annotations\":{\"org.opencontainers.image.base.digest\":\"sha256:3d1556a8a18cf5307b121e0a98e93f1ddf1f3f8e092f1fddfd941254785b95d7\",\"org.opencontainers.image.base.name\":\"docker.io/library/ubuntu:22.04\"}}",
+    "Container": "",
+    "ContainerID": "",
+    "MountPoint": "",
+    "ProcessLabel": "",
+    "MountLabel": "",
+    "ImageAnnotations": {
+        "org.opencontainers.image.base.digest": "sha256:3d1556a8a18cf5307b121e0a98e93f1ddf1f3f8e092f1fddfd941254785b95d7",
+        "org.opencontainers.image.base.name": "docker.io/library/ubuntu:22.04"
+    },
+    "ImageCreatedBy": "",
+    "OCIv1": {
+        "created": "2025-01-26T15:50:07.17096592Z",
+        "architecture": "amd64",
+        "os": "linux",
+        "config": {
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Entrypoint": [
+                "/init"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "WorkingDir": "/wdir",
+            "Labels": {
+                "io.buildah.version": "1.38.0",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            }
+        },
+        "rootfs": {
+            "type": "layers",
+            "diff_ids": [
+                "sha256:2573e0d8158209ed54ab25c87bcdcb00bd3d2539246960a3d592a1c599d70465",
+                "sha256:219c5c525632ecece45a788632031700a031abdaf3b8fc0ffe815d6f8f519633"
+            ]
+        },
+        "history": [
+            {
+                "created": "2024-09-11T16:25:16.091322237Z",
+                "created_by": "/bin/sh -c #(nop)  ARG RELEASE",
+                "empty_layer": true
+            },
+            {
+                "created": "2024-09-11T16:25:16.110134186Z",
+                "created_by": "/bin/sh -c #(nop)  ARG LAUNCHPAD_BUILD_ARCH",
+                "empty_layer": true
+            },
+            {
+                "created": "2024-09-11T16:25:16.12828917Z",
+                "created_by": "/bin/sh -c #(nop)  LABEL org.opencontainers.image.ref.name=ubuntu",
+                "empty_layer": true
+            },
+            {
+                "created": "2024-09-11T16:25:16.145319811Z",
+                "created_by": "/bin/sh -c #(nop)  LABEL org.opencontainers.image.version=22.04",
+                "empty_layer": true
+            },
+            {
+                "created": "2024-09-11T16:25:17.895714864Z",
+                "created_by": "/bin/sh -c #(nop) ADD file:ebe009f86035c175ba244badd298a2582914415cf62783d510eab3a311a5d4e1 in / "
+            },
+            {
+                "created": "2024-09-11T16:25:18.112480611Z",
+                "created_by": "/bin/sh -c #(nop)  CMD [\"/bin/bash\"]",
+                "empty_layer": true
+            },
+            {
+                "created": "2025-01-26T15:50:11.064995179Z",
+                "created_by": "/bin/sh",
+                "comment": "FROM docker.io/library/ubuntu:22.04"
+            }
+        ]
+    },
+    "Docker": {
+        "created": "2025-01-26T15:50:07.17096592Z",
+        "container_config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "/wdir",
+            "Entrypoint": [
+                "/init"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "io.buildah.version": "1.38.0",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            }
+        },
+        "config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "/wdir",
+            "Entrypoint": [
+                "/init"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "io.buildah.version": "1.38.0",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            }
+        },
+        "architecture": "amd64",
+        "os": "linux",
+        "rootfs": {
+            "type": "layers",
+            "diff_ids": [
+                "sha256:2573e0d8158209ed54ab25c87bcdcb00bd3d2539246960a3d592a1c599d70465",
+                "sha256:219c5c525632ecece45a788632031700a031abdaf3b8fc0ffe815d6f8f519633"
+            ]
+        },
+        "history": [
+            {
+                "created": "2024-09-11T16:25:16.091322237Z",
+                "created_by": "/bin/sh -c #(nop)  ARG RELEASE",
+                "empty_layer": true
+            },
+            {
+                "created": "2024-09-11T16:25:16.110134186Z",
+                "created_by": "/bin/sh -c #(nop)  ARG LAUNCHPAD_BUILD_ARCH",
+                "empty_layer": true
+            },
+            {
+                "created": "2024-09-11T16:25:16.12828917Z",
+                "created_by": "/bin/sh -c #(nop)  LABEL org.opencontainers.image.ref.name=ubuntu",
+                "empty_layer": true
+            },
+            {
+                "created": "2024-09-11T16:25:16.145319811Z",
+                "created_by": "/bin/sh -c #(nop)  LABEL org.opencontainers.image.version=22.04",
+                "empty_layer": true
+            },
+            {
+                "created": "2024-09-11T16:25:17.895714864Z",
+                "created_by": "/bin/sh -c #(nop) ADD file:ebe009f86035c175ba244badd298a2582914415cf62783d510eab3a311a5d4e1 in / "
+            },
+            {
+                "created": "2024-09-11T16:25:18.112480611Z",
+                "created_by": "/bin/sh -c #(nop)  CMD [\"/bin/bash\"]",
+                "empty_layer": true
+            },
+            {
+                "created": "2025-01-26T15:50:11.064995179Z",
+                "created_by": "/bin/sh",
+                "comment": "FROM docker.io/library/ubuntu:22.04"
+            }
+        ]
+    },
+    "DefaultMountsFilePath": "",
+    "Isolation": "oci",
+    "NamespaceOptions": [
+        {
+            "Name": "cgroup",
+            "Host": false,
+            "Path": ""
+        },
+        {
+            "Name": "ipc",
+            "Host": false,
+            "Path": ""
+        },
+        {
+            "Name": "mount",
+            "Host": false,
+            "Path": ""
+        },
+        {
+            "Name": "network",
+            "Host": false,
+            "Path": ""
+        },
+        {
+            "Name": "pid",
+            "Host": false,
+            "Path": ""
+        },
+        {
+            "Name": "user",
+            "Host": true,
+            "Path": ""
+        },
+        {
+            "Name": "uts",
+            "Host": false,
+            "Path": ""
+        }
+    ],
+    "Capabilities": null,
+    "ConfigureNetwork": "NetworkDefault",
+    "CNIPluginPath": "",
+    "CNIConfigDir": "",
+    "IDMappingOptions": {
+        "HostUIDMapping": true,
+        "HostGIDMapping": true,
+        "UIDMap": [],
+        "GIDMap": [],
+        "AutoUserNs": false,
+        "AutoUserNsOpts": {
+            "Size": 0,
+            "InitialSize": 0,
+            "PasswdFile": "",
+            "GroupFile": "",
+            "AdditionalUIDMappings": null,
+            "AdditionalGIDMappings": null
+        }
+    },
+    "History": [
+        {
+            "created": "2024-09-11T16:25:16.091322237Z",
+            "created_by": "/bin/sh -c #(nop)  ARG RELEASE",
+            "empty_layer": true
+        },
+        {
+            "created": "2024-09-11T16:25:16.110134186Z",
+            "created_by": "/bin/sh -c #(nop)  ARG LAUNCHPAD_BUILD_ARCH",
+            "empty_layer": true
+        },
+        {
+            "created": "2024-09-11T16:25:16.12828917Z",
+            "created_by": "/bin/sh -c #(nop)  LABEL org.opencontainers.image.ref.name=ubuntu",
+            "empty_layer": true
+        },
+        {
+            "created": "2024-09-11T16:25:16.145319811Z",
+            "created_by": "/bin/sh -c #(nop)  LABEL org.opencontainers.image.version=22.04",
+            "empty_layer": true
+        },
+        {
+            "created": "2024-09-11T16:25:17.895714864Z",
+            "created_by": "/bin/sh -c #(nop) ADD file:ebe009f86035c175ba244badd298a2582914415cf62783d510eab3a311a5d4e1 in / "
+        },
+        {
+            "created": "2024-09-11T16:25:18.112480611Z",
+            "created_by": "/bin/sh -c #(nop)  CMD [\"/bin/bash\"]",
+            "empty_layer": true
+        },
+        {
+            "created": "2025-01-26T15:50:11.064995179Z",
+            "created_by": "/bin/sh",
+            "comment": "FROM docker.io/library/ubuntu:22.04"
+        }
+    ],
+    "Devices": null,
+    "DeviceSpecs": null,
+    "CDIConfigDir": ""
+}

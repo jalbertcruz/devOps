@@ -1,0 +1,6 @@
+minio-1: 
+  command: minio server ./data
+  working_dir: wdir/minio
+  environment: 
+    - MINIO_ADDRESS=:10021
+    - MINIO_CONSOLE_ADDRESS=:10022

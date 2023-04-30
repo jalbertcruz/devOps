@@ -1,0 +1,3 @@
+---
+app_runtime_deps:
+  - libssl1.1

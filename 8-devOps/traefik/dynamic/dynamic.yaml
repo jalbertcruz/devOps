@@ -1,0 +1,33 @@
+tcp:
+  serversTransports:
+    mytransport:
+      dialTimeout: "30s"
+      dialKeepAlive: "20s"
+      terminationDelay: "200ms"
+      tls:
+        serverName: "personal.local"
+        certificates:
+          - "/home/z/src/devOps/08-devOps/traefik/pki/personal.local+9.pem"
+        insecureSkipVerify: true
+        rootcas:
+          - "/home/z/.local/share/mkcert/rootCA.pem"
+  routers:
+    my-tls-router:
+      entryPoints: kafka
+      rule: "HostSNI(`kafka-1.personal.local`)"
+      service: "my-tcp-service"
+      tls:
+        passthrough: true
+        options: "my-tls-options"
+        domains:
+          - main: "kafka-1.personal.local"
+            sans:
+              - "www.kafka-1.personal.local"
+        certResolver: "myresolver"
+
+  services:
+    my-tcp-service:
+      loadBalancer:
+        serversTransport: mytransport
+        servers:
+          - address: "127.0.0.1:19092"

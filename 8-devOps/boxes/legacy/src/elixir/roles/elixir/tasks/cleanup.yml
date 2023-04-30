@@ -1,0 +1,5 @@
+---
+- name: Removing precompiled Elixir
+  file:
+    path: "{{ kerl_working_dir }}/Precompiled.zip"
+    state: absent

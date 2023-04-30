@@ -1,19 +1,12 @@
 
+https://doublecmd.github.io/doc/en/variables.html
 
-# terminal: alacritty
-https://github.com/alacritty/alacritty
+# wezterm
 
-https://firminmartin.com/en/posts/2021/03/tabs_in_alacritty/
+wezterm
+start --cwd %D
 
-https://github.com/PatrickF1/fzf.fish
-
-### fzf
-# Search Git Log
-Ctrl+Alt+L (L for log)
-
-# Search Processes
-Ctrl+Alt+P (P for process)
-
-# Search Variables
-Ctrl+V (V for variable)
-
+# wezterm use
+https://wezfurlong.org/wezterm/copymode.html
+Ctrl+Shift+X
+Y

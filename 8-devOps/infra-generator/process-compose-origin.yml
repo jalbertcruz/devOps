@@ -1,0 +1,12 @@
+version: "0.5"
+is_strict: true
+environment:
+processes:
+  reposilite:
+    command: |
+      java -jar $REPOSILITE_STANDALONE_JAR_PATH --token name:secret --shared-configuration shared.configuration.json
+    working_dir: "wdir/reposilite"
+  caddy:
+    command: |
+      caddy run
+    working_dir: "wdir/caddy"

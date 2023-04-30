@@ -1,0 +1,26 @@
+
+# gnome .desktop files location
+❯ cp /usr/share/applications/code.desktop /home/a/Downloads/
+
+
+# To use xfs
+https://www.cyberciti.biz/faq/how-to-install-xfs-and-create-xfs-file-system-on-debianubuntu-linux/
+https://manpages.ubuntu.com/manpages/bionic/man8/mkfs.xfs.8.html
+
+sudo apt update
+sudo apt install xfsprogs
+
+https://www.baeldung.com/linux/gnome-shell-extension
+
+# flatpak
+https://linuxconfig.org/flatpak-offline-repository-usage
+flatpak install --from https://flathub.org/repo/appstream/org.kicad.KiCad.flatpakref
+flatpak list --app
+flatpak uninstall org.gimp.GIMP
+flatpak info -o org.kicad.KiCad
+flatpak remotes -d
+sudo flatpak remote-modify --collection-id=org.flathub.Stable flathub
+flatpak create-usb /home/z/Downloads/Studing/Electronics/videos/flat-backup org.kicad.KiCad
+flatpak create-usb "/media/z/Local data/backups/electronics" org.kicad.KiCad
+flatpak create-usb "/media/z/Local data/backups/flatpak installers/Gromit - linux gnome draw/" net.christianbeier.Gromit-MPX
+sudo flatpak install --sideload-repo=/home/linuxconfig/offline-repo/.ostree/repo flathub org.gnome.gedit

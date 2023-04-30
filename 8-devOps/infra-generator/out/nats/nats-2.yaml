@@ -1,0 +1,5 @@
+nats-2: 
+  command: nats-server -config server.conf
+  working_dir: wdir/nats2
+  environment: 
+    - NATS_PORT=10043

@@ -1,0 +1,131 @@
+
+https://github.com/tsenart/vegeta
+
+Vegeta
+
+Usage: vegeta [global flags] <command> [command flags]
+
+global flags:
+  -cpus int
+    	Number of CPUs to use (default = number of cpus)
+  -profile string
+    	Enable profiling of [cpu, heap]
+  -version
+    	Print version and exit
+
+attack command:
+  -body string
+    	Requests body file
+  -cert string
+    	TLS client PEM encoded certificate file
+  -chunked
+    	Send body with chunked transfer encoding
+  -connections int
+    	Max open idle connections per target host (default 10000)
+  -dns-ttl value
+    	Cache DNS lookups for the given duration [-1 = disabled, 0 = forever] (default 0s)
+  -duration duration
+    	Duration of the test [0 = forever]
+  -format string
+    	Targets format [http, json] (default "http")
+  -h2c
+    	Send HTTP/2 requests without TLS encryption
+  -header value
+    	Request header
+  -http2
+    	Send HTTP/2 requests when supported by the server (default true)
+  -insecure
+    	Ignore invalid server TLS certificates
+  -keepalive
+    	Use persistent connections (default true)
+  -key string
+    	TLS client PEM encoded private key file
+  -laddr value
+    	Local IP address (default 0.0.0.0)
+  -lazy
+    	Read targets lazily
+  -max-body value
+    	Maximum number of bytes to capture from response bodies. [-1 = no limit] (default -1)
+  -max-connections int
+    	Max connections per target host
+  -max-workers uint
+    	Maximum number of workers (default 18446744073709551615)
+  -name string
+    	Attack name
+  -output string
+    	Output file (default "stdout")
+  -prometheus-addr string
+    	Prometheus exporter listen address [empty = disabled]. Example: 0.0.0.0:8880
+  -proxy-header value
+    	Proxy CONNECT header
+  -rate value
+    	Number of requests per time unit [0 = infinity] (default 50/1s)
+  -redirects int
+    	Number of redirects to follow. -1 will not follow but marks as success (default 10)
+  -resolvers value
+    	List of addresses (ip:port) to use for DNS resolution. Disables use of local system DNS. (comma separated list)
+  -root-certs value
+    	TLS root certificate files (comma separated list)
+  -session-tickets
+    	Enable TLS session resumption using session tickets
+  -targets string
+    	Targets file (default "stdin")
+  -timeout duration
+    	Requests timeout (default 30s)
+  -unix-socket string
+    	Connect over a unix socket. This overrides the host address in target URLs
+  -workers uint
+    	Initial number of workers (default 10)
+
+encode command:
+  -output string
+    	Output file (default "stdout")
+  -to string
+    	Output encoding [csv, gob, json] (default "json")
+
+plot command:
+  -output string
+    	Output file (default "stdout")
+  -threshold int
+    	Threshold of data points above which series are downsampled. (default 4000)
+  -title string
+    	Title and header of the resulting HTML page (default "Vegeta Plot")
+
+report command:
+  -buckets string
+    	Histogram buckets, e.g.: "[0,1ms,10ms]"
+  -every duration
+    	Report interval
+  -output string
+    	Output file (default "stdout")
+  -type string
+    	Report type to generate [text, json, hist[buckets], hdrplot] (default "text")
+
+examples:
+  echo "GET http://localhost/" | vegeta attack -duration=5s | tee results.bin | vegeta report
+  vegeta report -type=json results.bin > metrics.json
+  cat results.bin | vegeta plot > plot.html
+  cat results.bin | vegeta report -type="hist[0,100ms,200ms,300ms]"
+
+
+Usage: Distributed attacks
+
+Whenever your load test can't be conducted due to Vegeta hitting machine limits such as open files, memory, CPU or network bandwidth, it's a good idea to use Vegeta in a distributed manner.
+
+In a hypothetical scenario where the desired attack rate is 60k requests per second, let's assume we have 3 machines with vegeta installed.
+
+Make sure open file descriptor and process limits are set to a high number for your user on each machine using the ulimit command.
+
+We're ready to start the attack. All we need to do is to divide the intended rate by the number of machines, and use that number on each attack. Here we'll use pdsh for orchestration.
+
+$ PDSH_RCMD_TYPE=ssh pdsh -b -w '10.0.1.1,10.0.2.1,10.0.3.1' \
+    'echo "GET http://target/" | vegeta attack -rate=20000 -duration=60s > result.bin'
+After the previous command finishes, we can gather the result files to use on our report.
+
+$ for machine in 10.0.1.1 10.0.2.1 10.0.3.1; do
+    scp $machine:~/result.bin $machine.bin &
+  done
+The report command accepts multiple result files. It'll read and sort them by timestamp before generating reports.
+
+vegeta report *.bin
+Another way to gather results in distributed tests is to use the built-in Prometheus Exporter and configure a Prometheus Server to get test results from all Vegeta instances. See attack option "prometheus-addr" for more details and a complete example in the section "Prometheus Support".

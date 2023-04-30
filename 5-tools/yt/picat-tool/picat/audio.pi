@@ -1,0 +1,6 @@
+import domain.
+
+main() =>
+    smallest_acodec_format(ID, ['es', 'es-US']),
+    Res = to_string(ID),
+    printf("%s", Res).

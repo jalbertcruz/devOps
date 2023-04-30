@@ -1,0 +1,26 @@
+
+https://docs.docker.com/engine/daemon/#:~:text=dockerd%20%2D%2Dhelp-,Daemon%20data%20directory,For%20example%3A
+
+# Ubuntu offline package repository mirror
+https://documentation.ubuntu.com/landscape/how-to-guides/landscape-installation-and-set-up/install-landscape-in-an-air-gapped-or-offline-environment/
+https://pypi.org/project/apt-mirror/
+https://gitlab.com/apt-mirror2/apt-mirror2
+https://hub.docker.com/r/aptmirror/apt-mirror2
+
+sudo ip link add dummy1 type dummy
+sudo ip addr add 192.168.0.3/24 dev dummy1
+sudo ip link set dummy1 up
+
+sudo ip link add dummy2 type dummy
+sudo ip addr add 192.168.0.4/24 dev dummy2
+sudo ip link set dummy2 up
+
+
+https://wiki.archlinux.org/title/Polkit
+https://unix.stackexchange.com/questions/496982/restarting-systemd-service-only-as-a-specific-user#497011
+
+# An email and SMTP testing tool with API for developers
+https://github.com/axllent/mailpit/releases
+
+https://github.com/ServBay/ServBay
+

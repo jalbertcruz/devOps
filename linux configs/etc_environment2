@@ -1,0 +1,14 @@
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/a/appslnx/build-tools/maven/bin"
+
+export GRADLE_HOME=/home/a/appslnx/build-tools/gradle/
+export GRADLE_USER_HOME=/media/a/data/repo/internet/.gradle
+
+export JAVA_HOME=/home/a/appslnx/jdk1.8/
+
+
+export M2_HOME=/home/a/appslnx/build-tools/maven
+
+export M2=/home/a/appslnx/build-tools/maven/bin
+
+export MAVEN_OPTS="-Xms256m -Xmx512m"
+

@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+export GUM_CHOOSE_HEADER="Choose a project"
+
+options=$(yq 'keys | .[]' $PROJECTS_TEMPLATES_FILE)
+project=$(gum choose $options)
+
+src=$(yq ".${project}.templatePath " $PROJECTS_TEMPLATES_FILE)
+
+export GUM_INPUT_WIDTH=100
+name_default=$(basename $src)
+name=$(gum input --placeholder "Enter a value for the folder name, default is $(basename $src)")
+if [ -z "$name" ]; then
+  name=$name_default
+fi
+
+mkdir $name
+cd $name
+cwd=$(pwd)
+cd "$src"
+tar_name="$(basename $(pwd)).tar"
+git archive --output=./"$tar_name" --format=tar HEAD
+cd $cwd
+mv "$src/$tar_name" .
+tar -xvf "$tar_name"
+rm "$tar_name"
+
+read -r -d '' TEMPLATE <<EOM
+id: change_x
+language: scala
+rule:
+   kind: type_identifier
+   regex: CppWriter
+fix: |-
+  Other
+EOM
+
+language="\"$(yq ".${project}.lang" $PROJECTS_TEMPLATES_FILE)\""
+readarray parameters < <(yq -o=j -I=0 ".${project}.parameters[]" $PROJECTS_TEMPLATES_FILE)
+for parameter in "${parameters[@]}"; do
+  readarray casos < <(echo "$parameter" | yq -o=j -I=0 ".[]")
+  for caso in "${casos[@]}"; do
+    description=$(echo "$caso" | yq '.description' -)
+    new_value="$(gum input --placeholder "Enter a value for: $description")"
+    if [ "$new_value" ]; then
+      new_value="\"$new_value\""
+      regex="\"$(echo "$caso" | yq '.rule.regex' -)\""
+      readarray kinds < <(echo "$caso" | yq -o=j -I=0 ".kinds[]")
+      for kind in "${kinds[@]}"; do
+        x=$(echo "$TEMPLATE" | yq ".fix = $new_value | .rule.kind = $kind | .language = $language | .rule.regex = $regex" -)
+        echo "$x" >_fix.yaml
+        ast-grep scan -r _fix.yaml --interactive
+      done
+    fi
+  done
+done
+
+rm _fix.yaml || true

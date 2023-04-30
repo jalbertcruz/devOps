@@ -1,0 +1,6 @@
+
+== Jaeger
+
+jaeger-all-in-one --collector.zipkin.host-port=:9411
+
+# http://localhost:16686

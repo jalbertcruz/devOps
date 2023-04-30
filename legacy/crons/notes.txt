@@ -1,0 +1,22 @@
+
+# chmod ugo+x rjuvenil.sh
+# https://www.redeszone.net/2017/01/09/utilizar-cron-crontab-linux-programar-tareas/
+# crontab -e
+00 18 * * 1-6 /home/a/src/devOps/crons/rjuvenil.sh > /home/a/logs/rjuvenil.log 2>&1
+15 18 * * 1-6 /home/a/src/devOps/crons/krjuvenil.sh
+00 21 * * 1-5 /home/a/src/devOps/crons/rjuvenil2.sh > /home/a/logs/rjuvenil2.log 2>&1
+15 21 * * 1-5 /home/a/src/devOps/crons/krjuvenil2.sh
+36 18 * * 1-5 /home/a/src/devOps/crons/rprogreso.sh > /home/a/logs/rprogreso.log 2>&1
+00 19 * * 1-5 /home/a/src/devOps/crons/krprogreso.sh
+
+# 00 23 * * * /home/a/src/devOps/crons/rangulo.sh > /home/a/logs/rangulo.log 2>&1
+
+
+5 asteriscos y el comando a ejecutar. Cada uno de los 5 asteriscos significa:
+
+m: minuto
+h: hora
+dom: día de la semana
+mon: mes
+dow: día del mes
+Lo valores que pueden adoptar cada una de estas variables se encuentran en la imagen. Por ejemplo, en el caso del último, se permite la utilización del nombre de los días escritos en inglés.

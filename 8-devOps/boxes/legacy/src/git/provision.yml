@@ -1,0 +1,52 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python3-minimal)
+
+- name: Provision Gitea
+  hosts: all
+
+  tasks:
+    - name: "Creates directory: /etc/services.d/gitea"
+      file:
+        path: /etc/services.d/gitea
+        state: directory
+
+    - name: Putting /etc/services.d/gitea/run
+      copy:
+        src: files/services.d/gitea/run
+        dest: /etc/services.d/gitea/run
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+# GITEA_WORK_DIR=/home/app/gitea/
+    - name: Install git
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - git
+
+    - name: creating /etc/gitea
+      raw: mkdir /etc/gitea && chown root:app /etc/gitea && chmod 770 /etc/gitea
+
+    - name: creating dirs
+      raw: mkdir -p /home/app/gitea/{custom,data,log}
+
+    - name: Putting Gitea file
+      copy:
+        src: files/gitea-1.12.5-linux-amd64
+        dest: /home/app/gitea/gitea
+        owner: app
+        group: app
+
+    - name: updating permissions
+      raw: chown -R app:app /home/app/gitea
+
+    - name: updating permissions
+      raw: chmod +x /home/app/gitea/gitea

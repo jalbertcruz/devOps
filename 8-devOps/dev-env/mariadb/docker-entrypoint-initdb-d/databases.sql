@@ -1,0 +1,4 @@
+
+CREATE DATABASE operations;
+CREATE DATABASE service1;
+CREATE DATABASE service2;

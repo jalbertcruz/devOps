@@ -1,0 +1,56 @@
+
+- name: Putting /etc/s6-overlay/scripts/unseal.py
+  copy:
+    src: files/s6-overlay/scripts/unseal.py
+    dest: /usr/local/bin/unseal.py
+    mode: preserve
+#    owner: app
+#    group: app
+
+- name: "Creates directory: /etc/s6-overlay/s6-rc.d/unseal-vault"
+  file:
+    path: /etc/s6-overlay/s6-rc.d/unseal-vault
+    state: directory
+
+- name: Putting /etc/s6-overlay/s6-rc.d/unseal-vault/type
+  copy:
+    src: files/s6-overlay/s6-rc.d/unseal-vault/type
+    dest: /etc/s6-overlay/s6-rc.d/unseal-vault/type
+    owner: app
+    group: app
+
+- name: Putting /etc/s6-overlay/s6-rc.d/unseal-vault/up
+  copy:
+    src: files/s6-overlay/s6-rc.d/unseal-vault/up
+    dest: /etc/s6-overlay/s6-rc.d/unseal-vault/up
+    owner: app
+    group: app
+    mode: u=rx,g=rx,o=rx
+
+#- name: Putting /etc/s6-overlay/s6-rc.d/unseal-vault/run
+#  copy:
+#    src: files/s6-overlay/s6-rc.d/unseal-vault/run
+#    dest: /etc/s6-overlay/s6-rc.d/unseal-vault/run
+#    owner: app
+#    group: app
+#    mode: u=rx,g=rx,o=rx
+
+- name: Putting /etc/s6-overlay/s6-rc.d/user/contents.d/unseal-vault
+  copy:
+    src: files/s6-overlay/s6-rc.d/user/contents.d/unseal-vault
+    dest: /etc/s6-overlay/s6-rc.d/user/contents.d/unseal-vault
+    owner: app
+    group: app
+
+- name: "Creates directory: /etc/s6-overlay/s6-rc.d/unseal-vault/dependencies.d"
+  file:
+    path: /etc/s6-overlay/s6-rc.d/unseal-vault/dependencies.d
+    state: directory
+
+- name: Putting /etc/s6-overlay/s6-rc.d/unseal-vault/dependencies.d/vault
+  copy:
+    src: files/s6-overlay/s6-rc.d/unseal-vault/dependencies.d/vault
+    dest: /etc/s6-overlay/s6-rc.d/unseal-vault/dependencies.d/vault
+#    owner: app
+#    group: app
+#

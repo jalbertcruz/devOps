@@ -1,0 +1,3 @@
+spark-master.service.dc1.consul
+spark-worker1.service.dc1.consul
+spark-worker2.service.dc1.consul

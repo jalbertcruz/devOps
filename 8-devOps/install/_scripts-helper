@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+maybe_copy_fish_completions_files() {
+  find . -type f -name "*.fish" | while read -r script; do
+    mv "$script" $FISH_COMPLETIONS_DIR
+  done
+}
+
+save_last_version() {
+  local app_name=$1
+  local url=$2
+  last_version_file=${FILES_INSTALLED_PATH}/${APP_TYPE}-${app_name}-last-version.txt
+  last_version_installed=$(cat $last_version_file || echo "")
+  if [[ "$last_version_installed" == "$url" ]]; then
+    echo skip
+    return 0
+  fi
+  echo $url >$last_version_file
+}
+
+save_last_installation_log() {
+  local app_name=$1
+  log_file=${FILES_INSTALLED_PATH}/${APP_TYPE}-${app_name}.txt
+  date >>${log_file}
+  echo "${url}" >>${log_file}
+  echo "" >>${log_file}
+}
+
+wait_some_time() {
+  local WAITING_TIME=$1
+  local msg=$2
+  echo "$msg"
+  sleep $WAITING_TIME
+}

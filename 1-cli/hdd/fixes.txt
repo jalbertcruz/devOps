@@ -1,0 +1,38 @@
+
+## 2Tb disk
+
+sudo badblocks -wvs /dev/sdd
+
+❯ sudo fsck -cfvr /dev/sdc1
+fsck from util-linux 2.39.3
+e2fsck 1.47.0 (5-Feb-2023)
+Checking for bad blocks (read-only test): done
+/dev/sdc1: Updating bad block inode.
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+
+/dev/sdc1: ***** FILE SYSTEM WAS MODIFIED *****
+
+          11 inodes used (0.00%, out of 122101760)
+           0 non-contiguous files (0.0%)
+           0 non-contiguous directories (0.0%)
+             # of inodes with ind/dind/tind blocks: 0/0/0
+             Extent depth histogram: 2/1
+     7947223 blocks used (1.63%, out of 488378368)
+           0 bad blocks
+           1 large file
+
+           0 regular files
+           2 directories
+           0 character device files
+           0 block device files
+           0 fifos
+           0 links
+           0 symbolic links (0 fast symbolic links)
+           0 sockets
+------------
+           2 files
+/dev/sdc1: status 0, rss 42668, real 18630.668328, user 74.818700, sys 1780.687885

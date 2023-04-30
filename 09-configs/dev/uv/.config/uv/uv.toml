@@ -1,0 +1,2 @@
+
+allow-insecure-host = ["localhost:8080"]

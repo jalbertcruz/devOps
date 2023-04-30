@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Koodo Reader
+Exec=/usr/local/bin/appslnx/tools/learning/Koodo/squashfs-root/koodo-reader --no-sandbox %U
+Terminal=false
+Type=Application
+Icon=/usr/local/bin/appslnx/tools/learning/Koodo/koodo-reader.png
+StartupWMClass=Koodo Reader
+X-AppImage-Version=2.2.2
+Comment=Koodo Reader is a cross-platform ebook reader
+MimeType=application/x-mobipocket-ebook;application/vnd.amazon.ebook;application/vnd.amazon.ebook;application/x-cbz;application/x-cbr;application/x-cbt;application/x-cb7;application/x-fictionbook+xml;x-scheme-handler/koodo-reader;
+Categories=Office;

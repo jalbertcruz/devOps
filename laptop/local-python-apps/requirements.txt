@@ -1,4 +1,6 @@
 youtube_dl
+charset-normalizer
 httpie
 ansible
 pipenv
+auto-editor

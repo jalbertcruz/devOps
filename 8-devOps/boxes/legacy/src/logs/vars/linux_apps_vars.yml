@@ -1,0 +1,5 @@
+---
+
+debian_deps:
+  - build-essential
+  - default-libmysqlclient-dev

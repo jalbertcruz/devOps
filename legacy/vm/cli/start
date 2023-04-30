@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# firecraker_socker_path=/home/a/src/vm/firecracker.socket
+# firecraker_socker_path=/home/a/src/vm/firecracker2.socket
+# rm -f $firecraker_socker_path
+
+#https://s3.amazonaws.com/spec.ccfc.min/img/quickstart_guide/x86_64/kernels/vmlinux.bin
+#https://s3.amazonaws.com/spec.ccfc.min/img/quickstart_guide/x86_64/rootfs/bionic.rootfs.ext4
+
+# firecracker --api-sock /home/a/src/vm/firecracker.socket
+# firecracker --api-sock /home/a/src/vm/firecracker2.socket
+
+sgk
+sgr
+sgm

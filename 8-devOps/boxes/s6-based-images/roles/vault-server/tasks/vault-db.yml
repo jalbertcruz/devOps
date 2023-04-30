@@ -1,0 +1,11 @@
+
+- name: "Creates directory: /backup"
+  file:
+    path: /backup
+    state: directory
+
+- name: Putting vault raft files
+  ansible.builtin.unarchive:
+    src: files/raft-vault.tgz
+    dest: /backup
+

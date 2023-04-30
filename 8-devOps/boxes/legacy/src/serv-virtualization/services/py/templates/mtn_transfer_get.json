@@ -1,0 +1,18 @@
+{
+  "request" : {
+    "url" : "/disbursement/v1_0/transfer/{{ x_reference_id }}",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"amount\":\"1\",\"currency\":\"EUR\",\"financialTransactionId\":\"920918987\",\"externalId\":\"dedac3be-d6ba-444d-b4fb-53d31041d4cb\",\"payee\":{\"partyIdType\":\"MSISDN\",\"partyId\":\"254702333444\"},\"status\":\"SUCCESSFUL\"}",
+    "headers" : {
+      "Content-Type" : "application/json;charset=utf-8",
+      "Request-Context" : "appId=cid-v1:e996501c-e721-4ac1-97ff-dc6887b85e8c",
+      "Date" : "Tue, 18 Feb 2020 11:48:25 GMT"
+    }
+  },
+  "uuid" : "{{ x_reference_id }}",
+  "persistent" : true,
+  "insertionIndex" : 23
+}

@@ -1,0 +1,10 @@
+# Example using filters, ignoring permission errors, and specifying the hostname precedence
+plugin: aws_ec2
+# Populate inventory with instances in these regions
+#regions:
+#  - us-east-2
+filters:
+  tag:Environment: payment-test-dev
+
+# Ignores 403 errors rather than failing
+strict_permissions: False

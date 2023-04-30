@@ -1,0 +1,3 @@
+#!/command/with-contenv sh
+
+traefik --configfile /configs/traefik.yaml

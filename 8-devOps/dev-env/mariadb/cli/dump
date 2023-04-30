@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+declare -a dbases=(one)
+db=$(gum choose $dbases)
+echo "You have selected the database: $db"
+
+exit 0
+
+server=postgres-1
+dbases=$(docker exec -i $server psql -U duser -d postgres -t -c "SELECT datname FROM pg_database;")
+db=$(gum choose $dbases)
+export GUM_INPUT_HEADER="Backup file name"
+output=$(gum input --value "postgres_backup.sql")
+docker exec -it $server sh -c "pg_dump --username=duser --host=localhost --port=5432 --format=plain -f /dump/$output --clean --inserts -d $db"

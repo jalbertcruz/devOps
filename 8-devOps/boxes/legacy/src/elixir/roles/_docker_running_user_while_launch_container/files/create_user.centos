@@ -1,0 +1,32 @@
+#!/bin/sh
+# run a command as (non-existent) user, using libnss-wrapper
+
+U=`id -u`
+G=`id -g`
+
+HOME_DIR=/tmp/user
+PASSWD=/var/tmp/passwd
+GROUP=/var/tmp/group
+
+#if [ ! -d "$HOME_DIR" ]; then
+#  mkdir "$HOME_DIR"
+#fi
+
+if [ ! -f "$PASSWD" ]; then
+  echo "user::$U:$G::$HOME_DIR:" > "$PASSWD"
+fi
+if [ ! -f "$GROUP" ]; then
+  echo "user::$G:" > "$GROUP"
+fi
+
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+
+# http://blog.dscpl.com.au/2015/12/unknown-user-when-running-docker.html
+# https://github.com/openshift/jenkins/blob/355600974c22617f5fc4d4bf5eac1aee064e7a2f/2/contrib/jenkins/jenkins-common.sh#L13
+# jenkins/2/contrib/jenkins/jenkins-common.sh
+echo "default:x:${USER_ID}:${GROUP_ID}:Default Application User:${HOME_DIR}:/sbin/nologin" >> /etc/passwd
+
+#"$@"
+
+#LD_PRELOAD=/usr/lib64/libnss_wrapper.so NSS_WRAPPER_PASSWD="$PASSWD" NSS_WRAPPER_GROUP="$GROUP" "$@"

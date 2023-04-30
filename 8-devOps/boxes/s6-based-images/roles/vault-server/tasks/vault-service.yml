@@ -1,0 +1,41 @@
+
+# Vault service
+
+- name: Putting vault binary
+  ansible.builtin.unarchive:
+    src: files/vault_1.14.1_linux_amd64.zip
+    dest: /usr/local/bin/
+
+- name: "Creates directory: /etc/s6-overlay/s6-rc.d/vault"
+  file:
+    path: /etc/s6-overlay/s6-rc.d/vault
+    state: directory
+
+- name: Putting /etc/s6-overlay/s6-rc.d/vault/type
+  copy:
+    src: files/s6-overlay/s6-rc.d/vault/type
+    dest: /etc/s6-overlay/s6-rc.d/vault/type
+    owner: app
+    group: app
+
+- name: Putting /etc/s6-overlay/s6-rc.d/vault/run
+  copy:
+    src: files/s6-overlay/s6-rc.d/vault/run
+    dest: /etc/s6-overlay/s6-rc.d/vault/run
+    owner: app
+    group: app
+    mode: u=rx,g=rx,o=rx
+
+- name: Putting /etc/s6-overlay/s6-rc.d/user/contents.d/vault
+  copy:
+    src: files/s6-overlay/s6-rc.d/user/contents.d/vault
+    dest: /etc/s6-overlay/s6-rc.d/user/contents.d/vault
+    owner: app
+    group: app
+
+- name: Putting /configs/config-vault.hcl
+  copy:
+    src: files/config-vault.hcl
+    dest: /configs/config-vault.hcl
+    owner: app
+    group: app

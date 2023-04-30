@@ -1,0 +1,23 @@
+id: change_plugins_versions
+language: scala
+rule:
+  pattern: |
+    object V {
+        $$$
+    }
+  inside:
+    pattern: |
+      object PluginsDependencies {
+          $$$
+      }
+    stopBy:
+      kind: object_definition
+
+fix: |-
+    object V {
+      val scalaLTSVersion      = "3.3.4"
+      val scalaLatestVersion   = "3.4.2"
+      val distage              = "1.2.8"
+    }
+
+# ---

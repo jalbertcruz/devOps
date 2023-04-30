@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+#f2 -f '\.' -r ' ' -e --include-dir --exec | true
+PATH="$PATH:/usr/local/bin/appslnx/bin/tools/pls/refactoring"
+
+f2 -f '(.*) \[.*$' \
+  -r '$1' \
+  -e --include-dir --exec | true
+f2 -f '？' -r '_' \
+  -e --include-dir --exec | true
+f2 -f '_' -r ' ' \
+  -e --include-dir --exec | true
+f2 -f '-' -r ' ' \
+  -e --include-dir --exec | true
+f2 -f '\?' -r '_' \
+  -e --include-dir --exec | true
+f2 -f '¿' -r '' \
+  -e --include-dir --exec | true
+f2 -f 'á' -r 'a' \
+  -e --include-dir --exec | true
+f2 -f 'é' -r 'e' \
+  -e --include-dir --exec | true
+f2 -f 'í' -r 'i' \
+  -e --include-dir --exec | true
+f2 -f 'í' -r 'i' \
+  -e --include-dir --exec | true
+f2 -f 'ó' -r 'o' \
+  -e --include-dir --exec | true
+f2 -f 'ú' -r 'u' \
+  -e --include-dir --exec | true
+f2 -f 'Á' -r 'A' \
+  -e --include-dir --exec | true
+f2 -f 'É' -r 'E' \
+  -e --include-dir --exec | true
+f2 -f 'Í' -r 'I' \
+  -e --include-dir --exec | true
+f2 -f 'Ó' -r 'O' \
+  -e --include-dir --exec | true
+f2 -f 'Ú' -r 'U' \
+  -e --include-dir --exec | true
+f2 -f 'Ú' -r 'U' \
+  -e --include-dir --exec | true
+f2 -f 'ñ' -r 'n' \
+  -e --include-dir --exec | true
+f2 -r '{.di}' \
+  -e --include-dir --exec | true
+f2 -r '{.win}' \
+  -e --include-dir --exec | true
+f2 -f '｜' -r '' \
+  -e --include-dir --exec | true
+f2 -f '＂' -r '' \
+  -e --include-dir --exec | true
+f2 -f '：' -r ' -' \
+  -e --include-dir --exec | true
+f2 -f '⧸' -r '-' \
+  -e --include-dir --exec | true
+f2 -f '⚡' -r '' \
+  -e --include-dir --exec | true

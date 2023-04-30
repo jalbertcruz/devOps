@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+#export CNI_VERSION=v1.1.1
+#export ARCH=$([ $(uname -m) = "x86_64" ] && echo amd64 || echo arm64)
+#sudo mkdir -p /opt/cni/bin
+#curl -sSL https://github.com/containernetworking/plugins/releases/download/${CNI_VERSION}/cni-plugins-linux-${ARCH}-${CNI_VERSION}.tgz | sudo tar -xz -C /opt/cni/bin
+
+DEVCTR_IMAGE_NO_TAG="public.ecr.aws/firecracker/fcuvm"
+DEVCTR_IMAGE_TAG="v33"
+
+DEVCTR_IMAGE="${DEVCTR_IMAGE_NO_TAG}:${DEVCTR_IMAGE_TAG}"
+
+#docker run \
+#	--add-host=host.docker.internal:host-gateway \
+#	--rm \
+#	-it \
+#	"$DEVCTR_IMAGE" /bin/bash
+
+#	curl http://host.docker.internal:4000/linux-5.10.99.tar.xz > e.xz
+
+cat ../cli/eth0.json |  jj -v $firecraker_tap_id host_dev_name > e.json

@@ -1,0 +1,16 @@
+meta {
+  name: get port demo
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base-url}}/get-port?host=postgres-1.personal.local&port=3306
+  body: none
+  auth: inherit
+}
+
+params:query {
+  host: postgres-1.personal.local
+  port: 3306
+}

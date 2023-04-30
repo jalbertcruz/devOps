@@ -1,0 +1,49 @@
+
+# Traefik service
+
+- name: Putting traefik binary
+  ansible.builtin.unarchive:
+    src: files/traefik_v2.10.4_linux_amd64.tar.gz
+    dest: /usr/local/bin/
+
+- name: "Creates directory: /etc/s6-overlay/s6-rc.d/traefik"
+  file:
+    path: /etc/s6-overlay/s6-rc.d/traefik
+    state: directory
+
+- name: Putting /etc/s6-overlay/s6-rc.d/traefik/type
+  copy:
+    src: files/s6-overlay/s6-rc.d/traefik/type
+    dest: /etc/s6-overlay/s6-rc.d/traefik/type
+    owner: app
+    group: app
+
+- name: Putting /etc/s6-overlay/s6-rc.d/traefik/run
+  copy:
+    src: files/s6-overlay/s6-rc.d/traefik/run
+    dest: /etc/s6-overlay/s6-rc.d/traefik/run
+    owner: app
+    group: app
+    mode: u=rx,g=rx,o=rx
+
+- name: Putting /etc/s6-overlay/s6-rc.d/user/contents.d/traefik
+  copy:
+    src: files/s6-overlay/s6-rc.d/user/contents.d/traefik
+    dest: /etc/s6-overlay/s6-rc.d/user/contents.d/traefik
+    owner: app
+    group: app
+
+- name: Putting /configs/traefik.yaml
+  copy:
+    src: files/traefik.yaml
+    dest: /configs/traefik.yaml
+
+- name: "Creates directory: /configs/traefik"
+  file:
+    path: /configs/traefik
+    state: directory
+
+- name: Putting /configs/traefik/dynamic.yaml
+  copy:
+    src: files/traefik-conf/dynamic.yaml
+    dest: /configs/traefik/dynamic.yaml

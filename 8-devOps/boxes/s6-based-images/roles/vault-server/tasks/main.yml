@@ -1,0 +1,18 @@
+---
+
+- name: Creating directories
+  import_tasks: global-directories.yml
+
+- name: Putting vault db
+  import_tasks: vault-db.yml
+
+- name: Installing vault service
+  import_tasks: vault-service.yml
+
+- name: Installing unseal service
+  import_tasks: unseal-service.yml
+
+- name: Installing traefik service
+  import_tasks: traefik-service.yml
+
+

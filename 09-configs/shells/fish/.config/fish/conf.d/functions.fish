@@ -1,0 +1,10 @@
+source ~/.config/fish/conf.d/functions/apis.fish
+source ~/.config/fish/conf.d/functions/docker.fish
+source ~/.config/fish/conf.d/functions/edition.fish
+source ~/.config/fish/conf.d/functions/env-vars.fish
+source ~/.config/fish/conf.d/functions/medias.fish
+source ~/.config/fish/conf.d/functions/navigation.fish
+source ~/.config/fish/conf.d/functions/network.fish
+source ~/.config/fish/conf.d/functions/process.fish
+source ~/.config/fish/conf.d/functions/python.fish
+source ~/.config/fish/conf.d/functions/tools.fish

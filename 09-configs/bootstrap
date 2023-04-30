@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+set -e
+set -u
+set -o pipefail
+
+this_dir="$(dirname "$0")"
+repo_home_dir="$(cd "$this_dir" && cd . && pwd)"
+
+rm $HOME/.local/share/applications/Logseq.desktop 2>/dev/null || true
+
+cd "$repo_home_dir"
+
+cd base
+stow \
+  -t "$HOME" \
+  broot \
+  kitty \
+  nvim \
+  nvim-dev \
+  zellij \
+  yazi \
+  bin
+
+#  superfile \
+#  wezterm \
+
+cd ../data
+stow \
+  -t "$HOME" \
+  jq \
+  bin
+
+cd ../dev
+stow \
+  -t "$HOME" \
+  clojure-lsp \
+  coursier \
+  efm \
+  lazygit \
+  git \
+  pnpm \
+  poetry \
+  sbt \
+  sqlfluff \
+  tree-sitter-cli \
+  uv \
+  bin \
+  jetbrains-vim
+
+#cd ../extra
+#stow \
+#  -t "$HOME"
+
+cd ../lnx-utils
+stow \
+  -t "$HOME" \
+  files-utils \
+  ov \
+  procs \
+  bin
+
+cd ../local
+stow \
+  -t "$HOME" \
+  qmk
+
+cd ../Ops
+stow \
+  -t "$HOME" \
+  containers \
+  direnv \
+  just \
+  k9s \
+  qtile \
+  rofi \
+  bin
+
+cd ../shells
+stow \
+  -t "$HOME" \
+  atuin \
+  carapace \
+  cheat \
+  navi \
+  nushell \
+  starship \
+  tealdeer \
+  fish
+
+cd ../study
+stow \
+  -t "$HOME" \
+  logseq \
+  obs-studio \
+  sioyek \
+  vale \
+  bin
+
+cd ../GUIs
+stow \
+  -t "$HOME" \
+  base \
+  data \
+  dev \
+  hobbies \
+  media \
+  security \
+  learning \
+  writing

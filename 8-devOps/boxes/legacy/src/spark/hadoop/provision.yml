@@ -1,0 +1,192 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap Python
+      raw: (apt-get -y update && test -e /usr/bin/python) || (apt-get -y update && apt-get install -y python-minimal)
+
+- name: Provision Hadoop
+  hosts: all
+  vars:
+    core_site: "<configuration><property>
+                  <name>fs.default.name</name>
+                  <value>hdfs://hadoop-master.service.dc1.consul:9000</value>
+                </property>
+               "
+
+    hdfs_site: "
+              <configuration>
+                  <property>
+                          <name>dfs.namenode.name.dir</name>
+                          <value>/home/app/data/nameNode</value>
+                  </property>
+
+                  <property>
+                          <name>dfs.datanode.data.dir</name>
+                          <value>/home/app/data/dataNode</value>
+                  </property>
+
+                  <property>
+                          <name>dfs.replication</name>
+                          <value>1</value>
+                  </property>
+              "
+    yarn_site: "
+    <configuration>
+                <property>
+                           <name>yarn.acl.enable</name>
+                           <value>0</value>
+                   </property>
+
+                   <property>
+                           <name>yarn.resourcemanager.hostname</name>
+                           <value>hadoop-master.service.dc1.consul</value>
+                   </property>
+
+                   <property>
+                           <name>yarn.nodemanager.aux-services</name>
+                           <value>mapreduce_shuffle</value>
+                   </property>
+
+                   <property>
+                           <name>yarn.nodemanager.resource.memory-mb</name>
+                           <value>1536</value>
+                   </property>
+
+                   <property>
+                           <name>yarn.scheduler.maximum-allocation-mb</name>
+                           <value>1536</value>
+                   </property>
+
+                   <property>
+                           <name>yarn.scheduler.minimum-allocation-mb</name>
+                           <value>128</value>
+                   </property>
+
+                   <property>
+                           <name>yarn.nodemanager.vmem-check-enabled</name>
+                           <value>false</value>
+                   </property>
+              "
+
+  tasks:
+
+    - name: echo app/.profile
+      raw: echo "export PATH=/home/app/hadoop/bin:/home/app/hadoop/sbin:\$PATH" >> /etc/profile.d/custom_inits.sh
+
+    - name: echo app/.bashrc
+      raw: echo "export HADOOP_HOME=/home/app/hadoop" >> /etc/profile.d/custom_inits.sh
+
+    - name: echo app/.bashrc
+      raw: echo "export PATH=\${PATH}:\${HADOOP_HOME}/bin:\${HADOOP_HOME}/sbin" >> /etc/profile.d/custom_inits.sh
+
+    - name: cp /etc/profile.d/custom_inits.sh
+      raw: cp /etc/profile.d/custom_inits.sh /home/app/custom_inits.sh
+
+    - name: chmod /home/app/custom_inits.sh
+      raw: chmod 777 /home/app/custom_inits.sh
+
+#    - name: echo app/.profile
+#      raw: echo "export PATH=/home/app/hadoop/bin:/home/app/hadoop/sbin:\$PATH" >> /home/app/.profile
+#
+#    - name: echo app/.bashrc
+#      raw: echo "export HADOOP_HOME=/home/app/hadoop" >> /home/app/.bashrc
+#
+#    - name: echo app/.bashrc
+#      raw: echo "export PATH=\${PATH}:\${HADOOP_HOME}/bin:\${HADOOP_HOME}/sbin" >> /home/app/.bashrc
+
+    # https://askubuntu.com/questions/454260/how-to-solve-locale-problem
+#    - name: "fix => bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)"
+#      raw: echo "LANG=en_US.UTF-8" >> /etc/environment
+
+    - name: Putting Hadoop files
+      unarchive:
+#        src: files/hadoop-2.7.3.tar.gz
+        src: files/hadoop-3.2.1.tar.gz
+        dest: /home/app
+        owner: app
+        group: app
+
+    - name: rename hadoop
+      raw: mv /home/app/hadoop* /home/app/hadoop
+
+    - name: Set NameNode Location
+      lineinfile:
+        path: /home/app/hadoop/etc/hadoop/core-site.xml
+        regexp: '<configuration>'
+        line: "{{ core_site }}"
+
+    - name: Set path for HDFS
+      lineinfile:
+        path: /home/app/hadoop/etc/hadoop/hdfs-site.xml
+        regexp: '<configuration>'
+        line: "{{ hdfs_site }}"
+
+    - name: Putting YARN as Job Scheduler
+      copy:
+        src: files/mapred-site.xml.template
+        dest: /home/app/hadoop/etc/hadoop/mapred-site.xml
+        owner: app
+        group: app
+
+    - name: Configure YARN
+      lineinfile:
+        path: /home/app/hadoop/etc/hadoop/yarn-site.xml
+        regexp: '<configuration>'
+        line: "{{ yarn_site }}"
+
+    - name: Configure Workers
+      copy:
+        src: files/workers
+        dest: /home/app/hadoop/etc/hadoop/workers
+        owner: app
+        group: app
+        mode: u=rx,g=rx,o=rx
+
+
+
+#    - name: "ssh: # SSH login fix. Otherwise user is kicked off after login"
+#      raw: sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+#    - name: ssh 3
+#      raw: echo "export VISIBLE=now" >> /etc/profile
+
+
+#    - name: Create workdir
+#      file:
+#        path: /opt
+#        state: directory
+#        owner: root
+#        group: root
+#        mode: 0755
+#
+#    - name: Putting Spark file
+#      copy:
+#        src: spark-2.4.4-bin-hadoop2.7.tgz
+#        dest: /opt/spark.tgz
+#        owner: root
+#        group: root
+#
+#    - name: Unpacking
+#      raw: tar -xzf /opt/spark.tgz -C /opt/
+#
+#    - name: Remove Spark file
+#      raw: rm -rf /opt/spark.tgz
+#
+#    - name: Spark link
+#      raw: ln -s /opt/spark-2.4.4-bin-hadoop2.7 /usr/local/spark
+#
+#    - name: setting SPARK_HOME
+#      raw: echo 'export SPARK_HOME=/usr/local/spark' >> /etc/environment
+
+#- name: Container cleanup
+#  hosts: all
+#  gather_facts: no
+#  tasks:
+#    - name: Remove python
+#      raw: apt-get purge -y python-minimal && apt-get autoremove -y
+#
+#    - name: Remove apt lists
+#      raw: rm -rf /var/lib/apt/lists/*

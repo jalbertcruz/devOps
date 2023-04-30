@@ -1,0 +1,32 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap Python
+      raw: apt-get -y update && apt-get install -y python3-minimal
+
+- name: Provision Java
+  hosts: all
+
+  tasks:
+
+    - name: Copy file
+      ansible.builtin.copy:
+        src: files/Main.java
+        dest: /Main.java
+        owner: root
+        group: root
+        mode: u=rw,g=r,o=r
+
+    - name: Copy file
+      ansible.builtin.copy:
+        src: files/run.sh
+        dest: /run.sh
+        owner: root
+        group: root
+        mode: u=rwx,g=rx,o=rx
+
+    - name: compile file
+      raw: javac /Main.java

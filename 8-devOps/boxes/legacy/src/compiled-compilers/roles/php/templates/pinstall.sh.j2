@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+cd /tmp
+tar -xf swoole.tar.gz -C swoole --strip-components=1
+cd /tmp/swoole
+phpize
+./configure --enable-openssl --enable-http2 --enable-sockets --enable-mysqlnd
+make
+make install-modules
+echo "extension=swoole.so" >> /etc/php/7.4/cli/php.ini
+
+# apt autoremove --purge -y git php7.4-dev build-essential

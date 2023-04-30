@@ -1,0 +1,15 @@
+---
+
+- name: Install Erlang
+  import_tasks: install.yml
+
+- name: Putting entrypoint
+  template:
+    src: templates/entrypoint.sh.j2
+    dest: /usr/local/bin/entrypoint.sh
+    owner: root
+    group: root
+    mode: u=rx,g=rx,o=rx
+
+- name: Cleanup
+  import_tasks: cleanup.yml

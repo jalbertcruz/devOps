@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+
+Name=Xournal++
+Comment=Take handwritten notes
+Keywords=tablet;Wacom;pen input;PDF Annotation;markup
+
+Exec=/usr/local/bin/appslnx/tools/edition/xournalpp/squashfs-root/AppRun %f
+SingleMainWindow=false
+StartupWMClass=com.github.xournalpp.xournalpp
+Terminal=false
+StartupNotify=true
+MimeType=application/x-xoj;application/x-xojpp;application/x-xopp;application/x-xopt;
+Icon=/usr/local/bin/appslnx/tools/edition/xournalpp/com.github.xournalpp.xournalpp.svg
+Categories=Office;GNOME;GTK;
+X-AppImage-Version=1.2.7

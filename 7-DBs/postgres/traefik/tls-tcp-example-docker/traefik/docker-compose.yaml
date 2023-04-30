@@ -1,0 +1,32 @@
+services:
+  traefik:
+    image: "traefik:v3.4.3"
+    container_name: traefik
+    command:
+      - "--log.level=DEBUG"
+      - "--configfile=/traefik.yml"
+    ports:
+      - "8089:8089"
+      - "4443:443"
+      - "55432:55432"
+    labels:
+      - traefik.enable=true
+    networks:
+      - traefik-network
+    volumes:
+      - /run/user/1000/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yaml:/traefik.yml
+#      - ./pki/personal.local+5.pem:/pki/personal.local+5.pem
+#      - ./pki/personal.local+5-key.pem:/pki/personal.local+5-key.pem
+volumes:
+  postgres-1-data:
+    name: postgres-1-data
+    external: true
+  postgres-2-data:
+    name: postgres-2-data
+    external: true
+
+networks:
+  traefik-network:
+    name: traefik-network
+    external: true

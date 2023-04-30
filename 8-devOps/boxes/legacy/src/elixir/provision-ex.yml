@@ -1,0 +1,45 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  vars:
+    ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+  tasks:
+
+    - name: Boostrap Python Debian
+      raw: apt-get -y update && apt-get install -y python-minimal
+      when:
+        - ansible_distribution | lower == "debian"
+
+    - name: Boostrap Python CentOS
+      raw: yum -y install epel-release && yum -y update
+      when:
+        - ansible_distribution | lower == "centos"
+
+- name: Provision Elixir
+  hosts: all
+
+  tasks:
+
+    - name: "Creates directory: /etc/services.d/elixir-app"
+      file:
+        path: /etc/services.d/elixir-app
+        state: directory
+
+    - name: Putting /etc/services.d/elixir-app/run
+      copy:
+        src: files/services.d/elixir-app/run
+        dest: /etc/services.d/elixir-app/run
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    - name: Putting /usr/bin/elixir-app.sh
+      copy:
+        src: files/scripts/elixir-app.sh
+        dest: /usr/bin/elixir-app.sh
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx

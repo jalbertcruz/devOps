@@ -1,0 +1,47 @@
+services:
+  docker-registry:
+    image: registry:3.0.0
+    container_name: docker-registry
+    restart: always
+    ports:
+      - "5000:5000"
+#    environment:
+#      OTEL_TRACES_EXPORTER: none
+#      OTEL_SDK_DISABLED: true
+#      OTEL_TRACES_EXPORT_INTERVAL: 60000000
+    volumes:
+      - /media/z/data/repo/docker:/var/lib/registry
+    networks:
+      - dev-network
+
+#  dnsmasq:
+#    image: dockurr/dnsmasq:2.90
+#    container_name: dnsmasq
+#    environment:
+#      DNS1: "1.0.0.1"
+#      DNS2: "1.1.1.1"
+#    ports:
+#      - 5354:53/udp
+#      - 5354:53/tcp
+#    volumes:
+#      - ./dnsmasq.conf:/etc/dnsmasq.conf
+#    networks:
+#        dev-network:
+#          ipv4_address: 10.5.0.3
+#    cap_add:
+#      - NET_ADMIN
+#    restart: always
+
+volumes:
+  registry-data:
+    name: ${REGISTRY_DATA_VOLUME}
+    external: true
+
+networks:
+  dev-network:
+    name: dev-network
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.5.0.0/16

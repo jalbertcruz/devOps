@@ -1,0 +1,22 @@
+
+
+
+curl --cacert /home/z/src/devOps/07-DBs/postgres/traefik/tls-example/pki/personal.local+5.pem -H "Host: demo.personal.local" --request POST \
+  --url https://localhost:4443/items/ \
+  --header 'content-type: application/json' \
+  --data '{
+    "name": "Foo_suffix",
+    "description": "An optional description -- {{price}}",
+    "price": 33,
+    "tax": 3.5
+}'
+
+curl --cacert /home/z/src/devOps/07-DBs/postgres/traefik/tls-example/pki/personal.local+5.pem -H "Host: demo2.personal.local" --request POST \
+  --url https://localhost:4443/items/ \
+  --header 'content-type: application/json' \
+  --data '{
+    "name": "Foo_suffix",
+    "description": "An optional description -- {{price}}",
+    "price": 33,
+    "tax": 3.5
+}'

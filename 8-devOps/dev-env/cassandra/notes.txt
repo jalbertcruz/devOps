@@ -1,0 +1,91 @@
+https://cassandra.apache.org/doc/4.1/cassandra/operating/backups.html
+
+nodetool clearsnapshot --all akka
+
+
+devOps/08-devOps/dev-env on 🌱 dev +315/-125 [📦📝🤷✓] underwent 1s
+❯ js
+Requested creating snapshot(s) for [akka] with snapshot name [backup1] and options {skipFlush=false}
+Snapshot directory: backup1
+/var/lib/cassandra/data/akka/databasechangeloglock-259d5460418c11f0a48f93265ce2004d/snapshots
+/var/lib/cassandra/data/akka/databasechangelog-24dd5fc0418c11f0a48f93265ce2004d/snapshots
+/var/lib/cassandra/data/akka/snapshots-2abf6aa0418c11f0a48f93265ce2004d/snapshots
+/var/lib/cassandra/data/akka/tag_write_progress-27e632f0418c11f0a48f93265ce2004d/snapshots
+/var/lib/cassandra/data/akka/tag_views-27324c40418c11f0a48f93265ce2004d/snapshots
+/var/lib/cassandra/data/akka/tag_scanning-289d4df0418c11f0a48f93265ce2004d/snapshots
+/var/lib/cassandra/data/akka/metadata-2954de20418c11f0a48f93265ce2004d/snapshots
+/var/lib/cassandra/data/akka/all_persistence_ids-2a0bf920418c11f0a48f93265ce2004d/snapshots
+/var/lib/cassandra/data/akka/messages-268172d0418c11f0a48f93265ce2004d/snapshots
+
+nodetool import akka messages /dump/akka/messages
+error: Insufficient permissions on directory /dump/akka/messages
+
+root@ad37aac455e0:/# nodetool help import
+NAME
+        nodetool import - Import new SSTables to the system
+
+SYNOPSIS
+        nodetool [(-h <host> | --host <host>)] [(-p <port> | --port <port>)]
+                [(-pp | --print-port)] [(-pw <password> | --password <password>)]
+                [(-pwf <passwordFilePath> | --password-file <passwordFilePath>)]
+                [(-u <username> | --username <username>)] import
+                [(-c | --no-invalidate-caches)] [(-e | --extended-verify)]
+                [(-l | --keep-level)] [(-p | --copy-data)] [(-q | --quick)]
+                [(-r | --keep-repaired)] [(-t | --no-tokens)] [(-v | --no-verify)] [--]
+                <keyspace> <table> <directory> ...
+
+OPTIONS
+        -c, --no-invalidate-caches
+            Don't invalidate the row cache when importing
+
+        -e, --extended-verify
+            Run an extended verify, verifying all values in the new sstables
+
+        -h <host>, --host <host>
+            Node hostname or ip address
+
+        -l, --keep-level
+            Keep the level on the new sstables
+
+        -p <port>, --port <port>
+            Remote jmx agent port number
+
+        -p, --copy-data
+            Copy data from source directories instead of moving them
+
+        -pp, --print-port
+            Operate in 4.0 mode with hosts disambiguated by port number
+
+        -pw <password>, --password <password>
+            Remote jmx agent password
+
+        -pwf <passwordFilePath>, --password-file <passwordFilePath>
+            Path to the JMX password file
+
+        -q, --quick
+            Do a quick import without verifying sstables, clearing row cache or
+            checking in which data directory to put the file
+
+        -r, --keep-repaired
+            Keep any repaired information from the sstables
+
+        -t, --no-tokens
+            Don't verify that all tokens in the new sstable are owned by the
+            current node
+
+        -u <username>, --username <username>
+            Remote jmx agent username
+
+        -v, --no-verify
+            Don't verify new sstables
+
+        --
+            This option can be used to separate command-line options from the
+            list of argument, (useful when arguments might be mistaken for
+            command-line options
+
+        <keyspace> <table> <directory> ...
+            The keyspace, table name and directories to import sstables from
+
+root@cassandra1:/# cqlsh -f /dump/akka/messages/schema.cql
+sstableloader /dump/akka/messages -d cassandra1_dev_me

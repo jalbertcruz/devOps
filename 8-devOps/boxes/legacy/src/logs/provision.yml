@@ -1,0 +1,55 @@
+---
+
+- name: Provision Fluentd
+  hosts: all
+  vars_files:
+    - vars/fluentd_plugins_vars.yml
+    - vars/linux_apps_vars.yml
+
+  tasks:
+    - name: "Creates directory: /etc/services.d/fluentd"
+      file:
+        path: /etc/s6-overlay/s6-rc.d/fluentd
+        state: directory
+
+    - name: Putting /etc/s6-overlay/s6-rc.d/fluentd
+      copy:
+        src: files/s6-overlay/s6-rc.d/fluentd/run
+        dest: /etc/s6-overlay/s6-rc.d/fluentd/run
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    # https://docs.fluentd.org/installation/install-by-deb
+    # TODO: tunning: https://docs.fluentd.org/installation/before-install
+    # https://www.slideshare.net/brendangregg/how-netflix-tunes-ec2-instances-for-performance
+    # perfromance: https://www.fluentd.org/faqs
+    - name: Install fluentd calyptia for Ubuntu Focal
+      # calyptia-fluentd 1
+      raw: curl -fsSL https://calyptia-fluentd.s3.us-east-2.amazonaws.com/calyptia-fluentd-1-ubuntu-focal.sh | sh
+
+#    - name: Install fluent-plugin-route
+#      raw: /usr/sbin/calyptia-fluentd-gem install fluent-plugin-route
+
+#    - name: Install fluent-plugin-route
+#      raw: /usr/sbin/calyptia-fluentd-gem install fluent-plugin-prometheus
+
+    - name: Install deps Debian
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ debian_deps }}"
+
+    - name: Install fluentd plugins
+      raw: "/usr/sbin/calyptia-fluentd-gem install {{ item }}"
+#      raw: "/usr/sbin/calyptia-fluentd-gem install {{ item }}; ls"
+#      raw: "/usr/sbin/calyptia-fluentd-gem install {{ item }}; cat /opt/calyptia-fluentd/lib/ruby/gems/3.0.0/extensions/x86_64-linux/3.0.0/mysql2-0.5.3/mkmf.log "
+      with_items: "{{ fluentd_plugins }}"
+
+#    - name: logging errors
+#      command: cat /opt/calyptia-fluentd/lib/ruby/gems/3.0.0/extensions/x86_64-linux/3.0.0/mysql2-0.5.3/mkmf.log
+#      register: command_output
+#
+#    - name: Print to console
+#      debug:
+#        msg: "{{command_output.stdout}}"

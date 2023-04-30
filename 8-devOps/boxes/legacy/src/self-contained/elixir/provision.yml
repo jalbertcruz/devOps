@@ -1,0 +1,40 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap Python
+      raw: apt-get -y update && apt-get install -y python3-minimal
+
+- name: Provision Elixir
+  hosts: all
+  vars:
+    erlang_version: "{{ lookup('env','ERLANG_VERSION') }}"
+    erts_version: "{{ lookup('env','ERTS_VERSION') }}"
+    kerl_configure_options: "{{ lookup('env','KERL_CONFIGURE_OPTIONS') }}"
+    default_erlang_configure_options: "{{ lookup('env','DEFAULT_ERLANG_CONFIGURE_OPTIONS') }}"
+    kerl_download_url: https://raw.githubusercontent.com/kerl/kerl/master/kerl
+    kerl_working_dir: /home/app
+    erlang_sources_dir: /home/app/.kerl/archives
+
+    elixir_version: "{{ lookup('env','ELIXIR_VERSION') }}"
+    elixir_download_url: "https://github.com/elixir-lang/elixir/releases/download/v{{ elixir_version }}/Precompiled.zip"
+    elixir_bin_dir: /home/app/elixir_dir
+    secret_key_base: KmxDZE4OX9zJi0lJXtur8+RLljGt076qCXJD754GppyUWPGV4lCP0LGnGlQ7k8M0
+
+  tasks:
+    - name: Install deps
+      include_tasks: "../tasks/install-deps-erlang-compilation.yaml"
+
+    - name: Prepare OS
+      include_tasks: "../tasks/prepare-os-ubuntu.yaml"
+
+    - name: Install Erlang
+      include_tasks: "../tasks/install-erlang-via-kerl.yaml"
+
+    - name: Install Elixir
+      include_tasks: "../tasks/install-elixir.yaml"
+
+    - name: Configure entrypoint
+      include_tasks: "../tasks/init-configurations.yaml"

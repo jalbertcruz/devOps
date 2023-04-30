@@ -1,0 +1,14 @@
+images: 
+  - postgres:17.5-alpine3.22
+  - postgres:17.6-trixie
+  - postgis/postgis:17-3.5-alpine
+  - mariadb:12.0.2-noble
+  - mysql:9.4.0
+  - docker.redpanda.com/redpandadata/redpanda:v25.2.1
+  - docker.redpanda.com/redpandadata/console:v3.1.3
+  - cassandra:5.0.5
+  - danteev/texlive:2025-08-15
+  - registry:3.0.0
+  - dockurr/dnsmasq:2.90
+  - traefik:v3.5.0
+  - rabbitmq:4.1.3-management-alpine

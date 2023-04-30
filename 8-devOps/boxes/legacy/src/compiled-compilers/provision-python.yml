@@ -1,0 +1,25 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+#  debugger: always
+  vars:
+    ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+  tasks:
+
+    - name: Boostrap Python Debian
+      raw: apt-get -y update
+      when:
+        - ansible_distribution | lower == "debian"
+
+- name: Provision Python
+  hosts: all
+
+  tasks:
+    - name: Ensure Python configured with role
+      include_role:
+        name: python
+      vars:
+        ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"

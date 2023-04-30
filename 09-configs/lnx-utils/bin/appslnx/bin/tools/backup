@@ -1,0 +1,134 @@
+#!/usr/bin/env bash
+
+#rsync -avP  --delete -r  --files-from="$BACKUP_DIR_LIST" / $BACKUP_PATH
+#rsync -avP  --delete -r --modify-window=10 /media/z/data/docs $BACKUP_PATH
+
+#rsync -av --delete -r --files-from="$BACKUP_DIR_LIST" / $BACKUP_PATH
+#rsync -aAXHv -r --filter="merge $BACKUP_FILTER" --files-from="$BACKUP_DIR_LIST_PERMISSIONS" / $BACKUP_PATH
+#rsync -aAXHv --delete -r --filter="merge $BACKUP_FILTER" --files-from="$BACKUP_DIR_LIST" / $BACKUP_PATH
+
+cat $BACKUP_DIR_LIST | xargs -I{} -n1 rsync -avP --delete -r --modify-window=10 {} $BACKUP_PATH/documentation
+cat $BACKUP_DIR_LIST_PERMISSIONS | xargs -I{} -n1 rsync -aPAXHv --delete -r --filter="merge $BACKUP_FILTER" --modify-window=10 {} $BACKUP_PATH/sys
+
+exit 0
+
+res1=$(date +%s.%N)
+
+destination_path=$(yq ".destination_path " $BACKUPS_CONFIG_FILE)
+origin_path=$(yq ".origin_path " $BACKUPS_CONFIG_FILE)
+origin_path_levels=$(echo -n $origin_path | sd '[^\/]' '' | awk '{ print length }')
+
+cd "$origin_path"
+pwd
+
+cpath=$(pwd)
+
+# packaging the configured directories
+readarray packaging < <(yq -o=j -I=0 ".structure.packaging[]" $BACKUPS_CONFIG_FILE)
+for entry in "${packaging[@]}"; do
+  directory=$(echo "$entry" | yq '.dir' -)
+  level=$(echo "$entry" | yq '.level' -)
+  readarray directories < <(fd --max-depth $level --type d --exclude '.' . "$directory" | sort)
+  for d in "${directories[@]}"; do
+    current_level=$(echo -n "$d" | sd '[^\/]' '' | awk '{ print length }')
+    difference=$(($current_level - 1))
+    if [[ $difference == $level ]]; then
+      dx=$(echo -n "$d")
+      d1=$(dirname "$dx")
+      d2=$(basename "$dx")
+      cd "$d1/$d2"
+      files_count=$(ls -A . | wc -l)
+      if [[ $files_count > 0 ]]; then
+        mkdir -p "$destination_path/$d1"
+        echo "Creating tar file: '$destination_path/$d1/$d2.tar'"
+        echo "At => $(date)"
+
+        if ! test -f "$destination_path/$d1/$d2.tar"; then
+          tar -cvf "$destination_path/$d1/$d2.tar" *
+        fi
+
+        echo " "
+      fi
+      cd "$cpath"
+    fi
+  done
+done
+
+cd "$cpath"
+
+# copying the files from the configured directories
+for entry in "${packaging[@]}"; do
+  #    echo $entry
+  directory=$(echo "$entry" | yq '.dir' -)
+  level=$(echo "$entry" | yq '.level' -)
+  readarray files < <(fd --max-depth $level --full-path --type f --exclude '.' . "$directory" | sort)
+  for f in "${files[@]}"; do
+    echo $f
+    dx=$(echo -n "$f")
+    d1=$(dirname "$dx")
+    d2=$(basename "$dx")
+    mkdir -p "$destination_path/$d1"
+    cp "$dx" "$destination_path/$d1/$d2"
+  done
+done
+
+# packaging the directories that are not configured
+all_dirs=$(yq -o=j -I=0 ".structure.packaging[].dir" $BACKUPS_CONFIG_FILE)
+all_dirs=$(echo "$all_dirs" | sd '"' '')
+echo "$all_dirs" >._all_dirs.txt
+
+eza --only-dirs --oneline "$origin_path" | while read -r dir; do
+  dir=$(echo -n "$dir" | sd "'" '')
+  dir_re=$(echo -n "$dir" | sd '\(' '\\(' | sd '\)' '\\)' | sd '\[' '\\[' | sd '\]' '\\]')
+  pattern="^$dir_re\$"
+  if cat ._all_dirs.txt | rg "$pattern" >/dev/null 2>&1; then
+    :
+  else
+    cd "$dir"
+    echo "Creating tar file: '$destination_path/$dir.tar'"
+    echo "At => $(date)"
+
+    if ! test -f "$destination_path/$dir.tar"; then
+      tar -cvf "$destination_path/$dir.tar" *
+    fi
+
+    cd "$cpath"
+  fi
+done
+
+rm ._all_dirs.txt || true
+
+sync
+
+res2=$(date +%s.%N)
+dt=$(echo "$res2 - $res1" | bc)
+dd=$(echo "$dt/86400" | bc)
+dt2=$(echo "$dt-86400*$dd" | bc)
+dh=$(echo "$dt2/3600" | bc)
+dt3=$(echo "$dt2-3600*$dh" | bc)
+dm=$(echo "$dt3/60" | bc)
+ds=$(echo "$dt3-60*$dm" | bc)
+
+printf "Total runtime: %d:%02d:%02d:%02.4f\n" $dd $dh $dm $ds
+
+sync
+
+if [ "$#" -eq 0 ]; then
+  _ACTION="none"
+else
+  case $1 in
+  shutdown)
+    _ACTION="shutdown"
+    ;;
+  *)
+    _ACTION="none"
+    ;;
+  esac
+fi
+
+case $_ACTION in
+shutdown)
+  shutdown +1
+  ;;
+none) ;;
+esac

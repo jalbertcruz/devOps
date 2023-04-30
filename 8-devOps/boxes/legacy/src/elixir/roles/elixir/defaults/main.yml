@@ -1,0 +1,8 @@
+---
+
+elixir_version: "{{ lookup('env','ELIXIR_VERSION') }}"
+elixir_download_url: https://github.com/elixir-lang/elixir/releases/download/v{{ elixir_version }}/Precompiled.zip
+elixir_bin_dir: /home/app/elixir_dir
+kerl_working_dir: /home/app
+secret_key_base: KmxDZE4OX9zJi0lJXtur8+RLljGt076qCXJD754GppyUWPGV4lCP0LGnGlQ7k8M0
+erlang_version: "{{ lookup('env','ERLANG_VERSION') }}"

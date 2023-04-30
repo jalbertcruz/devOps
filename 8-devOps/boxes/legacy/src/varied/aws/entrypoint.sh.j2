@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+# trap 'exit' INT; envconsul -consul-addr=172.17.0.2:8500 -log-level="err" -prefix sb-common- -prefix sb-denarius-  /app/{{ app_name }}/bin/{{ app_name }} start
+
+# envconsul -consul-addr=172.17.0.2:8500 -log-level="err" -prefix sb-common- -prefix sb-denarius-  /app/{{ app_name }}/bin/{{ app_name }} start
+
+# trap 'exit' INT; envconsul -consul-addr=172.17.0.2:8500 -log-level="err" -prefix payment_services- ../../bin/{{ app_name }} start
+
+trap 'exit' INT; envconsul -consul-addr=172.17.0.2:8500 -log-level="err" -prefix payment_services- /app/{{ app_name }}/bin/{{ app_name }} start
+
+# envconsul -consul-addr=172.17.0.2:8500 -log-level="err" -prefix payment_services- ./payment_services start
+
+# envconsul -consul-addr=172.17.0.2:8500 -log-level="err" -prefix payment_services- ../../bin/payment_services start
+
+# trap 'exit' INT; envconsul -consul-addr=172.17.0.2:8500 -log-level="err" -prefix payment_services- /app/payment_services/bin/payment_services start
+
+# envconsul -consul-addr=172.17.0.2:8500 -log-level="err" -prefix payment_services- ./payment_services start
+
+envconsul -consul-addr=172.17.0.2:8500 -log-level="err" -prefix sb-common- -prefix sb-denarius- ./denarius start

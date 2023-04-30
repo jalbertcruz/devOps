@@ -1,0 +1,17 @@
+
+# Vault
+--------------------------------------
+VAULT_ADDR=http://127.0.0.1:8300 vault operator init -key-shares=1 -key-threshold=1
+Unseal Key 1: HuNpzHzI++tm6ntCmLmQ7Yuw5crh62bDMKK47UkByzw=
+
+Initial Root Token: hvs.As8ldb2WqLz1z1xvOonrPwjl
+--------------------------------------
+
+VAULT_ADDR=http://127.0.0.2:8200 vault operator unseal $UNSEAL_KEY
+VAULT_ADDR=http://127.0.0.2:8200 vault login $INITIAL_ROOT_TOKEN
+
+docker run --rm --name aa -v /home/a/src/POCs/devOps-POCs/personal-vault-data/raft-vault:/data/raft-vault/ -d jalbert/vault:1.14.0
+
+# Traefik self signed cert
+https://community.traefik.io/t/simple-http-to-https-redirect-with-default-self-signed-certificate/10273/4
+https://traefik.io/blog/traefik-2-tls-101-23b4fbee81f1/

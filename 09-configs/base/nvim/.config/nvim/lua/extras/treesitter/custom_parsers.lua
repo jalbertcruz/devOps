@@ -1,0 +1,37 @@
+--local function install_treesitter_parsers()
+--  local languages = {
+--    "python",
+--    "scala",
+--    "lua",
+--  }
+--  local ok, _ = pcall(require, "nvim-treesitter")
+--  if not ok then
+--    vim.notify("nvim-treesitter not found, skipping TSInstall", vim.log.levels.WARN)
+--    return
+--  end
+--
+--  local lang_string = table.concat(languages, " ")
+--  print("Installing TreeSitter parsers for: " .. lang_string)
+--  vim.cmd("TSInstall " .. lang_string)
+--  --vim.notify("TreeSitter parsers installation completed", vim.log.levels.INFO)
+--end
+--
+--vim.api.nvim_create_user_command("UParsersInstall", install_treesitter_parsers, {})
+--
+--vim.api.nvim_create_autocmd("User", {
+--  pattern = "TSUpdate",
+--  callback = function()
+--    local treesitter_parsers = require("nvim-treesitter.parsers")
+--
+--    treesitter_parsers.scala = {
+--      install_info = {
+--        path = "/tree-sitter/tree-sitter-scala",
+--        -- optional entries
+--        --location = "parser",
+--        --generate = true,
+--        --generate_from_json = false,
+--        --queries = "queries/neovim", -- symlink queries from given directory
+--      },
+--    }
+--  end,
+--})

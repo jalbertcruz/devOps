@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# --diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]]
+#   Select only files that are Added (A), Copied (C), Deleted (D), Modified (M), Renamed (R), have their type (i.e. regular file, symlink, submodule, ...) changed (T), are Unmerged (U), are Unknown (X), or have
+#   had their pairing Broken (B). Any combination of the filter characters (including none) can be used. When * (All-or-none) is added to the combination, all paths are selected if there is any file that matches
+#   other criteria in the comparison; if there is no file that matches other criteria, nothing is selected.
+
+#   Also, these upper-case letters can be downcased to exclude. E.g.  --diff-filter=ad excludes added and deleted paths.
+
+#   Note that not all diffs can feature all types. For instance, copied and renamed entries cannot appear if detection for those types is disabled.
+# https://git-scm.com/docs/git-diff#Documentation/git-diff.txt-code--diff-filterACDMRTUXBcode
+
+filter="ACDMRTUXB"
+filter="ACMRTUXB"
+result=$(git diff --cached --name-only --diff-filter=$filter | rg -w "$PRE_COMMIT_EXCLUDE_FILES" | wc -l)
+if [[ "$result" != "0" ]]; then
+  echo "Pre-commit check failed: $result files match the exclude pattern: $PRE_COMMIT_EXCLUDE_FILES"
+  exit 1
+fi

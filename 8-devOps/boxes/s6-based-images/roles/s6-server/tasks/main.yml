@@ -1,0 +1,125 @@
+---
+- name: Install deps
+  import_tasks: deps.yml
+
+- name: Putting s6-overlay-noarch.tar.xz
+  ansible.builtin.unarchive:
+    src: files/s6-overlay-noarch.tar.xz
+    dest: /
+- name: Putting s6-overlay-symlinks-arch.tar.xz
+  ansible.builtin.unarchive:
+    src: files/s6-overlay-symlinks-arch.tar.xz
+    dest: /
+- name: Putting syslogd-overlay-noarch.tar.xz
+  ansible.builtin.unarchive:
+    src: files/syslogd-overlay-noarch.tar.xz
+    dest: /
+- name: Putting s6-overlay-x86_64.tar.xz
+  ansible.builtin.unarchive:
+    src: files/s6-overlay-x86_64.tar.xz
+    dest: /
+- name: Putting s6-overlay-symlinks-noarch.tar.xz
+  ansible.builtin.unarchive:
+    src: files/s6-overlay-symlinks-noarch.tar.xz
+    dest: /
+
+- name: "Creates directory: /etc/s6-overlay/s6-rc.d/user/contents.d"
+  file:
+    path: /etc/s6-overlay/s6-rc.d/user/contents.d
+    state: directory
+
+- name: Create app group
+  group:
+    name: app
+    state: present
+
+- name: Create user
+  user:
+    name: app
+    state: present
+    group: app
+#    shell: /bin/bash
+    shell: /usr/bin/fish
+    groups:
+      - app
+      - staff
+      - sudo
+
+- name: "Creates directory: /home/app"
+  file:
+    path: /home/app
+    state: directory
+
+- name: Putting fish-shell binaries (fish)
+  copy:
+    src: files/fish/fish
+    dest: /usr/bin/fish
+    owner: root
+    group: root
+    mode: u=rx,g=rx,o=rx
+
+- name: Putting fish binaries (fish_indent)
+  copy:
+    src: files/fish/fish_indent
+    dest: /usr/bin/fish_indent
+    owner: root
+    group: root
+    mode: u=rx,g=rx,o=rx
+
+- name: Putting fish binaries (fish_key_reader)
+  copy:
+    src: files/fish/fish_key_reader
+    dest: /usr/bin/fish_key_reader
+    owner: root
+    group: root
+    mode: u=rx,g=rx,o=rx
+
+- name: "Creates directory: /home/app/.local/share/fish"
+  file:
+    path: /home/app/.local/share/fish/install
+    state: directory
+
+- name: Putting fish-shell files
+  ansible.builtin.unarchive:
+    src: files/fish/install.tar.gz
+    dest: /home/app/.local/share/fish/install
+
+- name: "Creates directory: /root/.local/share/fish"
+  file:
+    path: /root/.local/share/fish/install
+    state: directory
+
+- name: Putting fish-shell files
+  ansible.builtin.unarchive:
+    src: files/fish/install.tar.gz
+    dest: /root/.local/share/fish/install
+
+#- name: Putting fish-shell files
+#  copy:
+#    src: files/fish/install
+#    dest: /home/app/.local/share/fish/install
+#
+#- name: key-gen 1
+#  raw: /usr/bin/ssh-keygen -q -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -C '' -N ''
+#  when:
+#    - ansible_distribution | lower == "centos"
+#
+#- name: key-gen 2
+#  raw: /usr/bin/ssh-keygen -q -t rsa -f /etc/ssh/ssh_host_rsa_key -C '' -N ''
+#  when:
+#    - ansible_distribution | lower == "centos"
+#
+#- name: key-gen 3
+#  raw: /usr/bin/ssh-keygen -q -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -C '' -N ''
+#  when:
+#    - ansible_distribution | lower == "centos"
+
+
+- name: set ssh
+  import_tasks: ssh.yml
+
+#- name: Putting demo service
+#  copy:
+#    src: files/demo/
+#    dest: /root/demo/
+

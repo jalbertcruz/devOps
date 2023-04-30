@@ -1,0 +1,14 @@
+
+volumes:
+  mariadb1-data:
+    name: ${MARIADB_SERVICE_1_VOLUME}
+    external: true
+  mariadb2-data:
+    name: ${MARIADB_SERVICE_2_VOLUME}
+    external: true
+
+networks:
+  dev-network:
+    name: dev-network
+    external: true
+

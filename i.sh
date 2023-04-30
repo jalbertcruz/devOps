@@ -1,16 +1,44 @@
 #!/usr/bin/env bash
 
-sudo add-apt-repository ppa:jgmath2000/et
-sudo apt-get install -y software-properties-common
+
+sudo apt-get install -y
+software-properties-common
 
 sudo apt-get update
 #sudo apt-get install -y net-tools et meld tree basez libheif-examples curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev libffi-dev python3-pip zeal vlc vim python3-venv tumx feedgnuplot
-sudo apt-get install -y net-tools meld tree basez libheif-examples curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev libffi-dev python3-pip zeal vlc vim python3-venv tumx feedgnuplot
+sudo apt-get install -y i
+net-tools
+meld
+tree
+basez
+libheif-examples
+curl
+zlib1g-dev
+build-essential
+libssl-dev
+libreadline-dev
+libyaml-dev
+libsqlite3-dev
+sqlite3
+libxml2-dev
+libxslt1-dev
+libcurl4-openssl-dev
+libffi-dev
+python3-pip
+zeal
+vlc
+vim
+python3-venv
+tumx
+feedgnuplot
+
 # OJO: not in use dnsmasq (I am using systemd-resolved)
 
 sudo apt-add-repository ppa:fish-shell/release-3
 sudo apt-get update
-sudo apt-get install fish powerline
+sudo apt-get install
+fish
+powerline
 
 # compile Erlang:
 # https://riptutorial.com/erlang/example/2791/build-and-install-erlang-otp-on-ubuntu
@@ -82,3 +110,6 @@ sudo apt-get install pavucontrol audacity
 # sudo apt-get install libgconf-2-4
 
 sudo apt-get install -y stow
+sudo apt-get install -y libbz2-dev lzma liblzma-dev libbz2-dev
+# comby
+sudo apt-get install -y libev-dev
