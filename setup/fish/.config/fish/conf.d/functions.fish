@@ -1,3 +1,4 @@
+
 function tid
   # https://www.shell-tips.com/linux/how-to-format-date-and-time-in-linux-macos-and-bash/
   date '+%Y%m%d%H%M%S'
@@ -7,6 +8,19 @@ function mp3tag
     for i in *.mp3
       eyeD3 -a $argv[1] -n 2 "$i"
     end
+end
+
+function media-clean
+    auto-editor $argv[1]
+end
+
+function mp3-split
+    #  mp3-split <file> 900
+    ffmpeg -i $argv[1] -f segment -segment_time $argv[2] -c copy %02d-$argv[1].mp3
+end
+
+function mp4-to-mp3
+    ffmpeg -i $argv[1] -b:a 192K -vn $argv[1].mp3
 end
 
 function vpnc
@@ -65,7 +79,7 @@ function ltxx
     docker run --rm -it -v (pwd):/workdir danteev/texlive:2022-02-15 lualatex --shell-escape $argv[1].tex
 end
 
-function kabn
+function kbn
   # kill all process by name!
   ps aux | grep $argv[1] | grep -v grep | awk '{print $2}' | xargs kill
 end

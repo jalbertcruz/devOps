@@ -911,3 +911,14 @@ kill -9 <pid>
 # kill it gracefully (-15 == SIGTERM)
 kill -15 <pid>
 
+### fzf
+https://github.com/PatrickF1/fzf.fish
+# Search Git Log
+Ctrl+Alt+L (L for log)
+
+# Search Processes
+Ctrl+Alt+P (P for process)
+
+# Search Variables
+Ctrl+V (V for variable)
+

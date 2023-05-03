@@ -27,6 +27,9 @@ if test -d ~/appslnx/jdk-17
     set -x JAVA_HOME ~/appslnx/jdk-17
 end
 
+# set -x JAVA_HOME ~/.cache/coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.7%252B7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.7_7.tar.gz/jdk-17.0.7+7/
+# set -x PATH $JAVA_HOME/bin $PATH
+
 set -x PATH ~/appslnx/clojure/bin $PATH
 set -x PATH ~/appslnx/build-tools/gradle/bin $PATH
 

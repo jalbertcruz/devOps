@@ -7,6 +7,8 @@ fastmod --help
 fastmod -m -d . --extensions ex '' ''
 fastmod -m -d . '' '' --hidden
 
+fastmod -m -d . 'cljimpl' 'clj-impl' --hidden
+
 fastmod -m -d . --extensions exs '' ''
 
 # A command-line tool to batch rename files and directories

@@ -5,15 +5,4 @@ https://github.com/alacritty/alacritty
 
 https://firminmartin.com/en/posts/2021/03/tabs_in_alacritty/
 
-https://github.com/PatrickF1/fzf.fish
-
-### fzf
-# Search Git Log
-Ctrl+Alt+L (L for log)
-
-# Search Processes
-Ctrl+Alt+P (P for process)
-
-# Search Variables
-Ctrl+V (V for variable)
 
