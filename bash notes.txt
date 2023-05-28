@@ -374,6 +374,11 @@ for i in *.avi; do
     ffmpeg -i "$i" -codec:a mp3 -strict -2 "${i%.*}.mp4"
 done
 
+# How to convert .m4a audio files to .mp3 use command line?
+
+# https://askubuntu.com/questions/1200430/how-to-convert-m4a-audio-files-to-mp3-use-command-line
+❯ ffmpeg -i 1x15-Supervivencia-con-Ignacio-Ortega.m4a -c:a libmp3lame -q:a 8 1x15-Supervivencia-con-Ignacio-Ortega.mp3
+
 How do you Resize/Scale/Change the Resolution of a Video using FFmpeg?
 # https://ottverse.com/change-resolution-resize-scale-video-using-ffmpeg/
 
@@ -463,6 +468,7 @@ sudo ln -s /opt/python-3.10.0/bin/python3.10 /usr/local/bin/python3.10
 ln [OPTION]... [-T] TARGET LINK_NAME
 
 ln -s /path/to/file (the existing one) /path/to/symlink (the one being created)
+ln -s /home/a/src/POCs/APIs/jdev-clj-impl-validator/src/jalbertcruz/jdev_clj_impl_validator.clj /home/a/src/POCs/APIs/demos-java/src/main/resources/jdev_clj_impl_validator.clj
 
 ln -s /home/a/src/cv/utilities-pro-deployment/p8/bin/p8 /home/a/appslnx/bin/p8
 ln -s /home/a/src/cv/utilities-pro-deployment/p8/bin/diyp8 /home/a/appslnx/bin/diyp8
@@ -747,8 +753,10 @@ shfmt -l -w script.sh
 shfmt -i 2 -l -w bin/appslnx/bin/
 
 # https://stackoverflow.com/questions/9265172/scrape-an-entire-website
+# https://superuser.com/questions/970323/using-wget-to-copy-website-with-proper-layout-for-offline-browsing
 $ wget -m -k -E -l 7 -t 6 -w 1 https://www.postgresqltutorial.com/
 $ wget -m -k -E -l 7 -t 6 -w 1 https://www.mysqltutorial.org/
+$ wget --mirror --convert-links --adjust-extension --page-requisites --no-parent https://www.enjoyalgorithms.com/system-design-courses
 
 # https://github.com/blackjack4494/yt-dlc/issues/7
 # [Question]How do I download age restricted video with youtube-dlc? youtube-dl is fine automatically

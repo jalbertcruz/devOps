@@ -5,8 +5,8 @@ else
     " ordinary Neovim
 endif
 
-lua require('plugins')
-lua require('options')
+"lua require('plugins')
+"lua require('options')
 
 set nocompatible            " disable compatibility to old-time vi
 set showmatch               " show matching 

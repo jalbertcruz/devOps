@@ -4,9 +4,10 @@ function tid
   date '+%Y%m%d%H%M%S'
 end
 
-function mp3tag
+function mp3-tag
+    # https://eyed3.readthedocs.io/en/latest/
     for i in *.mp3
-      eyeD3 -a $argv[1] -n 2 "$i"
+      eyeD3 -a $argv[1] -n 2 "$i" -t "$i"
     end
 end
 

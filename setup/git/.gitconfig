@@ -153,7 +153,7 @@
     gc-ap = gc --aggressive --prune
     listconf = config --global --list
     cam = commit -a --amend --no-edit
-    cm = commit -m
+    cm = commit -a -m
     can = commit --amend --no-edit
     lsm = log -M --stat
     hse = log --stat -5
