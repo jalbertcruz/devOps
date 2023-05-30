@@ -4,3 +4,8 @@ https://www.scala-lang.org/blog/2021/02/16/preventing-version-conflicts-with-ver
 https://github.com/scalacenter/sbt-version-policy
 
 sbt dependencyBrowseTreeHTML
+
+# generate dependency graph
+# https://www.youtube.com/watch?v=eVYSwWU1yXw&ab_channel=DevInsideYou
+bloop projects --dot-graph | sed "/-test/d" | sed "/root-project/d" | dot -Tsvg -o dg.svg -Grankdir=BT
+bloop projects --dot-graph | sed "/-test/d" | sed "/root-project/d" | dot2d2 | d2 --layout=elk - $1.svg

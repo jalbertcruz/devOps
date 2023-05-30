@@ -21,7 +21,7 @@ end
 require("user.options")
 require("user.keybinds")
 --require("user.keybinds_lsp")
---require("lazy").setup("user.plugins")
+require("lazy").setup("user.plugins")
 --require("user.colorscheme")
 --require("user.autocmd")
 
