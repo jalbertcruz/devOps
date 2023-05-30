@@ -897,6 +897,10 @@ $ pwd
 # from configs to touched files
 stow --adopt -vSt ~ *
 
+❯ stow -nvS -t ~ bin
+LINK: appslnx/bin/json-merge => ../../src/devOps/setup/bin/appslnx/bin/json-merge
+WARNING: in simulation mode so not modifying filesystem.
+
 # restore (from repo to config)
 stow -vSt ~ tmuxp
 

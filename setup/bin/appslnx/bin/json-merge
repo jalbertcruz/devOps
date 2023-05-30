@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+first=$(jq 'if type=="array" then 1 else 2 end' $1)
+second=$(jq 'if type=="array" then 1 else 2 end' $2)
+
+if [ "$first" -eq 1 ] && [ "$second" -eq 1 ]; then
+  echo '{}' >_temp1.json
+  echo '{}' >_temp2.json
+
+  jq '.values = input' _temp1.json $1 >_temp11.json
+  jq '.values = input' _temp2.json $2 >_temp21.json
+
+  jq -s 'import "merge" as json_merge; json_merge::deepmerge({}; .)' _temp11.json _temp21.json >${3}_.json
+  cat ${3}_.json | jq '.values' >${3}.json
+  rm _temp1.json _temp2.json _temp11.json _temp21.json ${3}_.json
+
+elif [ "$first" -eq 2 ] && [ "$second" -eq 1 ]; then
+  jq '. |= .+ [input]' $2 $1 >${3}.json
+elif [ "$first" -eq 1 ] && [ "$second" -eq 2 ]; then
+  jq '. |= .+ [input]' $1 $2 >${3}.json
+else
+  jq -s 'import "merge" as json_merge; json_merge::deepmerge({}; .)' $1 $2 >${3}_.json
+fi
