@@ -8,4 +8,4 @@ sbt dependencyBrowseTreeHTML
 # generate dependency graph
 # https://www.youtube.com/watch?v=eVYSwWU1yXw&ab_channel=DevInsideYou
 bloop projects --dot-graph | sed "/-test/d" | sed "/root-project/d" | dot -Tsvg -o dg.svg -Grankdir=BT
-bloop projects --dot-graph | sed "/-test/d" | sed "/root-project/d" | dot2d2 | d2 --layout=elk - $1.svg
+bloop projects --dot-graph | sed "/-test/d" | sed "/invoice-generator/d"  | dot2d2 | d2 --layout=elk - $1.svg

@@ -146,7 +146,9 @@
 
     sync = !git pull && git push
     es = !git pull --rebase && git push
-    si = !git init && git commit --allow-empty -m 'Initial commit' && git co -b dev
+    si = !git init && git commit --allow-empty -m 'Initial commit' && git co -b develop
+    sis = !git init -b main && git --config-env=gpg.ssh.allowedSignersFile=ALLOWED_SIGNERS_FILE --config-env=user.email=ACTIVE_EMAIL --config-env=user.signingKey=ACTIVE_SIGNING_KEY commit --allow-empty -m 'Initial commit' && git co -b develop
+    vc = !git verify-commit -v HEAD
     lf = log --pretty=fuller
     ignorechanges = update-index --assume-unchanged
     noticechanges = update-index --no-assume-unchanged
@@ -233,6 +235,7 @@
     wadded = log --diff-filter=A
     rhh = reset --hard
     sh = show
+    pristine = reset --hard && clean -dffx
 [rerere]
 	enabled = 1
 [init]

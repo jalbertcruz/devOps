@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+program=$(sed -n -e '/^Exec=\"/p' /home/a/.local/share/applications/jetbrains-idea.desktop | sed -n 's/.*"\(.*\)\".*/\1/p')
+exec "$program" "$@" > /dev/null 2>&1 &

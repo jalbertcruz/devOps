@@ -1,8 +1,28 @@
 
+https://doublecmd.github.io/doc/en/variables.html
 
 # terminal: alacritty
 https://github.com/alacritty/alacritty
 
 https://firminmartin.com/en/posts/2021/03/tabs_in_alacritty/
+# Double commander config: F9 -> Options -> Tools -> Terminal
+```
+x-terminal-emulator
+-e sh -c '{command}; echo -n Press ENTER to exit... ; read a'
 
+x-terminal-emulator
+-e sh -c {command}
 
+alacritty
+
+```
+
+# wezterm
+
+wezterm
+start --cwd %D
+
+# wezterm use
+https://wezfurlong.org/wezterm/copymode.html
+Ctrl+Shift+X
+Y

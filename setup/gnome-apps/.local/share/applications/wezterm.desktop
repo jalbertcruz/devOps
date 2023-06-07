@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Wez Terminal Emulator
+Type=Application
+Exec=/usr/bin/wezterm
+Icon=/usr/local/bin/appslnx/tools/wezterm.png
+Terminal=false
+Categories=System;TerminalEmulator;

@@ -15,6 +15,11 @@ function media-clean
     auto-editor $argv[1]
 end
 
+function c
+    code . > /dev/null 2>&1 &
+    disown
+end
+
 function mp3-split
     #  mp3-split <file> 900
     ffmpeg -i $argv[1] -f segment -segment_time $argv[2] -c copy %02d-$argv[1].mp3
@@ -71,7 +76,8 @@ function wmock
 end
 
 function ltxp
-    docker run --rm -it -v (pwd):/workdir danteev/texlive:2022-02-15 pdflatex $argv[1].tex
+#     docker run --rm -it -v (pwd):/workdir danteev/texlive:2022-02-15 pdflatex $argv[1].tex
+    docker run --rm -it -v (pwd):/workdir danteev/texlive:2023-06-01 pdflatex $argv[1].tex
 end
 
 function ltxx

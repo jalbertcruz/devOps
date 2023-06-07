@@ -901,6 +901,10 @@ stow --adopt -vSt ~ *
 LINK: appslnx/bin/json-merge => ../../src/devOps/setup/bin/appslnx/bin/json-merge
 WARNING: in simulation mode so not modifying filesystem.
 
+❯ stow -nvS -t ~ gnome-apps
+LINK: .local/share/applications/wezterm.desktop => ../../../src/devOps/setup/gnome-apps/.local/share/applications/wezterm.desktop
+WARNING: in simulation mode so not modifying filesystem.
+
 # restore (from repo to config)
 stow -vSt ~ tmuxp
 
