@@ -16,3 +16,10 @@ end
 # Then, to save it across terminal sessions:
 funcsave rmi
 This last command creates the file ~/.config/fish/functions/rmi.fish
+
+# https://stackoverflow.com/questions/45360612/fish-shell-automatic-directory-specific-functions#:~:text=Take%20a%20look,to%20%24PWD%0Aend
+Take a look at the --on-variable flag for the function statement. You can define a function like this that runs whenever the PWD changes:
+
+function react_to_pwd --on-variable PWD
+   echo Reacting to PWD changing to $PWD
+end

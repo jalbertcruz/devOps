@@ -251,8 +251,8 @@ sudo apt-get install python-setuptools
 sudo apt-get install python3-setuptools
 
 » pip install wheel
-» pip3 install --user youtube-dl -U
-$ youtube-dl "https://www.youtube.com/watch?v=d2lJUOv0hLA" --all-subs
+
+» python3 -m pip install -U yt-dlp
 
 # How can I make docke pull images using a socks5 proxy?
 $ export ALL_PROXY=socks5://127.0.0.1:1080 
@@ -378,6 +378,7 @@ done
 
 # https://askubuntu.com/questions/1200430/how-to-convert-m4a-audio-files-to-mp3-use-command-line
 ❯ ffmpeg -i 1x15-Supervivencia-con-Ignacio-Ortega.m4a -c:a libmp3lame -q:a 8 1x15-Supervivencia-con-Ignacio-Ortega.mp3
+ffmpeg -i "Daily Tools.webm" -c:a libmp3lame -q:a 8 "Daily Tools.mp3"
 
 How do you Resize/Scale/Change the Resolution of a Video using FFmpeg?
 # https://ottverse.com/change-resolution-resize-scale-video-using-ffmpeg/
@@ -391,7 +392,13 @@ ffmpeg -i ateo.mp4 -vf "scale='min(320,iw)':'min(240,ih)'" output.mp4
 #!/usr/bin/env zsh
 
 for i in *.avi; do
-    ffmpeg -i "$i"  -strict -2 "${i%.*}.mp4"
+    ffmpeg -i "$i" -strict -2 "${i%.*}.mp4"
+done
+
+# yt-dlp "https://www.youtube.com/playlist?list=PL-5YtFfXdaFS5DjNzFmwwcF3ab2keYyd3" --write-description --no-clean-info-json --write-info-json
+
+ls -t *.webm | while read -r i ; do
+    ffmpeg -i "$i" "mp3/${i%.*}.mp3"
 done
 
 # How can I convert MP4 video to MP3 audio with FFmpeg?
@@ -471,6 +478,7 @@ ln -s /path/to/file (the existing one) /path/to/symlink (the one being created)
 ln -s /home/a/src/POCs/APIs/jdev-clj-impl-validator/src/jalbertcruz/jdev_clj_impl_validator.clj /home/a/src/POCs/APIs/demos-java/src/main/resources/jdev_clj_impl_validator.clj
 
 ln -s /home/a/src/cv/utilities-pro-deployment/p8/bin/p8 /home/a/appslnx/bin/p8
+ln -s /home/a/appslnx/tools/smithy/cli/bin/smithy /home/a/appslnx/bin/smithy
 ln -s /home/a/src/cv/utilities-pro-deployment/p8/bin/diyp8 /home/a/appslnx/bin/diyp8
 
 ln -s /home/a/src/ansible/src/logs/td-agent-config/td-agent.conf /home/a/dockers-data/fluentd/td-agent/td-agent.conf
@@ -646,10 +654,11 @@ Gnome apps configs
 /home/a/.local/share/applications/
 
 # only audio
-youtube-dl -F "https://www.youtube.com/watch?v=un_TSrR8COk"
-youtube-dl -f 251 "https://www.youtube.com/watch?v=s1XK4lHS4dQ"
+yt-dlp -F "https://www.youtube.com/watch?v=un_TSrR8COk"
+yt-dlp -f 251 "https://www.youtube.com/watch?v=s1XK4lHS4dQ"
 
-youtube-dl -f 'bestvideo[height<=360]+bestaudio/best[height<=360]' "https://www.youtube.com/watch?v=SSNV0Di0ph0"
+# ?
+yt-dlp -f 'bestvideo[height<=360]+bestaudio/best[height<=360]' "https://www.youtube.com/watch?v=SSNV0Di0ph0"
 
 # https://askubuntu.com/questions/856911/using-youtube-dl-to-download-entire-youtube-channel
 # youtube-dl -f best -ciw -o "%(title)s.%(ext)s" -v <url-of-channel>
@@ -938,3 +947,37 @@ Ctrl+Alt+P (P for process)
 # Search Variables
 Ctrl+V (V for variable)
 
+# sumar todos los numeros que estan como primer campo en un archivo
+rg day notes-code.txt -N | awk '{print $1}' | jq -s 'add'
+
+----------------------------------------------------------------------------------------------------------------------------
+# SSL certificates et al
+# caddy
+❯ caddy reverse-proxy --from 127.0.0.1:9000 --to nexus.service.dc1.consul:8081
+2023/06/27 14:44:06.170 WARN    admin   admin endpoint disabled
+2023/06/27 14:44:06.171 INFO    tls.cache.maintenance   started background certificate maintenance      {"cache": "0xc000263110"}
+2023/06/27 14:44:06.171 INFO    http    enabling automatic HTTP->HTTPS redirects        {"server_name": "proxy"}
+2023/06/27 14:44:06.171 INFO    tls     cleaning storage unit   {"description": "FileStorage:/home/a/.local/share/caddy"}
+2023/06/27 14:44:06.172 INFO    tls     finished cleaning storage units
+2023/06/27 14:44:06.183 INFO    pki.ca.local    root certificate is already trusted by system   {"path": "storage:pki/authorities/local/root.crt"}
+2023/06/27 14:44:06.184 INFO    http.log        server running  {"name": "remaining_auto_https_redirects", "protocols": ["h1", "h2", "h3"]}
+2023/06/27 14:44:06.184 INFO    http    enabling HTTP/3 listener        {"addr": ":9000"}
+2023/06/27 14:44:06.184 INFO    failed to sufficiently increase receive buffer size (was: 208 kiB, wanted: 2048 kiB, got: 416 kiB). See https://github.com/quic-go/quic-go/wiki/UDP-Receive-Buffer-Size for details.
+2023/06/27 14:44:06.184 INFO    http.log        server running  {"name": "proxy", "protocols": ["h1", "h2", "h3"]}
+2023/06/27 14:44:06.184 INFO    http    enabling automatic TLS certificate management   {"domains": ["127.0.0.1"]}
+2023/06/27 14:44:06.184 WARN    tls     stapling OCSP   {"error": "no OCSP stapling for [127.0.0.1]: no OCSP server specified in certificate", "identifiers": ["127.0.0.1"]}
+Caddy proxying https://127.0.0.1:9000 -> nexus.service.dc1.consul:8081
+
+openssl s_client -showcerts -connect 127.0.0.1:9000 </dev/null
+
+echo | \
+    openssl s_client -servername 127.0.0.1 -connect 127.0.0.1:9000 2>/dev/null | \
+    openssl x509 -text
+
+openssl s_client -showcerts -connect 127.0.0.1:9000 </dev/null | sed -n -e '/-.BEGIN/,/-.END/ p' > certifs.pem
+
+keytool -import -alias local -keystore  "/nix/store/x1zccs83jrj59jy8pvs3c80mq820y67j-openjdk-17.0.4+8/bin/../lib/security/cacerts" -file /home/a/src/Scala/teaching/certifs.cer
+----------------------------------------------------------------------------------------------------------------------------
+
+
+nix --extra-experimental-features 'nix-command flakes' develop

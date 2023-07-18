@@ -45,11 +45,9 @@
 [gpg]
     format = ssh
 
-[commit]
-    gpgsign = true
-
 [user]
     name = José Albert Cruz Almaguer
+    email = jalbertcruz@gmail.com
 
 [push]
 #    default = matching
@@ -60,13 +58,13 @@
     recurseSubmodules = no
 
 [merge]
-    tool = smartsynchronize
+;     tool = smartsynchronize
     ff = false
     #conflictstyle = diff3
 
-[mergetool "smartsynchronize"]
-    cmd = ~/appslnx/git/smartsynchronize/bin/smartsynchronize.sh $LOCAL $REMOTE $MERGED
-    trustExitCode = false
+; [mergetool "smartsynchronize"]
+;     cmd = ~/appslnx/git/smartsynchronize/bin/smartsynchronize.sh $LOCAL $REMOTE $MERGED
+;     trustExitCode = false
 
 [diff]
 #        external = extDiff
@@ -82,7 +80,7 @@
 [core]
     pager = delta
 
-    editor = vi
+    editor = nvim
     autocrlf = input
     whitespace = trailing-space,tab-in-indent,tabwidth=4
     quotepath = false
@@ -120,7 +118,6 @@
     br = branch -a
     s = status -u -s
     cl = log --stat -C -2
-    c = commit
     co = checkout
     d = diff --color-words
     dh = diff HEAD
@@ -154,8 +151,11 @@
     noticechanges = update-index --no-assume-unchanged
     gc-ap = gc --aggressive --prune
     listconf = config --global --list
+    c = commit
     cam = commit -a --amend --no-edit
-    cm = commit -a -m
+    cams = commit -a -S --amend --no-edit
+    cm = commit -a
+    cms = commit -a -S
     can = commit --amend --no-edit
     lsm = log -M --stat
     hse = log --stat -5

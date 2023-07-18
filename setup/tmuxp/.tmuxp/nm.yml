@@ -5,7 +5,7 @@ shell_command_before:
 windows:
   - window_name: nomad
     shell_command_before:
-      - '[ -f .env/bin/activate.fish ] && source .env/bin/activate.fish'
+      - '[ -f .venv/bin/activate.fish ] && source .venv/bin/activate.fish'
     layout: tiled
 #    layout: 84bf,216x48,0,0[216x15,0,0{107x15,0,0,1,108x15,108,0,2},216x15,0,16{107x15,0,16,3,108x15,108,16,4},216x16,0,32{107x16,0,32,5,108x16,108,32,6}]
     panes:

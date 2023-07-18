@@ -1,6 +1,6 @@
 
 # ripgrep ( rg )
-# https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md
+https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md
 
 Configuration file:
 RIPGREP_CONFIG_PATH

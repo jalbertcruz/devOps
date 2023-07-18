@@ -538,3 +538,17 @@ gitk --all $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' )
 
 # export a git repository as a tarball
 ❯ git archive --output=./(basename (pwd)).tar --format=tar HEAD
+
+# Determining the Fingerprint of your SSH Key
+# https://bitlaunch.io/blog/how-to-check-your-ssh-key-fingerprint/
+# https://ociaw.com/posts/determining-ssh-host-key-fingerprint
+$ ssh-keygen -lf id_ed25519_job.pub
+$ ssh-keygen -lf id_ed25519_job
+$ ssh-keygen -E md5 -lf /etc/ssh/ssh_host_ecdsa_key.pub
+
+# Using Python
+from git import Repo
+repo = Repo(".")
+cmmts = repo.iter_commits(f"{repo.active_branch}...{repo.active_branch.tracking_branch()}")
+for c in cmmts:
+	print(c.hexsha)

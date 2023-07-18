@@ -74,3 +74,6 @@ Ctrl+Shit+L - select all
 Switch cursor from editor to file explorer
 # https://stackoverflow.com/questions/52093417/switch-cursor-from-editor-to-file-explorer-and-vice-versa-in-vs-code
 Ctrl + Shift + e
+
+# upcase
+Ctrl + Shit + P

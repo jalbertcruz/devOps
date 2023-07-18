@@ -11,15 +11,6 @@ function mp3-tag
     end
 end
 
-function media-clean
-    auto-editor $argv[1]
-end
-
-function c
-    code . > /dev/null 2>&1 &
-    disown
-end
-
 function mp3-split
     #  mp3-split <file> 900
     ffmpeg -i $argv[1] -f segment -segment_time $argv[2] -c copy %02d-$argv[1].mp3
@@ -27,6 +18,15 @@ end
 
 function mp4-to-mp3
     ffmpeg -i $argv[1] -b:a 192K -vn $argv[1].mp3
+end
+
+function media-clean
+    auto-editor $argv[1]
+end
+
+function c
+    code . > /dev/null 2>&1 &
+    disown
 end
 
 function vpnc
@@ -58,6 +58,10 @@ end
 
 function denv
   set -e DEV_ENV
+  direnv reload
+end
+
+function der
   direnv reload
 end
 
@@ -105,6 +109,13 @@ function chkp
   sudo lsof -wni "tcp:$argv[1]" | awk '{print $2}' | awk 'NR!=1' | sudo xargs kill
 end
 
+[ -e .venv/bin/activate.fish ] && source .venv/bin/activate.fish
+
+function react_to_pwd --on-variable PWD
+    [ -e .venv/bin/activate.fish ] && source .venv/bin/activate.fish
+#     echo Reacting to PWD changing to $PWD
+end
+
 function venv
   # set -l options (fish_opt -s h -l help)
   set -l options (fish_opt -s v -l python_version --required-val)
@@ -115,15 +126,19 @@ function venv
     return 2
   end
 
-  eval "python$_flag_v -m venv .env"
+  eval "python$_flag_v -m venv .venv"
 
-  source .env/bin/activate.fish
+  source .venv/bin/activate.fish
 
   pip install --upgrade pip
   pip install --upgrade wheel
 
   if test -e requirements.txt
       pip install -r requirements.txt
+  end
+  if test -e Pipfile
+      # https://github.com/pypa/pipenv#usage-examples
+      pipenv install --dev
   end
 
 end

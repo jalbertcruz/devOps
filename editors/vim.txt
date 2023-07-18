@@ -240,3 +240,9 @@ only in whether they include the line below the block or not.
         <count>aI         (A)n (I)ndentation level and lines above/below.
         <count>iI         (I)nner (I)ndentation level (no lines above/below).
 <
+
+# search backwards
+? <word>
+
+# 2.5 Normal mode/Commands starting with 'z'
+https://app.memrise.com/course/1534510/vim-complete-command-reference/7/

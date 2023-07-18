@@ -1,6 +1,6 @@
 
 # Configure Jump
-status --is-interactive; and source (/snap/bin/jump shell fish | psub)
+status --is-interactive; and source (jump shell fish | psub)
 
 fish_vi_key_bindings
 

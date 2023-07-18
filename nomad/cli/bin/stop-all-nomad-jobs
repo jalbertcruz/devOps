@@ -71,6 +71,7 @@ declare -a services_ports=(
  5005 # consul-monitor server
  8080 # cAdvisor
  8006 # Python file server # » sudo lsof -wni "tcp:8006" # » sudo fuser 8006/tcp # » sudo netstat -ltnp | grep -w '8006' # » netstat -tulpen | rg 8006 # (no root!)
+ 4647 # nomad
 )
 
 declare -a services_ports_consul_client=(
@@ -80,7 +81,7 @@ declare -a services_ports_consul_client=(
 
 for i in "${!services_ports[@]}"; do
   echo "Killing " "$i"
-  sudo lsof -wni "tcp:${services_ports[$i]}" | awk '{if (NR>1) print}' | awk '{print $2}' | xargs -L 1 kill -9 || true
+  sudo lsof -wni "tcp:${services_ports[$i]}" | awk '{if (NR>1) print}' | awk '{print $2}' | sudo xargs -L 1 kill -9 || true
   # sudo lsof -wni "tcp:4000"
   # apap
   # » sudo ss -l # lists data of the open sockets
@@ -104,3 +105,5 @@ sudo lsof -wni "tcp:8500" | awk '{if (NR>1) print}'| awk '{print $2}' | xargs -L
 # 8500 # consul
 # 8600 # consul (the client is on 53)
 # 8300 # consul
+
+ktmux dev-env
