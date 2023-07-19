@@ -112,11 +112,8 @@ end
 [ -e .venv/bin/activate.fish ] && source .venv/bin/activate.fish
 
 function react_to_pwd --on-variable PWD
-    if type -q deactivate
-        deactivate
-    end
+    type -q deactivate && deactivate
     [ -e .venv/bin/activate.fish ] && source .venv/bin/activate.fish
-#     echo Reacting to PWD changing to $PWD
 end
 
 function venv
