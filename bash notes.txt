@@ -870,8 +870,8 @@ mix test --slowest 100
 
 # Erlang install
 kerl update releases
-kerl build 25.1.2 25.1.2
-kerl install 25.1.2 ~/kerl/25.1.2
+kerl build 26.0.2 26.0.2
+kerl install 26.0.2 ~/kerl/26.0.2
 
 # Elixir scripts
 Mix.install([

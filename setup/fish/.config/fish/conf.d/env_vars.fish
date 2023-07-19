@@ -1,11 +1,8 @@
 
-# for some extrange reason the elixir.fish config breaks this PATH config
-set -x PATH /snap/bin/ $PATH
-
 source ~/.config/fish/conf.d/env_vars/dart.fish
 source ~/.config/fish/conf.d/env_vars/dstores.fish
 source ~/.config/fish/conf.d/env_vars/editors.fish
-# source ~/.config/fish/conf.d/env_vars/elixir.fish
+source ~/.config/fish/conf.d/env_vars/elixir.fish
 source ~/.config/fish/conf.d/env_vars/extra.fish
 source ~/.config/fish/conf.d/env_vars/fzf.fish
 source ~/.config/fish/conf.d/env_vars/git.fish

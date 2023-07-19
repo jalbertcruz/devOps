@@ -1,19 +1,13 @@
 
 set -x DIRENV_LOG_FORMAT ''
 
-if test -e ~/src/starship.toml
-    set -x STARSHIP_CONFIG ~/src/starship.toml
-end
+test -e ~/src/starship.toml && set -x STARSHIP_CONFIG ~/src/starship.toml
 
-if test -e ~/.ripgreprc
-    set -x RIPGREP_CONFIG_PATH $HOME/.ripgreprc
-end
+test -e ~/.ripgreprc && set -x RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 
 set -x ANSIBLE_HOST_KEY_CHECKING False
 
-if test -e ~/.fly
-    set -x FLYCTL_INSTALL $HOME/.fly
-end
+test -e ~/.fly && set -x FLYCTL_INSTALL $HOME/.fly
 
 set -x PATH /opt/google/chrome $PATH
 

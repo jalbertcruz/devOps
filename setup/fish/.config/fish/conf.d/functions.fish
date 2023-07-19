@@ -109,11 +109,11 @@ function chkp
   sudo lsof -wni "tcp:$argv[1]" | awk '{print $2}' | awk 'NR!=1' | sudo xargs kill
 end
 
-[ -e .venv/bin/activate.fish ] && source .venv/bin/activate.fish
+test -e .venv/bin/activate.fish && source .venv/bin/activate.fish
 
 function react_to_pwd --on-variable PWD
     type -q deactivate && deactivate
-    [ -e .venv/bin/activate.fish ] && source .venv/bin/activate.fish
+    test -e .venv/bin/activate.fish && source .venv/bin/activate.fish
 end
 
 function venv
@@ -133,13 +133,8 @@ function venv
   pip install --upgrade pip
   pip install --upgrade wheel
 
-  if test -e requirements.txt
-      pip install -r requirements.txt
-  end
-  if test -e Pipfile
-      # https://github.com/pypa/pipenv#usage-examples
-      pipenv install --dev
-  end
+  test -e requirements.txt && pip install -r requirements.txt
+  test -e Pipfile && pipenv install --dev
 
 end
 
