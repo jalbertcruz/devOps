@@ -9,7 +9,10 @@ set -x HEX_UNSAFE_HTTPS true
 set -x HEX_HTTP_TIMEOUT 1000
 set -x HEX_HOME /media/a/data/repo/.hex/
 
+# ------------------------------------------------
 # FIXME: for some extrange reason this breaks the PATH config
 # set -x PATH ~/.mix/escripts
+# direnv: error can't find bash: exec: "bash": executable file not found in $PATH
+# ------------------------------------------------
 
 set -x PATH ~/.kiex/bin/ $PATH
