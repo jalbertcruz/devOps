@@ -981,3 +981,9 @@ keytool -import -alias local -keystore  "/nix/store/x1zccs83jrj59jy8pvs3c80mq820
 
 
 nix --extra-experimental-features 'nix-command flakes' develop
+
+# How to make byobu output the complete history directly to buffer?
+Shift-F7                     Save history to $BYOBU_RUN_DIR/printscreen
+:qa
+Ctrl+C
+buffer
