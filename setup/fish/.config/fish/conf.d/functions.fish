@@ -109,13 +109,6 @@ function chkp
   sudo lsof -wni "tcp:$argv[1]" | awk '{print $2}' | awk 'NR!=1' | sudo xargs kill -9
 end
 
-test -e .venv/bin/activate.fish && source .venv/bin/activate.fish
-
-function react_to_pwd --on-variable PWD
-    type -q deactivate && deactivate
-    test -e .venv/bin/activate.fish && source .venv/bin/activate.fish
-end
-
 function venv
   # set -l options (fish_opt -s h -l help)
   set -l options (fish_opt -s v -l python_version --required-val)
@@ -166,6 +159,15 @@ function envsource
 end
 
 envsource ~/.env
+
+test -e .venv/bin/activate.fish && source .venv/bin/activate.fish
+# test -e .env.local && envsource .env.local
+
+function react_to_pwd --on-variable PWD
+    type -q deactivate && deactivate
+    test -e .venv/bin/activate.fish && source .venv/bin/activate.fish
+#    test -e .env.local && envsource .env.local
+end
 
 function loopback_exists_at_address
     set -l a (ip addr show dev lo | grep "$argv[1]" || true | tr -d '[:space:]')

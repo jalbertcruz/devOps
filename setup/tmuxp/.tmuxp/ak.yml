@@ -1,4 +1,4 @@
-session_name: points-account
+session_name: akka-cluster
 windows:
   - window_name: akka-cassandra
 #    layout: 680e,236x42,0,0{118x42,0,0,1,117x42,119,0[117x12,119,0,2,117x13,119,13,3,117x15,119,27,4]} # origin
