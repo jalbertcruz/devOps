@@ -7,7 +7,7 @@ windows:
     panes:
       - shell_command:
           - cd $AKKA_CLUSTER_APP_HOME && sleep 10
-          - sbtr 0 "queries-rest-app"
+          - sbtr 0 "commands-rest-app"
       - shell_command:
           - cd $AKKA_CLUSTER_APP_HOME && sdenv 1
           - sbtr 0 "commands-app"
