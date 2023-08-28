@@ -74,10 +74,11 @@ chcon -Rt svirt_sandbox_file_t /home/j/src/dbs/mysql56km
 What to do when all docker commands hang?
 https://forums.docker.com/t/what-to-do-when-all-docker-commands-hang/28103
 
-## Remove all docker images one liner
+
 # enter in the bash of the first container
 docker exec -it $(docker ps | head -n 2 | tail -n 1 | cut -d " " -f 1) bash
 
+## Remove all docker images one liner
 # delete all containers
 docker ps -a | tail -n +2 | cut -d " " -f 1 | xargs docker rm
 
@@ -86,3 +87,9 @@ docker images | tail -n +2 | tr -s " " | cut -d " " -f 3 | xargs docker rmi -f
 
 # Delete all volumes:
 docker volume rm $(docker volume ls -q)
+
+# Local development
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+

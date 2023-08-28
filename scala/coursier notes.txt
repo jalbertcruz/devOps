@@ -5,8 +5,11 @@
 java                           auto     /home/a/appslnx/jdk-11/bin/java
 javac                          auto     /home/a/appslnx/jdk-11/bin/javac
 
+https://get-coursier.io/docs/cli-installation
 # JAR-based launcher
-» curl -fLo coursier https://git.io/coursier-cli && chmod +x coursier && ./coursier && mv coursier cs
+curl -fLo coursier https://git.io/coursier-cli && chmod +x coursier && mv coursier cs
+
+curl -fLo coursier https://github.com/coursier/launchers/raw/master/coursier && chmod +x coursier && mv coursier cs
 
 ./cs setup
 
@@ -105,9 +108,6 @@ $ cs update
 # https://get-coursier.io/docs/2.0.0-RC6-9/other-repositories
 $ export COURSIER_REPOSITORIES="ivy2Local|central|sonatype:releases|jitpack|https://corporate.com/repo"
 
-
-
 » cs bootstrap betradar-node --standalone -o betradar-node --channel ./apps/apps/resources
 
 » unzip -d ./dest betradar-node
-

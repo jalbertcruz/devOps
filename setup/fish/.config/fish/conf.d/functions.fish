@@ -4,6 +4,7 @@ function tid
   date '+%Y%m%d%H%M%S'
 end
 
+# Multimedias
 function mp3-tag
     # https://eyed3.readthedocs.io/en/latest/
     for i in *.mp3
@@ -24,18 +25,13 @@ function media-clean
     auto-editor $argv[1]
 end
 
+# Development
+
 function c
     code . > /dev/null 2>&1 &
     disown
 end
 
-function vpnc
-  sudo openfortivpn
-end
-
-function mux
-  command tmuxinator $argv
-end
 
 function lvenv
   source .env/bin/activate.fish
@@ -79,34 +75,14 @@ function wmock
     --extensions org.wiremock.webhooks.Webhooks --port $argv[1] --root-dir $argv[2]
 end
 
+function structurizr
+  java -Djdk.util.jar.enableMultiRelease=false \
+    -jar "/media/a/data/docs/P/Architecture/best/!! Software Architecture for Developers/tools/structurizr-lite.war" $argv[1]
+end
+
 function ltxp
 #     docker run --rm -it -v (pwd):/workdir danteev/texlive:2022-02-15 pdflatex $argv[1].tex
     docker run --rm -it -v (pwd):/workdir danteev/texlive:2023-06-01 pdflatex $argv[1].tex
-end
-
-function ltxx
-    # docker run --rm -it -v (pwd):/workdir danteev/texlive:2022-02-15 xelatex $argv[1].tex
-    # docker run --rm -it -v (pwd):/workdir danteev/texlive:2022-02-15 pst-pdf $argv[1].tex
-    docker run --rm -it -v (pwd):/workdir danteev/texlive:2022-02-15 lualatex --shell-escape $argv[1].tex
-end
-
-function kbn
-  # kill all process by name!
-  ps aux | grep $argv[1] | grep -v grep | awk '{print $2}' | sudo xargs kill
-end
-
-function kjp
-    ps aux | grep java | grep $argv[1] | grep -v grep | awk '{print $2}' | xargs kill
-end
-
-function chp
-  # How to check the listening ports and applications on Linux:
-  sudo lsof -wni "tcp:$argv[1]"
-end
-
-function chkp
-  # How to check the listening ports and applications on Linux:
-  sudo lsof -wni "tcp:$argv[1]" | awk '{print $2}' | awk 'NR!=1' | sudo xargs kill -9
 end
 
 function venv
@@ -132,15 +108,47 @@ function venv
 end
 
 function sbtr
-    sleep $argv[1] && sbt -Dactive.app="$argv[2]" r
+    sleep $argv[1] && sbt -Dactive.app="$argv[2]" -Dconfig.file="$argv[3]" r
 end
 
-function make
-  if set -q MAKE_FILE
-      /usr/bin/make -f $MAKE_FILE $argv
+## Kubernetes
+
+function kctl
+  if count $argv > /dev/null
+    switch $argv[1]
+        case cli
+          set name (kubectl get pods | grep $argv[2] | head -n 1 | awk '{print $1}')
+          kubectl exec --stdin --tty $name -- /bin/bash
+      case logs
+          set name (kubectl get pods | grep $argv[2] | head -n 1 | awk '{print $1}')
+          kubectl logs $name -f
+     case pf
+          set name (kubectl get pods | grep $argv[2] | head -n 1 | awk '{print $1}')
+          kubectl port-forward $name "$argv[3]:$argv[3]"
+    end
   else
-      /usr/bin/make $argv
+      kubectl get pods -o wide
   end
+
+end
+
+# function vpnc
+#   sudo openfortivpn
+# end
+
+# function make
+#   if set -q MAKE_FILE
+#       /usr/bin/make -f $MAKE_FILE $argv
+#   else
+#       /usr/bin/make $argv
+#   end
+# end
+
+# Documentation
+function ltxx
+    # docker run --rm -it -v (pwd):/workdir danteev/texlive:2022-02-15 xelatex $argv[1].tex
+    # docker run --rm -it -v (pwd):/workdir danteev/texlive:2022-02-15 pst-pdf $argv[1].tex
+    docker run --rm -it -v (pwd):/workdir danteev/texlive:2022-02-15 lualatex --shell-escape $argv[1].tex
 end
 
 # https://gist.github.com/nikoheikkila/dd4357a178c8679411566ba2ca280fcc#file-readme-md
@@ -157,6 +165,7 @@ function envsource
     end
   end
 end
+
 
 envsource ~/.env
 
@@ -192,3 +201,22 @@ function vault_delete_network
      end
   end
 end
+# OS and System
+function kbn
+  # kill all process by name!
+  ps aux | grep $argv[1] | grep -v grep | awk '{print $2}' | sudo xargs kill
+end
+
+function kjp
+    ps aux | grep java | grep $argv[1] | grep -v grep | awk '{print $2}' | xargs kill
+end
+
+function chp
+  # How to check the listening ports and applications on Linux:
+  sudo lsof -wni "tcp:$argv[1]"
+end
+
+function chkp
+  sudo lsof -wni "tcp:$argv[1]" | awk '{print $2}' | awk 'NR!=1' | sudo xargs kill -9
+end
+

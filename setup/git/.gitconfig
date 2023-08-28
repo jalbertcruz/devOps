@@ -154,7 +154,7 @@
     c = commit
     cam = commit -a --amend --no-edit
     cams = commit -a -S --amend --no-edit
-    cm = commit -a
+    cm = commit -a -m
     cms = commit -a -S
     can = commit --amend --no-edit
     lsm = log -M --stat

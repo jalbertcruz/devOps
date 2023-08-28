@@ -7,13 +7,13 @@ windows:
     panes:
       - shell_command:
           - cd $AKKA_CLUSTER_APP_HOME && sleep 10
-          - sbtr 0 "commands-rest-app"
+          - sbtr 0 "ports-app" "03-main-ports/src/main/resources/application.conf"
       - shell_command:
           - cd $AKKA_CLUSTER_APP_HOME && sdenv 1
-          - sbtr 0 "commands-app"
+          - sbtr 0 "commands-app" "03-main-command/src/main/resources/application-dev.conf"
       - shell_command:
           - cd $AKKA_CLUSTER_APP_HOME && sdenv 2
-          - sbtr 5 "commands-app"
+          - sbtr 5 "commands-app" "03-main-command/src/main/resources/application-dev.conf"
       - shell_command:
           - cd $AKKA_CLUSTER_APP_HOME && sdenv 3
-          - sbtr 7 "commands-app"
+          - sbtr 7 "commands-app" "03-main-command/src/main/resources/application-dev.conf"

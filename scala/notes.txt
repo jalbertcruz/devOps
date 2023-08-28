@@ -9,3 +9,14 @@ sbt dependencyBrowseTreeHTML
 # https://www.youtube.com/watch?v=eVYSwWU1yXw&ab_channel=DevInsideYou
 bloop projects --dot-graph | sed "/-test/d" | sed "/root-project/d" | dot -Tsvg -o dg.svg -Grankdir=BT
 bloop projects --dot-graph | sed "/-test/d" | sed "/invoice-generator/d"  | dot2d2 | d2 --layout=elk - $1.svg
+
+# Compiler options
+# Scala 2
+https://docs.scala-lang.org/overviews/compiler-options/
+
+# Scala 3
+https://docs.scala-lang.org/scala3/guides/migration/options-new.html
+
+# This table lists the Scala 2.13 compiler options with their equivalent in Scala 3
+https://docs.scala-lang.org/scala3/guides/migration/options-lookup.html
+
