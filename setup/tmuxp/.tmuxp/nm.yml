@@ -4,21 +4,21 @@ shell_command_before:
   - 'direnv allow'
 windows:
   - window_name: nomad
-    shell_command_before:
-      - '[ -f .venv/bin/activate.fish ] && source .venv/bin/activate.fish'
+#    shell_command_before:
+#      - '[ -f .venv/bin/activate.fish ] && source .venv/bin/activate.fish'
     layout: tiled
 #    layout: 84bf,216x48,0,0[216x15,0,0{107x15,0,0,1,108x15,108,0,2},216x15,0,16{107x15,0,16,3,108x15,108,16,4},216x16,0,32{107x16,0,32,5,108x16,108,32,6}]
     panes:
-      - shell_command:
-          - sleep 10 && envconsul -log-level="err" -consul-addr=172.16.10.65:8500 -prefix nomad- python cli/servers/consul-monitor.py
+#      - shell_command:
+#          - sleep 10 && envconsul -log-level="err" -consul-addr=172.16.10.65:8500 -prefix nomad- python cli/servers/consul-monitor.py
       - shell_command:
           - consul-client-start
       - shell_command:
           - sleep 1 && consul-client2-start
       - shell_command:
           - sleep 3 && consul-server-start
+#      - shell_command:
+#          - sleep 3 && consul-esm-start
+      # (the need of using -- `sudo` --) https://github.com/hashicorp/nomad/issues/696
       - shell_command:
-          - sleep 3 && consul-esm-start
-      - shell_command:
-         # (the need of using -- `sudo` --) https://github.com/hashicorp/nomad/issues/696
           - sleep 0 && sudo nomad agent -config cli/configs/nomad-client-server.hcl

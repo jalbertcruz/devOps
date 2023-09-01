@@ -131,3 +131,6 @@ curl -L https://github.com/hashicorp/levant/releases/download/0.3.0/linux-amd64-
 # namespace creation: https://www.nomadproject.io/docs/commands/namespace
 nomad namespace apply -description "development" dev-namespace
 
+# When Consul resets DB!
+python cli/load-consul-kv.py
+

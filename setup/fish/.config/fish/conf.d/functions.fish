@@ -61,7 +61,6 @@ function der
   direnv reload
 end
 
-set -gx DENV 1
 
 function sdenv
   set -e DENV
@@ -113,18 +112,16 @@ end
 
 ## Kubernetes
 
-function kctl
+function kctrl
   if count $argv > /dev/null
+    set podId (kubectl get pods | grep $argv[2] | head -n 1 | awk '{print $1}')
     switch $argv[1]
-        case cli
-          set name (kubectl get pods | grep $argv[2] | head -n 1 | awk '{print $1}')
-          kubectl exec --stdin --tty $name -- /bin/bash
+      case cli
+        kubectl exec --stdin --tty $podId -- /bin/bash
       case logs
-          set name (kubectl get pods | grep $argv[2] | head -n 1 | awk '{print $1}')
-          kubectl logs $name -f
-     case pf
-          set name (kubectl get pods | grep $argv[2] | head -n 1 | awk '{print $1}')
-          kubectl port-forward $name "$argv[3]:$argv[3]"
+        kubectl logs $podId -f
+      case pf
+        kubectl port-forward $podId "$argv[3]:$argv[3]"
     end
   else
       kubectl get pods -o wide
@@ -167,9 +164,6 @@ function envsource
 end
 
 
-envsource ~/.env
-
-test -e .venv/bin/activate.fish && source .venv/bin/activate.fish
 # test -e .env.local && envsource .env.local
 
 function react_to_pwd --on-variable PWD

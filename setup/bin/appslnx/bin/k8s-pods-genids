@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+microk8s.kubectl get pods | grep $1 | awk '{print $1}' > pod-ids-a.txt
+microk8s.kubectl get pods | grep $2 | awk '{print $1}' > pod-ids-b.txt
+
