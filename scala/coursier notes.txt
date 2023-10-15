@@ -13,7 +13,6 @@ curl -fLo coursier https://github.com/coursier/launchers/raw/master/coursier && 
 
 ./cs setup
 
-»
 cs java --available
 adopt:1.8.0-232
 adopt:1.8.0-242

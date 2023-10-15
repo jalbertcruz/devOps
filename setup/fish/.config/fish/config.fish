@@ -4,6 +4,10 @@ set -x PATH "$VOLTA_HOME/bin" $PATH
 
 status --is-interactive; and ~/.rbenv/bin/rbenv init - fish | source
 
+test -e .cs-java && set jsJava (cat .cs-java) && eval "$(cs java --jvm  $jsJava --env)"
+if not test -e .cs-java
+    test -d ~/appslnx/jdk-17 && set -x JAVA_HOME ~/appslnx/jdk-17
+end
 source ~/.config/fish/conf.d/config.fish
 
 set -x PATH /snap/bin/ $PATH
@@ -20,4 +24,3 @@ set -gx DENV 1
 #     eval "$val"
 # end
 
-# test -e .cs-java && eval (eval (cat .cs-java))

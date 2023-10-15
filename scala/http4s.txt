@@ -1,0 +1,26 @@
+
+https://github.com/brettwooldridge/HikariCP
+https://www.tutorialspoint.com/jdbc/jdbc-sample-code.htm
+
+
+Extend the ConnectionPool Example to showcase using the transactor in a larger app #795
+https://github.com/tpolecat/doobie/issues/795
+https://github.com/tpolecat/doobie/issues/795#issuecomment-450331395
+
+
+# doobie json
+https://devpress.csdn.net/postgresql/632ba08d357a883f870c7a33.html
+https://stackoverflow.com/questions/67789229/how-i-can-insert-case-object-as-jsonb-format-via-doobie
+https://github.com/tpolecat/doobie/blob/v1.0.0-RC4/modules/postgres-circe/src/test/scala/doobie/postgres/circe/PGJsonSuite.scala
+ 
+
+# Multipart Demo, http4s + blaze
+https://github.com/http4s/blaze/blob/main/examples/src/main/scala/com/example/http4s/blaze/demo/server/endpoints/MultipartHttpEndpoint.scala
+https://github.com/gvolpe/advanced-http4s/blob/master/src/main/scala/com/github/gvolpe/http4s/server/endpoints/MultipartHttpEndpoint.scala
+https://github.com/http4s/blaze/blob/main/examples/src/main/scala/com/example/http4s/blaze/demo/server/service/FileService.scala
+
+https://softwaremill.community/t/multipart-upload-worked-example/118
+
+
+# Language
+https://stackoverflow.com/questions/20684572/scala-convert-map-to-case-class

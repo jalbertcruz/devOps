@@ -328,6 +328,10 @@ $ git push --tags
 git fetch origin
 git rebase origin/master
 
+# https://stackoverflow.com/questions/16825849/choose-git-merge-strategy-for-specific-files-ours-mine-theirs
+git rebase -s recursive -X theirs develop
+git merge -s recursive -X <ours/theirs> develop
+
 
 # gpg
 

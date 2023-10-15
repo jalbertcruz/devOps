@@ -368,9 +368,18 @@ for i in *.heic; do
 done
 
 
-# encode audio to .mp3 and video to .mp4
+# encode audio to .mp3 and video to .mp4 (para usar en old TV Cuba)
 # » ffmpeg -i Aqui.no.hay.quien.viva.1x01.avi -codec:a mp3 -strict -2 a.mp4
+## https://gist.github.com/iangreenleaf/279849
+## https://gist.github.com/felipou/6fbec22c4e04d3adfae5
+## https://linuxize.com/post/bash-increment-decrement-variable/
+# Trap interrupts and exit instead of continuing the loop
+trap "echo Exited!; exit;" SIGINT SIGTERM
+totalAvi=$(ls -1 *.avi | wc -l)
+i=0
 for i in *.avi; do
+    i=$((i+1))
+    echo "Processing file number $i of $totalAvi"
     ffmpeg -i "$i" -codec:a mp3 -strict -2 "${i%.*}.mp4"
 done
 
