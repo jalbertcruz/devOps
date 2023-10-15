@@ -1,0 +1,19 @@
+---
+job:
+  name: nexus
+  network:
+    port_server:
+      to: 8081
+  task:
+    config:
+      image: sonatype/nexus3:3.56.0
+      hostname: nexus.service.dc1.consul
+      volume:
+        a:
+          key: nomad-nexus_data
+          path: /nexus-data
+    service:
+      port: port_server
+    resource:
+      memory: 6000
+      cpu: 2000

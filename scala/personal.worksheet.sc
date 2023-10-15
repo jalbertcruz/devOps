@@ -13,3 +13,7 @@ val pesoParedCorta = paredCorta * pesoOriginal / original
 val peso = (pesoParedLarga + pesoParedCorta) * 2
 
 val current = 2.37 + 6.38 + 4.23 + 4.86
+
+// Fregadero
+// 50-55 cm X 80 cm
+
