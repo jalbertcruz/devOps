@@ -1,37 +1,12 @@
 
-function tid
-  # https://www.shell-tips.com/linux/how-to-format-date-and-time-in-linux-macos-and-bash/
-  date '+%Y%m%d%H%M%S'
-end
-
-# Multimedias
-function mp3-tag
-    # https://eyed3.readthedocs.io/en/latest/
-    for i in *.mp3
-      eyeD3 -a $argv[1] -n 2 "$i" -t "$i"
+function c
+    if test -d code
+        pyide
+    else
+        code . > /dev/null 2>&1 &
+        disown
     end
 end
-
-function mp3-split
-    #  mp3-split <file> 900
-    ffmpeg -i $argv[1] -f segment -segment_time $argv[2] -c copy %02d-$argv[1].mp3
-end
-
-function mp4-to-mp3
-    ffmpeg -i $argv[1] -b:a 192K -vn $argv[1].mp3
-end
-
-function media-clean
-    auto-editor $argv[1]
-end
-
-# Development
-
-function c
-    code . > /dev/null 2>&1 &
-    disown
-end
-
 
 function lvenv
   source .env/bin/activate.fish
@@ -107,7 +82,8 @@ function venv
 end
 
 function sbtr
-    sleep $argv[1] && sbt -Dactive.app="$argv[2]" -Dconfig.file="$argv[3]" r
+#     sleep $argv[1] && sbt -Dactive.app="$argv[2]" -Dconfig.file="$argv[3]" r
+    sleep $argv[1] && sbt -Dconfig.file="$argv[2]" r
 end
 
 ## Kubernetes
@@ -169,6 +145,9 @@ end
 function react_to_pwd --on-variable PWD
     type -q deactivate && deactivate
     test -e .venv/bin/activate.fish && source .venv/bin/activate.fish
+
+    test -d code && wezterm cli spawn --cwd code --
+
 #    test -e .env.local && envsource .env.local
 end
 
@@ -214,3 +193,12 @@ function chkp
   sudo lsof -wni "tcp:$argv[1]" | awk '{print $2}' | awk 'NR!=1' | sudo xargs kill -9
 end
 
+function pinstall
+  pip install --force-reinstall --no-cache-dir -U "$argv[1]" --user
+#   pip install --force-reinstall --no-cache-dir -U "$argv[1]"
+end
+
+function ch-d
+    set dest (_choose-destination)
+    cd "$dest"
+end

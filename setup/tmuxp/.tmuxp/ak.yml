@@ -1,5 +1,5 @@
 session_name: akka-cluster
-start_directory: $AKKA_CLUSTER_APP_HOME
+start_directory: $SYSTEM_APP_HOME
 windows:
   - window_name: akka-cluster
 #    layout: 680e,236x42,0,0{118x42,0,0,1,117x42,119,0[117x12,119,0,2,117x13,119,13,3,117x15,119,27,4]} # origin
@@ -7,14 +7,17 @@ windows:
     layout: f529,211x35,0,0{74x35,0,0,3,136x35,75,0[136x12,75,0,4,136x9,75,13,5,136x12,75,23,6]}
     panes:
       - shell_command:
-          - sleep 10
-          - sbtr 0 "ports-app" "03-main-ports/src/main/resources/application.conf"
+          - cd $PORTS_APP_HOME
+          - sbtr 0 "src/main/resources/application.conf"
       - shell_command:
+          - cd $AKKA_CLUSTER_APP_HOME
           - sdenv 1
-          - sbtr 0 "commands-app" "03-main-command/src/main/resources/application-dev.conf"
+          - sbtr 0 "src/main/resources/application-dev.conf"
       - shell_command:
+          - cd $AKKA_CLUSTER_APP_HOME
           - sdenv 2
-          - sbtr 5 "commands-app" "03-main-command/src/main/resources/application-dev.conf"
+          - sbtr 5 "src/main/resources/application-dev.conf"
       - shell_command:
+          - cd $AKKA_CLUSTER_APP_HOME
           - sdenv 3
-          - sbtr 7 "commands-app" "03-main-command/src/main/resources/application-dev.conf"
+          - sbtr 7 "src/main/resources/application-dev.conf"

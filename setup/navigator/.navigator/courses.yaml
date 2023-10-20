@@ -1,0 +1,4 @@
+- name: RJVM - Advanced Scala
+  rootPath: /home/a/src/Scala/courses/scala-3-advanced
+- name: Tasty explorer
+  rootPath: /home/a/src/Scala/teaching/reflection/explorer

@@ -1,0 +1,10 @@
+- name: Points account
+  rootPath: /home/a/src/a/intelygenz/points-account/
+- name: Rewards engine
+  rootPath: /home/a/src/a/intelygenz/rewards/repos/rewards-engine/
+- name: Engine frontend
+  rootPath: /home/a/src/a/intelygenz/rewards/repos/rewards-engine-frontend/
+- name: Advertisers mic
+  rootPath: /home/a/src/a/intelygenz/working/loya-mic-advertisers/
+- name: spec
+  rootPath: /home/a/src/a/intelygenz/working/loya-spec-domain/
