@@ -198,7 +198,7 @@ function pinstall
 #   pip install --force-reinstall --no-cache-dir -U "$argv[1]"
 end
 
-function ch-d
+function chd
     set dest (_choose-destination)
     cd "$dest"
 end
