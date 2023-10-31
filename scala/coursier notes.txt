@@ -111,3 +111,13 @@ $ export COURSIER_REPOSITORIES="ivy2Local|central|sonatype:releases|jitpack|http
 » cs bootstrap betradar-node --standalone -o betradar-node --channel ./apps/apps/resources
 
 » unzip -d ./dest betradar-node
+
+
+# Cache
+# https://get-coursier.io/docs/cache
+To override it, use the -Dsbt.coursier.home system property or the COURSIER_CACHE environment variable.
+
+Default location
+on Linux, ~/.cache/coursier/v1. This also applies to Linux-based CI environments, and FreeBSD too.
+# TTL
+https://get-coursier.io/docs/ttl

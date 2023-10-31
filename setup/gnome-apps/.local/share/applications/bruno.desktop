@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Exec=/usr/local/bin/appslnx/web/bruno.AppImage -- %u
+Terminal=false
+Icon=/usr/local/bin/appslnx/web/bruno.png
+Name=bruno
+Terminal=false
+Type=Application
+Comment=API Client
+Categories=Development;
+
+MimeType=text/html;x-scheme-handler/bruno;

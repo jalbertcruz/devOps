@@ -1,4 +1,6 @@
 - name: Advertisers microservice
-  rootPath: ~/src/a/intelygenz/WIPs/loya-mic-advertisers-WIP
+  rootPath: ~/src/a/intelygenz/src/WIPs/loya-mic-advertisers-WIP
 - name: Domain specs
-  rootPath: ~/src/a/intelygenz/WIPs/loya-spec-domain-WIP
+  rootPath: ~/src/a/intelygenz/src/WIPs/loya-spec-domain-WIP
+- name: System demo
+  rootPath: ~/src/Scala/teaching/api/system-demo

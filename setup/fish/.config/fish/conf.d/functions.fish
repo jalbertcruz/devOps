@@ -1,7 +1,7 @@
 
 function c
     if test -d code
-        pyide
+        idea
     else
         code . > /dev/null 2>&1 &
         disown
@@ -198,7 +198,7 @@ function pinstall
 #   pip install --force-reinstall --no-cache-dir -U "$argv[1]"
 end
 
-function chd
+function ch
     set dest (_choose-destination)
     cd "$dest"
 end
