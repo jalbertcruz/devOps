@@ -81,11 +81,6 @@ function venv
 
 end
 
-function sbtr
-#     sleep $argv[1] && sbt -Dactive.app="$argv[2]" -Dconfig.file="$argv[3]" r
-    sleep $argv[1] && sbt -Dconfig.file="$argv[2]" r
-end
-
 ## Kubernetes
 
 function kctrl
@@ -194,8 +189,8 @@ function chkp
 end
 
 function pinstall
-  pip install --force-reinstall --no-cache-dir -U "$argv[1]" --user
-#   pip install --force-reinstall --no-cache-dir -U "$argv[1]"
+#   pip install --force-reinstall --no-cache-dir -U "$argv[1]" --user
+  pip install --force-reinstall --no-cache-dir -U "$argv[1]"
 end
 
 function ch

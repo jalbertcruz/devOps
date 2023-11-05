@@ -17,3 +17,4 @@ val current = 2.37 + 6.38 + 4.23 + 4.86
 // Fregadero
 // 50-55 cm X 80 cm
 
+5.3 kg la caja chica

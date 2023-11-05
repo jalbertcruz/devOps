@@ -8,16 +8,16 @@ windows:
     panes:
       - shell_command:
           - cd $PORTS_APP_HOME
-          - sbtr 0 "src/main/resources/application.conf"
+          - $PORTS_APP_RUN_COMMAND 0
       - shell_command:
           - cd $AKKA_CLUSTER_APP_HOME
           - sdenv 1
-          - sbtr 0 "src/main/resources/application-dev.conf"
+          - $AKKA_CLUSTER_APP_RUN_COMMAND 0
       - shell_command:
           - cd $AKKA_CLUSTER_APP_HOME
           - sdenv 2
-          - sbtr 5 "src/main/resources/application-dev.conf"
+          - $AKKA_CLUSTER_APP_RUN_COMMAND 5
       - shell_command:
           - cd $AKKA_CLUSTER_APP_HOME
           - sdenv 3
-          - sbtr 7 "src/main/resources/application-dev.conf"
+          - $AKKA_CLUSTER_APP_RUN_COMMAND 7

@@ -556,3 +556,6 @@ repo = Repo(".")
 cmmts = repo.iter_commits(f"{repo.active_branch}...{repo.active_branch.tracking_branch()}")
 for c in cmmts:
 	print(c.hexsha)
+
+# Remove files from index (the staging area between the workspace and the repository)
+git rm --cached -r 00-systems/cruds/01-api-rest-crud/
