@@ -73,6 +73,9 @@ find . -name rabbit* -print
 
 # Recursively Search All Files For A String
 find . -iname "*" -type f -print0 | xargs -0 grep -Hn "controller"
+❯ find . -iname "*.txt" -type f -print0 | xargs -0 rg "cursos"
+./teaching/Learning Scala notes.txt
+2:Cursos
 
 # Recursively Search All directories For A String and print it's size
 find . -iname "target" -type d -print0 | xargs -0 du -sh

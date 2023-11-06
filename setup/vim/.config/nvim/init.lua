@@ -17,7 +17,6 @@ else
     -- ordinary Neovim
 end
 
-
 require("user.options")
 require("user.keybinds")
 --require("user.keybinds_lsp")

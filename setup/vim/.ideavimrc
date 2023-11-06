@@ -32,7 +32,7 @@ set ideaput
 set ideastatusicon=gray
 set idearefactormode=keep
 set number relativenumber
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 
 set ideamarks
 
