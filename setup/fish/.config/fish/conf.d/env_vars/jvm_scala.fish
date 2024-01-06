@@ -33,3 +33,5 @@ set -x PATH ~/usr/local/bin/appslnx/tools/async-profiler $PATH
 set -x PATH ~/appslnx/tools/spring/bin $PATH
 
 # set -x PATH ~/appslnx/tools/smithy/cli/bin $PATH
+
+set -x PATH ~/appslnx/tools/liquibase $PATH

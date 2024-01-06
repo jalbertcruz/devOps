@@ -36,11 +36,19 @@ function der
   direnv reload
 end
 
-
 function sdenv
   set -e DENV
   set -gx DENV $argv[1]
   direnv reload
+end
+
+function showapi
+  redocly --port=10091 --host=0.0.0.0 preview-docs $argv[1] &
+  chrome http://0.0.0.0:10091
+end
+
+function kshowapi
+    chp 10091 | rg listen | awk '{ print $2 }' | sudo xargs kill -9
 end
 
 function wmock
@@ -136,14 +144,11 @@ end
 
 
 # test -e .env.local && envsource .env.local
+#     test -d code && wezterm cli spawn --cwd code --
 
 function react_to_pwd --on-variable PWD
     type -q deactivate && deactivate
     test -e .venv/bin/activate.fish && source .venv/bin/activate.fish
-
-    test -d code && wezterm cli spawn --cwd code --
-
-#    test -e .env.local && envsource .env.local
 end
 
 function loopback_exists_at_address
@@ -169,6 +174,7 @@ function vault_delete_network
      end
   end
 end
+
 # OS and System
 function kbn
   # kill all process by name!

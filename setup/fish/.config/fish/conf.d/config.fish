@@ -86,3 +86,9 @@ end
 # set -gx VOLTA_HOME "$HOME/.volta"
 # set -gx PATH "$VOLTA_HOME/bin" $PATH
 
+set KUBERNETES_NAMESPACE realm-loya
+set AGENT_ID 230
+
+set CLUSTER_NAME "zenith-dev"
+set CONTEXT_NAME "$CLUSTER_NAME-$KUBERNETES_NAMESPACE"
+

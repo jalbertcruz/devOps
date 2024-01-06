@@ -4,11 +4,12 @@ windows:
   - window_name: akka-cluster
 #    layout: 680e,236x42,0,0{118x42,0,0,1,117x42,119,0[117x12,119,0,2,117x13,119,13,3,117x15,119,27,4]} # origin
 #    layout: 6eb9,243x35,0,0{23x35,0,0,3,219x35,24,0[219x9,24,0,4,219x11,24,10,5,219x13,24,22,6]} # run
-    layout: f529,211x35,0,0{74x35,0,0,3,136x35,75,0[136x12,75,0,4,136x9,75,13,5,136x12,75,23,6]}
+    layout: 06f9,184x39,0,0{10x39,0,0,3,173x39,11,0[173x35,11,0,4,173x1,11,36,5,173x1,11,38,6]}
+#    layout: f529,211x35,0,0{74x35,0,0,3,136x35,75,0[136x12,75,0,4,136x9,75,13,5,136x12,75,23,6]}
     panes:
       - shell_command:
           - cd $PORTS_APP_HOME
-          - $PORTS_APP_RUN_COMMAND 0
+#          - $PORTS_APP_RUN_COMMAND 0
       - shell_command:
           - cd $AKKA_CLUSTER_APP_HOME
           - sdenv 1

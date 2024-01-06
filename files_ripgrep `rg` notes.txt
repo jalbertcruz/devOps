@@ -2,6 +2,12 @@
 # ripgrep ( rg )
 https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md
 
+# looking for all occurrences of the word fast in README.md
+$ rg fast README.md
+
+# ripgrep's support for file types:
+$ rg '`' --type scala
+
 Configuration file:
 RIPGREP_CONFIG_PATH
 $ cat $HOME/.ripgreprc

@@ -1,12 +1,14 @@
-- name: Points account
-  rootPath: ~/src/a/intelygenz/legacy/points-account/
 - name: Rew engine
   rootPath: ~/src/a/intelygenz/src/rewards/rewards-engine/
-- name: Rew frontend
+- name: Rew front
   rootPath: ~/src/a/intelygenz/src/rewards/rewards-engine-frontend/
-- name: Ad mic
-  rootPath: ~/src/a/intelygenz/src/campaigns/loya-mic-advertisers/
+
 - name: Domain openapi spec
   rootPath: ~/src/a/intelygenz/src/campaigns/loya-spec-domain/
+
+- name: Campaigns front
+  rootPath: ~/src/a/intelygenz/src/campaigns/frontend-campaigns-engine/code/
 - name: Campaigns
   rootPath: ~/src/a/intelygenz/src/campaigns/campaigns-engine/
+- name: Campaigns advertisers
+  rootPath: ~/src/a/intelygenz/src/campaigns/advertisers/
