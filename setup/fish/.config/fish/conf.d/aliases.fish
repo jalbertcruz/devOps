@@ -6,7 +6,7 @@ alias b byobu
 alias buffer 'code $BYOBU_RUN_DIR/printscreen'
 alias bload 'byobu new-session tmuxp load --yes'
 alias v 'nvim (fzf)'
-alias js 'just'
+alias js 'just --choose'
 alias galias 'git config --list | rg alias | fzf'
 alias ktmux 'tmux kill-session -t '
 # alias ktmux 'chkp 9005 ; tmux kill-session -t '

@@ -10,7 +10,7 @@ if not test -e .cs-java
 end
 source ~/.config/fish/conf.d/config.fish
 
-test -d code && wezterm cli spawn --cwd code --
+# test -d code && wezterm cli spawn --cwd code --
 
 set -x PATH /snap/bin/ $PATH
 set -x PATH "$HOME/appslnx/tools/PKI/cfssl/" $PATH
