@@ -59,7 +59,7 @@ end
 
 function structurizr
   java -Djdk.util.jar.enableMultiRelease=false \
-    -jar "/media/a/data/docs/P/Architecture/best/!! Software Architecture for Developers/tools/structurizr-lite.war" $argv[1]
+    -jar /media/a/data/docs/P/Architecture/best/Software-Architecture-for-Developers/tools/structurizr-lite.war $argv[1]
 end
 
 function ltxp
