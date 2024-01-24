@@ -42,12 +42,12 @@ function sdenv
   direnv reload
 end
 
-function showapi
+function servapi
   redocly --port=10091 --host=0.0.0.0 preview-docs $argv[1] &
   chrome http://0.0.0.0:10091
 end
 
-function kshowapi
+function kservapi
     chp 10091 | rg listen | awk '{ print $2 }' | sudo xargs kill -9
 end
 
@@ -82,10 +82,12 @@ function venv
   source .venv/bin/activate.fish
 
   pip install --upgrade pip
+  pip install --upgrade build
   pip install --upgrade wheel
-
   test -e requirements.txt && pip install -r requirements.txt
   test -e Pipfile && pipenv install --dev
+  test -e pyproject.toml && pip install .
+  pip install hatch
 
 end
 

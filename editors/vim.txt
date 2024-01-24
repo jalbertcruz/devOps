@@ -213,6 +213,7 @@ Esc
 multiple cursors, idea
 https://plugins.jetbrains.com/plugin/19162-ideavimmulticursor
 
+# In normal mode
 Ctrl+a n
 
 
