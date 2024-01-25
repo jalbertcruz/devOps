@@ -1,6 +1,6 @@
 
-set -x EDITOR vim
-set -x VISUAL vim
+set -x EDITOR nvim
+set -x VISUAL nvim
 
 set -x VSCODE_DATA '/usr/local/bin/appslnx/web/vscode-data/'
 set -x VSCODE_INSTALL_DIR '/usr/local/bin/appslnx/web/VSCode/'

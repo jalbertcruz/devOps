@@ -4,8 +4,8 @@ status --is-interactive; and source (jump shell fish | psub)
 
 fish_vi_key_bindings
 
-set fish_function_path $fish_function_path "/usr/share/powerline/bindings/fish"
-source /usr/share/powerline/bindings/fish/powerline-setup.fish
+# set fish_function_path $fish_function_path "/usr/share/powerline/bindings/fish"
+# source /usr/share/powerline/bindings/fish/powerline-setup.fish
 
 source ~/.config/fish/conf.d/env_vars.fish
 source ~/.config/fish/conf.d/functions.fish
@@ -30,7 +30,7 @@ set -g theme_hide_hostname no
 set -g theme_hostname always
 set -gx TERM xterm-256color
 
-powerline-setup
+# powerline-setup
 
 set -g fish_greeting
 # set -g IDEA_PROPERTIES '/usr/local/bin/appslnx/jetbrains/idea/personal/idea.properties'
