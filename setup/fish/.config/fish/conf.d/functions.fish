@@ -88,8 +88,25 @@ function venv
   test -e Pipfile && pipenv install --dev
   test -e pyproject.toml && pip install .
   pip install hatch
+#   pip install devpi-client
 
 end
+
+function ch
+    set dest (_choose-destination)
+    cd "$dest"
+end
+
+function rgf
+  set res (rg $argv[1] > /dev/null; and rg $argv[1] --json | ripgrep_to_fzf_filter | fzf | hck -Ld':' -f1,2,3 -D=":")
+  rg $argv[1] > /dev/null; and command code --reuse-window --goto $res &
+  disown
+end
+
+function rgfnv
+  rg $argv[1] > /dev/null; and rg $argv[1] --json | ripgrep_to_fzf_filter | fzf | _vim-translator | xargs nvim
+end
+
 
 ## Kubernetes
 
@@ -183,25 +200,15 @@ function kbn
   ps aux | grep $argv[1] | grep -v grep | awk '{print $2}' | sudo xargs kill
 end
 
-function kjp
-    ps aux | grep java | grep $argv[1] | grep -v grep | awk '{print $2}' | xargs kill
-end
-
-function chp
-  # How to check the listening ports and applications on Linux:
-  sudo lsof -wni "tcp:$argv[1]"
-end
-
 function chkp
-  sudo lsof -wni "tcp:$argv[1]" | awk '{print $2}' | awk 'NR!=1' | sudo xargs kill -9
+  lsof -wni "tcp:$argv[1]" | awk '{print $2}' | awk 'NR!=1' | sudo xargs kill -9
 end
 
-function pinstall
-#   pip install --force-reinstall --no-cache-dir -U "$argv[1]" --user
-  pip install --force-reinstall --no-cache-dir -U "$argv[1]"
+function fports
+    # fuzzy search for ports and copy the PID to clipboard
+    lsof -wni | fzf | hck -f2 | tr -d "\n" | xclip -sel clip
 end
 
-function ch
-    set dest (_choose-destination)
-    cd "$dest"
+function fps
+    ps aux | fzf | hck -f2 | tr -d "\n" | xclip -sel clip
 end

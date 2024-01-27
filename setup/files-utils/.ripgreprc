@@ -10,8 +10,12 @@
 web:*.{html,css,js}*
 
 # Using glob patterns to include/exclude files or folders
-# --glob=!git/*
---glob=!{*/**/test/*/**}
+--glob=!git/*
+--glob=!.venv/*
+--glob=!.bsp/*
+--glob=!.idea/*
+--glob=!target/*
+#--glob=!{*/**/test/*/**}
 
 --glob=!{.git,.svn,node_modules,tealdeer,Trash,vendor,deps,assets}
 
