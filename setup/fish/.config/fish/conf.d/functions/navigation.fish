@@ -16,8 +16,10 @@ function rgf
   set res (rg $argv[1] > /dev/null; and rg $argv[1] --json | ripgrep_to_fzf_filter --rb 3 --lc 6 \
   | fzf --delimiter : --preview 'bat --color=always {1} --line-range {4}:+{5} --highlight-line {2} --wrap=character --terminal-width=80' \
   | hck -Ld':' -f1,2,3 -D=":")
-  rg $argv[1] > /dev/null; and command code --reuse-window --goto $res &
-  disown
+  if [ "$res" ]
+      rg $argv[1] > /dev/null; and command code --reuse-window --goto $res &
+      disown
+  end
 end
 
 function rgfnv
