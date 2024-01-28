@@ -13,11 +13,15 @@ function ch
 end
 
 function rgf
-  set res (rg $argv[1] > /dev/null; and rg $argv[1] --json | ripgrep_to_fzf_filter | fzf | hck -Ld':' -f1,2,3 -D=":")
+  set res (rg $argv[1] > /dev/null; and rg $argv[1] --json | ripgrep_to_fzf_filter \
+  | fzf --delimiter : --preview 'bat --color=always {1} --line-range {4}:+{5} --highlight-line {2} --wrap=character --terminal-width=80' \
+  | hck -Ld':' -f1,2,3 -D=":")
   rg $argv[1] > /dev/null; and command code --reuse-window --goto $res &
   disown
 end
 
 function rgfnv
-  rg $argv[1] > /dev/null; and rg $argv[1] --json | ripgrep_to_fzf_filter | fzf | _vim-translator | xargs nvim
+  rg $argv[1] > /dev/null; and rg $argv[1] --json | ripgrep_to_fzf_filter \
+  | fzf --delimiter : --preview 'bat --color=always {1} --line-range {4}:+{5} --highlight-line {2} --wrap=character --terminal-width=80' \
+  | _vim-translator | xargs nvim
 end
