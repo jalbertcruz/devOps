@@ -13,3 +13,4 @@ set -x FZF_ALT_C_OPTS "--preview 'tree -C {} | head -50'"
 set -x FZF_COMPLETION_TRIGGER '**'
 
 set -x PATH $HOME/appslnx/tools/git/git-fuzzy/bin $PATH
+

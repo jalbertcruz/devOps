@@ -933,6 +933,9 @@ stow -vSt ~ tmuxp
 # un-adopt (remove links)
 stow -vDt ~ *
 
+# fish config update
+stow -nvSt ~ fish
+
 ❯ pwd
 /home/a/appslnx/web/vscode-data
 stow -nvSt /home/a/appslnx/web/VSCode/ personal
