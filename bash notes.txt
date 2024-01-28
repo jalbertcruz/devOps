@@ -1017,3 +1017,9 @@ buffer
         libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f2403200000)
         /lib64/ld-linux-x86-64.so.2 (0x00007f24051fe000)
 
+# pdf manipulation
+# qpdf
+# https://qpdf.readthedocs.io/en/stable/overview.html
+# https://stackoverflow.com/questions/2507766/merge-convert-multiple-pdf-files-into-one-pdf
+qpdf a.pdf qpdf --empty --pages in.pdf 1-4 -- out.pdf
+
