@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+for cmd in $(yq '.hooks | .pre-push' .hooks-config.yaml); do
+  eval "$cmd $@"
+done

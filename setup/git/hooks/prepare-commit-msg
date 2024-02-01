@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+for cmd in $(yq '.hooks | .prepare-commit-msg' .hooks-config.yaml); do
+  eval "$cmd $@"
+done

@@ -47,6 +47,11 @@ set -x LD_LIBRARY_PATH /usr/local/lib/
 # set -x PATH $HOME/appslnx/bin/job $PATH
 penv
 
+set -x _ZO_DATA_DIR /media/a/data/repo/zoxide
+set -x _ZO_ECHO 1
+
+zoxide init fish | source
+
 direnv hook fish | source
 
 # bind \cr history-token-search-backward

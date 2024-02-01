@@ -1,7 +1,6 @@
-
 alias ... "cd ../../"
-alias g 'git --config-env=commit.gpgsign=SIG_COMMIT --config-env=gpg.ssh.allowedSignersFile=ALLOWED_SIGNERS_FILE --config-env=user.email=ACTIVE_EMAIL --config-env=user.signingKey=ACTIVE_SIGNING_KEY'
-alias e 'exa -h -l'
+alias g 'git --config-env=commit.gpgsign=SIG_COMMIT --config-env=gpg.ssh.allowedSignersFile=ALLOWED_SIGNERS_FILE --config-env=user.email=ACTIVE_EMAIL --config-env=user.signingKey=ACTIVE_SIGNING_KEY --config-env=core.hooksPath=HOOKS_PATH '
+alias e 'eza -h -l'
 alias b byobu
 alias buffer 'code $BYOBU_RUN_DIR/printscreen'
 alias bload 'byobu new-session tmuxp load --yes'

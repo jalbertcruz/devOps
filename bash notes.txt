@@ -1023,3 +1023,5 @@ buffer
 # https://stackoverflow.com/questions/2507766/merge-convert-multiple-pdf-files-into-one-pdf
 qpdf a.pdf qpdf --empty --pages in.pdf 1-4 -- out.pdf
 
+# adding capabilities to a binary
+sudo setcap cap_sys_ptrace,cap_dac_read_search,cap_net_raw,cap_net_admin+ep bandwhich
