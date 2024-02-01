@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
-for cmd in $(yq '.hooks | .pre-commit' .hooks-config.yaml); do
-  eval "$cmd $@"
-done
+if [ -z ${USING_HOOKS+x} ]; then
+  :
+else
+  if [ "$USING_HOOKS" = "true" ]; then
+    for cmd in $(yq '.hooks | .pre-commit' .hooks-config.yaml); do
+      eval "$cmd $@"
+    done
+  fi
+fi
