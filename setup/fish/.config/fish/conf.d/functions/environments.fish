@@ -62,6 +62,7 @@ function venv
   pip install --upgrade build
   pip install --upgrade wheel
   test -e requirements.txt && pip install -r requirements.txt
+  test -e requirements-dev.txt && pip install -r requirements-dev.txt
   test -e Pipfile && pipenv install --dev
   test -e pyproject.toml && pip install .
   pip install hatch

@@ -32,8 +32,16 @@ function chkp
   lsof -wni "tcp:$argv[1]" | hck -f2 | tail -n +2 | sudo xargs kill -9
 end
 
-function fports
-    # fuzzy search for ports and copy the PID to clipboard
-    lsof -wni | fzf | hck -f2 | tr -d "\n" | xclip -sel clip
+function kport
+    # fuzzy search for ports and kill the process
+
+    # lsof -i -P -n | fzf | hck -f2 | tr -d "\n" | xclip -sel clip
+
+  lsof -i -P -n | \
+  fzf --bind 'ctrl-r:reload(lsof -i -P -n)' \
+      --header 'Press CTRL-R to reload' --header-lines=1 \
+      --height=50% --layout=reverse | \
+  hck -f2 | tr -d "\n" | xargs kill -9
+
 end
 
