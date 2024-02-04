@@ -918,6 +918,8 @@ $ pwd
 # from configs to touched files
 stow --adopt -vSt ~ *
 
+stow -nvSt ~ gnome-apps
+
 ❯ stow -nvS -t ~ bin
 LINK: appslnx/bin/json-merge => ../../src/devOps/setup/bin/appslnx/bin/json-merge
 WARNING: in simulation mode so not modifying filesystem.

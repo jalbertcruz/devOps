@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=2024.1.0
+TryExec=/usr/local/bin/appslnx/tools/Bitwarden.AppImage
+Exec=/usr/local/bin/appslnx/tools/Bitwarden.AppImage -- %u
+Terminal=false
+Icon=/usr/local/bin/appslnx/tools/bitwarden.png
+Name=bitwarden
+Type=Application
+Categories=Security;Utility;PasswordManager;
+                          
+MimeType=text/html;
