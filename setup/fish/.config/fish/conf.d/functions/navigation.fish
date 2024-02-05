@@ -3,9 +3,13 @@
 #     test -d code && wezterm cli spawn --cwd code --
 
 function react_to_pwd --on-variable PWD
-    type -q deactivate && deactivate
-    test -e .venv/bin/activate.fish && source .venv/bin/activate.fish
     test -e .cs-java && set jsJava (cat .cs-java) && eval "$(cs java --jvm  $jsJava --env)"
+    type -q deactivate && deactivate
+#     set activate_path .venv/bin/activate.fish
+#     if test -e $activate_path
+#         echo "Activating virtualenv: $PWD/$activate_path"
+#         source "$PWD/$activate_path"
+#     end
 end
 
 function ch
