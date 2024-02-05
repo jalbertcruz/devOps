@@ -31,3 +31,5 @@ set -x PATH ~/appslnx/bin $PATH
 # set -x PATH ~/.local/bin:$PATH
 
 set -x PATH $HOME/bin $PATH
+set -x PATH $HOME/appslnx/monitoring/loki $PATH
+set -x PATH $HOME/appslnx/monitoring/tempo $PATH

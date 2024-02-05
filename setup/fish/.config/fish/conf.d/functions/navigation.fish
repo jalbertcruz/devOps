@@ -5,6 +5,7 @@
 function react_to_pwd --on-variable PWD
     type -q deactivate && deactivate
     test -e .venv/bin/activate.fish && source .venv/bin/activate.fish
+    test -e .cs-java && set jsJava (cat .cs-java) && eval "$(cs java --jvm  $jsJava --env)"
 end
 
 function ch
