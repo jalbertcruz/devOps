@@ -1,10 +1,10 @@
 - name: Rew engine
   rootPath: ~/src/a/intelygenz/src/rewards/rewards-engine/
 - name: Rew front
-  rootPath: ~/src/a/intelygenz/src/rewards/rewards-engine-frontend/
+  rootPath: ~/src/a/intelygenz/src/rewards/frontend-rewards-engine/
 
 - name: Domain openapi spec
-  rootPath: ~/src/a/intelygenz/src/campaigns/loya-spec-domain/
+  rootPath: ~/src/a/intelygenz/src/campaigns/spec-domain/
 
 - name: Campaigns front
   rootPath: ~/src/a/intelygenz/src/campaigns/frontend-campaigns-engine/code/

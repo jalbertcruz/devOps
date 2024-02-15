@@ -32,6 +32,17 @@ function chkp
   lsof -wni "tcp:$argv[1]" | hck -f2 | tail -n +2 | sudo xargs kill -9
 end
 
+function fport
+    # fuzzy search for ports
+
+  lsof -i -P -n | \
+  fzf --bind 'ctrl-r:reload(lsof -i -P -n)' \
+      --header 'Press CTRL-R to reload' --header-lines=1 \
+      --height=50% --layout=reverse | \
+  hck -f2 | tr -d "\n" | xclip -sel clip
+
+end
+
 function kport
     # fuzzy search for ports and kill the process
 

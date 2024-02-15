@@ -1,2 +1,12 @@
-- name: System demo
-  rootPath: ~/src/Scala/teaching/api/system-demo
+
+- name: system demo
+  rootPath: ~/src/Scala/teaching/demos/system-demo
+
+- name: http4s demo
+  rootPath: ~/src/Scala/teaching/demos/http4s-demo
+
+- name: izumi demo
+  rootPath: ~/src/Scala/teaching/demos/izumi-demo
+
+- name: otelo demo
+  rootPath: ~/src/Scala/teaching/demos/otelo-demo

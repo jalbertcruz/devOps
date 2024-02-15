@@ -190,3 +190,5 @@ courses/akka-persistence-udemy/src/main/protobuf/DataModel.proto
 general/elixir-scala/grpc/akka-grpc-client-server/src/main/protobuf/helloworld.proto
 general/elixir-scala/grpc/grpc_elixir_client/deps/protobuf/src/elixir.proto
 general/elixir-scala/grpc/grpc_elixir_client/helloworld.proto
+
+❯ fd -H comby /

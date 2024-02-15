@@ -12,11 +12,6 @@ function react_to_pwd --on-variable PWD
 #     end
 end
 
-function ch
-    set dest (_choose-destination)
-    cd "$dest"
-end
-
 function rgf
   set res (rg $argv[1] > /dev/null; and rg $argv[1] --json | ripgrep_to_fzf_filter --rb 3 --lc 6 \
   | fzf --delimiter : --preview 'bat --color=always {1} --line-range {4}:+{5} --highlight-line {2} --wrap=character --terminal-width=80' \
@@ -32,5 +27,14 @@ function rgfnv
   | fzf --delimiter : --preview 'bat --color=always {1} --line-range {4}:+{5} --highlight-line {2} --wrap=character --terminal-width=80')
   if [ "$res" ]
       echo -n $res | _vim-translator | xargs nvim
+  end
+end
+
+# dirs-navigator
+# senv
+function ch
+    set dest (_choose-destination)
+  if [ "$dest" ]
+    cd "$dest"
   end
 end
