@@ -91,9 +91,17 @@ end
 # set -gx VOLTA_HOME "$HOME/.volta"
 # set -gx PATH "$VOLTA_HOME/bin" $PATH
 
+# https://nrbx.atlassian.net/wiki/spaces/PaaS/pages/257490991/DEV+Kubernetes+Cluster
 set KUBERNETES_NAMESPACE realm-loya
-set AGENT_ID 230
+set AGENT_ID 1090399
+
+# it is in...
+# set TOKEN ""
 
 set CLUSTER_NAME "zenith-dev"
 set CONTEXT_NAME "$CLUSTER_NAME-$KUBERNETES_NAMESPACE"
 
+# kubectl config set-cluster $CONTEXT_NAME --server "https://kas.gitlab.com/k8s-proxy"
+# kubectl config set-credentials $CONTEXT_NAME --token "pat:$AGENT_ID:$TOKEN"
+# kubectl config set-context $CONTEXT_NAME --cluster $CONTEXT_NAME --user $CONTEXT_NAME --namespace $KUBERNETES_NAMESPACE
+# kubectl config use-context $CONTEXT_NAME
