@@ -1,7 +1,7 @@
 
-set -x PATH $HOME/appslnx/build-tools/maven/bin $PATH
+# set -x PATH $HOME/appslnx/build-tools/maven/bin $PATH
 set -x PATH $JAVA_HOME/bin/ $HOME/appslnx/build-tools/maven/bin/ $PATH
-#set -x PATH $HOME/appslnx/jdk-11/bin/ $HOME/appslnx/build-tools/maven/bin/ $HOME/.rbenv/shims/ $PATH
+# set -x PATH $HOME/appslnx/jdk-11/bin/ $HOME/appslnx/build-tools/maven/bin/ $HOME/.rbenv/shims/ $PATH
 
 set -x LEIN_JVM_OPTS "-Dmaven.wagon.rto=1800000"
 

@@ -5,7 +5,7 @@ function kbn
 end
 
 function kps
-    ps aux | fzf | hck -f2 | tr -d "\n" | xargs kill
+    ps aux | fzf | hck -f2 | tr -d "\n" | xargs kill -9
 end
 
 function fps

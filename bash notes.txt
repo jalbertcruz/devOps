@@ -307,7 +307,7 @@ https://archive.org/download/stackexchange/stackoverflow.com-PostHistory.7z
 
 # Random string generation
 cat /dev/urandom | base64 | head -c 44 ; echo
-head -c 32 /dev/urandom | base64
+head -c 12 /dev/urandom | base64
 
 The following procedure should wipe wireshark from your system: First uninstall the wireshark package and all related configuration files:
 
@@ -553,6 +553,8 @@ create database terraform_backend
 > fd '^x.*rc$'
 X11/xinit/xinitrc
 X11/xinit/xserverrc
+# find executable files, in this case docker
+fd -t x '^docker$'
 
 
 # httpie on centos
