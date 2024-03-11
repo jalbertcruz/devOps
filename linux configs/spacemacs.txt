@@ -1,0 +1,4 @@
+
+* resize windows
+* windows manipulation transient state
+Sp w . 

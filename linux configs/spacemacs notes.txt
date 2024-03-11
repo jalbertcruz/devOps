@@ -1,0 +1,14 @@
+
+bookmarks
+
+space f b
+
+
+How can I reload .spacemacs file after editing without restart emacs?
+
+SPC f e R
+
+
+
+Table 1—Repeatable Actions and How to Reverse Them (page 36)
+

@@ -1,0 +1,11 @@
+
+# gnome .desktop files location
+❯ cp /usr/share/applications/code.desktop /home/a/Downloads/
+
+
+# To use xfs
+https://www.cyberciti.biz/faq/how-to-install-xfs-and-create-xfs-file-system-on-debianubuntu-linux/
+https://manpages.ubuntu.com/manpages/bionic/man8/mkfs.xfs.8.html
+
+sudo apt update
+sudo apt install xfsprogs

@@ -33,7 +33,7 @@ end
 # dirs-navigator
 # senv
 function ch
-    set dest (_choose-destination)
+  set dest (_choose-destination)
   if [ "$dest" ]
     cd "$dest"
   end

@@ -1,0 +1,7 @@
+
+❯ ssh-keygen -lf ~/.ssh/id_ed25519_job.pub
+256 SHA256:BFpp0B7HB8/U6MfAVBAbDc7/x+19O+DEs6u7Mp5d6p8 albert.cruz@intelygenz.com (ED25519)
+
+❯ g verify-commit HEAD
+Good "git" signature with ED25519 key SHA256:BFpp0B7HB8/U6MfAVBAbDc7/x+19O+DEs6u7Mp5d6p8
+No principal matched.

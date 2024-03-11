@@ -4,10 +4,16 @@ function kbn
   ps aux | grep $argv[1] | grep -v grep | hck -f2 | sudo xargs kill
 end
 
-function kps
-    ps aux | fzf | hck -f2 | tr -d "\n" | xargs kill -9
+function fpsk
+  set res (ps aux | fzf | hck -f2 | tr -d "\n")
+  if [ "$res" ]
+      kill -9 $res
+  end
 end
 
 function fps
-    ps aux | fzf | hck -f2 | tr -d "\n" | xclip -sel clip
+  set res (ps aux | fzf | hck -f2 | tr -d "\n")
+  if [ "$res" ]
+  end
+     echo $res | xclip -sel clip
 end
