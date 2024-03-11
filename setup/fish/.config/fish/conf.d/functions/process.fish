@@ -14,6 +14,6 @@ end
 function fps
   set res (ps aux | fzf | hck -f2 | tr -d "\n")
   if [ "$res" ]
-  end
      echo $res | xclip -sel clip
+  end
 end
