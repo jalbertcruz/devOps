@@ -83,4 +83,5 @@ sudo apt-get install pavucontrol audacity
 
 sudo apt-get install -y stow
 sudo apt-get install -y libbz2-dev lzma liblzma-dev libbz2-dev
+# comby
 sudo apt-get install -y libev-dev

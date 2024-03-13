@@ -1,0 +1,30 @@
+
+# rnr
+https://github.com/ismaelgv/rnr
+
+USAGE:
+    rnr [FLAGS] [OPTIONS] <EXPRESSION> <REPLACEMENT> <PATH(S)>...
+    rnr [FLAGS] [OPTIONS] <SUBCOMMAND>
+
+FLAGS:
+    -b, --backup          Generate file backups before renaming
+    -n, --dry-run         Only show what would be done (default mode)
+        --dump            Force dumping operations into a file even in dry-run mode
+    -f, --force           Make actual changes to files
+    -h, --help            Prints help information
+    -x, --hidden          Include hidden files and directories
+    -D, --include-dirs    Rename matching directories
+        --no-dump         Do not dump operations into a file
+    -r, --recursive       Recursive mode
+    -s, --silent          Do not print any information
+    -V, --version         Prints version information
+
+OPTIONS:
+        --color <color>            Set color output mode [default: auto]  [possible values: always, auto, never]
+    -d, --max-depth <LEVEL>        Set max depth in recursive mode
+    -l, --replace-limit <LIMIT>    Limit of replacements, all matches if set to 0 [default: 1]
+
+ARGS:
+    <EXPRESSION>     Expression to match (can be a regex)
+    <REPLACEMENT>    Expression replacement
+    <PATH(S)>...     Target paths
