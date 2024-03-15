@@ -35,3 +35,8 @@ set -x PATH ~/appslnx/tools/spring/bin $PATH
 # set -x PATH ~/appslnx/tools/smithy/cli/bin $PATH
 
 set -x PATH ~/appslnx/tools/liquibase $PATH
+
+set -x KC_HOME ~/appslnx/web/keycloak
+set -x KEYCLOAK_ADMIN admin
+set -x KEYCLOAK_ADMIN_PASSWORD admin
+set -x PATH $KC_HOME/bin $PATH

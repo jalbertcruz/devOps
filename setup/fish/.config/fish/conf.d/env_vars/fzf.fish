@@ -10,7 +10,7 @@ set -x FZF_CTRL_T_OPTS "--preview 'bat --color=always --line-range :50 {}'"
 
 set -x FZF_ALT_C_COMMAND 'command fd --type d . --color=never --hidden -E .git -E .bsp -E target -E .idea -E .venv'
 set -x FZF_ALT_C_OPTS "--preview 'tree -C {} | head -50'"
-set -x FZF_COMPLETION_TRIGGER '**'
+# set -x FZF_COMPLETION_TRIGGER '**'
 
 set -x PATH $HOME/appslnx/tools/git/git-fuzzy/bin $PATH
 

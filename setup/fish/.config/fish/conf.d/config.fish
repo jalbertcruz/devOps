@@ -1,6 +1,4 @@
 
-# Configure Jump
-status --is-interactive; and source (jump shell fish | psub)
 
 fish_vi_key_bindings
 
@@ -51,8 +49,12 @@ set -x _ZO_DATA_DIR /media/a/data/repo/zoxide
 set -x _ZO_ECHO 1
 
 zoxide init fish | source
-
 direnv hook fish | source
+# Install Starship
+starship init fish | source
+# Configure Jump
+status --is-interactive; and source (jump shell fish | psub)
+fzf --fish | source
 
 # bind \cr history-token-search-backward
 # bind \cn history-token-search-forward
@@ -81,8 +83,6 @@ set -g fish_color_selection 'white' '--bold' '--background=brblack'
 set -g fish_color_user brgreen
 set -g fish_color_valid_path --underline
 
-# Install Starship
-starship init fish | source
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
