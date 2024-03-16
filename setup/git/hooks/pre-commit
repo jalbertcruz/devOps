@@ -1,10 +1,22 @@
 #!/usr/bin/env bash
 
+if ! command -v yq &> /dev/null
+then
+    echo "'yq' tool could not be found"
+    exit 0
+fi
+
+HOOKS_CONFIG_FILE=".hooks-config.yaml"
+if ! test -f $HOOKS_CONFIG_FILE; then
+  echo "File '$HOOKS_CONFIG_FILE' does not exist."
+  exit 0
+fi
+
 if [ -z ${USING_HOOKS+x} ]; then
   :
 else
   if [ "$USING_HOOKS" = "true" ]; then
-    for cmd in $(yq '.hooks | .pre-commit' .hooks-config.yaml); do
+    for cmd in $(yq '.hooks | .pre-commit' $HOOKS_CONFIG_FILE); do
       eval "$cmd $@"
     done
   fi
