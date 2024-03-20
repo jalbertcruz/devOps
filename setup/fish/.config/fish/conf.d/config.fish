@@ -56,6 +56,10 @@ starship init fish | source
 status --is-interactive; and source (jump shell fish | psub)
 fzf --fish | source
 
+if status is-interactive
+#     eval (zellij setup --generate-auto-start fish | string collect)
+end
+
 # bind \cr history-token-search-backward
 # bind \cn history-token-search-forward
 # bind \cg "commandline -rt (complete -C --escape|fzf|cut -d\t -f1)\ "
