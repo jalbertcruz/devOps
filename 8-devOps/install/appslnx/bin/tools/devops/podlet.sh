@@ -28,6 +28,7 @@ install_podlet() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf podlet-x86_64-unknown-linux-gnu.tar.xz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv podlet-x86_64-unknown-linux-gnu/podlet $DEST
 
   save_last_installation_log $app_name

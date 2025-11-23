@@ -3,10 +3,12 @@
 #f2 -f '\.' -r ' ' -e --include-dir --exec | true
 PATH="$PATH:/usr/local/bin/appslnx/bin/tools/pls/refactoring"
 
-f2 -f '(.*) \[.*$' \
-  -r '$1' \
-  -e --include-dir --exec | true
+# f2 -f '(.*) \[.*$' \
+#   -r '$1' \
+#   -e --include-dir --exec | true
 f2 -f '？' -r '_' \
+  -e --include-dir --exec | true
+f2 -f '  ' -r ' ' \
   -e --include-dir --exec | true
 f2 -f '_' -r ' ' \
   -e --include-dir --exec | true
@@ -56,3 +58,8 @@ f2 -f '⧸' -r '-' \
   -e --include-dir --exec | true
 f2 -f '⚡' -r '' \
   -e --include-dir --exec | true
+f2 -f '\[' -r '-' \
+  -e --include-dir --exec | true
+f2 -f '\]' -r '-' \
+  -e --include-dir --exec | true
+

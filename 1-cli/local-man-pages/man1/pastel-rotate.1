@@ -1,0 +1,31 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH pastel-rotate 1  "rotate " 
+.SH NAME
+pastel\-rotate \- Rotate the hue channel by the specified angle
+.SH SYNOPSIS
+\fBpastel rotate\fR [\fB\-h\fR|\fB\-\-help\fR] <\fIdegrees\fR> [\fIcolor\fR] 
+.SH DESCRIPTION
+Rotate the HSL hue channel of a color by the specified angle (in degrees). A rotation by 180° returns the complementary color. A rotation by 360° returns to the original color.
+.SH OPTIONS
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+<\fIdegrees\fR>
+angle by which to rotate (in degrees, can be negative)
+.TP
+[\fIcolor\fR]
+Colors can be specified in many different formats, such as #RRGGBB, RRGGBB, #RGB, \*(Aqrgb(…, …, …)\*(Aq, \*(Aqhsl(…, …, …)\*(Aq, \*(Aqgray(…)\*(Aq or simply by the name of the color. The identifier \*(Aq\-\*(Aq can be used to read a single color from standard input. Also, the special identifier \*(Aqpick\*(Aq can be used to run an external color picker to choose a color. If no color argument is specified, colors will be read from standard input.
+Examples (all of these specify the same color):
+  \- lightslategray
+  \- \*(Aq#778899\*(Aq
+  \- 778899
+  \- 789
+  \- \*(Aqrgb(119, 136, 153)\*(Aq
+  \- \*(Aq119,136,153\*(Aq
+  \- \*(Aqhsl(210, 14.3%, 53.3%)\*(Aq
+Alpha transparency is also supported:
+  \- \*(Aq#77889980\*(Aq
+  \- \*(Aqrgba(119, 136, 153, 0.5)\*(Aq
+  \- \*(Aqhsla(210, 14.3%, 53.3%, 50%)\*(Aq

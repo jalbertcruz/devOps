@@ -80,3 +80,19 @@ end
 vim.api.nvim_create_user_command("Sftype", set_file_type, {})
 
 require("config.extras_lsp")
+
+local function disable_expandtab()
+  vim.opt_local.expandtab = false
+  vim.opt_local.tabstop = 2 -- or your preferred tab width
+  vim.opt_local.shiftwidth = 2 -- or your preferred indent width
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = disable_expandtab,
+})
+
+ vim.api.nvim_create_autocmd("FileType", {
+   pattern = "org",
+   callback = disable_expandtab
+ })

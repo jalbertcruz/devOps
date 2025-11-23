@@ -1,0 +1,165 @@
+.\" Manpage for broot
+.\" Some items starting with a # are replaced on build
+.TH broot 1 "2026/03/26" "1.56.2" "broot manpage"
+.SH NAME
+broot \- Tree view, file manager, configurable launcher
+.SH SYNOPSIS
+.B broot
+[\fIflags\fR]
+[\fIoptions\fR]
+[path]
+.br
+.B br
+[\fIflags\fR]
+[\fIoptions\fR]
+[path]
+.SH DESCRIPTION
+\fBbroot\fR lets you explore file hierarchies with a tree-like view, manipulate files, launch actions, and define your own shortcuts.
+.PP
+\fBbroot\fR is best launched as \fBbr\fR: this shell function gives you access to more commands, especially \fIcd\fR. The \fBbr\fR shell function is interactively installed on first \fBbroot\fR launch.
+.PP
+Flags and options can be classically passed on launch but also written in the configuration file. Each flag has a counter-flag so that you can cancel at command line a flag which has been set in the configuration file.
+.SH FLAGS
+FLAGS
+.TP
+\fB\-d\fR, \fB\-\-dates\fR
+Show the last modified date of files and directories
+.TP
+\fB\-D\fR, \fB\-\-no\-dates\fR
+Don\*(Aqt show the last modified date
+.TP
+\fB\-f\fR, \fB\-\-only\-folders\fR
+Only show folders
+.TP
+\fB\-F\fR, \fB\-\-no\-only\-folders\fR
+Show folders and files alike
+.TP
+\fB\-\-show\-root\-fs\fR
+Show filesystem info on top
+.TP
+\fB\-g\fR, \fB\-\-show\-git\-info\fR
+Show git statuses on files and stats on repo
+.TP
+\fB\-G\fR, \fB\-\-no\-show\-git\-info\fR
+Don\*(Aqt show git statuses on files and stats on repo
+.TP
+\fB\-\-git\-status\fR
+Only show files having an interesting git status, including hidden ones
+.TP
+\fB\-\-help\fR
+Print help information
+.TP
+\fB\-h\fR, \fB\-\-hidden\fR
+Show hidden files
+.TP
+\fB\-H\fR, \fB\-\-no\-hidden\fR
+Don\*(Aqt show hidden files
+.TP
+\fB\-i\fR, \fB\-\-git\-ignored\fR
+Show git ignored files
+.TP
+\fB\-I\fR, \fB\-\-no\-git\-ignored\fR
+Don\*(Aqt show git ignored files
+.TP
+\fB\-p\fR, \fB\-\-permissions\fR
+Show permissions
+.TP
+\fB\-P\fR, \fB\-\-no\-permissions\fR
+Don\*(Aqt show permissions
+.TP
+\fB\-s\fR, \fB\-\-sizes\fR
+Show the size of files and directories
+.TP
+\fB\-S\fR, \fB\-\-no\-sizes\fR
+Don\*(Aqt show sizes
+.TP
+\fB\-\-sort\-by\-count\fR
+Sort by count (only show one level of the tree)
+.TP
+\fB\-\-sort\-by\-date\fR
+Sort by date (only show one level of the tree)
+.TP
+\fB\-\-sort\-by\-size\fR
+Sort by size (only show one level of the tree)
+.TP
+\fB\-\-sort\-by\-type\fR
+Same as sort\-by\-type\-dirs\-first
+.TP
+\fB\-\-sort\-by\-type\-dirs\-first\fR
+Sort by type, directories first (only show one level of the tree)
+.TP
+\fB\-\-sort\-by\-type\-dirs\-last\fR
+Sort by type, directories last (only show one level of the tree)
+.TP
+\fB\-w\fR, \fB\-\-whale\-spotting\fR
+Sort by size, show ignored and hidden files
+.TP
+\fB\-\-no\-sort\fR
+Don\*(Aqt sort
+.TP
+\fB\-t\fR, \fB\-\-trim\-root\fR
+Trim the root too and don\*(Aqt show a scrollbar
+.TP
+\fB\-T\fR, \fB\-\-no\-trim\-root\fR
+Don\*(Aqt trim the root level, show a scrollbar
+.TP
+\fB\-\-outcmd\fR=\fIOUTCMD\fR
+Where to write the produced cmd (if any)
+.TP
+\fB\-c\fR, \fB\-\-cmd\fR=\fICMD\fR
+Semicolon separated commands to execute
+.TP
+\fB\-\-color\fR=\fICOLOR\fR [default: auto]
+Whether to have styles and colors (default is usually OK)
+.br
+
+.br
+[\fIpossible values: \fRauto, yes, no]
+.TP
+\fB\-\-conf\fR=\fICONF\fR
+Semicolon separated paths to specific config files
+.TP
+\fB\-\-height\fR=\fIHEIGHT\fR
+Height (if you don\*(Aqt want to fill the screen or for file export)
+.TP
+\fB\-\-install\fR
+Install or reinstall the br shell function
+.TP
+\fB\-\-set\-install\-state\fR=\fISET_INSTALL_STATE\fR
+Where to write the produced cmd (if any)
+.br
+
+.br
+[\fIpossible values: \fRundefined, refused, installed]
+.TP
+\fB\-\-print\-shell\-function\fR=\fIPRINT_SHELL_FUNCTION\fR
+Print to stdout the br function for a given shell
+.TP
+\fB\-\-listen\fR=\fILISTEN\fR
+A socket to listen to for commands
+.TP
+\fB\-\-get\-root\fR
+Ask for the current root of the remote broot
+.TP
+\fB\-\-write\-default\-conf\fR=\fIWRITE_DEFAULT_CONF\fR
+Write default conf files in given directory
+.TP
+\fB\-\-send\fR=\fISEND\fR
+A socket that broot sends commands to before quitting
+.TP
+\fB\-V\fR, \fB\-\-version\fR
+Print version
+.TP
+.SH BUGS
+.PP
+.B broot
+is known to be slow on most \fIWindows\fR installations.
+.PP
+On unix and mac platforms, most problems you may encounter are related to some terminals or terminal multiplexers which either intercepts some standard TTY instructions or break buffering or size querying. The list of shortcuts you can define in the config file is thus dependent of your system.
+.SH AUTHOR
+.B broot
+is free and open-source and is written by \fIdenys.seguret@gmail.com\fR. The source code and documentation are available at https://dystroy.org/broot
+
+
+
+

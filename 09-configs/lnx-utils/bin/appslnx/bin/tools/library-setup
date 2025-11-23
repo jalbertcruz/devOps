@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+
+if [ -z "$ZPOOL" ] || [ -z "$DATA_FOLDER" ]; then
+  echo "Error: ZPOOL and DATA_FOLDER environment variables must be set."
+  exit 1
+fi
+
+#ZPOOL="externo"
+DISK_1_ID="usb-SanDisk_Cruzer_Blade_04020204010325234118-0:0-part1" # flash
+DISK_2_ID="usb-WD_Elements_25A1_575831314442384152444E35-0:0-part3" # hdd
+# ls -la /dev/disk/by-id/
+
+#    -f \
+#sudo zpool create -o cachefile=$ZPOOL_CACHE \
+sudo zpool create \
+    -o ashift=12 \
+    -o autotrim=off \
+    $ZPOOL mirror \
+    /dev/disk/by-id/${DISK_1_ID} \
+    /dev/disk/by-id/${DISK_2_ID}
+
+## Para bases de datos (8-16KB)
+#sudo zfs set recordsize=16K externo/bases-datos
+## Para archivos grandes (1MB)
+#sudo zfs set recordsize=1M externo/videos
+## Para uso general (128KB - default)
+#sudo zfs set recordsize=128K externo/general
+
+## Ver configuración
+#echo "=== Configuración final ==="
+#sudo zfs list -r $ZPOOL
+#echo ""
+#echo "=== Propiedades destacadas ==="
+#sudo zfs get compression,quota,mountpoint,recordsize -r $ZPOOL
+
+# Para archivos críticos, puedes tener copias extras
+# Aunque estés en mirror, puedes pedir copias adicionales
+
+# Esto guarda 2 copias de cada bloque (además del mirror)
+#sudo zfs set copies=2 externo/critico
+# Con copies=2 y mirror, cada bloque existe 3 veces
+# Protege incluso si ambos discos tienen bit rot en diferentes bloques
+# Ver espacio usado por las copias
+#sudo zfs get used,logicalused externo/critico
+
+
+
+# private data
+sudo zfs create $ZPOOL/private
+sudo zfs set compression=zstd-9 $ZPOOL/private
+sudo zfs set recordsize=8K $ZPOOL/private
+sudo zfs set copies=3 $ZPOOL/private
+sudo zfs set mountpoint=/home/$USER/$DATA_FOLDER/private $ZPOOL/private
+sudo zfs set sync=standard $ZPOOL/private
+
+# books
+sudo zfs create $ZPOOL/books
+sudo zfs set compression=zstd-9 $ZPOOL/books
+sudo zfs set recordsize=64K $ZPOOL/books
+sudo zfs set atime=off $ZPOOL/books
+sudo zfs set mountpoint=/home/$USER/$DATA_FOLDER/books $ZPOOL/books
+sudo zfs set sync=standard $ZPOOL/books
+
+
+
+#chown -R z:z /home/z/books /home/z/code /home/z/docs /home/z/medias /home/z/photos
+#chmod -R 700 /home/z/books /home/z/code /home/z/docs /home/z/medias /home/z/photos
+
+#chown -R z:z /home/z/books /home/z/private
+#chmod -R 700 /home/z/books /home/z/private
+#
+#exit 0
+
+# code
+sudo zfs create $ZPOOL/code
+sudo zfs set compression=zstd-9 $ZPOOL/code
+sudo zfs set recordsize=64K $ZPOOL/code
+sudo zfs set atime=off $ZPOOL/code
+sudo zfs set mountpoint=/home/$USER/$DATA_FOLDER/code $ZPOOL/code
+sudo zfs set sync=standard $ZPOOL/code
+
+# personal documents
+sudo zfs create $ZPOOL/docs
+sudo zfs set compression=zstd-9 $ZPOOL/docs
+sudo zfs set recordsize=64K $ZPOOL/docs
+sudo zfs set atime=off $ZPOOL/docs
+sudo zfs set mountpoint=/home/$USER/$DATA_FOLDER/docs $ZPOOL/docs
+sudo zfs set sync=standard $ZPOOL/docs
+
+sudo zfs create $ZPOOL/medias
+sudo zfs set compression=off  $ZPOOL/medias
+sudo zfs set recordsize=1M $ZPOOL/medias
+sudo zfs set atime=off $ZPOOL/medias
+sudo zfs set mountpoint=/home/$USER/$DATA_FOLDER/medias $ZPOOL/medias
+sudo zfs set sync=standard $ZPOOL/medias
+
+sudo zfs create $ZPOOL/photos
+sudo zfs set compression=off  $ZPOOL/photos
+sudo zfs set recordsize=128K $ZPOOL/photos
+sudo zfs set atime=off $ZPOOL/photos
+sudo zfs set mountpoint=/home/$USER/$DATA_FOLDER/photos $ZPOOL/photos
+sudo zfs set sync=standard $ZPOOL/photos
+
+sudo chown -R z:z /home/$USER/$DATA_FOLDER
+sudo chmod -R 700 /home/$USER/$DATA_FOLDER
+
+##ls -li /externo/documentos/archivo.txt
+# Output: 123456 -rw-r--r-- ... archivo.txt
+#         ^^^^^^ inodo
+##stat /externo/documentos/archivo.txt
+# Muestra: Inode: 12345
+#zdb -ddddd $ZPOOL/private <inode>
+#zpool status -v externo
+
+#zdb -ddddd $ZPOOL/private 2
+#sudo zpool sync $ZPOOL
+

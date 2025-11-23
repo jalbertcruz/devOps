@@ -11,6 +11,7 @@ import_lua("extras/exporters")
 import_lua("extras/formaters")
 import_lua("extras/treesitter")
 import_lua("extras/searchers")
+import_lua("extras/lsp")
 
 require("extras.formaters.scala.sql_doobie").setup({})
 require("extras.formaters.scala.enum_scala3").setup({})

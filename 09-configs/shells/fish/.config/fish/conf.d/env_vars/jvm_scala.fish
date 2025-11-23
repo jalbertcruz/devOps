@@ -1,6 +1,7 @@
 # test -e .cs-java && set jsJava (cat .cs-java) && eval "$(cs java --jvm $jsJava --env)"
 if not test -e .cs-java
-    #     test -d ~/appslnx/jdk-17 && set -x JAVA_HOME ~/appslnx/jdk-17
+#     test -d ~/appslnx/jdk-11 && set -x JAVA_HOME ~/appslnx/jdk-11
+#     test -d ~/appslnx/jdk-17 && set -x JAVA_HOME ~/appslnx/jdk-17
     test -d ~/appslnx/jdk-21 && set -xg JAVA_HOME ~/appslnx/jdk-21 # && echo "Using default JDK 21"
 else
     set jsJava (cat .cs-java)
@@ -40,8 +41,6 @@ fish_add_path --global ~/appslnx/build-tools/gradle/bin
 
 fish_add_path --global ~/usr/local/bin/appslnx/tools/async-profiler
 fish_add_path --global ~/appslnx/tools/spring/bin
-
-# fish_add_path --global ~/appslnx/tools/smithy/cli/bin
 
 fish_add_path --global ~/appslnx/tools/liquibase
 

@@ -22,6 +22,7 @@ lazy val root = project
       "com.mysql"                     % "mysql-connector-j"        % "9.4.0",
       "io.7mind.izumi"               %% "distage-extension-config" % izumi,
       "io.7mind.izumi"               %% "distage-core"             % izumi,
+       "dev.zio" %% "zio" % "2.1.24",
       "com.disneystreaming.smithy4s" %% "smithy4s-http4s"          % smithy4sVersion.value,
       "org.http4s"                   %% "http4s-ember-server"      % "0.23.30",
       "com.monovore"                 %% "decline-effect"           % "2.5.0") ++

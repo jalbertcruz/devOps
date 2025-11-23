@@ -29,6 +29,7 @@ install_procs() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   unzip procs-*x86_64-linux.zip
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv procs $DEST
 
   save_last_installation_log $app_name

@@ -17,6 +17,12 @@ return {
       -- options
     },
   },
+  {
+    "sindrets/diffview.nvim",
+    opts = {
+      -- options
+    },
+  },
   --   {
   --       "jay-babu/mason-nvim-dap.nvim",
   --

@@ -256,11 +256,11 @@ local all_servers = {
   --    settings = {},
   --  },
   --},
-  {
-    clojure_lsp = {
-      mason = false,
-    },
-  },
+  --{
+  --  clojure_lsp = {
+  --    mason = false,
+  --  },
+  --},
   {
     texlab = {
       mason = false,

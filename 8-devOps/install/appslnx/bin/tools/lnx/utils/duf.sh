@@ -29,6 +29,7 @@ install_duf() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf duf*linux_x86_64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv duf $DEST
 
   save_last_installation_log $app_name

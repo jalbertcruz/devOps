@@ -23,7 +23,7 @@ object Configs:
      penpotapp_frontend:   String,
      penpotapp_backend:   String,
      penpotapp_exporter:   String,
-     penpot_mailcatch: String,
+     penpotapp_mailcatch: String,
      valkey:   String,
 
      )

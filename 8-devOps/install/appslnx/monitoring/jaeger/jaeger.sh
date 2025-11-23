@@ -27,7 +27,7 @@ install_jaeger() {
   echo "Downloading $url"
   mkdir -p $DEST
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
-  tar -xvf jaeger-2.12.0-linux-amd64.tar.gz
+  tar -xvf jaeger-*-linux-amd64.tar.gz
   cp jaeger*/* $DEST
 
   save_last_installation_log $app_name
@@ -37,7 +37,7 @@ if (
   [[ ! $(command -v $app_name) ]] ||
     [[ "$UPDATE_ALL" = "true" ]]
 ) &&
-  [[ "$APP_TYPE" = "monitoring" ]]; then
+  [[ "$APP_TYPE" = "monitoring_temp" ]]; then
   echo "Installing ${app_name} in: $DEST"
   eval install_$app_name
   wait_some_time $WAITING_TIME "Waiting for $WAITING_TIME seconds before the next script..."

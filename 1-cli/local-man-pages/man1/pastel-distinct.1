@@ -1,0 +1,43 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH pastel-distinct 1  "distinct " 
+.SH NAME
+pastel\-distinct \- Generate a set of visually distinct colors
+.SH SYNOPSIS
+\fBpastel distinct\fR [\fB\-m\fR|\fB\-\-metric\fR] [\fB\-v\fR|\fB\-\-verbose\fR] [\fB\-h\fR|\fB\-\-help\fR] [\fIcount\fR] [\fIcolor\fR] 
+.SH DESCRIPTION
+Generate a set of visually distinct colors by maximizing the perceived color difference between pairs of colors.
+.PP
+The default parameters for the optimization procedure (simulated annealing) should work fine for up to 10\-20 colors.
+.SH OPTIONS
+.TP
+\fB\-m\fR, \fB\-\-metric\fR \fI<name>\fR [default: CIE76]
+Distance metric to compute mutual color distances. The CIEDE2000 is more accurate, but also much slower.
+.br
+
+.br
+[\fIpossible values: \fRCIEDE2000, CIE76]
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Print simulation output to STDERR
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+[\fIcount\fR] [default: 10]
+Number of distinct colors in the set
+.TP
+[\fIcolor\fR]
+Colors can be specified in many different formats, such as #RRGGBB, RRGGBB, #RGB, \*(Aqrgb(…, …, …)\*(Aq, \*(Aqhsl(…, …, …)\*(Aq, \*(Aqgray(…)\*(Aq or simply by the name of the color. The identifier \*(Aq\-\*(Aq can be used to read a single color from standard input. Also, the special identifier \*(Aqpick\*(Aq can be used to run an external color picker to choose a color. If no color argument is specified, colors will be read from standard input.
+Examples (all of these specify the same color):
+  \- lightslategray
+  \- \*(Aq#778899\*(Aq
+  \- 778899
+  \- 789
+  \- \*(Aqrgb(119, 136, 153)\*(Aq
+  \- \*(Aq119,136,153\*(Aq
+  \- \*(Aqhsl(210, 14.3%, 53.3%)\*(Aq
+Alpha transparency is also supported:
+  \- \*(Aq#77889980\*(Aq
+  \- \*(Aqrgba(119, 136, 153, 0.5)\*(Aq
+  \- \*(Aqhsla(210, 14.3%, 53.3%, 50%)\*(Aq

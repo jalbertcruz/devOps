@@ -30,6 +30,7 @@ install_tealdeer() {
   echo "📥 Installing tealdeer..."
   mkdir -p $DEST
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   mv tealdeer-linux-x86_64-musl tealdeer
   chmod +x tealdeer

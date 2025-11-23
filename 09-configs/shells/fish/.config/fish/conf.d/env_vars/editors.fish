@@ -9,3 +9,5 @@ set -x IDEA_VMOPTIONS_FILE '$HOME/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-
 
 # set -x NVIM_APPNAME nvim-tj
 # set -x NVIM_APPNAME nvim-exosyphon
+
+fish_add_path --global ~/.config/emacs-doom/bin

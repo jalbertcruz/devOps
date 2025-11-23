@@ -9,8 +9,4 @@
 ;;   {:shortcuts {:ui/toggle-theme "t z"
 ;;                :ui/toggle-brackets "t b"}}
 
-{
-  :preferred-workflow :todo
-  :editor/preferred-pasting-file? true
-  :shortcuts {:graph/export-as-html ["ctrl+pg-down"]}
- }
+{}

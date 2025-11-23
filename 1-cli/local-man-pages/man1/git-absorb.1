@@ -1,0 +1,339 @@
+'\" t
+.\"     Title: git-absorb
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 02/14/2026
+.\"    Manual: git absorb
+.\"    Source: git-absorb 0.9.0
+.\"  Language: English
+.\"
+.TH "GIT\-ABSORB" "1" "02/14/2026" "git\-absorb 0\&.9\&.0" "git absorb"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+git-absorb \- Automatically absorb staged changes into your current branch
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit absorb\fR [FLAGS] [OPTIONS]
+.fi
+.SH "DESCRIPTION"
+.sp
+You have a feature branch with a few commits\&. Your teammate reviewed the branch and pointed out a few bugs\&. You have fixes for the bugs, but you don\(cqt want to shove them all into an opaque commit that says fixes, because you believe in atomic commits\&. Instead of manually finding commit SHAs for git commit \-\-fixup, or running a manual interactive rebase, do this:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git add $FILES_YOU_FIXED
+
+$ git absorb \-\-and\-rebase
+  (or)
+$ git absorb
+$ git rebase \-i \-\-autosquash master
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+git absorb will automatically identify which commits are safe to modify, and which indexed changes belong to each of those commits\&. It will then write fixup! commits for each of those changes\&. You can check its output manually if you don\(cqt trust it, and then fold the fixups into your feature branch with git\(cqs built\-in autosquash functionality\&.
+.SH "FLAGS"
+.PP
+\-r, \-\-and\-rebase
+.RS 4
+Run rebase if successful\&. See also the REBASE_OPTIONS below\&.
+.RE
+.PP
+\-n, \-\-dry\-run
+.RS 4
+Don\(cqt make any actual changes
+.RE
+.PP
+\-\-no\-limit
+.RS 4
+Remove absorb stack limit\&. Has no effect when used with
+\-\-base
+
+This will consider all commits until either root, merge commit, or a commit by other author (unless
+\-\-force\-author
+is used)
+
+Which is why you should be careful when using this flag\&.
+.RE
+.PP
+\-\-force\-author
+.RS 4
+Generate fixups to commits not made by you
+.RE
+.PP
+\-\-force\-detach
+.RS 4
+Generate fixups even when on a non\-branch (detached) HEAD
+.RE
+.PP
+\-F, \-\-one\-fixup\-per\-commit
+.RS 4
+Only generate one fixup per commit
+.RE
+.PP
+\-f, \-\-force
+.RS 4
+Skip all safety checks as if all \-\-force\-* flags were given\&. See those flags to understand the full effect of supplying \-\-force\&.
+.RE
+.PP
+\-s, \-\-squash
+.RS 4
+Create squash commits instead of fixup commits\&.
+
+When this flag is used, "fixup commit" may be read as "squash commit" throughout the documentation\&. All configuration relating to fixup commits will apply to the squash commits instead\&.
+.RE
+.PP
+\-w, \-\-whole\-file
+.RS 4
+Match the first commit touching the same file as the current hunk\&. Use this with care!
+.RE
+.PP
+\-h, \-\-help
+.RS 4
+Prints help information
+.RE
+.PP
+\-V, \-\-version
+.RS 4
+Prints version information
+.RE
+.PP
+\-v, \-\-verbose
+.RS 4
+Display more output
+.RE
+.SH "OPTIONS"
+.PP
+\-b <base>, \-\-base <base>
+.RS 4
+Use this commit as the base of the absorb stack
+.RE
+.PP
+\-m <MESSAGE>, \-\-message <MESSAGE>
+.RS 4
+A simple commit message body that will be used for
+\fBall\fR
+generated fixup commits\&.
+.RE
+.PP
+\-\-gen\-completions <SHELL>
+.RS 4
+Generate completions [possible values: bash, fish, nushell, zsh, powershell, elvish]
+.RE
+.PP
+\-\- <REBASE_OPTIONS>
+.RS 4
+Options to pass to git rebase after generating commits\&. Must be the last arguments and the
+\-\-
+must be present\&. Only valid when
+\-\-and\-rebase
+is used\&.
+.RE
+.SH "USAGE"
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 1.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  1." 4.2
+.\}
+git add
+any changes that you want to absorb\&. By design,
+git absorb
+will only consider content in the git index\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 2.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  2." 4.2
+.\}
+git absorb\&. This will create a sequence of commits on
+HEAD\&. Each commit will have a
+fixup!
+message indicating the message (if unique) or SHA of the commit it should be squashed into\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 3.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  3." 4.2
+.\}
+If you are satisfied with the output,
+git rebase \-i \-\-autosquash
+to squash the
+fixup!
+commits into their predecessors\&. You can set the
+GIT_SEQUENCE_EDITOR
+environment variable if you don\(cqt need to edit the rebase TODO file\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 4.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  4." 4.2
+.\}
+If you are not satisfied (or if something bad happened),
+git reset \-\-soft PRE_ABSORB_HEAD
+to the pre\-absorption commit to recover your old state\&. (You can also find the commit in question with
+git reflog\&.) And if you think
+git absorb
+is at fault, please
+file an issue\&.
+.RE
+.SH "CONFIGURATION"
+.SS "STACK SIZE"
+.sp
+When run without \-\-base, git\-absorb will only search for candidate commits to fixup within a certain range (by default 10)\&. If you get an error like this:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+WARN stack limit reached, limit: 10
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+edit your local or global \&.gitconfig and add the following section:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[absorb]
+    maxStack=50 # Or any other reasonable value for your project
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+Stack size can also be disabled temporarily for one command (see \-\-no\-limit)
+.SS "ONE FIXUP PER FIXABLE COMMIT"
+.sp
+By default, git\-absorb will generate separate fixup commits for every absorbable hunk\&. To always generate only 1 fixup commit for all hunks that absorb into the same commit, edit your local or global \&.gitconfig and add the following section:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[absorb]
+    oneFixupPerCommit = true
+.fi
+.if n \{\
+.RE
+.\}
+.SS "AUTO\-STAGE ALL CHANGES IF NOTHING STAGED"
+.sp
+By default, git\-absorb will only consider files that you\(cqve staged to the index via git add\&. However, sometimes one wants to try and absorb from all changes, which would require to stage them first via git add \&.\&. To avoid this extra step, set
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[absorb]
+    autoStageIfNothingStaged = true
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+which tells git\-absorb, when no changes are staged, to auto\-stage them all, create fixup commits where possible, and unstage remaining changes from the index\&.
+.SS "FIXUP TARGET ALWAYS SHA"
+.sp
+By default, git\-absorb will create fixup commits with their messages pointing to the target commit\(cqs summary, and if there are duplicate summaries, will fall back to pointing to the target\(cqs SHA\&. Instead, can always point to the target\(cqs SHA via:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[absorb]
+    fixupTargetAlwaysSHA = true
+.fi
+.if n \{\
+.RE
+.\}
+.SS "GENERATE FIXUPS FOR COMMITS NOT AUTHORED BY YOU"
+.sp
+By default, git\-absorb will only generate fixup commits for commits that were authored by you\&. To always generate fixups for any author\(cqs commits, edit your local or global \&.gitconfig and add the following section:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[absorb]
+    forceAuthor = true
+.fi
+.if n \{\
+.RE
+.\}
+.SS "GENERATE FIXUPS ON DETACHED HEAD"
+.sp
+By default, git\-absorb will not generate fixup commits when HEAD is not a branch ("is detached")\&. To always generate fixups on detached HEADs, edit your local or global \&.gitconfig and add the following section:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[absorb]
+    forceDetach = true
+.fi
+.if n \{\
+.RE
+.\}
+.SS "GENERATE SQUASH COMMITS INSTEAD OF FIXUPS"
+.sp
+By default, git\-absorb will generate fixup commits\&. To instead generate squash commits, edit your local or global \&.gitconfig and add the following section:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[absorb]
+    createSquashCommits = true
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+When this option is set, "fixup commit" may be read as "squash commit" throughout the documentation\&. All configuration relating to fixup commits will apply to the squash commits instead\&.
+.SH "GITHUB PROJECT"
+.sp
+https://github\&.com/tummychow/git\-absorb
+.SH "AUTHOR"
+.sp
+Stephen Jung <tummychow511@gmail\&.com>

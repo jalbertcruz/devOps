@@ -30,6 +30,7 @@ install_traefik() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf traefik*inux_amd64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv traefik $DEST
 
   save_last_installation_log $app_name

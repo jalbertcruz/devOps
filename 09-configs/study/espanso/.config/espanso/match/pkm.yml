@@ -1,0 +1,154 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/match.schema.json
+matches:
+  - trigger: ":jib"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/ji_books.org"
+  - trigger: ":jip"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/ji_pdfs.org"
+  - trigger: ":jic"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/ji_courses.org"
+  - trigger: ":iar"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/i_articles.org"
+  - trigger: ":ivi"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/i_videos.org"
+  - trigger: ":ipo"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/i_podcasts.org"
+  - trigger: ":iqu"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/i_quotes.org"
+  - trigger: ":rso"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_software.org"
+  - trigger: ":rwe"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_website.org"
+  - trigger: ":rco"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_course.org"
+  - trigger: ":rdo"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_documentation.org"
+  - trigger: ":rpr"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_presentation.org"
+  - trigger: ":rsd"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_source-data.org"
+  - trigger: ":rex"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_expert.org"
+  - trigger: ":rop"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_opinion-pov.org"
+  - trigger: ":rbp"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_best-practice.org"
+  - trigger: ":rhg"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_how-to-guide-tutorial.org"
+  - trigger: ":rdg"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_design-guide.org"
+  - trigger: ":rli"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        depends_on: ["templates"]
+        params:
+          cmd: "cat $ESPANSO_TEMPLATES/r_list.org"

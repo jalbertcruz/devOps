@@ -15,10 +15,13 @@ install_minio() {
   mkdir -p "$TMP_DIR/$app_name"
   cd "$TMP_DIR/$app_name"
   echo "📥 Installing minio..."
-  wget "https://dl.min.io/server/minio/release/linux-amd64/minio"
+  wget https://dl.min.io/aistor/minio/release/linux-amd64/minio
+  #  wget "https://dl.min.io/server/minio/release/linux-amd64/minio"
   chmod +x minio
-  wget "https://dl.min.io/client/mc/release/linux-amd64/mc"
+  #  wget "https://dl.min.io/client/mc/release/linux-amd64/mc"
+  wget https://dl.min.io/aistor/mc/release/linux-amd64/mc
   chmod +x mc
+  echo "Moving minio files to $DEST"
   mv minio $DEST
   mv mc $DEST
 }

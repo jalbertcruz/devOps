@@ -30,6 +30,7 @@ install_neovim() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf nvim-linux-x86_64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv -f nvim-linux-x86_64/bin $DEST
   mv -f nvim-linux-x86_64/lib $DEST
   mv -f nvim-linux-x86_64/share $DEST
@@ -41,7 +42,7 @@ if (
   [[ ! $(command -v $app_name) ]] ||
     [[ "$UPDATE_ALL" = "true" ]]
 ) &&
-  [[ "$APP_TYPE" = "neovim" ]]; then
+  [[ "$APP_TYPE" = "neovimx" ]]; then
   echo "Installing ${app_name} in: $DEST"
   eval install_$app_name
   wait_some_time $WAITING_TIME "Waiting for $WAITING_TIME seconds before the next script..."

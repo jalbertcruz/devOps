@@ -14,7 +14,7 @@ install_websocat() {
   mkdir -p "$TMP_DIR/$app_name"
   cd "$TMP_DIR/$app_name"
   url1=$(curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -s https://api.github.com/repos/vi/websocat/releases/latest |
-    grep browser_download_url | grep websocat_max.x86_64-unknown-linux-musl | head -n 1)
+    grep browser_download_url | grep websocat.x86_64-unknown-linux-musl | head -n 1)
   #    echo $url1
   url=$(echo -n $url1 | cut -d '"' -f4)
 
@@ -28,7 +28,7 @@ install_websocat() {
   echo "Downloading $url"
   mkdir -p $DEST
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
-  mv websocat_max.x86_64-unknown-linux-musl websocat
+  mv websocat.x86_64-unknown-linux-musl websocat
   chmod +x websocat
   mv websocat $DEST
 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ro
+# key: ro
+# --
+${1:$$(yas-choose-value '("get" "post" "patch"))} "/hello", ${2:$$(capitalize-first yas-text)}Controller, :index$0

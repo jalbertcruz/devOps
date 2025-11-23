@@ -29,6 +29,7 @@ install_overmind() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   gunzip overmind*inux-amd64.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv overmind*inux-amd64 overmind
   chmod +x overmind
   mv overmind $DEST

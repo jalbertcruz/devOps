@@ -29,6 +29,7 @@ install_efm_langserver() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf efm-langserver*inux_amd64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv efm-langserver*inux_amd64/efm-langserver $DEST
 
   save_last_installation_log $app_name

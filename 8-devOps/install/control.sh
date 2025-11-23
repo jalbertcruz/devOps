@@ -11,6 +11,8 @@ export UPDATE_ALL=true
 export BASE_INSTALL_DIR=$HOME
 #export BASE_INSTALL_DIR="$HOME/Downloads/aa/temp2"
 export FISH_COMPLETIONS_DIR="$HOME/.config/fish/completions/"
+export MAN_PAGES_DIR="$HOME/src/devOps/1-cli/local-man-pages/man1/"
+
 #export FISH_COMPLETIONS_DIR="$HOME/Downloads/kdl/temp/"
 mkdir -p $FISH_COMPLETIONS_DIR
 export STATUS_RESULT_FILE=$HOME/src/apps-installed/status.txt
@@ -49,6 +51,9 @@ options2=(
   writing
   learning
   video
+  image
+  audio
+  linter
 )
 options3=(
   neovim
@@ -66,7 +71,7 @@ options4=(
 )
 
 options5=(
-  performancex
+  offline
 )
 
 options9=(
@@ -79,7 +84,7 @@ options9=(
   tui_1
   tracing_1
   "clangd-lsp"
-  #  minio
+  #   minio
   #  "clangd-lsp-indexing-tools"
 )
 
@@ -90,8 +95,8 @@ all_options=(
   options2
   options3
   options4
-#  options9
-  #    options5
+  options9
+  #        options5
 )
 
 for array_name in "${all_options[@]}"; do

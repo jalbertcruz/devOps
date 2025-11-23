@@ -1,0 +1,40 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH pastel-set 1  "set " 
+.SH NAME
+pastel\-set \- Set a color property to a specific value
+.SH SYNOPSIS
+\fBpastel set\fR [\fB\-h\fR|\fB\-\-help\fR] <\fIproperty\fR> <\fIvalue\fR> [\fIcolor\fR] 
+.SH DESCRIPTION
+Set the given property to a specific value
+Example:
+  pastel random | pastel set luminance 0.9
+.SH OPTIONS
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+<\fIproperty\fR>
+The property that should be changed
+.br
+
+.br
+[\fIpossible values: \fRlightness, hue, chroma, lab\-a, lab\-b, oklab\-l, oklab\-a, oklab\-b, red, green, blue, hsl\-hue, hsl\-saturation, hsl\-lightness, alpha]
+.TP
+<\fIvalue\fR>
+The new numerical value of the property
+.TP
+[\fIcolor\fR]
+Colors can be specified in many different formats, such as #RRGGBB, RRGGBB, #RGB, \*(Aqrgb(…, …, …)\*(Aq, \*(Aqhsl(…, …, …)\*(Aq, \*(Aqgray(…)\*(Aq or simply by the name of the color. The identifier \*(Aq\-\*(Aq can be used to read a single color from standard input. Also, the special identifier \*(Aqpick\*(Aq can be used to run an external color picker to choose a color. If no color argument is specified, colors will be read from standard input.
+Examples (all of these specify the same color):
+  \- lightslategray
+  \- \*(Aq#778899\*(Aq
+  \- 778899
+  \- 789
+  \- \*(Aqrgb(119, 136, 153)\*(Aq
+  \- \*(Aq119,136,153\*(Aq
+  \- \*(Aqhsl(210, 14.3%, 53.3%)\*(Aq
+Alpha transparency is also supported:
+  \- \*(Aq#77889980\*(Aq
+  \- \*(Aqrgba(119, 136, 153, 0.5)\*(Aq
+  \- \*(Aqhsla(210, 14.3%, 53.3%, 50%)\*(Aq

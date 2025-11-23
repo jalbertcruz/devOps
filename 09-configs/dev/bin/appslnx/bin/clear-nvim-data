@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+rm -rf $HOME/.local/state/nvim-fs
+rm -rf $HOME/.local/share/nvim-fs
+
+exit 0
+
 NVIM_BASE_DIR=${NVIM_BASE_DIR_VALUE:-"$HOME/.config/nvim"}
 
 rm -rf $HOME/.local/state/nvim

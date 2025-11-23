@@ -7,11 +7,12 @@ use std
 # ls **/*.webm -f                | each { |it| {name: (basename $it.name), path: (dirname $it.name), hash: (sha512sum $it.name | hck -f 1) } } | into sqlite videos.db
 # ls **/*.md   -f                | each { |it| {name: (basename $it.name), path: (dirname $it.name)                                        } } | into sqlite mds.db
 
-export def --env cbs [] {
+export def --env index-bdb [] {
    # ls **/*.epub **/*.pdf **/*.mobi **/*.azw3 **/*.djvu **/*.ps **/*.chm **/*.doc **/*.rar **/*.rtf -f $env.DOCS_HOME       | each { |it| {name: (basename $it.name | str downcase), path: (dirname $it.name), hash: (sha512sum $it.name | hck -f 1) } } | into sqlite ($env.DOCS_HOME ++ '/books.db')
    # ls **/*.epub **/*.pdf **/*.mobi **/*.azw3 **/*.djvu **/*.ps **/*.chm **/*.doc **/*.rar **/*.rtf -f | where type == file | each { |it| {name: (basename $it.name | str downcase), original_name: (basename $it.name), path: (dirname $it.name), hash: (sha512sum $it.name | hck -f 1), size: $it.size } } | into sqlite books.db
    # ls **/*.epub **/*.pdf **/*.mobi **/*.azw3 **/*.djvu **/*.ps **/*.chm **/*.doc **/*.rar **/*.rtf -f                      | each { |it| {name: (basename $it.name | str downcase), path: (dirname $it.name)                                        } } | into sqlite books.db
    cd $env.DOCS_HOME
+   rm --force books.db
    ls **/*.epub **/*.pdf **/*.mobi **/*.azw3 **/*.djvu **/*.ps **/*.chm **/*.doc **/*.rar **/*.rtf -f | where type == file | each { |it| try { {name: (basename $it.name | str downcase), path: (dirname $it.name)                                        }} catch { {name: $it.name, path: 'error'} } } | into sqlite ($env.DOCS_HOME ++ "/books.db")
 }
 

@@ -704,3 +704,21 @@ git ls-tree  -rl HEAD | sort -k4 -n | tail --lines=30 | awk '{print $4, $5}' | n
 sort -k4 -n sort numerically based on 4th column.
 tail cut out the last 10 item.
 Using awk to only get the 4th and 5th column out out the output.
+
+# https://git-scm.com/docs/git-config#Documentation/git-config.txt-GITCONFIGCOUNT
+git config --global url."https://github.com/".insteadOf "gh:"
+git config --global url."https://codeberg.org/".insteadOf "cb:"
+
+# https://www.meziantou.net/using-git-insteadof-to-automatically-replace-https-urls-with-ssh.htm
+git config --global url."git@github.com:".insteadOf "https://github.com/"
+git config --global url."git@gitlab.com:".insteadOf "https://gitlab.com/"
+git config --global url."git@bitbucket.org:".insteadOf "https://bitbucket.org/"
+
+git config --global url."git@github.com:meziantou/".insteadOf "https://github.com/meziantou/"
+# The following command
+git clone https://github.com/user/repo.git
+# Becomes equivalent to
+git clone git@github.com:user/repo.git
+
+git config --global url."https://<token>@github.com/".insteadOf "https://github.com/"
+

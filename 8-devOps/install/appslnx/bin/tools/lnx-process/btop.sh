@@ -14,7 +14,7 @@ install_btop() {
   mkdir -p "$TMP_DIR/$app_name"
   cd "$TMP_DIR/$app_name"
   url=$(curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -s https://api.github.com/repos/aristocratos/btop/releases/latest |
-    grep browser_download_url | grep 86_64-linux-musl.tbz |
+    grep browser_download_url | grep 86_64-unknown-linux-musl.tar.gz |
     cut -d '"' -f4)
 
   result=$(save_last_version $app_name "$url")
@@ -27,8 +27,9 @@ install_btop() {
   echo "Downloading $url"
   mkdir -p $DEST
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
-  tar -xvf btop-x86_64-linux-musl.tbz
+  tar -xvf btop-x86_64-unknown-linux-musl.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv btop/bin/btop $DEST
 
   save_last_installation_log $app_name

@@ -31,6 +31,7 @@ install_go_tcp_proxy() {
   mv go-tcp-proxy*linux_amd64 go-tcp-proxy
   chmod +x go-tcp-proxy
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv go-tcp-proxy $DEST
 
   save_last_installation_log $app_name

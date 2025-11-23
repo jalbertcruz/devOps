@@ -191,7 +191,7 @@ local null_ls_entries_optional = {
   null_ls_sql_entry(),
   null_ls_yaml_entry(),
   null_ls_buf_entry(),
---   null_ls_fish_entry(),
+  --   null_ls_fish_entry(),
   null_ls_dockerfile_entry(),
   null_ls_pylint_entry(),
   null_ls_d2_entry(),

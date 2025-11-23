@@ -1,0 +1,31 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH pastel-gradient 1  "gradient " 
+.SH NAME
+pastel\-gradient \- Generate an interpolating sequence of colors
+.SH SYNOPSIS
+\fBpastel gradient\fR [\fB\-n\fR|\fB\-\-number\fR] [\fB\-s\fR|\fB\-\-colorspace\fR] [\fB\-h\fR|\fB\-\-help\fR] <\fIcolor\fR> 
+.SH DESCRIPTION
+Generate a sequence of colors that interpolates between the specified colors.
+The interpolation is performed in the specified color space.
+.PP
+Example:
+  pastel gradient \-\-colorspace=HSL ffffcc fd8d3c
+  pastel gradient 555ee4 white d84341 \-n 15
+.SH OPTIONS
+.TP
+\fB\-n\fR, \fB\-\-number\fR \fI<count>\fR [default: 10]
+Number of colors to generate
+.TP
+\fB\-s\fR, \fB\-\-colorspace\fR \fI<name>\fR [default: Lab]
+The colorspace in which to interpolate
+.br
+
+.br
+[\fIpossible values: \fRLab, LCh, RGB, HSL, OkLab]
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+<\fIcolor\fR>
+Color stops in the color gradient

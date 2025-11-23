@@ -29,6 +29,7 @@ install_podman_tui() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   unzip podman-tui-release-linux_amd64.zip
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv podman-tui-release-linux_amd64/podman-tui*/podman-tui $DEST
 
   save_last_installation_log $app_name

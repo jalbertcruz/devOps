@@ -1,0 +1,101 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH pastel 1  "pastel 0.12.0" 
+.SH NAME
+pastel \- A command\-line tool to generate, analyze, convert and manipulate colors
+.SH SYNOPSIS
+\fBpastel\fR [\fB\-\-color\-picker\fR] [\fB\-f\fR|\fB\-\-force\-color\fR] [\fB\-h\fR|\fB\-\-help\fR] [\fB\-m\fR|\fB\-\-color\-mode\fR] [\fB\-V\fR|\fB\-\-version\fR] <\fIsubcommands\fR>
+.SH DESCRIPTION
+A command\-line tool to generate, analyze, convert and manipulate colors
+.SH OPTIONS
+.TP
+\fB\-\-color\-picker\fR
+Use a specific tool to pick the colors
+.br
+
+.br
+[\fIpossible values: \fRgpick, xcolor, wcolor, grabc, colorpicker, chameleon, kcolorchooser, zenity, yad, hyprpicker, gdbus]
+.TP
+\fB\-f\fR, \fB\-\-force\-color\fR
+Alias for \-\-mode=24bit
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help
+.TP
+\fB\-m\fR, \fB\-\-color\-mode\fR \fI<mode>\fR
+Specify the terminal color mode: 24bit, 8bit, off, *auto*
+.TP
+\fB\-V\fR, \fB\-\-version\fR
+Print version
+.SH SUBCOMMANDS
+.TP
+pastel\-color(1)
+Display information about the given color
+.TP
+pastel\-colorblind(1)
+Simulate a color under a certain colorblindness profile
+.TP
+pastel\-colorcheck(1)
+Check if your terminal emulator supports 24\-bit colors.
+.TP
+pastel\-complement(1)
+Get the complementary color (hue rotated by 180°)
+.TP
+pastel\-darken(1)
+Darken color by a specified amount
+.TP
+pastel\-desaturate(1)
+Decrease color saturation by a specified amount
+.TP
+pastel\-distinct(1)
+Generate a set of visually distinct colors
+.TP
+pastel\-format(1)
+Convert a color to the given format
+.TP
+pastel\-gradient(1)
+Generate an interpolating sequence of colors
+.TP
+pastel\-gray(1)
+Create a gray tone from a given lightness
+.TP
+pastel\-help(1)
+Print this message or the help of the given subcommand(s)
+.TP
+pastel\-lighten(1)
+Lighten color by a specified amount
+.TP
+pastel\-list(1)
+Show a list of available color names
+.TP
+pastel\-mix(1)
+Mix two colors in the given colorspace
+.TP
+pastel\-paint(1)
+Print colored text using ANSI escape sequences
+.TP
+pastel\-pick(1)
+Interactively pick a color from the screen (pipette)
+.TP
+pastel\-random(1)
+Generate a list of random colors
+.TP
+pastel\-rotate(1)
+Rotate the hue channel by the specified angle
+.TP
+pastel\-saturate(1)
+Increase color saturation by a specified amount
+.TP
+pastel\-set(1)
+Set a color property to a specific value
+.TP
+pastel\-sort\-by(1)
+Sort colors by the given property
+.TP
+pastel\-textcolor(1)
+Get a readable text color for the given background color
+.TP
+pastel\-to\-gray(1)
+Completely desaturate a color (preserving luminance)
+.SH VERSION
+v0.12.0

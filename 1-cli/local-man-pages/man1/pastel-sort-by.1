@@ -1,0 +1,44 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH pastel-sort-by 1  "sort-by " 
+.SH NAME
+pastel\-sort\-by \- Sort colors by the given property
+.SH SYNOPSIS
+\fBpastel sort\-by\fR [\fB\-r\fR|\fB\-\-reverse\fR] [\fB\-u\fR|\fB\-\-unique\fR] [\fB\-h\fR|\fB\-\-help\fR] [\fIsort\-order\fR] [\fIcolor\fR] 
+.SH DESCRIPTION
+Sort a list of colors by the given property.
+.PP
+Example:
+  pastel random \-n 20 | pastel sort\-by hue | pastel format hex
+.SH OPTIONS
+.TP
+\fB\-r\fR, \fB\-\-reverse\fR
+Reverse the sort order
+.TP
+\fB\-u\fR, \fB\-\-unique\fR
+Remove duplicate colors (equality is determined via RGB values)
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+[\fIsort\-order\fR] [default: hue]
+Sort order
+.br
+
+.br
+[\fIpossible values: \fRbrightness, luminance, hue, chroma, random]
+.TP
+[\fIcolor\fR]
+Colors can be specified in many different formats, such as #RRGGBB, RRGGBB, #RGB, \*(Aqrgb(…, …, …)\*(Aq, \*(Aqhsl(…, …, …)\*(Aq, \*(Aqgray(…)\*(Aq or simply by the name of the color. The identifier \*(Aq\-\*(Aq can be used to read a single color from standard input. Also, the special identifier \*(Aqpick\*(Aq can be used to run an external color picker to choose a color. If no color argument is specified, colors will be read from standard input.
+Examples (all of these specify the same color):
+  \- lightslategray
+  \- \*(Aq#778899\*(Aq
+  \- 778899
+  \- 789
+  \- \*(Aqrgb(119, 136, 153)\*(Aq
+  \- \*(Aq119,136,153\*(Aq
+  \- \*(Aqhsl(210, 14.3%, 53.3%)\*(Aq
+Alpha transparency is also supported:
+  \- \*(Aq#77889980\*(Aq
+  \- \*(Aqrgba(119, 136, 153, 0.5)\*(Aq
+  \- \*(Aqhsla(210, 14.3%, 53.3%, 50%)\*(Aq

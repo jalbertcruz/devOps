@@ -20,6 +20,11 @@ z       ALL=NOPASSWD: /usr/bin/netstat
 z       ALL=NOPASSWD: /usr/local/bin/mitmweb
 z       ALL=NOPASSWD: /usr/local/bin/mitmdump
 z       ALL=NOPASSWD: /usr/local/bin/mitmproxy
+z       ALL=NOPASSWD: /usr/sbin/openvpn
+z       ALL=NOPASSWD: /usr/local/bin/termshark
+z       ALL=NOPASSWD: /usr/bin/zfs
+z       ALL=NOPASSWD: /usr/sbin/zdb
+z       ALL=NOPASSWD: /sbin/zpool
 
 # To dnsmask to work:
 systemd-resolved/resolved.conf

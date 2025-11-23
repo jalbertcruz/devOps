@@ -24,6 +24,7 @@ services:
     hostname: cassandra1.dev.me
     volumes:
       - cassandra1-data:/var/lib/cassandra
+      - ./dump:/dump
     environment:
       MAX_HEAP_SIZE: 256M
       HEAP_NEWSIZE: 128M
@@ -43,6 +44,7 @@ services:
     hostname: cassandra2.dev.me
     volumes:
       - cassandra2-data:/var/lib/cassandra
+      - ./dump:/dump
     environment:
       MAX_HEAP_SIZE: 256M
       HEAP_NEWSIZE: 128M

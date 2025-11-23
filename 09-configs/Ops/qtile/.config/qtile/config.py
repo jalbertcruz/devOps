@@ -9,6 +9,7 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 # from qtile_extras.widget import PulseVolume, ALSAWidget
 from libqtile.widget import KeyboardLayout
+
 # out = subprocess.check_output(
 #     ["xrandr | grep connected | grep -v disconnected | wc -l"], text=True, shell=True
 # ).strip()
@@ -50,6 +51,7 @@ def maximize_by_switching_layout(qtile):
         qtile.current_group.layout = 'max'
     elif current_layout_name == 'max':
         qtile.current_group.layout = 'monadtall'
+
 
 keys = [
     Key([mod], "BackSpace", lazy.spawn(terminal), desc="Launch terminal"),
@@ -104,11 +106,16 @@ keys = [
         Key([], "q", lazy.shutdown(), desc='Shutdown Qtile'),
         # Key([], "s", lazy.spawn("shutdown now"), desc='Shutdown the system'),
         # Key([], "r", lazy.spawn("shutdown -r now"), desc='Restart the system'),
-        Key([], "e", lazy.spawn('/rofi/scripts/sys', shell=True), desc='rofi sys'),
-        Key([], "l", lazy.spawn('rofi -show yzl -modes "yzl:/rofi/scripts/yazi-projects-load"', shell=True), desc='rofi ...'),
-        Key([], "s", lazy.spawn('rofi -show yzs -modes "yzs:/rofi/scripts/yazi-projects-save"', shell=True), desc='rofi ...'),
+        Key([], "x", lazy.spawn('/rofi/scripts/sys', shell=True), desc='rofi sys'),
+        # Key([], "w", lazy.spawn('/usr/local/bin/appslnx/tools/emacs/client-runner-writer.sh', shell=True), desc=''),
+        Key([], "e", lazy.spawn('/usr/local/bin/appslnx/tools/emacs/client-runner.sh', shell=True), desc=''),
+        Key([], "l", lazy.spawn('rofi -show yzl -modes "yzl:/rofi/scripts/yazi-projects-load"', shell=True),
+            desc='rofi ...'),
+        Key([], "s", lazy.spawn('rofi -show yzs -modes "yzs:/rofi/scripts/yazi-projects-save"', shell=True),
+            desc='rofi ...'),
         Key([], "b", lazy.spawn("xrandr --output eDP-1 --primary --mode 1920x1200 --output HDMI-1 --off"), desc=''),
         Key([], "h", lazy.spawn("xrandr --output HDMI-1 --primary --mode 3440x1440 --output eDP-1 --off"), desc=''),
+        Key([], "f", lazy.spawn("maim -s | xclip -selection clipboard -t image/png", shell=True), desc=''),
         # Key([], "v", volume_toggle(), desc=''),
         # Key([], "l", log_screens_count(), desc='Start laptop screen'),
         # Key([], "l", lazy.spawn("xrandr --output eDP-1 --auto"), desc='Start laptop screen'),
@@ -143,6 +150,7 @@ keys = [
     Key([mod], "s", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
 ]
 
+
 def not_google():
     return False
     res = yes_google(client)
@@ -151,14 +159,16 @@ def not_google():
         logger.warning("It's NOT google chrome!")
     return res
 
+
 def yes_google(client):
     res = "google-chrome" in client.window.get_wm_class()
     if res:
         logger.warning("It's google chrome!")
     return res
 
+
 groups = []
-group_names  = ["1", "2", "3",  "4",  "5", ]
+group_names = ["1", "2", "3", "4", "5", ]
 group_labels = ["", "", "👁", "🏫", "📷", ]
 # group_labels =  ["DEV", "WWW", "SYS",  "STU", "VBOX", "CHAT", "MUS", "VID", "GFX", "MISC"]
 matches = {
@@ -207,7 +217,7 @@ for i in groups:
             Key(
                 [mod, "shift"],
                 i.name,
-                lazy.window.togroup(i.name, switch_group=False),
+                lazy.window.togroup(i.name, switch_group=True),
                 desc="Move focused window to group {}".format(i.name),
             ),
         ]
@@ -216,11 +226,12 @@ for i in groups:
 layouts = [
     # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
     # layout.Max(),
-    layout.MonadTall(),
-    layout.MonadWide(),
-    layout.Tile(),
-    layout.Max(),
-    layout.TreeTab(),
+    layout.MonadTall(margin=15, border_width=1),
+    # layout.MonadWide(),
+    # layout.Tile(),
+    # layout.Max(),
+    # layout.TreeTab(),
+    layout.Matrix(margin=15, border_width=1),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -251,6 +262,16 @@ screen1 = Screen(
             widget.Volume(
                 padding=8,
                 fmt='🕫  Vol: {}',
+            ),
+            # https://docs.qtile.org/en/stable/manual/ref/widgets.html#battery
+            widget.Battery(
+                battery_name='BAT0',  # Check /sys/class/power_supply/ if it fails
+                format='[{char} {percent:2.0%} {hour:d}:{min:02d} Hrs]',
+                charge_char='⚡',
+                discharge_char='🔋',
+                charge_controller=lambda: (0, 90),
+                low_percentage=0.2,
+                low_foreground='FF0000'
             ),
             KeyboardLayout(
                 configured_keyboards=["us", "es"]
@@ -343,6 +364,7 @@ wl_xcursor_size = 24
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+
 
 # @hook.subscribe.client_new
 # def modify_window(client):

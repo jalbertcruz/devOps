@@ -6,7 +6,7 @@ set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true, desc = "move up an
 set("n", "<C-f>", "<C-f>zz", { noremap = true, silent = true })
 set("n", "<C-b>", "<C-b>zz", { noremap = true, silent = true })
 
-set({ "n", "v" }, "<leader>tw", require("visual-whitespace").toggle, {desc = "Enable/Disable visual whitespace"})
+set({ "n", "v" }, "<leader>tw", require("visual-whitespace").toggle, { desc = "Enable/Disable visual whitespace" })
 
 -- vim.g["toggle_spelling"] = true
 -- function toggle_spelling()
@@ -28,20 +28,25 @@ set({ "n", "v" }, "<leader>tw", require("visual-whitespace").toggle, {desc = "En
 -- end
 
 function disable_spelling()
-    vim.cmd([[
+  local bufnr = vim.api.nvim_get_current_buf()
+  vim.cmd([[
         bufdo set nospell
     ]])
-    vim.lsp.enable("ltex_plus", false)
-    vim.lsp.enable("harper_ls", false)
+  vim.api.nvim_set_current_buf(bufnr)
+  --vim.lsp.enable("ltex_plus", false)
+  --vim.lsp.enable("harper_ls", false)
+  vim.g.toggle_spelling = false -- not really needed
 end
 
 function enable_spelling()
-    vim.cmd([[
+  local bufnr = vim.api.nvim_get_current_buf()
+  vim.cmd([[
         bufdo set spell
     ]])
-    vim.g.toggle_spelling = true
-    vim.lsp.enable("ltex_plus", true)
-    vim.lsp.enable("harper_ls", true)
+  vim.api.nvim_set_current_buf(bufnr)
+  --vim.lsp.enable("ltex_plus", true)
+  --vim.lsp.enable("harper_ls", true)
+  vim.g.toggle_spelling = true -- not really needed
 end
 
 -- set("n", "<leader>xd", Toggle_diagnostics, { noremap = true, silent = true, desc = "Toggle vim diagnostics" }) -- already present in LazyVim
@@ -59,3 +64,7 @@ set("n", "<leader>tS", enable_spelling, {
 -- set("n", "<leader>tss", ":setlocal spell spelllang=es<cr>", {
 --   desc = "Set spell check to es",
 -- })
+
+set("n", "<leader>ss", require("aerial").fzf_lua_picker, {
+  desc = "Goto Symbol (Aerial)",
+})

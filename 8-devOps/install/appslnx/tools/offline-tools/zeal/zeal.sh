@@ -27,7 +27,7 @@ install_zeal() {
   echo "Downloading $url"
   mkdir -p $DEST
   echo -n $url | xargs curl -LO
-  mv zeal*x86_64.AppImage a.AppImage
+  mv Zeal*x86_64.AppImage a.AppImage
   chmod +x a.AppImage
   rm -rf $DEST/squashfs-root || true
   ./a.AppImage --appimage-extract
@@ -39,7 +39,7 @@ if (
   [[ ! $(command -v $app_name) ]] ||
     [[ "$UPDATE_ALL" = "true" ]]
 ) &&
-  [[ "$APP_TYPE" = "video" ]]; then
+  [[ "$APP_TYPE" = "offline" ]]; then
   echo "Installing ${app_name} in: $DEST"
   eval install_$app_name
   wait_some_time $WAITING_TIME "Waiting for $WAITING_TIME seconds before the next script..."

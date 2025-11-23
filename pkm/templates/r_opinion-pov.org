@@ -1,0 +1,7 @@
+* t
+:PROPERTIES:
+:heading: 3
+:reference: [[opinion/POV]]
+:link:
+:tags:
+:END:

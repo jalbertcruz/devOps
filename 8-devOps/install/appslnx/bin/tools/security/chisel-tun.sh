@@ -29,6 +29,7 @@ install_chisel_tun() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   gunzip chisel*inux_amd64.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv chisel*inux_amd64 chisel-tun
   chmod +x chisel-tun
   mv chisel-tun $DEST

@@ -1,0 +1,29 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH pastel-random 1  "random " 
+.SH NAME
+pastel\-random \- Generate a list of random colors
+.SH SYNOPSIS
+\fBpastel random\fR [\fB\-s\fR|\fB\-\-strategy\fR] [\fB\-n\fR|\fB\-\-number\fR] [\fB\-h\fR|\fB\-\-help\fR] 
+.SH DESCRIPTION
+Generate a list of random colors.
+.PP
+Example:
+  pastel random \-n 20 \-\-strategy lch_hue
+.SH OPTIONS
+.TP
+\fB\-s\fR, \fB\-\-strategy\fR
+Randomization strategy:
+   vivid:    random hue, limited saturation and lightness values
+   rgb:      samples uniformly in RGB space
+   gray:     random gray tone (uniform)
+   lch_hue:  random hue, fixed lightness and chroma
+
+Default strategy: \*(Aqvivid\*(Aq
+ 
+.TP
+\fB\-n\fR, \fB\-\-number\fR \fI<count>\fR [default: 10]
+Number of colors to generate
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)

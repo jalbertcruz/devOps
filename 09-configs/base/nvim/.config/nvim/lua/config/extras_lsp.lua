@@ -1,4 +1,3 @@
-
 require("lspconfig").harper_ls.setup({
   settings = {
     ["harper-ls"] = {
@@ -35,15 +34,6 @@ require("lspconfig").harper_ls.setup({
 vim.lsp.enable("harper_ls")
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    vim.opt_local.expandtab = false
-    vim.opt_local.tabstop = 2 -- or your preferred tab width
-    vim.opt_local.shiftwidth = 2 -- or your preferred indent width
-  end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
   pattern = { "smithy" },
   callback = function()
     vim.lsp.start({
@@ -74,3 +64,5 @@ vim.lsp.enable("denols")
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#clangd
 vim.lsp.enable("clangd")
+
+vim.lsp.enable("jsonls")

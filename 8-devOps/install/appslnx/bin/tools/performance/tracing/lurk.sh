@@ -29,6 +29,7 @@ install_lurk() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf lurk-x86_64-unknown-linux-gnu.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv lurk $DEST
 
   save_last_installation_log $app_name

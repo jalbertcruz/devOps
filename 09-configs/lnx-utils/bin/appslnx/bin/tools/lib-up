@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+case "$1" in
+    partial)
+       # sudo zpool online externo 16629640703613495030
+        # Only one disk connected
+        if sudo zpool import $ZPOOL; then
+            echo "✅ Pool imported (only one disk)"
+            sudo zfs mount -a
+        else
+            echo "❌ Could not import pool"
+        fi
+        ;;
+    complete)
+        # Both disks connected
+#        if sudo zpool import -c $ZPOOL_CACHE $ZPOOL; then
+        if sudo zpool import $ZPOOL; then
+            echo "✅ Pool imported in read/write mode (full mirror)"
+            sudo zfs mount -a
+            # Check if resilver is needed
+            sudo zpool status $ZPOOL | grep -i resilver
+        fi
+        ;;
+    desc)
+        sudo zpool export $ZPOOL && echo "✅ Pool exported"
+        ;;
+    status)
+        sudo zpool status $ZPOOL 2>/dev/null || echo "Pool not imported"
+        ;;
+esac

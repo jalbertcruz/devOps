@@ -1,0 +1,38 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH pastel-format 1  "format " 
+.SH NAME
+pastel\-format \- Convert a color to the given format
+.SH SYNOPSIS
+\fBpastel format\fR [\fB\-h\fR|\fB\-\-help\fR] [\fItype\fR] [\fIcolor\fR] 
+.SH DESCRIPTION
+Convert the given color(s) to a specific format.
+.PP
+Example:
+  pastel random \-n 20 | pastel format rgb
+.SH OPTIONS
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+[\fItype\fR] [default: hex]
+Output format type. Note that the \*(Aqansi\-*\-escapecode\*(Aq formats print ansi escape sequences to the terminal that will not be visible unless something else is printed in addition.
+.br
+
+.br
+[\fIpossible values: \fRrgb, rgb\-float, rgb\-r, rgb\-g, rgb\-b, hex, hsl, hsl\-hue, hsl\-saturation, hsl\-lightness, hsv, hsv\-hue, hsv\-saturation, hsv\-value, lch, lch\-lightness, lch\-chroma, lch\-hue, oklch, oklch\-lightness, oklch\-chroma, oklch\-hue, lab, lab\-a, lab\-b, oklab, oklab\-l, oklab\-a, oklab\-b, luminance, brightness, ansi\-8bit, ansi\-24bit, ansi\-8bit\-value, ansi\-8bit\-escapecode, ansi\-24bit\-escapecode, cmyk, name]
+.TP
+[\fIcolor\fR]
+Colors can be specified in many different formats, such as #RRGGBB, RRGGBB, #RGB, \*(Aqrgb(…, …, …)\*(Aq, \*(Aqhsl(…, …, …)\*(Aq, \*(Aqgray(…)\*(Aq or simply by the name of the color. The identifier \*(Aq\-\*(Aq can be used to read a single color from standard input. Also, the special identifier \*(Aqpick\*(Aq can be used to run an external color picker to choose a color. If no color argument is specified, colors will be read from standard input.
+Examples (all of these specify the same color):
+  \- lightslategray
+  \- \*(Aq#778899\*(Aq
+  \- 778899
+  \- 789
+  \- \*(Aqrgb(119, 136, 153)\*(Aq
+  \- \*(Aq119,136,153\*(Aq
+  \- \*(Aqhsl(210, 14.3%, 53.3%)\*(Aq
+Alpha transparency is also supported:
+  \- \*(Aq#77889980\*(Aq
+  \- \*(Aqrgba(119, 136, 153, 0.5)\*(Aq
+  \- \*(Aqhsla(210, 14.3%, 53.3%, 50%)\*(Aq

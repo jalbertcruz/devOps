@@ -29,6 +29,7 @@ install_process_compose() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xzf process-compose_linux_amd64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv process-compose $DEST
 
   save_last_installation_log $app_name

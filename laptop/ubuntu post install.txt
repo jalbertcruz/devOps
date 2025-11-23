@@ -1,5 +1,4 @@
 
-
 sudo apt-get update
 sudo apt-get install -y tree meld basez cgroup-tools curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev libffi-dev python3-pip python-pip zeal vlc python3-venv stow
 
@@ -214,3 +213,19 @@ sudo apt-get install gromit-mpx
 
 # aria2 is a lightweight multi-protocol & multi-source (HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink)
 sudo apt-get install aria2
+
+apt-get install xdotool
+
+# clipboard screenshot
+sudo apt-get install maim
+
+# needed to compile python, if not then error:
+#    from _lzma import *
+#ModuleNotFoundError: No module named '_lzma'
+
+sudo apt-get install lzma
+sudo apt-get install liblzma-dev
+sudo apt-get install libbz2-dev
+
+# elixir
+sudo apt install inotify-tools

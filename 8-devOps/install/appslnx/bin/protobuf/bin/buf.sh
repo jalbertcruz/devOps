@@ -29,6 +29,7 @@ install_buf() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf buf-Linux-x86_64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv buf/bin/buf $DEST
   mv buf/bin/protoc-gen-buf-breaking $DEST
   mv buf/bin/protoc-gen-buf-lint $DEST

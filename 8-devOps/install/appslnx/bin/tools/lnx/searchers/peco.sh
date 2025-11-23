@@ -27,9 +27,10 @@ install_peco() {
   echo "Downloading $url"
   mkdir -p $DEST
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
-  tar -xvf peco_linux_amd64.tar.gz
+  tar -xvf peco*linux_amd64.tar.gz
   maybe_copy_fish_completions_files
-  mv peco_linux_amd64/peco $DEST
+  maybe_copy_man_pages_files
+  mv peco $DEST
 
   save_last_installation_log $app_name
 }

@@ -14,7 +14,7 @@ install_tree_sitter() {
   mkdir -p "$TMP_DIR/$app_name"
   cd "$TMP_DIR/$app_name"
   url=$(curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -s https://api.github.com/repos/tree-sitter/tree-sitter/releases/latest |
-    grep browser_download_url | grep inux-x64.gz |
+    grep browser_download_url | grep tree-sitter-cli-linux-x64.zip |
     cut -d '"' -f4)
 
   result=$(save_last_version $app_name "$url")
@@ -27,9 +27,9 @@ install_tree_sitter() {
   echo "Downloading $url"
   mkdir -p $DEST
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
-  gunzip tree-sitter-linux-x64.gz
+  unzip tree-sitter-cli-linux-x64.zip
   maybe_copy_fish_completions_files
-  mv tree-sitter-linux-x64 tree-sitter
+  maybe_copy_man_pages_files
   chmod +x tree-sitter
   cp tree-sitter $DEST
 

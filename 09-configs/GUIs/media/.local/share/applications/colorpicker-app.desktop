@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Colorpicker
+Exec=/usr/local/bin/appslnx/tools/edition/Colorpicker/squashfs-root/colorpicker-app
+Terminal=false
+Type=Application
+Icon=/usr/local/bin/appslnx/tools/edition/Colorpicker/colorpicker-app.png
+StartupWMClass=Colorpicker
+X-AppImage-Version=2.3.0
+Comment=Colorpicker is a little Electron app that can show colors with hex/rgb code, and generate shading for your color.
+Categories=Graphics;

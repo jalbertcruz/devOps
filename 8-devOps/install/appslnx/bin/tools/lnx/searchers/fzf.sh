@@ -13,7 +13,7 @@ app_name=fzf
 install_fzf() {
   mkdir -p "$TMP_DIR/$app_name"
   cd "$TMP_DIR/$app_name"
-  echo "📥 Installing fzf..."
+
   url=$(curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -s https://api.github.com/repos/junegunn/fzf/releases/latest |
     grep browser_download_url | grep linux_amd64.tar.gz |
     cut -d '"' -f4)
@@ -27,9 +27,11 @@ install_fzf() {
   echo "📥 Installing fzf..."
   echo "Downloading $url"
   mkdir -p $DEST
+
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf fzf-*-linux_amd64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv fzf $DEST
 
   save_last_installation_log $app_name

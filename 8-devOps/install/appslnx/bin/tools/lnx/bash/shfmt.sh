@@ -30,6 +30,7 @@ install_shfmt() {
   mv shfmt_*_linux_amd64 shfmt
   chmod +x shfmt
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv shfmt $DEST
 
   save_last_installation_log $app_name

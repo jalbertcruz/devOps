@@ -31,6 +31,7 @@ install_cheat() {
   mv cheat-linux-amd64 cheat
   chmod +x cheat
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv cheat $DEST
 
   save_last_installation_log $app_name

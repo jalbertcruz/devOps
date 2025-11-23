@@ -29,6 +29,7 @@ install_dns_proxy_server() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf dns-proxy-server-linux-amd64*.tgz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv dns-proxy-server $DEST
 
   save_last_installation_log $app_name

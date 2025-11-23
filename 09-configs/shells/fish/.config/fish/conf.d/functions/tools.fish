@@ -72,3 +72,13 @@ function format-fish-files
         fish_indent -w $f
     end
 end
+
+function sdem
+    /usr/local/bin/emacs --init-directory $HOME/.config/emacs-doom --debug-init &
+end
+function sbem
+    /usr/local/bin/emacs --init-directory $HOME/.config/emacs-dev-bridge &
+end
+function slem
+    /usr/local/bin/emacs --init-directory $HOME/.config/emacs-dev-lsp &
+end

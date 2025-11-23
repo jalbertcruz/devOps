@@ -29,6 +29,7 @@ install_git_lfs() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf git-lfs-linux-amd64*.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv git-lfs*/git-lfs $DEST
 
   save_last_installation_log $app_name

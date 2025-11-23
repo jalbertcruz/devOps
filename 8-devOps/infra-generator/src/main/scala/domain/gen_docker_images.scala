@@ -40,7 +40,7 @@ def mainConfig(): IO[Unit] =
               images.penpotapp_frontend,
               images.penpotapp_backend,
               images.penpotapp_exporter,
-              images.penpot_mailcatch,
+              images.penpotapp_mailcatch,
               images.valkey,
             ))
             val entry = imgs.asYaml.nullRemoved

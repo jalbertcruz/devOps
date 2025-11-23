@@ -30,6 +30,7 @@ install_pandoc_crossref() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf pandoc-crossref-Linux-X64.tar.xz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv pandoc-crossref $DEST
 
   save_last_installation_log $app_name

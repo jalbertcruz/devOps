@@ -1,0 +1,7 @@
+* t
+:PROPERTIES:
+:heading: 3
+:reference: [[documentation]]
+:link:
+:tags:
+:END:

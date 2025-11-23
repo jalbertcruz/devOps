@@ -1,6 +1,7 @@
 {
   "parser-directories": [
-    "/home/z/source",
+    "/home/z/src/nvim/std/all-treesitter-parsers-cloned/github.com/tree-sitter/",
+    "/home/z/.local/share/nvim/site/parser/",
     "/home/z/src/nvim/nvim-std/treesitter-parsers-cloned/plugins_errors/github.com/MunifTanjim/"
   ],
   "theme": {

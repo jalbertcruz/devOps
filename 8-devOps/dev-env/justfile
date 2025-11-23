@@ -12,10 +12,9 @@ bootstrap-up:
       --project-directory traefik \
       up -d
 
+[working-directory: 'postgres']
 postgres-up: bootstrap-up
-    docker compose \
-      --project-directory postgres \
-      up -d
+    docker compose up -d
 
 postgres-down:
     docker compose \
@@ -79,12 +78,6 @@ create-registry-data-resources:
 delete-registry-data-resources:
     docker volume rm registry-data || true
 
-create-postgres-data-resources:
-    docker volume create postgresql1-data || true
-
-delete-postgres-data-resources:
-    docker volume rm postgresql1-data || true
-
 create-cassandra-data-resources:
     docker volume create cassandra1-data || true
     docker volume create cassandra2-data || true
@@ -117,7 +110,13 @@ delete-rabbit-data-resources:
     docker volume rm rabbitmq1-data || true
     docker volume rm rabbitmq2-data || true
 
-create-postgres:
+create-postgres-data-resources:
+    docker volume create postgresql1-data || true
+
+delete-postgres-data-resources:
+    docker volume rm postgresql1-data || true
+
+create-postgres-database:
     #!/usr/bin/env bash
 
     servers=$(docker ps --filter "label=type=postgres" | awk 'NR>1 {print $NF}')
@@ -135,10 +134,10 @@ create-postgres:
     echo $dbases
 
 dump-postgres:
-    postgres-dump.py
+    cli/postgres-dump.py
 
 restore-postgres:
-    postgres-restore.py
+    cli/postgres-restore.py
 
 dump-mariadb:
     mariadb-dump.py
@@ -147,13 +146,13 @@ restore-mariadb:
     mariadb-restore.py
 
 dump-cassandra:
-    cassandra-dump.py
+    cli/cassandra-dump.py
 
 restore-cassandra:
-    cassandra-restore.py
+    cli/cassandra-restore.py
 
 create-keyspace-cassandra:
-    cassandra-keyspace-create.py
+    cli/cassandra-keyspace-create.py
 
 run-migrations:
     liquibase update --defaults-file=postgres/liquibase/liquibase.properties
@@ -164,3 +163,24 @@ fmt-py:
 
 run-tests:
     fd '.*_test_*|test_*|.*_test' --exec-batch echo '{//}'\n | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | grep -v '^\s*$' | fzf
+
+[working-directory: '../infra-generator']
+create-network-interfaces:
+    cli/create-interfaces
+
+[working-directory: '../infra-generator']
+update-network-confs:
+    cli/update-confs
+
+[working-directory: '/media/z/data/repo/apps/gitea']
+clean-gitea-config-data:
+    rm -rf data
+    echo "Removed gitea config data"
+
+[working-directory: '/media/z/data/repo/internet2/gitea/data']
+clean-gitea-repos:
+    rm -rf gitea-repositories
+    echo "Removed gitea repositories"
+
+clean-gitea: clean-gitea-config-data clean-gitea-repos
+    echo "Remember reset postgres DB"

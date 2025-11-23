@@ -40,7 +40,7 @@ if (
   [[ ! $(command -v $app_name) ]] ||
     [[ "$UPDATE_ALL" = "true" ]]
 ) &&
-  [[ "$APP_TYPE" = "js" ]]; then
+  [[ "$APP_TYPE" = "js-crap" ]]; then
   echo "Installing ${app_name} in: $DEST"
   eval install_$app_name
   wait_some_time $WAITING_TIME "Waiting for $WAITING_TIME seconds before the next script..."

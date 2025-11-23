@@ -29,6 +29,7 @@ install_decompose() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf decompose*inux_x86_64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv decompose $DEST
 
   save_last_installation_log $app_name

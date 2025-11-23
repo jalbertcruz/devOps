@@ -1,0 +1,7 @@
+* t
+:PROPERTIES:
+:heading: 3
+:reference: [[best practice]]
+:link:
+:tags:
+:END:

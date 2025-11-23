@@ -1,0 +1,8 @@
+* t
+:PROPERTIES:
+:heading: 3
+:input: [[quotes]]
+:producer:
+:link:
+:tags:
+:END:

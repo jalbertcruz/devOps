@@ -300,3 +300,15 @@
 	required = true
 [apply]
 	whitespace = nowarn
+
+[url "https://github.com/"]
+	insteadOf = git:
+
+[url "https://github.com/"]
+	insteadOf = gh:
+
+[url "https://codeberg.org/"]
+	insteadOf = cb:
+
+[url "git@github.com:"]
+	insteadOf = sgh:

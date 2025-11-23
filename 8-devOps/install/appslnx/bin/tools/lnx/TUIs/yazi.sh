@@ -29,6 +29,7 @@ install_yazi() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   unzip yazi-x86_64-unknown-linux-gnu.zip
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv yazi-x86_64-unknown-linux-gnu/ya* $DEST
 
   save_last_installation_log $app_name

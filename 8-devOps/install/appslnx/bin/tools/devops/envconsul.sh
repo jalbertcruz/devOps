@@ -31,6 +31,7 @@ install_envconsul() {
   echo -n $url | xargs curl -LO
   unzip envconsul*inux_amd64.zip
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv envconsul $DEST
 
   save_last_installation_log $app_name

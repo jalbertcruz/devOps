@@ -1,0 +1,29 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH pastel-pick 1  "pick " 
+.SH NAME
+pastel\-pick \- Interactively pick a color from the screen (pipette)
+.SH SYNOPSIS
+\fBpastel pick\fR [\fB\-h\fR|\fB\-\-help\fR] [\fIcount\fR] 
+.SH DESCRIPTION
+Print a spectrum of colors to choose from. This command requires an external color picker tool to be installed.
+.PP
+Supported tools:
+  \- gpick (https://github.com/thezbyg/gpick)
+  \- xcolor (https://github.com/Soft/xcolor)
+  \- wcolor (https://github.com/Elvyria/wcolor)
+  \- grabc (https://www.muquit.com/muquit/software/grabc/grabc.html)
+  \- colorpicker (https://github.com/Jack12816/colorpicker)
+  \- chameleon (https://github.com/seebye/chameleon)
+  \- KColorChooser (https://kde.org/applications/graphics/org.kde.kcolorchooser)
+  \- zenity (https://wiki.gnome.org/Projects/Zenity)
+  \- yad (https://github.com/v1cont/yad)
+  \- hyprpicker (https://github.com/hyprwm/hyprpicker)
+  \- macOS built\-in color picker
+.SH OPTIONS
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+[\fIcount\fR] [default: 1]
+Number of colors to pick

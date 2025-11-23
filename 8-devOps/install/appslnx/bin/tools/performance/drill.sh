@@ -29,6 +29,7 @@ install_drill() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf drill*86_64-unknown-linux-musl.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv drill $DEST
 
   save_last_installation_log $app_name

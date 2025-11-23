@@ -29,6 +29,7 @@ install_miller() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf miller*linux-amd64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv miller*linux-amd64/mlr $DEST
 
   save_last_installation_log $app_name

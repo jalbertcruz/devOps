@@ -29,6 +29,7 @@ install_ast_grep() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   unzip app-x86_64-unknown-linux-gnu.zip
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv ast-grep $DEST
 
   save_last_installation_log $app_name

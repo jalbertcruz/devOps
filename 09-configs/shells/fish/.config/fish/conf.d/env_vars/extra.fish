@@ -6,11 +6,6 @@ test -e ~/.ripgreprc && set -x RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 
 set -x ANSIBLE_HOST_KEY_CHECKING False
 
-test -e ~/.fly && set -x FLYCTL_INSTALL $HOME/.fly && fish_add_path --global $FLYCTL_INSTALL/bin
-
-# fish_add_path --global /opt/google/chrome
-
-# https://fishshell.com/docs/4.1/cmds/fish_add_path.html
 fish_add_path --global $HOME/src/devOps/architecture/tools
 fish_add_path --global $HOME/src/devOps/architecture/tools/cli
 
@@ -21,14 +16,8 @@ fish_add_path --global $HOME/appslnx/web/krakend
 
 fish_add_path --global $HOME/.local/bin
 fish_add_path --global /usr/local/bin
-
-# set -x PATH $HOME/appslnx/mobile/flutter/bin
-# fish_add_path --global $HOME/appslnx/tools/firecracker
-
 fish_add_path --global /usr/bin
-
 fish_add_path --global ~/appslnx/bin
-fish_add_path --global ~/.local/bin
 
 fish_add_path --global $HOME/appslnx/bin/tools/apis
 # set -x PATH $HOME/appslnx/bin/tools/aws
@@ -47,6 +36,7 @@ fish_add_path --global $HOME/appslnx/bin/tools/lnx-process
 fish_add_path --global $HOME/appslnx/bin/tools/network
 fish_add_path --global $HOME/appslnx/bin/tools/performance
 fish_add_path --global $HOME/appslnx/bin/tools/performance/tracing
+fish_add_path --global $HOME/appslnx/bin/tools/performance/tracing/perfetto
 fish_add_path --global $HOME/appslnx/bin/tools/pls
 fish_add_path --global $HOME/appslnx/bin/tools/pls/clojure-lang
 fish_add_path --global $HOME/appslnx/bin/tools/pls/lua-lang
@@ -67,7 +57,7 @@ fish_add_path --global $HOME/appslnx/tools/edition
 fish_add_path --global $HOME/appslnx/tools/kitty/bin
 
 set -x PRIVATE_TOOLS $HOME/appslnx/bin/tools/private
-fish_add_path --global $PRIVATE_TOOLS
+fish_add_path --global $HOME/appslnx/bin/tools/private
 fish_add_path --global $HOME/appslnx/tools/language/ltex-ls-plus/bin
 fish_add_path --global $HOME/appslnx/tools/haskell-language-server/bin
 
@@ -95,8 +85,10 @@ set -x DOCS_HOME /media/z/data/docs
 fish_add_path --global $HOME/appslnx/tools/ollama/bin
 set -x OLLAMA_MODELS /media/z/Local data/ollama/models
 fish_add_path --global $HOME/appslnx/tools/offline-tools/git/gitea
+fish_add_path --global $HOME/appslnx/tools/finances/hledger
 
 fish_add_path --global $HOME/appslnx/tools/linux/clipboard/bin
+fish_add_path --global /usr/local/texlive/2025/bin/x86_64-linux
 
 # set -gx POD_NAME usertools-albert-cruz-0
 # set -x QT_QPA_PLATFORM wayland
@@ -126,7 +118,9 @@ set -x ALL_EXTENSIONS 1
 # set -gx MANPAGER "ov --section-delimiter '^[^\s]' --section-header"
 set -gx BAT_PAGER "ov -F -H3"
 
-set -gx MANPATH $HOME/src/devOps/1-cli/local-man-pages
-# For some reason I have this env variable set
-# set -ug MANPATH
+# set -gx MANPATH $HOME/src/devOps/1-cli/local-man-pages
 set -xg MANPAGER "nvim +Man!"
+
+fish_add_path --global $HOME/appslnx/bin/tools/go
+fish_add_path --global $HOME/appslnx/tools/audio
+fish_add_path --global $HOME/appslnx/zig

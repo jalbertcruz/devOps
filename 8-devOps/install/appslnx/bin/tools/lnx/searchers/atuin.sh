@@ -14,7 +14,7 @@ install_atuin() {
   mkdir -p "$TMP_DIR/$app_name"
   cd "$TMP_DIR/$app_name"
   url=$(curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -s https://api.github.com/repos/atuinsh/atuin/releases/latest |
-    grep browser_download_url | grep x86_64-unknown-linux-gnu.tar.gz | grep -v .sha256 |
+    grep browser_download_url | grep atuin-x86_64-unknown-linux-gnu.tar.gz | grep -v .sha256 |
     cut -d '"' -f4)
 
   result=$(save_last_version $app_name "$url")

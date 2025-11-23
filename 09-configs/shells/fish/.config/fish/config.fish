@@ -1,9 +1,3 @@
-set -gx VOLTA_HOME /media/z/data/repo/internet2/volta
-fish_add_path --global "$VOLTA_HOME/bin"
-fish_add_path --global "$HOME/appslnx/tools/nodejs/volta/bin"
-fish_add_path --global "$HOME/appslnx/tools/nodejs/apps/bin"
-fish_add_path --global "$HOME/appslnx/tools/nodejs/apps/bootstrap"
-
 # source ~/.asdf/asdf.fish
 
 # not more ruby
@@ -42,3 +36,13 @@ fish_add_path --global $HOME/.ghcup/bin # ghcup-env
 
 # Added by LM Studio CLI (lms)
 fish_add_path --global $HOME/.lmstudio/bin
+
+
+set -gx VOLTA_HOME "$HOME/.volta"
+# set -gx VOLTA_HOME /media/z/data/repo/internet2/volta
+fish_add_path --global "$HOME/.volta/bin"
+
+fish_add_path --global "$HOME/appslnx/tools/nodejs"
+fish_add_path --global "$HOME/appslnx/tools/nodejs/apps/bin"
+fish_add_path --global "$HOME/appslnx/tools/nodejs/apps/bootstrap"
+

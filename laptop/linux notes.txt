@@ -9,3 +9,9 @@ I recommend this for the desktop:
 software-properties-gtk
 then under the "Ubuntu Software" tab click "Source code"
 
+Clear initramfs and Old Kernels
+Old kernels and their associated initramfs files can fill up the /boot partition.
+- Remove unused kernels:
+    sudo apt-get autoremove --purge
+- Update initramfs: If you need to make initramfs smaller,
+    set COMPRESS=xz in /etc/initramfs-tools/initramfs.conf and run sudo update-initramfs -u

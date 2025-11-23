@@ -5,7 +5,8 @@ function dv
     #   yt-dlp "$url" --write-description --no-clean-info-json --write-info-json --write-playlist-metafiles --embed-metadata --embed-chapters
 
     if test -e cookies.txt
-        yt-dlp "$url" --cookies cookies.txt --embed-metadata --embed-chapters
+        yt-dlp "$url" --cookies cookies.txt --embed-metadata --embed-chapters --remote-components ejs:github
+         # [youtube] [jsc:deno] Downloading challenge solver lib script from  https://github.com/yt-dlp/ejs/releases/download/0.8.0/yt.solver.lib.min.js
     else
         yt-dlp "$url" --embed-metadata --embed-chapters
     end
@@ -23,9 +24,9 @@ end
 function dvl
     set url (xclip -o -selection clipboard)
     if test -e cookies.txt
-        yt-dlp -F "$url" --list-subs --cookies cookies.txt
+        yt-dlp -F "$url" --cookies cookies.txt --remote-components ejs:github
     else
-        yt-dlp -F "$url" --list-subs
+        yt-dlp -F "$url"
     end
 end
 
@@ -33,7 +34,7 @@ function dvc
     set url (xclip -o -selection clipboard)
     #yt-dlp -f $argv[1] "$url" --write-description --no-clean-info-json --write-info-json --write-playlist-metafiles --embed-metadata --embed-chapters --write-subs --write-auto-subs
     if test -e cookies.txt
-        yt-dlp -f $argv[1] "$url" --write-description --no-clean-info-json --write-info-json --write-playlist-metafiles --embed-metadata --embed-chapters --cookies cookies.txt
+        yt-dlp -f $argv[1] "$url" --write-description --no-clean-info-json --write-info-json --write-playlist-metafiles --embed-metadata --embed-chapters --cookies cookies.txt --remote-components ejs:github
     else
         yt-dlp -f $argv[1] "$url" --write-description --no-clean-info-json --write-info-json --write-playlist-metafiles --embed-metadata --embed-chapters
     end

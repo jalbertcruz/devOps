@@ -1,0 +1,34 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH pastel-paint 1  "paint " 
+.SH NAME
+pastel\-paint \- Print colored text using ANSI escape sequences
+.SH SYNOPSIS
+\fBpastel paint\fR [\fB\-o\fR|\fB\-\-on\fR] [\fB\-b\fR|\fB\-\-bold\fR] [\fB\-i\fR|\fB\-\-italic\fR] [\fB\-u\fR|\fB\-\-underline\fR] [\fB\-n\fR|\fB\-\-no\-newline\fR] [\fB\-h\fR|\fB\-\-help\fR] <\fIcolor\fR> [\fItext\fR] 
+.SH DESCRIPTION
+Print colored text using ANSI escape sequences
+.SH OPTIONS
+.TP
+\fB\-o\fR, \fB\-\-on\fR \fI<bg\-color>\fR
+Use the specified background color
+.TP
+\fB\-b\fR, \fB\-\-bold\fR
+Print the text in bold face
+.TP
+\fB\-i\fR, \fB\-\-italic\fR
+Print the text in italic font
+.TP
+\fB\-u\fR, \fB\-\-underline\fR
+Draw a line below the text
+.TP
+\fB\-n\fR, \fB\-\-no\-newline\fR
+Do not print a trailing newline character
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help
+.TP
+<\fIcolor\fR>
+The foreground color. Use \*(Aq\-\*(Aq to read the color from STDIN.
+.TP
+[\fItext\fR]
+The text to be printed in color. If no argument is given, the input is read from STDIN.

@@ -30,6 +30,7 @@ install_mitmproxy() {
   wget $url
   tar -xvf mitmproxy*linux-x86_64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv mitmproxy $DEST
   mv mitmdump $DEST
   mv mitmweb $DEST

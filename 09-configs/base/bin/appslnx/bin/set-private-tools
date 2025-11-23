@@ -119,6 +119,34 @@ if __name__ == "__main__":
         "pip3.13",
         "python3.14",
         "pip3.14",
+        "uvicorn",
+        "fastapi",
+        "email_validator",
+        "websockets",
+
+        "isbn_stdin_validate",
+        "isbn_info",
+        "isbn_mask",
+        "isbn_repl",
+        "isbn_editions",
+        "isbn_ean13",
+        "isbn_cover",
+        "isbn_classify",
+        "to_isbn10",
+        "to_isbn13",
+        "isbn_goom",
+        "isbn_ren",
+        "isbn_desc",
+        "isbn_doi",
+        "isbn_doi2tex",
+        "isbn_conf",
+        "isbn_from_words",
+        "isbntools",
+        "isbn_validate",
+        "csv2pskc",
+        "pskc2pskc",
+        "pskc2csv",
+
         "",
 
         # "register-python-argcomplete",
@@ -141,8 +169,6 @@ if __name__ == "__main__":
         # "barman-wal-archive",
         # "barman-cloud-restore",
         # "barman-cloud-backup-show",
-
-        "",
 
         #        "",
     ])

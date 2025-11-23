@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# buildah run --volume /path/on/host:/path/in/container:ro,z containerID /bin/sh
+
 container=$(buildah from docker.io/ubuntu:24.04)
 
 mnt=$(buildah mount $container)

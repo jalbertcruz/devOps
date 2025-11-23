@@ -29,6 +29,7 @@ install_k6() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf k6*inux-amd64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv k6*inux-amd64/k6 $DEST
 
   save_last_installation_log $app_name

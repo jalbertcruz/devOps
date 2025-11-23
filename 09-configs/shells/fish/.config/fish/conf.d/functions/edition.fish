@@ -22,7 +22,8 @@ end
 
 function ltxp
     #     docker run --rm -it -v (pwd):/workdir danteev/texlive:2022-02-15 pdflatex $argv[1].tex
-    docker run --rm -it -v (pwd):/workdir danteev/texlive:2024-08-15 pdflatex $argv[1].tex
+    #docker run --rm -it -v (pwd):/workdir danteev/texlive:2024-08-15 pdflatex $argv[1].tex
+    docker run --rm -it -v (pwd):/workdir texlive/texlive:latest pdflatex $argv[1].tex
 end
 
 function ltxx
@@ -42,4 +43,10 @@ function v
         set -gx NVIM_ID 0
         nvim --listen "/tmp/(pwd | slugify --stdin)" $argv
     end
+end
+
+function update-espanso-templates-path
+  set res (yq '.[][0].params.cmd' ~/.config/espanso/match/templates_path.yml | choose 1)
+  eval set p $res
+ echo -n $ESPANSO_TEMPLATES > $p
 end

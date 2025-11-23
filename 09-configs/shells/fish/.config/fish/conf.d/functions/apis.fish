@@ -17,5 +17,5 @@ end
 function wmock
     java -jar $WIREMOCK_STANDALONE_JAR_PATH \
         --port $argv[1] \
-        --record-mappings
+        --record-mappings __mappings
 end

@@ -29,6 +29,7 @@ install_hoverfly() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   unzip hoverfly_bundle_linux_amd64.zip
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv hoverctl $DEST
   mv hoverfly $DEST
 

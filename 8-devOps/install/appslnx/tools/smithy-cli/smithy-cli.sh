@@ -30,6 +30,7 @@ install_smithy_cli() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   unzip smithy-cli-linux-x86_64.zip
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv -f smithy-cli-linux-x86_64/bin/ $DEST
   mv -f smithy-cli-linux-x86_64/lib/ $DEST
   mv -f smithy-cli-linux-x86_64/conf/ $DEST

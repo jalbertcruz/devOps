@@ -11,12 +11,20 @@ rm $HOME/.local/share/applications/Logseq.desktop 2>/dev/null || true
 cd "$repo_home_dir"
 
 cd base
+#https://www.gnu.org/software/stow/manual/html_node/Resource-Files.html
 stow \
   -t "$HOME" \
   broot \
+  emacs-dev-bridge \
+  emacs-dev-lsp \
+  emacs-dev-eglot \
+  emacs-doom \
+  emacs-writer \
   kitty \
   nvim \
   nvim-dev \
+  nvim-vscode \
+  nvim-fs \
   zellij \
   yazi \
   bin
@@ -33,12 +41,12 @@ stow \
 cd ../dev
 stow \
   -t "$HOME" \
-  clojure-lsp \
+  clojure \
   coursier \
   efm \
   lazygit \
   git \
-  pnpm \
+  js \
   poetry \
   sbt \
   sqlfluff \
@@ -47,14 +55,18 @@ stow \
   bin \
   jetbrains-vim
 
-#cd ../extra
-#stow \
-#  -t "$HOME"
+cd ../extra
+stow \
+  -t "$HOME" \
+  hledger
 
 cd ../lnx-utils
 stow \
   -t "$HOME" \
+  debian-aptly \
+  distrobox \
   files-utils \
+  notifications \
   ov \
   procs \
   bin
@@ -63,6 +75,12 @@ cd ../local
 stow \
   -t "$HOME" \
   qmk
+
+cd ../medias
+stow \
+  -t "$HOME" \
+  mpd \
+  rmpc
 
 cd ../Ops
 stow \
@@ -75,6 +93,10 @@ stow \
   rofi \
   bin
 
+#  tmux \
+#  tmuxp \
+#  byobu \
+
 cd ../shells
 stow \
   -t "$HOME" \
@@ -85,16 +107,19 @@ stow \
   nushell \
   starship \
   tealdeer \
+  television \
   fish
 
 cd ../study
 stow \
   -t "$HOME" \
+  bin \
+  espanso \
+  harper \
   logseq \
   obs-studio \
   sioyek \
-  vale \
-  bin
+  vale
 
 cd ../GUIs
 stow \

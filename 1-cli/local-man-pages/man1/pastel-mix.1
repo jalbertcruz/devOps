@@ -1,0 +1,44 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH pastel-mix 1  "mix " 
+.SH NAME
+pastel\-mix \- Mix two colors in the given colorspace
+.SH SYNOPSIS
+\fBpastel mix\fR [\fB\-s\fR|\fB\-\-colorspace\fR] [\fB\-f\fR|\fB\-\-fraction\fR] [\fB\-h\fR|\fB\-\-help\fR] <\fIcolor\fR> [\fIcolor\fR] 
+.SH DESCRIPTION
+Create new colors by interpolating between two colors in the given colorspace.
+.PP
+Example:
+  pastel mix \-\-colorspace=RGB red blue
+.SH OPTIONS
+.TP
+\fB\-s\fR, \fB\-\-colorspace\fR \fI<name>\fR [default: Lab]
+The colorspace in which to interpolate
+.br
+
+.br
+[\fIpossible values: \fRLab, LCh, RGB, HSL, OkLab]
+.TP
+\fB\-f\fR, \fB\-\-fraction\fR [default: 0.5]
+The number between 0.0 and 1.0 determining how much to mix in from the base color.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+<\fIcolor\fR>
+The base color which will be mixed with the other colors
+.TP
+[\fIcolor\fR]
+Colors can be specified in many different formats, such as #RRGGBB, RRGGBB, #RGB, \*(Aqrgb(…, …, …)\*(Aq, \*(Aqhsl(…, …, …)\*(Aq, \*(Aqgray(…)\*(Aq or simply by the name of the color. The identifier \*(Aq\-\*(Aq can be used to read a single color from standard input. Also, the special identifier \*(Aqpick\*(Aq can be used to run an external color picker to choose a color. If no color argument is specified, colors will be read from standard input.
+Examples (all of these specify the same color):
+  \- lightslategray
+  \- \*(Aq#778899\*(Aq
+  \- 778899
+  \- 789
+  \- \*(Aqrgb(119, 136, 153)\*(Aq
+  \- \*(Aq119,136,153\*(Aq
+  \- \*(Aqhsl(210, 14.3%, 53.3%)\*(Aq
+Alpha transparency is also supported:
+  \- \*(Aq#77889980\*(Aq
+  \- \*(Aqrgba(119, 136, 153, 0.5)\*(Aq
+  \- \*(Aqhsla(210, 14.3%, 53.3%, 50%)\*(Aq

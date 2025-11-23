@@ -16,7 +16,7 @@ install_onlyoffice() {
   # https://github.com/ONLYOFFICE/DesktopEditors/releases
   # $HOME/appslnx/tools/edition/onlyoffice/bin/usr/bin/
   url1=$(curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -s https://api.github.com/repos/ONLYOFFICE/appimage-desktopeditors/releases/latest |
-    grep browser_download_url | grep .AppImage | head -n 1)
+    grep browser_download_url | grep x86_64.AppImage | head -n 1)
   url=$(echo -n $url1 | cut -d '"' -f4)
 
   result=$(save_last_version $app_name "$url")

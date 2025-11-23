@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "@olrtg/emmet-language-server": "^2.8.0",
+    "@tailwindcss/language-server": "^0.14.29",
+    "@usebruno/cli": "^3.2.2",
+    "@vtsls/language-server": "^0.3.0",
+    "@vue/language-server": "^3.2.6",
+    "alex": "^11.0.0",
+    "markdown-toc-gen": "^1.2.0",
+    "markdownlint-cli2": "^0.22.0",
+    "mldoc": "^1.5.9",
+    "oxlint": "^1.60.0",
+    "prettier": "^3.8.2",
+    "typescript": "^6.0.3",
+    "typescript-language-server": "^5.1.3",
+    "write-good": "^1.0.8",
+    "yaml-language-server": "^1.20.0",
+    "@stylelint/language-server": "^1.1.1",
+    "@t1ckbase/vscode-langservers-extracted": "^1.0.4",
+    "@astrojs/language-server": "^2.16.6",
+    "bash-language-server": "^5.6.0",
+    "@mdx-js/language-server": "^0.6.3"
+  }
+}

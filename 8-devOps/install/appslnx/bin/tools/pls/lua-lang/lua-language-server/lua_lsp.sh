@@ -32,6 +32,7 @@ install_lua_language_server() {
   tar -xvf lua-language-server*inux-x64.tar.gz
   rm lua-language-server*inux-x64.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   cp -Rf ./* $DEST
 
   save_last_installation_log $app_name

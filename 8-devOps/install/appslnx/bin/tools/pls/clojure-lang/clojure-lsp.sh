@@ -29,6 +29,7 @@ install_clojure_lsp() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   unzip clojure-lsp-native-linux-amd64.zip
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv clojure-lsp $DEST
 
   save_last_installation_log $app_name

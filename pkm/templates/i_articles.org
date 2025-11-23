@@ -1,0 +1,8 @@
+* t
+:PROPERTIES:
+:heading: 3
+:input: [[articles]]
+:producer:
+:link:
+:tags:
+:END:

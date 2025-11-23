@@ -19,6 +19,7 @@ install_hck() {
   mv hck-linux-amd64 hck
   chmod +x hck
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv hck $DEST
 }
 

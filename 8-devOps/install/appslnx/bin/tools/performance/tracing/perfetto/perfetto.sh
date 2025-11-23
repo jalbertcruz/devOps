@@ -29,6 +29,8 @@ install_perfetto() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   unzip linux-amd64.zip
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
+  chmod +x linux-amd64/*
   mv linux-amd64/traced_probes $DEST
   mv linux-amd64/tracebox $DEST
   mv linux-amd64/traceconv $DEST

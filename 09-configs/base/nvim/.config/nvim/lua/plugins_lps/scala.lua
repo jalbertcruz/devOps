@@ -65,6 +65,7 @@ return {
       local set = vim.keymap.set
       local k = vim.keycode
 
+-- TODO: review keymaps (not being used)
       set("n", "<leader>ma", function()
         require("telescope").extensions.metals.commands()
       end, { noremap = true, silent = true, desc = "Metals commands" })

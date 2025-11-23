@@ -30,6 +30,7 @@ install_kitty() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf kitty*x86_64.txz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   cp -Rf bin $DEST
   cp -Rf lib $DEST
   cp -Rf share $DEST

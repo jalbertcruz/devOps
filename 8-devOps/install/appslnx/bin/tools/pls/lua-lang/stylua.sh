@@ -37,7 +37,7 @@ if (
   [[ ! $(command -v $app_name) ]] ||
     [[ "$UPDATE_ALL" = "true" ]]
 ) &&
-  [[ "$APP_TYPE" = "lua" ]]; then
+  [[ "$APP_TYPE" = "linter" ]]; then
   echo "Installing ${app_name} in: $DEST"
   eval install_$app_name
   wait_some_time $WAITING_TIME "Waiting for $WAITING_TIME seconds before the next script..."

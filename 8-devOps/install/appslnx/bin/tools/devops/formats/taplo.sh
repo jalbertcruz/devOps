@@ -29,6 +29,7 @@ install_taplo() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   gunzip taplo-linux-x86_64.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv taplo-linux-x86_64 taplo
   chmod +x taplo
   mv taplo $DEST

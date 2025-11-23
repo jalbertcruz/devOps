@@ -29,6 +29,7 @@ install_rg() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xzf ripgrep*x86_64-unknown-linux-musl.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv ripgrep*x86_64-unknown-linux-musl/rg $DEST
 
   save_last_installation_log $app_name

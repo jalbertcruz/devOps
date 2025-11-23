@@ -1,1 +1,122 @@
-[{"file": "/home/a/src/Python/katas/a.md", "column": 1, "mark": "'0", "line": 1}, {"file": "/home/a/src/Python/katas/cli/original", "column": 1, "mark": "'1", "line": 8}, {"file": "/home/a/src/Python/katas/cli/original", "column": 1, "mark": "'2", "line": 8}, {"file": "/home/a/src/Python/katas/cli/original", "column": 1, "mark": "'3", "line": 8}, {"file": "/home/a/src/Python/katas/arguments/__init__.py", "column": 1, "mark": "'4", "line": 46}, {"file": "/home/a/src/Python/katas/cli/original", "column": 1, "mark": "'5", "line": 8}, {"file": "/home/a/src/Python/katas/main.py", "column": 2, "mark": "'6", "line": 58}, {"file": "/home/a/src/Python/katas/main.py", "column": 1, "mark": "'7", "line": 58}, {"file": "/home/a/src/Python/katas/arguments/__init__.py", "column": 5, "mark": "'8", "line": 16}, {"file": "/home/a/src/Python/katas/main.py", "column": 12, "mark": "'9", "line": 58}, {"file": "", "column": 1, "mark": "'\"", "line": 1}, {"file": "", "column": 1, "mark": "'.", "line": 1}, {"file": "", "column": 1, "mark": "'\"", "line": 1}, {"file": "", "column": 1, "mark": "'.", "line": 1}, {"file": "", "column": 1, "mark": "'\"", "line": 1}, {"file": "", "column": 1, "mark": "'.", "line": 1}, {"file": "", "column": 1, "mark": "'\"", "line": 1}, {"file": "", "column": 1, "mark": "'.", "line": 1}, {"file": "", "column": 1, "mark": "'\"", "line": 1}, {"file": "", "column": 1, "mark": "'.", "line": 1}]
+[
+  {
+    "file": "/home/a/src/Python/katas/a.md",
+    "column": 1,
+    "mark": "'0",
+    "line": 1
+  },
+  {
+    "file": "/home/a/src/Python/katas/cli/original",
+    "column": 1,
+    "mark": "'1",
+    "line": 8
+  },
+  {
+    "file": "/home/a/src/Python/katas/cli/original",
+    "column": 1,
+    "mark": "'2",
+    "line": 8
+  },
+  {
+    "file": "/home/a/src/Python/katas/cli/original",
+    "column": 1,
+    "mark": "'3",
+    "line": 8
+  },
+  {
+    "file": "/home/a/src/Python/katas/arguments/__init__.py",
+    "column": 1,
+    "mark": "'4",
+    "line": 46
+  },
+  {
+    "file": "/home/a/src/Python/katas/cli/original",
+    "column": 1,
+    "mark": "'5",
+    "line": 8
+  },
+  {
+    "file": "/home/a/src/Python/katas/main.py",
+    "column": 2,
+    "mark": "'6",
+    "line": 58
+  },
+  {
+    "file": "/home/a/src/Python/katas/main.py",
+    "column": 1,
+    "mark": "'7",
+    "line": 58
+  },
+  {
+    "file": "/home/a/src/Python/katas/arguments/__init__.py",
+    "column": 5,
+    "mark": "'8",
+    "line": 16
+  },
+  {
+    "file": "/home/a/src/Python/katas/main.py",
+    "column": 12,
+    "mark": "'9",
+    "line": 58
+  },
+  {
+    "file": "",
+    "column": 1,
+    "mark": "'\"",
+    "line": 1
+  },
+  {
+    "file": "",
+    "column": 1,
+    "mark": "'.",
+    "line": 1
+  },
+  {
+    "file": "",
+    "column": 1,
+    "mark": "'\"",
+    "line": 1
+  },
+  {
+    "file": "",
+    "column": 1,
+    "mark": "'.",
+    "line": 1
+  },
+  {
+    "file": "",
+    "column": 1,
+    "mark": "'\"",
+    "line": 1
+  },
+  {
+    "file": "",
+    "column": 1,
+    "mark": "'.",
+    "line": 1
+  },
+  {
+    "file": "",
+    "column": 1,
+    "mark": "'\"",
+    "line": 1
+  },
+  {
+    "file": "",
+    "column": 1,
+    "mark": "'.",
+    "line": 1
+  },
+  {
+    "file": "",
+    "column": 1,
+    "mark": "'\"",
+    "line": 1
+  },
+  {
+    "file": "",
+    "column": 1,
+    "mark": "'.",
+    "line": 1
+  }
+]

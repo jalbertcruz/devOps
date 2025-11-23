@@ -1,4 +1,7 @@
 
+/media/z/data/repo/internet2/verdaccio/
+/home/z/.cache/deno/npm/
+
 
 # pnpm
 pnpm config set store-dir /media/z/data/repo/internet2/pnpm-store
@@ -6,9 +9,11 @@ pnpm config set store-dir /media/z/data/repo/internet2/pnpm-store
 # npm
 npm set registry http://localhost:4873
 
-deno compile --allow-all npm:verdaccio
+deno compile --allow-all npm:verdaccio@6.2.4
 
-deno compile --allow-all --include npm:typescript/tsc --include npm:typescript/tsserver --output typescript-language-server npm:typescript-language-server
+deno compile --allow-all --include npm:typescript/tsc --include npm:typescript/tsserver --output typescript-language-server npm:typescript-language-server@5.1.3
+deno compile --allow-all --include npm:typescript/tsserver --output typescript-language-server npm:typescript-language-server@5.1.3
+#npm i typescript-language-server
 
 typescript-language-server -> ../packages/typescript-language-server/node_modules/.bin/typescript-language-server
 deno compile --allow-all --output tsc npm:typescript/tsc
@@ -17,20 +22,20 @@ deno compile --allow-all --output tsserver npm:typescript/tsserver
 deno compile --allow-all npm:alex@11.0.1
 
 js-debug-adapter -> ../packages/js-debug-adapter/js-debug-adapter
-https://github.com/mason-org/mason-registry/blob/2025-10-21-native-trumpet/packages/js-debug-adapter/package.yaml
+https://github.com/mason-org/mason-registry/blob/main/packages/js-debug-adapter/package.yaml
 https://github.com/microsoft/vscode-js-debug/releases
 
 markdown-toc -> ../packages/markdown-toc/node_modules/.bin/markdown-toc
-https://github.com/mason-org/mason-registry/blob/2025-10-21-native-trumpet/packages/markdown-toc/package.yaml
+https://github.com/mason-org/mason-registry/blob/main/packages/markdown-toc/package.yaml
 deno compile --allow-all --output markdown-toc npm:markdown-toc@1.2.0
 
 markdownlint-cli2 -> ../packages/markdownlint-cli2/node_modules/.bin/markdownlint-cli2
-https://github.com/mason-org/mason-registry/blob/2025-10-21-native-trumpet/packages/markdownlint-cli2/package.yaml
-deno compile --allow-all --output markdownlint-cli2 npm:markdownlint-cli2@0.18.1
+https://github.com/mason-org/mason-registry/blob/main/packages/markdownlint-cli2/package.yaml
+deno compile --allow-all --output markdownlint-cli2 npm:markdownlint-cli2@0.20.0
 
 tailwindcss-language-server -> ../packages/tailwindcss-language-server/node_modules/.bin/tailwindcss-language-server
-https://github.com/mason-org/mason-registry/blob/2025-10-21-native-trumpet/packages/tailwindcss-language-server/package.yaml
-deno compile --allow-all --output tailwindcss-language-server npm:@tailwindcss/language-server@0.14.28
+https://github.com/mason-org/mason-registry/blob/main/packages/tailwindcss-language-server/package.yaml
+deno compile --allow-all --output tailwindcss-language-server npm:@tailwindcss/language-server@0.14.29
 
 
  * npm:vscode-langservers-extracted@4.10.0/vscode-eslint-language-server
@@ -38,29 +43,94 @@ deno compile --allow-all --output tailwindcss-language-server npm:@tailwindcss/l
 
 
 vscode-css-language-server -> ../packages/css-lsp/node_modules/.bin/vscode-css-language-server
-https://github.com/mason-org/mason-registry/blob/2025-10-21-native-trumpet/packages/css-lsp/package.yaml
+https://github.com/mason-org/mason-registry/blob/main/packages/css-lsp/package.yaml
 css-lsp
-deno compile --allow-all --output vscode-css-language-server npm:vscode-langservers-extracted@4.10.0/vscode-css-language-server
-
 vscode-html-language-server -> ../packages/html-lsp/node_modules/.bin/vscode-html-language-server
 html-lsp
-https://github.com/mason-org/mason-registry/blob/2025-10-21-native-trumpet/packages/html-lsp/package.yaml
-deno compile --allow-all --output vscode-html-language-server npm:vscode-langservers-extracted@4.10.0/vscode-html-language-server
-
-
+https://github.com/mason-org/mason-registry/blob/main/packages/html-lsp/package.yaml
 vscode-json-language-server -> ../packages/json-lsp/node_modules/.bin/vscode-json-language-server
-https://github.com/mason-org/mason-registry/blob/2025-10-21-native-trumpet/packages/json-lsp/package.yaml
+https://github.com/mason-org/mason-registry/blob/main/packages/json-lsp/package.yaml
 json-lsp
 jsonls
+eslint
+
+deno compile --allow-all --output vscode-css-language-server npm:vscode-langservers-extracted@4.10.0/vscode-css-language-server
+deno compile --allow-all --output vscode-html-language-server npm:vscode-langservers-extracted@4.10.0/vscode-html-language-server
 deno compile --allow-all --output vscode-json-language-server npm:vscode-langservers-extracted@4.10.0/vscode-json-language-server
+deno compile --allow-all --output vscode-eslint-language-server npm:vscode-langservers-extracted@4.10.0/vscode-eslint-language-server
 
 write-good -> ../packages/write-good/node_modules/.bin/write-good
-https://github.com/mason-org/mason-registry/blob/2025-10-21-native-trumpet/packages/write-good/package.yaml
+https://github.com/mason-org/mason-registry/blob/main/packages/write-good/package.yaml
 write-good
 deno compile --allow-all --output write-good npm:write-good@1.0.8
 
-deno compile --allow-all --node-modules-dir=auto --output bru npm:@usebruno/cli
+deno compile --allow-all --node-modules-dir=auto --output bru npm:@usebruno/cli@3.0.2
 deno compile --allow-all --node-modules-dir=auto --output oxlint npm:oxlint
 
-deno compile --allow-all --output vue-language-server npm:vue/language-server
+# https://www.npmjs.com/package/@vue/language-server
+# registry=http://localhost:4873 (esto no sirve) para vue-language-server, con la version fija si
+deno compile --allow-all --include npm:typescript --output vue-language-server npm:@vue/language-server@3.2.2
+
 deno compile --allow-all npm:yaml-language-server
+deno compile --allow-all npm:@olrtg/emmet-language-server
+
+deno compile --allow-all --output vtsls npm:@vtsls/language-server
+
+
+
+npm i typescript-language-server
+npm i typescript
+npm i @vtsls/language-server
+npm i vscode-langservers-extracted
+npm i @vue/language-server@3.2.2
+npm i @olrtg/emmet-language-server@2.8.0
+npm i yaml-language-server@1.19.2
+npm i oxlint@1.38.0
+npm i write-good@1.0.8
+npm i @tailwindcss/language-server@0.14.29
+npm i markdownlint-cli2@0.20.0
+npm i markdown-toc-gen@1.2.0
+npm i alex@11.0.0
+
+npm i prettier@3.7.4
+npm i @usebruno/cli
+
+
+code --goto "/home/z/Downloads/Dev review.txt":93:20
+
+>deno install --global --compile -A npm:@anthropic-ai/claude-code
+>deno compile --self-extracting
+$ deno compile --self-extracting -A main.ts -o my-app
+$ ./my-app  # Extracts embedded files on first run, then executes
+
+deno install --global --compile -A npm:verdaccio@6.4.0
+npm create astro@5.0.5
+
+# kind of crap for standalone lsps
+deno install --global --compile -A npm:prettier@3.8.2
+deno install --global --compile -A npm:@usebruno/cli@3.2.2
+deno install --global --compile -A npm:@olrtg/emmet-language-server@2.8.0
+deno install --global --compile -A npm:@tailwindcss/language-server@0.14.29 -n tailwindcss-language-server
+deno install --global --compile -A npm:@vue/language-server@3.2.6
+deno install --global --compile -A npm:@vtsls/language-server@0.3.0
+deno install --global --compile -A npm:alex@11.0.0
+deno install --global --compile -A npm:markdown-toc-gen@1.2.0
+deno install --global --compile -A npm:markdownlint-cli2@0.22.0
+deno install --global --compile -A npm:oxlint@1.60.0
+deno install --global --compile -A npm:typescript@6.0.3
+deno install --global --compile -A npm:typescript-language-server@5.1.3
+deno install --global --compile -A npm:write-good@1.0.8
+deno install --global --compile -A npm:yaml-language-server@1.22.0
+
+# first to download the dependency
+deno install --global --compile -A npm:@t1ckbase/vscode-langservers-extracted@1.0.4
+then:
+deno install --global --compile -A npm:@t1ckbase/vscode-langservers-extracted@1.0.4/vscode-css-language-server -n vscode-css-language-server
+deno install --global --compile -A npm:@t1ckbase/vscode-langservers-extracted@1.0.4/vscode-html-language-server -n vscode-html-language-server
+deno install --global --compile -A npm:@t1ckbase/vscode-langservers-extracted@1.0.4/vscode-json-language-server -n vscode-json-language-server
+deno install --global --compile -A npm:@t1ckbase/vscode-langservers-extracted@1.0.4/vscode-eslint-language-server -n vscode-eslint-language-server
+
+# deno install --global --compile -A npm:stylelint-lsp@2.0.1 # old
+https://libraries.io/npm/@stylelint%2Flanguage-server
+deno install --global --compile -A npm:@stylelint/language-server@1.1.1
+deno compile --allow-all --node-modules-dir=auto npm:@stylelint/language-server@1.1.1

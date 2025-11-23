@@ -151,6 +151,18 @@ function format-local-binaries
     shfmt -i 2 -l -w $HOME/src/devOps/09-configs/bootstrap
 end
 
+function fds
+    set base_path $HOME/src/devOps/09-configs/GUIs
+    set combined (fd --search-path $base_path --hidden --type file)
+    set name (for i in $combined
+        echo $i
+    end | xargs -I{} basename '{}' | fzf)
+    if [ "$name" ]
+        set res (fd --search-path $base_path --hidden --type file $name)
+        nvim "$res"
+    end
+end
+
 function fbs
     set items "$HOME/src/devOps/09-configs/base/bin/" \
         "$HOME/src/devOps/09-configs/data/bin/" \

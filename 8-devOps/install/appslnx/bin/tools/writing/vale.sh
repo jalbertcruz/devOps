@@ -13,7 +13,7 @@ app_name=vale
 install_vale() {
   mkdir -p "$TMP_DIR/$app_name"
   cd "$TMP_DIR/$app_name"
-  url=$(curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -s https://api.github.com/repos/errata-ai/vale/releases/latest |
+  url=$(curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -s https://api.github.com/repos/vale-cli/vale/releases/latest |
     grep browser_download_url | grep inux_64-bit.tar.gz |
     head -n 1 |
     cut -d '"' -f4)
@@ -30,6 +30,7 @@ install_vale() {
   echo -n $url | xargs curl -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" -LO
   tar -xvf vale*inux_64-bit.tar.gz
   maybe_copy_fish_completions_files
+  maybe_copy_man_pages_files
   mv vale $DEST
 
   save_last_installation_log $app_name
