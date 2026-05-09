@@ -16,7 +16,6 @@ stow \
   -t "$HOME" \
   broot \
   kitty \
-  zellij \
   yazi \
   bin
 
@@ -102,17 +101,21 @@ stow \
 #  tmuxp \
 #  byobu \
 
-cd ../shells
+cd ../shell-assistant
 stow \
   -t "$HOME" \
   atuin \
-  carapace \
   cheat \
   navi \
+  tealdeer \
+  television
+
+cd ../shells
+stow \
+  -t "$HOME" \
+  carapace \
   nushell \
   starship \
-  tealdeer \
-  television \
   fish
 
 cd ../study
