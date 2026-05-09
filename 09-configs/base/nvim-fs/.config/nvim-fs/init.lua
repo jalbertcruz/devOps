@@ -763,3 +763,35 @@ vim.keymap.set({ "n", "x", "o" }, "<A-i>", function()
 	end
 end, { desc = "Select child treesitter node or inner incremental lsp selections" })
 
+
+require("ft_temp_maps").setup({
+  markdown = {
+    {
+      mode = "n",
+      lhs = "gx",
+	--$ :verbose nmap gx
+	  rhs = "<cmd>bd<CR>",
+      opts = { silent = true, desc = "Close markdown buffer (temp)" },
+    },
+  },
+
+  lua = {
+    {
+      mode = "n",
+      lhs = "<A-o>",
+      rhs = "o<Esc>",
+      opts = { silent = true, desc = "Insert line below (Lua temp)" },
+    },
+  },
+
+  python = {
+    {
+      mode = "n",
+      lhs = "<A-o>",
+      rhs = "o<Esc>",
+      opts = { silent = true, desc = "Insert line below (Python temp)" },
+    },
+  },
+}, {
+  group_name = "FtTempMaps", -- optional
+})
