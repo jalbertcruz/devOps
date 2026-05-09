@@ -82,10 +82,9 @@ vim.keymap.set({ "n", "x", "o" }, "S", function()
 	require("tsht").nodes()
 end, { desc = "Tree hopper" })
 
-
 local hop = require("hop")
 local directions = require("hop.hint").HintDirection
-hop.setup { keys = 'etovxqpdygfblzhckisuran' }
+hop.setup({ keys = "etovxqpdygfblzhckisuran" })
 vim.keymap.set("n", "s", "<cmd>HopChar1<cr>", { desc = "Hop to char1", noremap = true, silent = true })
 vim.keymap.set("n", "gs", "<cmd>HopChar2MW<cr>", { desc = "Hop to Char2MW", noremap = true, silent = true })
 vim.keymap.set({ "n" }, "f", function()

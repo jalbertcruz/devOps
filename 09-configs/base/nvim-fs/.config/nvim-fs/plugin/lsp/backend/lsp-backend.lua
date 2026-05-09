@@ -10,3 +10,5 @@ vim.filetype.add({
 vim.treesitter.language.register("yaml", "buf-config")
 
 vim.lsp.enable("buf_ls")
+
+vim.lsp.enable("smithy_ls")

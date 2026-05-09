@@ -88,5 +88,4 @@ local dap = require("dap")
 --},
 --}
 
-
 vim.lsp.enable("metals")

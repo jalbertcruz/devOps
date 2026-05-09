@@ -232,7 +232,8 @@ vim.pack.add({
 })
 require("noice").setup({
 	cmdline = {
-		enabled = false, -- enables the Noice cmdline UI
+		enabled = true, -- enables the Noice cmdline UI
+		--view = "cmdline",
 	},
 	lsp = {
 		override = {
@@ -377,7 +378,15 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 				},
 			},
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer" },
+				default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+				providers = {
+					lazydev = {
+						name = "LazyDev",
+						module = "lazydev.integrations.blink",
+						-- make lazydev completions top priority (see `:h blink.cmp`)
+						score_offset = 100,
+					},
+				},
 			},
 			fuzzy = { implementation = "prefer_rust_with_warning" },
 		})
@@ -652,30 +661,54 @@ require("bufferline").setup({
 })
 --:
 
---: bookmarks
 vim.pack.add({
-	{ src = "git:heilgar/bookmarks.nvim" },
-	{ src = "git:kkharji/sqlite.lua" },
+	{ src = "git:otavioschwanck/arrow.nvim" },
 })
 
-require("bookmarks").setup({
-	default_mappings = true,
-	db_path = vim.fn.stdpath("data") .. "/bookmarks.db",
+require("arrow").setup({
+	show_icons = true,
+	--leader_key = "\\", -- Recommended to be a single key
+	leader_key = "`", -- Recommended to be a single key
+	buffer_leader_key = "m", -- Per Buffer Mappings
 })
-
 -- pcall(require("telescope").load_extension, "bookmarks")
 
-vim.keymap.set("n", "<leader>ba", "<cmd>BookmarkAdd<cr>", { desc = "Add Bookmark", noremap = true, silent = true })
+vim.pack.add({
+	{ src = "git:nvim-lua/plenary.nvim" },
+	{ src = "git:nvim-telescope/telescope.nvim" },
+})
+vim.pack.add({
+	{ src = "git:LintaoAmons/bookmarks.nvim", version = "v4.0.0" },
+	{
+		src = "git:kkharji/sqlite.lua",
+		--, version="v1.2.2"
+	},
+})
+vim.cmd.runtime("plugin/bookmarks.lua") -- workaround
+require("bookmarks").setup({
+	signs = {
+		-- Sign mark icon and color in the gutter
+		mark = {
+			--icon = "󰃁",
+			icon = "",
+			color = "#143E1D",
+			--line_bg = "#572626",
+			line_bg = "#16143E",
+		},
+		desc_format = function(bookmark)
+			---@cast bookmark Bookmarks.Node
+			return bookmark.name
+		end,
+	},
+})
+
+vim.keymap.set("n", "bc", "<cmd>BookmarksTree<cr>", { desc = "Create bookmark list", noremap = true, silent = true })
+vim.keymap.set("n", "bs", "<cmd>BookmarksLists<cr>", { desc = "Select bookmark list", noremap = true, silent = true })
+vim.keymap.set("n", "ba", "<cmd>BookmarksMark<cr>", { desc = "Add Bookmark", noremap = true, silent = true })
 vim.keymap.set(
 	"n",
-	"<leader>br",
-	"<cmd>BookmarkRemove<cr>",
-	{ desc = "Remove Bookmark", noremap = true, silent = true }
-)
-vim.keymap.set(
-	"n",
-	"<leader>bl",
-	"<cmd>Bookmarks<cr>",
+	"bl",
+	"<cmd>BookmarksGoto<cr>",
 	{ desc = "List Bookmarks (Telescope)", noremap = true, silent = true }
 )
 --:
@@ -718,7 +751,7 @@ vim.pack.add({
 })
 
 require("oil").setup({
-	columns = {  },
+	columns = {},
 	keymaps = {
 		--["<C-h>"] = false,
 		--["<M-h>"] = "actions.select_split",
@@ -730,11 +763,11 @@ require("oil").setup({
 vim.keymap.set("n", "-o", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 vim.pack.add({
-    { src = "git:mfussenegger/nvim-dap" },
-    { src = "git:rcarriga/nvim-dap-ui" },
-    { src = "git:thehamsta/nvim-dap-virtual-text" },
-    { src = "git:nvim-neotest/nvim-nio" },
-    --{ src = "git:" },
+	{ src = "git:mfussenegger/nvim-dap" },
+	{ src = "git:rcarriga/nvim-dap-ui" },
+	{ src = "git:thehamsta/nvim-dap-virtual-text" },
+	{ src = "git:nvim-neotest/nvim-nio" },
+	--{ src = "git:" },
 })
 
 --require("dapui").setup()
@@ -746,14 +779,18 @@ vim.pack.add({
 --  v_in - select child node
 --  v_]n - select prev node
 --  v_[n - select next node
-vim.keymap.set({ "n", "x", "o" }, "<A-o>" -- Alt+o
-, function()
-	if vim.treesitter.get_parser(nil, nil, { error = false }) then
-		require("vim.treesitter._select").select_parent(vim.v.count1)
-	else
-		vim.lsp.buf.selection_range(vim.v.count1)
-	end
-end, { desc = "Select parent treesitter node or outer incremental lsp selections" })
+vim.keymap.set(
+	{ "n", "x", "o" },
+	"<A-o>", -- Alt+o
+	function()
+		if vim.treesitter.get_parser(nil, nil, { error = false }) then
+			require("vim.treesitter._select").select_parent(vim.v.count1)
+		else
+			vim.lsp.buf.selection_range(vim.v.count1)
+		end
+	end,
+	{ desc = "Select parent treesitter node or outer incremental lsp selections" }
+)
 
 vim.keymap.set({ "n", "x", "o" }, "<A-i>", function()
 	if vim.treesitter.get_parser(nil, nil, { error = false }) then
@@ -763,35 +800,16 @@ vim.keymap.set({ "n", "x", "o" }, "<A-i>", function()
 	end
 end, { desc = "Select child treesitter node or inner incremental lsp selections" })
 
-
 require("ft_temp_maps").setup({
-  markdown = {
-    {
-      mode = "n",
-      lhs = "gx",
-	--$ :verbose nmap gx
-	  rhs = "<cmd>bd<CR>",
-      opts = { silent = true, desc = "Close markdown buffer (temp)" },
-    },
-  },
-
-  lua = {
-    {
-      mode = "n",
-      lhs = "<A-o>",
-      rhs = "o<Esc>",
-      opts = { silent = true, desc = "Insert line below (Lua temp)" },
-    },
-  },
-
-  python = {
-    {
-      mode = "n",
-      lhs = "<A-o>",
-      rhs = "o<Esc>",
-      opts = { silent = true, desc = "Insert line below (Python temp)" },
-    },
-  },
+	--markdown = {
+	--	{
+	--		mode = "n",
+	--		lhs = "gx",
+	--		--$ :verbose nmap gx
+	--		rhs = "<cmd>bd<CR>",
+	--		opts = { silent = true, desc = "Close markdown buffer (temp)" },
+	--	},
+	--},
 }, {
-  group_name = "FtTempMaps", -- optional
+	group_name = "FtTempMaps", -- optional
 })

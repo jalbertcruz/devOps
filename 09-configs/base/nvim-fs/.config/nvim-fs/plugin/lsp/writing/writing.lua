@@ -41,7 +41,6 @@ vim.lsp.config["harper_ls"] = {
 	},
 }
 
-
 vim.lsp.config("typos_lsp", {
 	on_attach = on_attach,
 

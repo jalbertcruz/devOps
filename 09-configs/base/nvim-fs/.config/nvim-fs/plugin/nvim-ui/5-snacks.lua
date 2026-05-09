@@ -1,4 +1,4 @@
-vim.pack.add({ "https://github.com/folke/snacks.nvim" })
+vim.pack.add({ "git:folke/snacks.nvim" })
 
 require("snacks").setup({
 	scroll = {
