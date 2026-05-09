@@ -1,0 +1,238 @@
+-- nvim 0.12
+-- https://neovim.io/doc/user/pack/
+-- https://github.com/SvenBroeckling/nvim-0.12-config/blob/main/init.lua
+-- https://www.youtube.com/watch?v=UE6XQTAxwE0
+-- git:mplusp/nvim-0.12-vim-pack-intro
+
+-- vim:fileencoding=utf-8:foldmethod=marker
+
+-- [[ --------------------- KEYMAP OVERVIEW --------------------- ]]
+--
+-- Leader key: "," (comma)
+--
+-- ---------------------------------------------------------------
+--  General Editor & Text
+-- ---------------------------------------------------------------
+--   <leader>w    (n) : Toggle word wrap ON
+--   <leader>W    (n) : Toggle word wrap OFF
+--   Y            (n) : Yank line (full line)
+--   <C-c>        (n) : Copy current line to clipboard
+--   <C-c>        (v) : Copy selection to clipboard
+--   >            (v) : Indent selection
+--   <            (v) : Outdent selection
+--
+-- ---------------------------------------------------------------
+--  Window & Buffer Management
+-- ---------------------------------------------------------------
+--   <C-h>        (n) : Move window to far left
+--   <C-l>        (n) : Move window to far right
+--   gt           (n) : Go to next buffer
+--   gT           (n) : Go to previous buffer
+--   gb           (n) : [Telescope] Go to buffer
+--   <leader>sb   (n) : [Telescope] Search buffers
+--
+-- ---------------------------------------------------------------
+--  File & Project Navigation
+-- ---------------------------------------------------------------
+--   <C-n>        (n) : Toggle NvimTree file explorer
+--   <M-1>        (n) : Open Oil file explorer
+--   <M-2>        (n) : Open MiniFiles file explorer
+--   <C-p>        (n) : [Telescope] Find files
+--   <C-e>        (n) : [Telescope] Find old files (history)
+--
+-- ---------------------------------------------------------------
+--  Telescope (Search)
+-- ---------------------------------------------------------------
+--   <leader>sg   (n) : Live Grep (search project text)
+--   <leader>sw   (n) : Grep for word under cursor
+--   <leader>sf   (n) : Search Functions (LSP)
+--   <leader>sc   (n) : Search Classes (LSP)
+--   <leader>sv   (n) : Search Variables (LSP)
+--   <leader>ss   (n) : Search All Symbols (LSP)
+--   <leader>sh   (n) : Search help tags
+--   <leader>sk   (n) : Search keymaps
+--
+-- ---------------------------------------------------------------
+--  LSP & Code (Active in code buffers)
+-- ---------------------------------------------------------------
+--   gd           (n) : Go to Definition
+--   K            (n) : Hover documentation
+--   [d           (n) : Go to previous diagnostic
+--   ]d           (n) : Go to next diagnostic
+--   <leader>ca   (n) : Code Actions
+--   <leader>rn   (n) : Rename symbol
+--   <leader>vr   (n) : View References
+--   <leader>vws  (n) : View Workspace Symbols
+--   <leader>lf   (n) : Format buffer (LSP)
+--   <C-h>        (i) : Signature Help (in insert mode)
+--
+-- ---------------------------------------------------------------
+--  Diagnostics & Quickfix
+-- ---------------------------------------------------------------
+--   <leader>ge   (n) : Jump to next diagnostic
+--   <leader>gE   (n) : Jump to previous diagnostic
+--   <leader>vd   (n) : Show diagnostic in float
+--   <leader>sd   (n) : [Telescope] Search all diagnostics
+--   <leader>x    (n) : Close quickfix window
+--   <leader>sn   (n) : Next item in quickfix
+--   <leader>sp   (n) : Previous item in quickfix
+--   <leader>sq   (n) : [Telescope] Search quickfix list
+--
+-- ---------------------------------------------------------------
+--  Bookmarks (bookmarks.nvim)
+-- ---------------------------------------------------------------
+--   <leader>ba   (n) : Add bookmark at line
+--   <leader>br   (n) : Remove bookmark at line
+--   <leader>bl   (n) : [Telescope] List all bookmarks
+--   mn           (n) : Jump to next bookmark (plugin default)
+--   mp           (n) : Jump to previous bookmark (plugin default)
+--
+-- [[ ----------------------------------------------------------- ]]
+
+require("vim._core.ui2").enable({ msg = { target = "cmd" } })
+
+-- Use system clipboard for all yank, delete, change, and put operations
+vim.opt.clipboard = "unnamedplus"
+
+--: Options
+-- vim.g.mapleader = ","
+vim.g.mapleader = " " -- sets leader to space
+vim.o.background = "dark"
+vim.o.backup = false
+vim.o.expandtab = true
+vim.o.hlsearch = false
+vim.o.incsearch = true
+vim.o.number = true
+vim.o.scrolloff = 8
+vim.o.shiftwidth = 4
+vim.o.showmode = false
+vim.o.signcolumn = "yes"
+vim.o.smartindent = true
+vim.o.softtabstop = 4
+vim.o.swapfile = false
+vim.o.tabstop = 4
+vim.o.termguicolors = true
+vim.o.updatetime = 50
+vim.o.winborder = "rounded"
+vim.o.wrap = false
+--:
+
+--: Godot
+-- paths to check for project.godot file
+local paths_to_check = { "/", "/../" }
+local is_godot_project = false
+local godot_project_path = ""
+local cwd = vim.fn.getcwd()
+
+-- iterate over paths and check
+for key, value in pairs(paths_to_check) do
+	if vim.uv.fs_stat(cwd .. value .. "project.godot") then
+		is_godot_project = true
+		godot_project_path = cwd .. value
+		break
+	end
+end
+
+-- check if server is already running in godot project path
+local is_server_running = vim.uv.fs_stat(godot_project_path .. "/server.pipe")
+-- start server, if not already running
+if is_godot_project and not is_server_running then
+	vim.fn.serverstart(godot_project_path .. "/server.pipe")
+end
+--:
+
+--: Basic keymaps
+local function set_wrap()
+	vim.opt.wrap = true
+	vim.opt.linebreak = true
+	vim.keymap.set("n", "j", "gj")
+	vim.keymap.set("n", "k", "gk")
+end
+
+local function set_nowrap()
+	vim.opt.wrap = false
+	vim.opt.linebreak = false
+	vim.keymap.set("n", "j", "j")
+	vim.keymap.set("n", "k", "k")
+end
+
+vim.keymap.set("v", ">", ">gv", { noremap = true })
+vim.keymap.set("v", "<", "<gv", { noremap = true })
+
+vim.keymap.set("n", "Y", "yy")
+vim.keymap.set("v", "<C-c>", '"+y')
+vim.api.nvim_set_keymap(
+	"n",
+	"<C-c>",
+	[[:lua vim.fn.setreg('+', vim.fn.getline('.'))<CR>]],
+	{ noremap = true, silent = true }
+)
+
+vim.keymap.set("n", "<leader>w", set_wrap)
+vim.keymap.set("n", "<leader>W", set_nowrap)
+
+vim.keymap.set("n", "<leader>x", [[:cclose]])
+
+vim.keymap.set("n", "<leader>ge", function()
+	vim.diagnostic.jump({ count = 1 })
+end)
+vim.keymap.set("n", "<leader>gE", function()
+	vim.diagnostic.jump({ count = -1 })
+end)
+
+vim.keymap.set("n", "<leader>sn", ":cnext<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>sp", ":cprev<CR>", { noremap = true })
+
+-- Move the current window to the far left
+vim.keymap.set("n", "<C-h>", "<C-W>H", { desc = "Move window to far left", noremap = true, silent = true })
+-- Move the current window to the far right
+vim.keymap.set("n", "<C-l>", "<C-W>L", { desc = "Move window to far right", noremap = true, silent = true })
+
+vim.keymap.set("n", "gt", ":bn<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "gT", ":bp<CR>", { noremap = true, silent = true })
+--:
+
+--: Plugins
+
+-- --: catppuccin
+-- vim.pack.add({
+-- 	{ src = "git:catppuccin/nvim.git", name = "catppuccin" },
+-- })
+-- vim.cmd.colorscheme("catppuccin")
+-- --:
+
+-- lua/plugins/theme.lua
+vim.pack.add({
+	{ src = "git:folke/tokyonight.nvim" },
+})
+require("tokyonight").setup({
+	style = "night",
+	transparent = true,
+})
+vim.cmd("colorscheme tokyonight")
+
+--: treesitter
+-- https://www.qu8n.com/posts/treesitter-migration-guide-for-nvim-0-12
+-- https://neovim.io/doc/user/treesitter/
+-- https://neovim.io/doc/user/treesitter/#%3AInspectTree
+vim.pack.add({
+	{ src = "git:nvim-treesitter/nvim-treesitter" },
+})
+-- require('nvim-treesitter').install { "javascript", "typescript", "python", "c", "lua", "vim", "vimdoc", "query", "htmldjango", "gdscript", "godot_resource", "gdshader" }
+require("nvim-treesitter").setup({})
+require("nvim-treesitter").install({ "elixir", "heex", "eex" })
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "*" },
+	callback = function()
+		local filetype = vim.bo.filetype
+		if filetype and filetype ~= "" then
+			local success = pcall(function()
+				vim.treesitter.start()
+			end)
+			if not success then
+				return
+			end
+		end
+	end,
+})

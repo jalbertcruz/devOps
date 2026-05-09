@@ -1,0 +1,3 @@
+
+:lua vim.print(package.loaded)
+:lua package.loaded["stackmap.util"] = nil -- delete that key from the table / 'un- require("stackmap.util")'

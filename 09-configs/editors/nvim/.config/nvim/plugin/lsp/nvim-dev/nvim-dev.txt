@@ -1,0 +1,7 @@
+
+Neovim now provides strong built-in alternatives:
+
+plenary.path → vim.fs + vim.uv (e.g. vim.fs.normalize, vim.fs.joinpath, vim.fs.dirname, vim.fs.find, vim.uv.fs_stat)
+plenary.scandir → vim.fs.dir() or vim.fs.find()
+plenary.job → vim.system() (available since Neovim 0.10, much cleaner and officially recommended)
+plenary.popup → MunifTanjim/nui.nvim (nui.popup)

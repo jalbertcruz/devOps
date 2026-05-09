@@ -92,7 +92,7 @@ alias b byobu
 
 #alias v 'NVIM_APPNAME=nvim-lazyvim nvim --listen /tmp/(pwd | slugify --stdin)'
 # alias v 'NVIM_APPNAME=nvim-d nvim'
-alias vfs 'NVIM_APPNAME=nvim-fs /home/z/appslnx/tools/nvim2/bin/nvim'
+alias vlz 'NVIM_APPNAME=nvim-lazy /home/z/appslnx/tools/nvim/bin/nvim'
 #alias v 'nvim --listen /tmp/(pwd | slugify --stdin)'
 # alias v 'NVIM_APPNAME=nvim-tj nvim --listen /tmp/(pwd | slugify --stdin)'
 # alias v 'NVIM_APPNAME=nvim-astronvim nvim --listen /tmp/(pwd | slugify --stdin)'

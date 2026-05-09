@@ -1,0 +1,99 @@
+
+ https://github.com/watchexec/watchexec/blob/9b7fed6a52c7586815864fe5c5bd1b6b5e5cec37/completions/zsh#L55
+ https://github.com/watchexec/watchexec/blob/9b7fed6a52c7586815864fe5c5bd1b6b5e5cec37/crates/cli/README.md?plain=1#L96
+
+
+       --emit-events-to <MODE>
+              Configure event emission
+
+              Watchexec  can  emit  event  information when running a command, which can be used by the child process to target specific
+              changed files.
+
+              One thing to take care with is assuming inherent behaviour where there is only chance.  Notably, it could appear as if the
+              `RENAMED` variable contains both the original and the new path being renamed. In previous versions, it would  even  appear
+              on  some platforms as if the original always came before the new. However, none of this was true. It's impossible to reli‐
+              ably and portably know which changed path is the old or new, "half" renames may appear (only the original, only the  new),
+              "unknown"  renames  may  appear  (change was a rename, but whether it was the old or new isn't known), rename events might
+              split across two debouncing boundaries, and so on.
+
+              This option controls where that information is emitted. It defaults to 'none', which doesn't  emit  event  information  at
+              all. The other options are 'environment' (deprecated), 'stdio', 'file', 'json-stdio', and 'json-file'.
+
+              The 'stdio' and 'file' modes are text-based: 'stdio' writes absolute paths to the stdin of the command, one per line, each
+              prefixed  with  `create:`,  `remove:`,  `rename:`,  `modify:`, or `other:`, then closes the handle; 'file' writes the same
+              thing to a temporary file, and its path is given with the $WATCHEXEC_EVENTS_FILE environment variable.
+
+              There are also two JSON modes, which are based on JSON objects and can represent the full set of events Watchexec handles.
+              Here's an example of a folder being created on Linux:
+
+              ```json
+                {
+                  "tags": [
+                    {
+                      "kind": "path",
+                      "absolute": "/home/user/your/new-folder",
+                      "filetype": "dir"
+                    },
+                    {
+                      "kind": "fs",
+                      "simple": "create",
+                      "full": "Create(Folder)"
+                    },
+                    {
+                      "kind": "source",
+                      "source": "filesystem",
+                    }
+                  ],
+                  "metadata": {
+                    "notify-backend": "inotify"
+                  }
+                } ```
+
+              The fields are as follows:
+
+                - `tags`, structured event data.
+                - `tags[].kind`, which can be:
+                  * 'path', along with:
+                    + `absolute`, an absolute path.
+                    + `filetype`, a file type if known ('dir', 'file', 'symlink', 'other').
+                  * 'fs':
+                    + `simple`, the "simple" event type ('access', 'create', 'modify', 'remove', or 'other').
+                    + `full`, the "full" event type, which is too complex to fully describe here, but looks  like  'General(Precise(Spe‐
+              cific))'.
+                  * 'source', along with:
+                    + `source`, the source of the event ('filesystem', 'keyboard', 'mouse', 'os', 'time', 'internal').
+                  * 'keyboard', along with:
+                    + `keycode`. Currently only the value 'eof' is supported.
+                  * 'process', for events caused by processes:
+                    + `pid`, the process ID.
+                  * 'signal', for signals sent to Watchexec:
+                    + `signal`, the normalised signal name ('hangup', 'interrupt', 'quit', 'terminate', 'user1', 'user2').
+                  * 'completion', for when a command ends:
+                    + `disposition`, the exit disposition ('success', 'error', 'signal', 'stop', 'exception', 'continued').
+                    + `code`, the exit, signal, stop, or exception code.
+                - `metadata`, additional information about the event.
+
+              The  'json-stdio'  mode  will  emit  JSON events to the standard input of the command, one per line, then close stdin. The
+              'json-file' mode will create a temporary file, write the events to  it,  and  provide  the  path  to  the  file  with  the
+              $WATCHEXEC_EVENTS_FILE environment variable.
+
+              Finally,  the  'environment'  mode was the default until 2.0. It sets environment variables with the paths of the affected
+              files, for filesystem events:
+
+              $WATCHEXEC_COMMON_PATH is set to the longest common path of all of the below variables, and so should be prepended to each
+              path to obtain the full/real path. Then:
+
+                - $WATCHEXEC_CREATED_PATH is set when files/folders were created
+                - $WATCHEXEC_REMOVED_PATH is set when files/folders were removed
+                - $WATCHEXEC_RENAMED_PATH is set when files/folders were renamed
+                - $WATCHEXEC_WRITTEN_PATH is set when files/folders were modified
+                - $WATCHEXEC_META_CHANGED_PATH is set when files/folders' metadata were modified
+                - $WATCHEXEC_OTHERWISE_CHANGED_PATH is set for every other kind of pathed event
+
+              Multiple paths are separated by the system path separator, ';' on Windows and ':' on unix.  Within  each  variable,  paths
+              are deduplicated and sorted in binary order (i.e. neither Unicode nor locale aware).
+
+              This  is  the  legacy  mode, is deprecated, and will be removed in the future. The environment is a very restricted space,
+              while also limited in what it can usefully represent. Large numbers of files will either cause the environment to be trun‐
+              cated, or may error or crash the process entirely. The $WATCHEXEC_COMMON_PATH is also unintuitive, as demonstrated by  the
+              multiple confused queries that have landed in my inbox over the years.

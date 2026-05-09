@@ -15,16 +15,7 @@ cd base
 stow \
   -t "$HOME" \
   broot \
-  emacs-dev-bridge \
-  emacs-dev-lsp \
-  emacs-dev-eglot \
-  emacs-doom \
-  emacs-writer \
   kitty \
-  nvim \
-  nvim-dev \
-  nvim-vscode \
-  nvim-fs \
   zellij \
   yazi \
   bin
@@ -52,7 +43,21 @@ stow \
   sqlfluff \
   tree-sitter-cli \
   uv \
-  bin \
+  bin
+
+
+cd ../editors
+stow \
+  -t "$HOME" \
+  emacs-dev-bridge \
+  emacs-dev-lsp \
+  emacs-dev-eglot \
+  emacs-doom \
+  emacs-writer \
+  nvim \
+  nvim-dev \
+  nvim-vscode \
+  nvim-lazy \
   jetbrains-vim
 
 cd ../extra
