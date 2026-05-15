@@ -1466,3 +1466,16 @@ lsblk -o NAME,SIZE,TYPE,MOUNTPOINT,PARTUUID
 
 └─sdd1      114.6G part               b7889ebe-c764-421e-baed-a1532d609b40
 └─sdc3      114.6G part               84af61e0-3207-49ce-b4a9-d74ba6cdd427
+
+# advanced grep
+To get the lines that are in file1.txt but not in file2.txt using the Linux CLI, you can use the grep command as follows:
+
+grep -Fxv -f file2.txt file1.txt
+
+Explanation:
+    -F: Treats the pattern as a fixed string (not regex).
+    -x: Matches whole lines only.
+    -v: Inverts the match (shows lines not found in file2.txt).
+    -f file2.txt: Reads patterns from file2.txt.
+This command will output all lines from file1.txt that are not present in file2.txt.
+

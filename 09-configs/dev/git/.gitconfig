@@ -301,8 +301,11 @@
 [apply]
 	whitespace = nowarn
 
-[url "https://github.com/"]
-	insteadOf = git:
+; [url "https://github.com/"]
+; 	insteadOf = git:
+
+; [url "http://me:memememe@localhost:3000/"]
+; 	insteadOf = git:
 
 [url "https://github.com/"]
 	insteadOf = gh:

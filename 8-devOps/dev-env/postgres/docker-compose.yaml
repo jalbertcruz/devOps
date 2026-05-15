@@ -12,16 +12,16 @@ services:
     restart: always
     ports:
 #      - 5432
-      - 5432:5432
+      - "5432:5432"
     container_name: postgresql-services-1_personal_local
-    image: postgres:18.0-alpine3.22
+    image: postgres:18.3-alpine3.23
     networks:
       - dev-network
     profiles:
       - tier-1
     hostname: postgresql-services-1.personal.local
     volumes:
-      - postgresql-services-1-data:/var/lib/postgresql/data
+      - postgresql-services-1-data:/var/lib/postgresql
       - ./dump:/dump
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     environment:

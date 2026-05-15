@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-rm -rf $HOME/.local/state/nvim
-rm -rf $HOME/.local/share/nvim
+rm -rf "$HOME/.local/state/nvim"
+rm -rf "$HOME/.local/share/nvim"
+rm -rf "$HOME/.local/state/nvim-lazy"
+rm -rf "$HOME/.local/share/nvim-lazy/"
+echo 'Rememeber to clear the json-configs of the git revisions'
 
 exit 0
 

@@ -1,8 +1,9 @@
 # test -e .cs-java && set jsJava (cat .cs-java) && eval "$(cs java --jvm $jsJava --env)"
 if not test -e .cs-java
+#     test -d ~/appslnx/jdk-8 && set -x JAVA_HOME ~/appslnx/jdk-8
 #     test -d ~/appslnx/jdk-11 && set -x JAVA_HOME ~/appslnx/jdk-11
-#     test -d ~/appslnx/jdk-17 && set -x JAVA_HOME ~/appslnx/jdk-17
-    test -d ~/appslnx/jdk-21 && set -xg JAVA_HOME ~/appslnx/jdk-21 # && echo "Using default JDK 21"
+    test -d ~/appslnx/jdk-17 && set -x JAVA_HOME ~/appslnx/jdk-17
+#     test -d ~/appslnx/jdk-21 && set -xg JAVA_HOME ~/appslnx/jdk-21 # && echo "Using default JDK 21"
 else
     set jsJava (cat .cs-java)
     echo Setting JDK version to $jsJava

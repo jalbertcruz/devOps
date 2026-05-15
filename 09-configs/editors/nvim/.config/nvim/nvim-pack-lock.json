@@ -5,7 +5,7 @@
       "src": "git:otavioschwanck/arrow.nvim"
     },
     "blink.cmp": {
-      "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
+      "rev": "5ec8f5b28440fd6ee4fac90a51c861136aafc00f",
       "src": "git:saghen/blink.cmp",
       "version": "'v1.10.2'"
     },
@@ -27,7 +27,7 @@
       "src": "git:stevearc/conform.nvim"
     },
     "emmet-vim": {
-      "rev": "92ef2f74f4093edc99db5e9e4cf7e40116a85bd6",
+      "rev": "65b0e4e57e1b03da543bd3fa8216c83038480d89",
       "src": "git:mattn/emmet-vim"
     },
     "friendly-snippets": {
@@ -35,7 +35,7 @@
       "src": "git:rafamadriz/friendly-snippets"
     },
     "fzf-lua": {
-      "rev": "375078d1fcb082b5593601bba424f5c4f4f00aaf",
+      "rev": "44816af2465bb0a17ae0f1f2d8a4f9c3df524fcd",
       "src": "git:ibhagwan/fzf-lua"
     },
     "grug-far.nvim": {
@@ -85,7 +85,7 @@
     },
     "nvim-metals": {
       "rev": "4cc98f07ec96bb748a8796831767538e0e4f9be4",
-      "src": "git:scalameta/nvim-metals"
+      "src": "http://me:memememe@localhost:3000/scalameta/nvim-metals"
     },
     "nvim-nio": {
       "rev": "21f5324bfac14e22ba26553caf69ec76ae8a7662",
@@ -105,7 +105,7 @@
       "version": "'master'"
     },
     "nvim-treesitter": {
-      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
+      "rev": "ed3ae5b81daefbf0cc3220664abcb738decf4a0a",
       "src": "git:nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },

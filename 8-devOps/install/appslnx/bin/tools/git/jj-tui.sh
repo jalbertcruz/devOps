@@ -33,7 +33,8 @@ install_jj_tui() {
   maybe_copy_fish_completions_files
   maybe_copy_man_pages_files
   rm *.zip
-  mv jj_tui $DEST
+  mv jj_tui jj-tui
+  mv jj-tui $DEST
 
   save_last_installation_log $app_name
 }

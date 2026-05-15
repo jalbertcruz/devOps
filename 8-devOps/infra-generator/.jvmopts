@@ -9,7 +9,7 @@
 -Dcats.effect.enhancedExceptions=true
 -Dcats.effect.trackFiberContext=true
 -Dsbt.override.build.repos=true
-${JJAVA_AGENT}
+#${JJAVA_AGENT}
 #-Dactive.app="commands-app"
 # -Dactive.app="ports-app"
 # -Dconfig.file=src/main/resources/app2.conf

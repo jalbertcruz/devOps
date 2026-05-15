@@ -1,4 +1,4 @@
 [repositories]
-
   local
   my-maven-releases-proxy: http://localhost:8080/releases
+  ivy-releases: http://localhost:8080/ivy-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]

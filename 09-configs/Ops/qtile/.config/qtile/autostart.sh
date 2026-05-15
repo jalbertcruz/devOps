@@ -11,8 +11,7 @@ xrandr --output HDMI-1 --primary --mode 3440x1440 --output eDP-1 --off
 xscreensaver --no-splash &
 mpd &
 dunst &
-/usr/local/bin/appslnx/tools/edition/LogseqDB/bin/Logseq &
-#/usr/local/bin/appslnx/tools/edition/Logseq/bin/Logseq &
+/usr/local/bin/appslnx/tools/edition/LogseqDB/bin/logseq &
 
 # este es el que estaba activo
 #/usr/local/bin/emacs --daemon # &

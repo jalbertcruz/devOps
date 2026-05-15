@@ -4,4 +4,4 @@ set -u
 set -o pipefail
 
 eval "$(direnv dotenv bash $HOME/.env)"
-/usr/local/bin/appslnx/tools/edition/LogseqDB/bin/Logseq %u
+/usr/local/bin/appslnx/tools/edition/LogseqDB/bin/logseq %u
